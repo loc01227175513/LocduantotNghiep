@@ -23,6 +23,7 @@
     "@nextui-org/system": "^2.2.6",
     "@nextui-org/theme": "^2.2.11",
     "axios": "^1.7.7",
+    "cac": "^6.7.14",
     "chart.js": "^4.4.5",
     "formik": "^2.4.6",
     "framer-motion": "^11.11.10",
