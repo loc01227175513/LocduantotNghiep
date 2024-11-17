@@ -33,7 +33,7 @@ export default function Main2() {
             return;
         }
         try {
-                       const response = await fetch('http://huuphuoc.id.vn/api/dangkygiangvien', {
+                       const response = await fetch('https://huuphuoc.id.vn/api/dangkygiangvien', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

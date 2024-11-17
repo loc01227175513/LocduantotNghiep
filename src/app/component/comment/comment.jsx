@@ -10,7 +10,7 @@ const Commenthome = () => {
       useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch('http://huuphuoc.id.vn/api/danhgia', {
+          const response = await fetch('https://huuphuoc.id.vn/api/danhgia', {
             referrerPolicy: 'unsafe-url',
           });
           const data = await response.json();

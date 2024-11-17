@@ -27,7 +27,7 @@ const Cart = ({ onAction }) => {
             try {
                 const parsedData = JSON.parse(userData);
 
-                axios.post('http://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id })
+                axios.post('https://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id })
                     .then(response => {
                         setCartItems(response.data.data);
 
@@ -61,7 +61,7 @@ const Cart = ({ onAction }) => {
                 id_nguoidung: parsedData.id,
             };
             toast.error('Xóa khóa học thành công');
-            await axios.post('http://huuphuoc.id.vn/api/xoasanphamadd', payload);
+            await axios.post('https://huuphuoc.id.vn/api/xoasanphamadd', payload);
             window.location.href = '/';
         } catch {
             // Do nothing

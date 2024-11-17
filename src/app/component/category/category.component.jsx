@@ -80,7 +80,7 @@ const NextCategory = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://huuphuoc.id.vn/api/theloai", {
+        const response = await fetch("https://huuphuoc.id.vn/api/theloai", {
           referrerPolicy: 'unsafe-url',
         });
         const data = await response.json();
@@ -248,7 +248,7 @@ const Category = ({ onCategoryChange }) => {
   const [activeCategory, setActiveCategory] = useState('');
 
    useEffect(() => {
-    fetch("http://huuphuoc.id.vn/api/allkhoahoc", {
+    fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
       referrerPolicy: 'unsafe-url',
     })
       .then((response) => response.json())
@@ -314,7 +314,7 @@ const Categoryheader = () => {
    useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://huuphuoc.id.vn/api/theloai", {
+        const response = await fetch("https://huuphuoc.id.vn/api/theloai", {
           referrerPolicy: 'unsafe-url',
         });
         const data = await response.json();

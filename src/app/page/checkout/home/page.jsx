@@ -36,7 +36,7 @@ const Page = () => {
     if (userData) {
       try {
         const parsedData = JSON.parse(userData);
-              axios.post('http://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id }, {
+              axios.post('https://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id }, {
           referrerPolicy: 'unsafe-url'
         })
           .then(response => {
@@ -103,7 +103,7 @@ const Page = () => {
 
   const validateCardDetails = () => {
     const [month, year] = paymentDetails.expiryDate.split('/');
-       axios.post('http://huuphuoc.id.vn/api/thenganhang', {
+       axios.post('https://huuphuoc.id.vn/api/thenganhang', {
       tenthe: paymentDetails.nameOnCard,
       sothe: paymentDetails.cardNumber,
       thang: month,
@@ -135,7 +135,7 @@ const Page = () => {
     }
     const [month, year] = paymentDetails.expiryDate.split('/');
     try {
-           const cardResponse = await axios.post('http://huuphuoc.id.vn/api/thenganhang', {
+           const cardResponse = await axios.post('https://huuphuoc.id.vn/api/thenganhang', {
         tenthe: paymentDetails.nameOnCard,
         sothe: paymentDetails.cardNumber,
         thang: month,
@@ -147,7 +147,7 @@ const Page = () => {
       });
 
       if (cardResponse.data.success) {
-               const paymentResponse = await axios.post('http://huuphuoc.id.vn/api/thanhtoan', {
+               const paymentResponse = await axios.post('https://huuphuoc.id.vn/api/thanhtoan', {
           total: totalPrice - (totalPrice * discount / 100),
           id_nguoidung: typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('data')).id : null,
           id_khoahoc: cartItems.map(item => item.khoahocs.map(khoahoc => khoahoc.id)),
@@ -160,7 +160,7 @@ const Page = () => {
         });
 
         if (paymentResponse.data.success) {
-                  await axios.post('http://huuphuoc.id.vn/api/xoagiohang', {
+                  await axios.post('https://huuphuoc.id.vn/api/xoagiohang', {
             total: totalPrice.toFixed(2),
             id_nguoidung: typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('data')).id : null,
             id_khoahoc: cartItems.map(item => item.khoahocs.map(khoahoc => khoahoc.id)),

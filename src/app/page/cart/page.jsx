@@ -31,7 +31,7 @@ const Cart = () => {
       try {
         const parsedData = JSON.parse(userData);
 
-               axios.post('http://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id }, {
+               axios.post('https://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id }, {
           referrerPolicy: 'unsafe-url'
         })
           .then(response => {
@@ -77,7 +77,7 @@ const Cart = () => {
         id_nguoidung: parsedData.id,
       };
 
-           await axios.post('http://huuphuoc.id.vn/api/xoasanphamadd', payload, {
+           await axios.post('https://huuphuoc.id.vn/api/xoasanphamadd', payload, {
         referrerPolicy: 'unsafe-url'
       });
       toast.success("Sản phẩm đã được xóa!");
