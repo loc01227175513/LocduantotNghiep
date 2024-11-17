@@ -5,7 +5,7 @@ import Mota from './Mota';
 import Instructor from './Instructor';
 import Review from './Review';
 import Course from './course';
-
+import NhanTin from './Nhantin';
 const MotionDiv = motion.div;
 
 export default function Page({ course, formattedTotalTime }) {
@@ -21,6 +21,8 @@ export default function Page({ course, formattedTotalTime }) {
         return <Course course={course} formattedTotalTime={formattedTotalTime} />;
       case 'mota':
         return <Mota course={course} />;
+      case 'nhan-tin':
+        return <NhanTin course={course} />;
       default:
         return <Mota course={course} />;
     }
@@ -30,8 +32,8 @@ export default function Page({ course, formattedTotalTime }) {
     <div className="shadow-lg border border-gray-200 p-4 rounded-md bg-white text-black">
       <div className="w-full pb-12">
         <div className="flex border-b">
-          {['Thông tin khóa học', 'Nội dung khóa học', 'Người hướng dẫn', 'Ôn tập'].map((label, index) => {
-            const currentPage = ['mota', 'course', 'instructor', 'review'][index];
+          {['Thông tin khóa học', 'Nội dung khóa học', 'Người hướng dẫn', 'Ôn tập', 'Nhắn tin'].map((label, index) => {
+            const currentPage = ['mota', 'course', 'instructor', 'review', 'nhan-tin'][index];
             return (
               <button
                 key={index}

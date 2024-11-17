@@ -347,10 +347,10 @@ export default function Header() {
                     {!hasData ? (
                       <>
                         <Link href="/page/login" className="rts-btn btn-border">
-                          Log In
+                        Đăng nhập
                         </Link>
-                        <Link href="/page/register  *369." className="rts-btn btn-primary">
-                          Sign Up
+                        <Link href="/page/register" className="rts-btn btn-primary">
+                         Đăng ký
                         </Link>
                       </>
                     ) : (

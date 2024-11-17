@@ -176,25 +176,28 @@ const NextCategory = () => {
   return (
     <div className="h-auto border category-area-style-one shape-move rts-section-gap bg_image">
       <div className="container">
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="title-area-center-style">
-              <div className="pre-title">
-                <i
-                  className="mr-2 bi bi-lightbulb"
-                  style={{ color: "#32ADE6" }}
-                ></i>
-                <span>Danh mục hàng đầu</span>
-              </div>
-              <h2 className="title">
-                Khám phá hơn 2000 khóa học trực tuyến miễn phí
-              </h2>
-              <p className="post-title">
-                Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao
-              </p>
-            </div>
-          </div>
-        </div>
+
+
+
+      <div className="row bg-gray-100">
+  <div className="col-lg-12">
+    <div className="title-area-center-style bg-white p-4">
+      <div className="pre-title">
+        <i
+          className="mr-2 bi bi-lightbulb"
+          style={{ color: "#32ADE6" }}
+        ></i>
+        <span>Danh mục hàng đầu</span>
+      </div>
+      <h2 className="title">
+        Khám phá hơn 2000 khóa học trực tuyến miễn phí
+      </h2>
+      <p className="post-title">
+        Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao
+      </p>
+    </div>
+  </div>
+</div>  
 
         <div>
           <div className="w-full mt-10 text-center h-30">

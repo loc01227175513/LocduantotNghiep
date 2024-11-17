@@ -449,8 +449,8 @@ const renderStars = (rating) => {
                         <h5 className="title">Một khóa học của </h5>
                         <div className="body">
                           <div className="font-normal text-black">
-                            <Image width={500} height={300}    src="assets/images/course/13.png" alt="" />
-                            <span>{course.giangvien}</span>
+                            {/* <Image width={500} height={300}    src="assets/images/course/13.png" alt="" /> */}
+                            <span><h2><strong>{course.giangvien}</strong></h2></span>
                           </div>
                         </div>
                       </div>

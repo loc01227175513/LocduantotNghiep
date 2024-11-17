@@ -74,7 +74,7 @@ const Headerdashboardstudent1 = () => {
   return (
     <div className="col-lg-12">
       <div className="dashboard-banner-area-start bg_image student-dashboard" style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-        {data.vaitro === 1 ? (
+        {data.vaitro != 0 ? (
           <div className="rating-area-banner-dashboard" style={{ marginBottom: '20px' }}>
             <a href="/page/lecturer-dashboard" className="create-btn" style={buttonStyle('#4CAF50', '#45a049')} >
               <i className="fa-regular fa-circle-plus" style={{ marginRight: '10px' }}></i> Giảng viên

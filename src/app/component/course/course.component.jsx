@@ -62,6 +62,7 @@ const OutstandingCourse = () => {
       toast.error("Error adding to favorites!");
     }
   };
+  
 
   // Function to render stars based on averageRating
   const renderStars = (rating) => {
@@ -79,6 +80,7 @@ const OutstandingCourse = () => {
     }
     return stars;
   };
+  
 
   return (
     <div>

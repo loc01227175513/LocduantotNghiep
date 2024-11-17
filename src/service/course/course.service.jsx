@@ -68,12 +68,22 @@ export const ThemKhoaHocDaHoc = async () => {
 export const GiangVienKhoaHocHienThi = async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const id_khoahoc = urlParams.get('id');
+
+  if (!id_khoahoc) {
+    console.error('Error: id_khoahoc is null or undefined');
+    throw new Error('Invalid course ID');
+  }
+
   const url = `https://huuphuoc.id.vn/api/GiangVienKhoaHocHienThi/${id_khoahoc}`;
+  console.log('Fetching URL:', url);
+
   const response = await fetch(`${url}`, {
     referrerPolicy: 'unsafe-url',
   }); // Gọi API nội bộ
+
   if (!response.ok) {
     throw new Error('Failed to fetch courses');
   }
+
   return response.json();
 };

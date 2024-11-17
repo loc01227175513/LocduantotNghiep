@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { GiangVienKhoaHocHienThi } from '../../../service/course/course.service';
 import { TheoDoiGiangVien, DanhSachTheoDoi } from '../../../service/Follow/Follow';
+import { KhoaHocYeuThich } from "../../../service/YeuThich/YeuThich";
 import Link from 'next/link';
 import Image from 'next/image';
 export const Profileinsructor = () => {
@@ -30,7 +31,7 @@ export const Profileinsructor = () => {
             try {
                 const res = await DanhSachTheoDoi();
                 console.log(res, "res");
-                
+
                 const urlParams = new URLSearchParams(window.location.search);
                 const id_giangvien = urlParams.get('id');
 
@@ -101,7 +102,16 @@ export const Profileinsructor = () => {
             alert('Theo dõi thất bại');
         }
     }
-
+    const handleYeuThich = async (id) => {
+        try {
+            const response = await KhoaHocYeuThich(id);
+            console.log(response);
+            toast.success("Added to favorites!");
+        } catch (error) {
+            console.error("Error:", error);
+            toast.error("Error adding to favorites!");
+        }
+    };
 
     return (
         <div className="container">
@@ -123,7 +133,7 @@ export const Profileinsructor = () => {
                                     </div>
                                     <div className="author-profile-image-and-name flex items-center space-x-4 p-4 bg-white shadow-md rounded-lg">
                                         <div className="flex-shrink-0">
-                                            <Image width={500} height={300}   
+                                            <Image width={500} height={300}
                                                 src={item.giangVien.hinh}
                                                 className="w-24 h-24 rounded-full object-cover"
                                                 alt="dashboard"
@@ -191,7 +201,7 @@ export const Profileinsructor = () => {
                                             <Link href={`/page/course-detail?id=${item.id}`}>
                                                 <div className="rts-single-course">
                                                     <a className="thumbnail">
-                                                        <Image width={500} height={300}   
+                                                        <Image width={500} height={300}
                                                             src={item.hinh}
                                                             alt="course"
                                                         />
@@ -200,6 +210,10 @@ export const Profileinsructor = () => {
                                                         className="save-icon"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal-login"
+                                                        onClick={(event) => {
+                                                            event.preventDefault();
+                                                            handleYeuThich(item.id);
+                                                        }}
                                                     >
                                                         <i className="fa-sharp fa-light fa-bookmark" />
                                                     </div>

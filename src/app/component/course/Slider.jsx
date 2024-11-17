@@ -21,12 +21,20 @@ export default function HorizontalScrollImages() {
     <Flex justify="center" align="center" minH="10vh" overflow="hidden" w="600px" mx="auto">
       <Flex
         animation={`${scroll} 20s linear infinite`}
-        minW="200%" // Double width to fit duplicate images
+        minW="200%"
         align="center"
       >
         {[...images, ...images].map((src, index) => (
           <Box key={index} mx={3}>
-            <Image src={src} alt={`icon-${index}`} boxSize="9rem" />
+            <Image 
+              src={src} 
+              alt={`icon-${index}`} 
+              boxSize="9rem"
+              border="1px"
+              borderColor="gray.200"
+              borderRadius="md"
+              p={2}
+            />
           </Box>
         ))}
       </Flex>

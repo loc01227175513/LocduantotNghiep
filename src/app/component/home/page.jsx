@@ -20,61 +20,9 @@ export default function Homecomponent() {
       <Banner />
    
 
-      {/* <div className="flex justify-center my-24">
-        <div>
-        </div>
-        <div className="flex ">
-          <div>
-      <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728126647/13_jmgxo8.svg" alt=""
-              className="w-36 h-36 mx-9"
-            />
-          </div>
-          <div>
-      <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728126637/12_tm0xts.svg" alt=""
-              className="w-36 h-36 mx-9"
-
-            />
-          </div>
-          <div>
-      <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728126629/11_t1fwzm.svg" alt=""
-              className="w-36 h-36 mx-9"
-
-            />
-          </div>
-          <div>
-      <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728126621/10_tkgxsm.svg" alt=""
-              className="w-36 h-36 mx-9"
-
-            />
-          </div>
-          <div>
-      <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728126611/09_i4yvcq.svg" alt=""
-              className="w-36 h-36 mx-9"
-
-            />
-          </div>
-          <div>
-      <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728126601/08_v0jlvy.svg" alt=""
-              className="w-36 h-36 mx-9"
-
-            />
-          </div>
-          <div>
-      <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728126611/09_i4yvcq.svg" alt=""
-              className="w-36 h-36 mx-9"
-
-            />
-          </div>
-        </div>
-      </div> */}
-      <HorizontalScrollImages />
+      <div className="bg-light p-3 rounded">
+  <HorizontalScrollImages />
+</div>
 
   
 

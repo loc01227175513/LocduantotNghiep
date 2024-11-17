@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { KhoaHocYeuThich } from "../../../../service/YeuThich/YeuThich";
 
 import Image from 'next/image';
 const Grid = ({ courses }) => {
@@ -12,6 +13,16 @@ const Grid = ({ courses }) => {
         }
         return sum / danhgia.length;
     }
+    const handleYeuThich = async (id) => {
+        try {
+          const response = await KhoaHocYeuThich(id);
+          console.log(response);
+          toast.success("Added to favorites!");
+        } catch (error) {
+          console.error("Error:", error);
+          toast.error("Error adding to favorites!");
+        }
+      };
 
     return (
         <div className="row">
@@ -24,7 +35,17 @@ const Grid = ({ courses }) => {
                                 <Image width={500} height={300}    src={course.hinh} alt="course" />
                             </a>
                             <div className="save-icon" data-bs-toggle="modal" data-bs-target="#exampleModal-login">
+                            <div
+                                className="save-icon"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal-login"
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    handleYeuThich(course.id);
+                                }}
+                            >
                                 <i className="fa-sharp fa-light fa-bookmark" />
+                            </div>
                             </div>
                             <div className="tags-area-wrapper">
                                 <div className="single-tag">
@@ -104,7 +125,17 @@ const List = ({ courses }) => {
                                 <Image width={500} height={300}    src={course.hinh} className="w-80" alt="course" />
                             </a>
                             <div className="save-icon" data-bs-toggle="modal" data-bs-target="#exampleModal-login">
+                            <div
+                                className="save-icon"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal-login"
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    handleYeuThich(course.id);
+                                }}
+                            >
                                 <i className="fa-sharp fa-light fa-bookmark" />
+                            </div>
                             </div>
                             <div className="tags-area-wrapper">
                                 <div className="single-tag">

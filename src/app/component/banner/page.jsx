@@ -48,7 +48,7 @@ const Banner = () => {
                     {banner.mota}
                   </p>
                   <div className="banner-btn-author-wrapper">
-                    <a href="course-five.html" className="rts-btn btn-primary with-arrow">
+                    <a href="/page/Cours-Filter" className="rts-btn btn-primary with-arrow">
                       Xem tất cả khóa học <i className="fa-regular fa-arrow-right" />
                     </a>
                     <div className="sm-image-wrapper">
@@ -88,14 +88,14 @@ const Banner = () => {
           <i className="flex items-center justify-center w-32 h-16 text-3xl text-black rounded-lg bi bi-backpack4" style={{ backgroundColor: '#32ADE6' }}></i>
           <div className="info-right">
             <h6 className="title">4.5</h6>
-            <span>(2.4k Review)</span>
+            <span>(Đánh giá 2.4K)</span>
           </div>
         </div>
         <div className="review-single two">
           <i className="flex items-center justify-center w-32 h-16 text-3xl text-black rounded-lg bi bi-buildings-fill" style={{ backgroundColor: '#32ADE6' }}></i>
           <div className="info-right">
             <h6 className="title">100+</h6>
-            <span>Online Course</span>
+            <span>Khóa học trực tuyến</span>
           </div>
         </div>
       </div>
