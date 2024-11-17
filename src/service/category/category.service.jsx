@@ -1,8 +1,10 @@
 export const Categorydata = async () => {
-    const url = 'http://huuphuoc.id.vn/api/theloai';
+    const url = 'https://huuphuoc.id.vn/api/theloai';
 
     try {
-        const response = await fetch(url); // Gọi API nội bộ
+        const response = await fetch(url, {
+            referrerPolicy: 'unsafe-url'
+        }); // Gọi API nội bộ
         if (!response.ok) {
             throw new Error('Failed to fetch courses');
         }
