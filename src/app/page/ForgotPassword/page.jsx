@@ -5,7 +5,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Header from "../../component/header/page";
 import Image from "next/image";
-import { Margin } from "@mui/icons-material";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -25,7 +24,7 @@ export default function Login() {
     };
 
     try {
-           const response = await fetch("https://huuphuoc.id.vn/api/sendMail", {
+      const response = await fetch("https://huuphuoc.id.vn/api/sendMail", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
