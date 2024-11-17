@@ -1,8 +1,13 @@
-// next.config.cjs
-module.exports = {
+/**  @type {import('next'). NextConfig}  */
+const nextConfig = {
   images: {
-    unoptimized: true,
-    domains: ['via.placeholder.com'],
+    domains: ['via.placeholder.com', 'res.cloudinary.com', 'scontent-atl3-2.xx.fbcdn.net', 'png.pngtree.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com'
+      },
+    ],
   },
   webpack: (config) => {
     config.module.rules.push({
@@ -15,5 +20,7 @@ module.exports = {
       },
     });
     return config;
-  }
+  },
 };
+
+module.exports = nextConfig;

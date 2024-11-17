@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js",
+    "export": "next export"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",
@@ -22,7 +23,6 @@
     "@nextui-org/system": "^2.2.6",
     "@nextui-org/theme": "^2.2.11",
     "axios": "^1.7.7",
-    "cac": "^6.7.14",
     "chart.js": "^4.4.5",
     "formik": "^2.4.6",
     "framer-motion": "^11.11.10",
