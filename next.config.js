@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'png.pngtree.com'
       },
+      {
+        protocol: 'https',
+        hostname: 'th.bing.com'
+      },
     ],
   },
   webpack: (config) => {

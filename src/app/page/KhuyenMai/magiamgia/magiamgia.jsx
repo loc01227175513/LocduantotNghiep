@@ -131,7 +131,7 @@ export default function VoucherShop() {
             toast.error("Failed to save voucher.");
         }
     };
-    
+
     return (
         <div className="container-fluid bg-light py-4">
             <ToastContainer />
@@ -150,26 +150,26 @@ export default function VoucherShop() {
                 </div>
 
                 <div className="row">
-                {KhuyenMai.map((item) => (
-    <motion.div
-        key={item.id}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: item.id * 0.1 }}
-        className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
-    >
-        <VoucherCard
-            maso={item.magiamgia.maso}
-            giamgia={item.khoahoc.giamgia}
-            gia={item.khoahoc.gia}
-            hinh={item.khoahoc.hinh}
-            trangthai={item.magiamgia.trangthai}
-            onSave={handleSave}
-            isSaved={savedVouchers.includes(item.magiamgia.maso)}
-            disabled={item.magiamgia.trangthai === 'Đã sử dụng'}
-        />
-    </motion.div>
-))}
+                    {KhuyenMai.map((item) => (
+                        <motion.div
+                            key={item.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: item.id * 0.1 }}
+                            className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+                        >
+                            <VoucherCard
+                                maso={item.magiamgia.maso}
+                                giamgia={item.khoahoc.giamgia}
+                                gia={item.khoahoc.gia}
+                                hinh={item.khoahoc.hinh}
+                                trangthai={item.magiamgia.trangthai}
+                                onSave={handleSave}
+                                isSaved={savedVouchers.includes(item.magiamgia.maso)}
+                                disabled={item.magiamgia.trangthai === 'Đã sử dụng'}
+                            />
+                        </motion.div>
+                    ))}
                 </div>
             </div>
         </div>

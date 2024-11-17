@@ -209,7 +209,7 @@ export default function Header() {
               <div className="header-one-wrapper">
                 <div className="left-side-header">
                   <Link href="/" className="logo-area">
-                    <Image width={500} height={300}   
+                    <Image width={500} height={300}
                       src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1727967044/z5893902778330_3f5bed4df0f1d220b06d64708c4d87fc_rfjfty.jpg"
                       className="w-72"
                       alt="logo"
@@ -289,7 +289,7 @@ export default function Header() {
                           </li>
                           <li>
 
-                            {!data ? null : data.vaitro === 1 ? (
+                            {!data ? null : data.vaitro !== 0 ? (
                               <Link href="/page/lecturer-dashboard" className="ml-4 hover:text-gray-300">
                                 <div className="m-4">
                                   <p className="p-2 m-0 font-bold text-center rounded-lg bg-cyan-200">Giảng Viên</p>
@@ -310,7 +310,7 @@ export default function Header() {
                 </div>
 
 
-                {!data ? null : data.vaitro === 1 ? (
+                {!data ? null : data.vaitro !== 0 ? (
                   <Link href="/page/lecturer-dashboard" className="ml-4 hover:text-gray-300">
                     <div className="m-4">
                       <p className="p-2 m-0 font-bold text-center rounded-lg bg-cyan-200">Giảng viên</p>
@@ -364,7 +364,7 @@ export default function Header() {
                             onMouseEnter={handleMouseEnter}
                             onMouseLeave={handleMouseLeave}
                           >
-                            <Image width={500} height={300}   
+                            <Image width={500} height={300}
                               src={data?.hinh}
                               alt=""
                               className="rounded-full cursor-pointer h-14 w-14"
@@ -379,7 +379,7 @@ export default function Header() {
                                     <div className="flex items-center border-b pb-4 mb-4">
 
                                       <div className="w-1/3 flex justify-center">
-                                        <Image  src={data?.hinh} alt="User Avatar" className="rounded-full" width="60" height="60" />
+                                        <Image src={data?.hinh} alt="User Avatar" className="rounded-full" width="60" height="60" />
                                       </div>
 
                                       <div className="w-2/3 pl-4">
@@ -449,7 +449,7 @@ export default function Header() {
                   >
                     <div className="flex items-center">
 
-                      <Image width={500} height={300}   
+                      <Image width={500} height={300}
                         src={data?.hinh}
                         alt="User Avatar"
                         className="w-12 h-12 rounded-full"
