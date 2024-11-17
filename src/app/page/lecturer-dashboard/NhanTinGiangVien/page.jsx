@@ -187,13 +187,14 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
         };
 
         try {
-            const response = await fetch(`http://huuphuoc.id.vn/api/addNhanTin`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken,
-                },
-                body: JSON.stringify(newFormData),
+                       const response = await fetch(`https://huuphuoc.id.vn/api/addNhanTin`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+              },
+              body: JSON.stringify(newFormData),
+              referrerPolicy: 'unsafe-url',
             });
             if (response.ok) {
                 toast.success('Thêm tin nhắn thành công từ Giảng viên!');

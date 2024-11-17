@@ -17,8 +17,10 @@ const OutstandingCourse = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
-  useEffect(() => {
-    fetch("http://huuphuoc.id.vn/api/allkhoahoc")
+   useEffect(() => {
+    fetch("http://huuphuoc.id.vn/api/allkhoahoc", {
+      referrerPolicy: 'unsafe-url',
+    })
       .then((response) => response.json())
       .then((data) => {
         setKhoaHoc(data.data);
@@ -204,7 +206,9 @@ const CourseNew = () => {
   const itemsPerPage = 8;
 
   useEffect(() => {
-    fetch("http://huuphuoc.id.vn/api/allkhoahoc")
+    fetch("http://huuphuoc.id.vn/api/allkhoahoc", {
+      referrerPolicy: 'unsafe-url',
+    })
       .then((response) => response.json())
       .then((data) => {
         setKhoaHoc(data.data);
@@ -393,7 +397,9 @@ const Courseseal = () => {
   const itemsPerPage = 4;
 
   useEffect(() => {
-    fetch("http://huuphuoc.id.vn/api/allkhoahoc")
+    fetch("http://huuphuoc.id.vn/api/allkhoahoc", {
+      referrerPolicy: 'unsafe-url',
+    })
       .then((response) => response.json())
       .then((data) => {
         setKhoaHoc(data.data);
@@ -572,8 +578,10 @@ const Coursefree = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
-  useEffect(() => {
-    fetch("http://huuphuoc.id.vn/api/allkhoahoc")
+   useEffect(() => {
+    fetch("http://huuphuoc.id.vn/api/allkhoahoc", {
+      referrerPolicy: 'unsafe-url',
+    })
       .then((response) => response.json())
       .then((data) => {
         setKhoaHoc(data.data);

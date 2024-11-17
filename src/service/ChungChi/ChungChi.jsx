@@ -1,22 +1,25 @@
-export const ChungChi =async()=>{
-    const url = 'http://huuphuoc.id.vn/api/ChungChi'
+export const ChungChi = async () => {
+  const url = 'https://huuphuoc.id.vn/api/ChungChi';
 
-    const response = await fetch(`${url}`); // Gọi API nội bộ
-    if (!response.ok) {
-      throw new Error('Failed to fetch courses');
-    }
-    return response.json(); 
-}
+  const response = await fetch(`${url}`, {
+    referrerPolicy: 'unsafe-url',
+  }); // Gọi API nội bộ
+  if (!response.ok) {
+    throw new Error('Failed to fetch courses');
+  }
+  return response.json();
+};
+
 export const ChonChungChi = async (id) => {
   const urlParams = new URLSearchParams(window.location.search);
   const id_khoahoc = urlParams.get('id');
-console.log("id_khoahoc",id_khoahoc);
+  console.log("id_khoahoc", id_khoahoc);
 
   if (!id_khoahoc) {
     throw new Error('Course ID not found in URL');
   }
 
-  const url = `http://huuphuoc.id.vn/api/GiangVienCourseChungChi`;
+  const url = `https://huuphuoc.id.vn/api/GiangVienCourseChungChi`;
 
   try {
     const response = await fetch(`${url}`, {
@@ -26,8 +29,9 @@ console.log("id_khoahoc",id_khoahoc);
       },
       body: JSON.stringify({
         id_khoahoc: id_khoahoc,
-        id_chungchi: id 
+        id_chungchi: id,
       }),
+      referrerPolicy: 'unsafe-url',
     });
 
     if (!response.ok) {

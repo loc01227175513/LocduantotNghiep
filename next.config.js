@@ -1,11 +1,22 @@
 /**  @type {import('next'). NextConfig}  */
 const nextConfig = {
   images: {
-    domains: ['via.placeholder.com', 'res.cloudinary.com', 'scontent-atl3-2.xx.fbcdn.net', 'png.pngtree.com'],
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'via.placeholder.com'
+      },
+      {
+        protocol: 'https',
         hostname: 'res.cloudinary.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'scontent-atl3-2.xx.fbcdn.net'
+      },
+      {
+        protocol: 'https',
+        hostname: 'png.pngtree.com'
       },
     ],
   },

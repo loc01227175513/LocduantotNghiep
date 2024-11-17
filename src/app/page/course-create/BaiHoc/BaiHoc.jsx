@@ -33,10 +33,13 @@ const BaiHoc = () => {
     const fetchLessons = async () => {
       if (id) {
         try {
-          const response = await Axios.post(
+                   const response = await Axios.post(
             "https://huuphuoc.id.vn/api/showBaiHoc",
             {
               id_khoahoc: id,
+            },
+            {
+              referrerPolicy: 'unsafe-url'
             }
           );
 
@@ -90,8 +93,10 @@ const BaiHoc = () => {
         id_khoahoc: id,
       });
   
-      await Axios.post("https://huuphuoc.id.vn/api/keoThaBaiHoc", {
+           await Axios.post("https://huuphuoc.id.vn/api/keoThaBaiHoc", {
         baihocs: lessons,
+      }, {
+        referrerPolicy: 'unsafe-url'
       });
   
       console.log("Cập nhật thứ tự thành công!");
@@ -119,9 +124,11 @@ const BaiHoc = () => {
         console.log("subItemId:", subItemId);
         console.log("newParentId:", newParentId);
 
-        await Axios.post("https://huuphuoc.id.vn/api/diChuyenVideo", {
-            video_id: subItemId,
-            new_baihoc_id: newParentId,
+               await Axios.post("https://huuphuoc.id.vn/api/diChuyenVideo", {
+          video_id: subItemId,
+          new_baihoc_id: newParentId,
+        }, {
+          referrerPolicy: 'unsafe-url'
         });
 
         setItems((prevItems) => {
@@ -237,8 +244,10 @@ const updateSubItemOrder = async (parentId, container) => {
         console.log("Sub-items to update:", subItems);
 
         // Send the updated order to the server
-        await Axios.post("https://huuphuoc.id.vn/api/sapXepThuTuVideo", {
-            videos: subItems,
+              await Axios.post("https://huuphuoc.id.vn/api/sapXepThuTuVideo", {
+          videos: subItems,
+        }, {
+          referrerPolicy: 'unsafe-url'
         });
 
         console.log("Cập nhật thứ tự sub item thành công!");
@@ -302,11 +311,14 @@ const removeSubItemFromDOM = (subItemId) => {
   const addLessonToCourse = async (lessonName) => {
     if (id) {
       try {
-        const response = await Axios.post(
+                const response = await Axios.post(
           "https://huuphuoc.id.vn/api/themBaiHoc",
           {
             id_khoahoc: id,
             ten: lessonName,
+          },
+          {
+            referrerPolicy: 'unsafe-url'
           }
         );
 
@@ -323,11 +335,14 @@ const removeSubItemFromDOM = (subItemId) => {
   const handleAddSubItem = async (itemId) => {
     if (newSubItemName.trim()) {
       try {
-        const response = await Axios.post(
+              const response = await Axios.post(
           "https://huuphuoc.id.vn/api/themSubBaiHoc",
           {
             ten: newSubItemName,
             id_baihoc: itemId,
+          },
+          {
+            referrerPolicy: 'unsafe-url'
           }
         );
 
@@ -401,8 +416,9 @@ const removeSubItemFromDOM = (subItemId) => {
 
           console.log("Payload:", payload); // Log the payload
 
-          await Axios.post("https://huuphuoc.id.vn/api/taonoidungsub", payload);
-
+                await Axios.post("https://huuphuoc.id.vn/api/taonoidungsub", payload, {
+            referrerPolicy: 'unsafe-url'
+          });
           console.log(`Adding content to sub-item ID ${subItemId}`);
           setNewContentUrl("");
           setIsContentModalOpen(false);
@@ -436,7 +452,9 @@ const removeSubItemFromDOM = (subItemId) => {
         const data = { id_video: subItemId };
         console.log("Sending data to server:", data);
 
-        await Axios.post("https://huuphuoc.id.vn/api/Xoasub", data);
+              await Axios.post("https://huuphuoc.id.vn/api/Xoasub", data, {
+          referrerPolicy: 'unsafe-url'
+        });
 
         setItems((prevItems) => {
             const updatedItems = prevItems.map((item) => {
@@ -468,10 +486,13 @@ const removeSubItemFromDOM = (subItemId) => {
       alert("Vui lòng xóa các mục con trước khi xóa mục chính.");
     } else {
       try {
-        const response = await Axios.post(
+               const response = await Axios.post(
           "https://huuphuoc.id.vn/api/xoabaihoc",
           {
             id_baihoc: itemId,
+          },
+          {
+            referrerPolicy: 'unsafe-url'
           }
         );
 
@@ -489,10 +510,13 @@ const removeSubItemFromDOM = (subItemId) => {
 
   const fetchSubItems = async (id_baihoc) => {
     try {
-      const response = await Axios.post(
+           const response = await Axios.post(
         "https://huuphuoc.id.vn/api/ShowSubBaiHoc",
         {
           id_baihoc: id_baihoc,
+        },
+        {
+          referrerPolicy: 'unsafe-url'
         }
       );
 

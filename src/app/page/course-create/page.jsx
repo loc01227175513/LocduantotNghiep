@@ -54,12 +54,13 @@ const CourseCreatePage = () => {
     }, 2000);
 
     try {
-      const response = await fetch("http://huuphuoc.id.vn/api/guixemxet", {
+            const response = await fetch("https://huuphuoc.id.vn/api/guixemxet", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id_khoahoc: id }),
+        referrerPolicy: 'unsafe-url',
       });
 
       if (!response.ok) {

@@ -21,7 +21,9 @@ function Mota() {
 
   const fetchMoTa = useCallback(async () => {
     try {
-      const response = await Axios.get(`http://huuphuoc.id.vn/api/motaKhoaHoc/${id}`);
+         const response = await Axios.get(`https://huuphuoc.id.vn/api/motaKhoaHoc/${id}`, {
+        referrerPolicy: 'unsafe-url'
+      });
       const data = response.data;
       console.log("API response data:", data); // Log API response
 
@@ -89,9 +91,11 @@ function Mota() {
     const hocSinhValues = hocSinhInputs.filter((input) => input.trim() !== "");
 
     try {
-      await Axios.post("http://huuphuoc.id.vn/api/updateMota", {
+          await Axios.post("https://huuphuoc.id.vn/api/updateMota", {
         id_khoahoc: id,
         mota: hocSinhValues,
+      }, {
+        referrerPolicy: 'unsafe-url'
       });
       alert("Mô tả khóa học đã được gửi thành công");
     } catch (error) {
@@ -113,9 +117,11 @@ function Mota() {
 
       try {
         console.log("Request data:", { idmota: idmota, id_khoahoc: id }); // Log request data
-        const response = await Axios.post("http://huuphuoc.id.vn/api/xoamota", {
+               const response = await Axios.post("https://huuphuoc.id.vn/api/xoamota", {
           idmota: idmota,
           id_khoahoc: id,
+        }, {
+          referrerPolicy: 'unsafe-url'
         });
 
         console.log("Delete response:", response);

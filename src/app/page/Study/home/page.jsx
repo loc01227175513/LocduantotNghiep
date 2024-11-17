@@ -40,7 +40,9 @@ export default function Page() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await Axios.get(`http://huuphuoc.id.vn/api/Khoahocchitiet/${id}`);
+                             const response = await Axios.get(`https://huuphuoc.id.vn/api/Khoahocchitiet/${id}`, {
+                  referrerPolicy: 'unsafe-url'
+                });
                 const khoahocData = response.data.khoahoc;
                 setKhoahoc(khoahocData);
 
@@ -82,7 +84,9 @@ export default function Page() {
                     };
                     console.log('Request Data:', requestData);
     
-                    const response = await Axios.post('http://huuphuoc.id.vn/api/videodahoc', requestData);
+                                      const response = await Axios.post('https://huuphuoc.id.vn/api/videodahoc', requestData, {
+                      referrerPolicy: 'unsafe-url'
+                    });
                     console.log("Video đã học", response);
     
                     setWatchedVideos(prev => ({ ...prev, [currentVideoId]: true }));
@@ -147,7 +151,9 @@ export default function Page() {
             }
 
             try {
-                const response = await Axios.get(`http://huuphuoc.id.vn/api/kiemtravidedahoc`);
+                             const response = await Axios.get(`https://huuphuoc.id.vn/api/kiemtravidedahoc`, {
+                  referrerPolicy: 'unsafe-url'
+                });
                 if (Array.isArray(response.data.data)) {
                     const updatedWatchedVideos = { ...watchedVideos };
                     khoahoc.baihocs.forEach((lesson) => {
@@ -205,7 +211,9 @@ export default function Page() {
                 noidung: comment,
             };
 
-            const response = await Axios.post('http://huuphuoc.id.vn/api/danhgia', payload);
+                     const response = await Axios.post('https://huuphuoc.id.vn/api/danhgia', payload, {
+              referrerPolicy: 'unsafe-url'
+            });
             if (response.status === 200) {
                 alert('Bình luận thành công!');
                 if (typeof window !== 'undefined') {

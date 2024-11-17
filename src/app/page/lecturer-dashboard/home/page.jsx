@@ -37,14 +37,15 @@ export default function Homedashboardlecturer() {
   }, []);
 
   useEffect(() => { 
-    const data= JSON.parse(localStorage.getItem('lecturerId'));
-
-    fetch('http://huuphuoc.id.vn/api/DoanhThuGiangVien', {
+    const data = JSON.parse(localStorage.getItem('lecturerId'));
+  
+    fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ id_giangvien: data.giangvien })
+      body: JSON.stringify({ id_giangvien: data.giangvien }),
+      referrerPolicy: 'unsafe-url',
     })
       .then((response) => response.json())
       .then((data) => {

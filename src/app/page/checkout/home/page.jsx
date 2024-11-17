@@ -36,7 +36,9 @@ const Page = () => {
     if (userData) {
       try {
         const parsedData = JSON.parse(userData);
-        axios.post('http://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id })
+              axios.post('http://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id }, {
+          referrerPolicy: 'unsafe-url'
+        })
           .then(response => {
             setCartItems(response.data.data);
             const total = response.data.data.reduce((sum, item) => {
@@ -101,12 +103,14 @@ const Page = () => {
 
   const validateCardDetails = () => {
     const [month, year] = paymentDetails.expiryDate.split('/');
-    axios.post('http://huuphuoc.id.vn/api/thenganhang', {
+       axios.post('http://huuphuoc.id.vn/api/thenganhang', {
       tenthe: paymentDetails.nameOnCard,
       sothe: paymentDetails.cardNumber,
       thang: month,
       nam: year,
       mabaomat: paymentDetails.cvc
+    }, {
+      referrerPolicy: 'unsafe-url'
     })
       .then(response => {
         if (response.data.success) {
@@ -131,17 +135,19 @@ const Page = () => {
     }
     const [month, year] = paymentDetails.expiryDate.split('/');
     try {
-      const cardResponse = await axios.post('http://huuphuoc.id.vn/api/thenganhang', {
+           const cardResponse = await axios.post('http://huuphuoc.id.vn/api/thenganhang', {
         tenthe: paymentDetails.nameOnCard,
         sothe: paymentDetails.cardNumber,
         thang: month,
         nam: year,
         mabaomat: paymentDetails.cvc,
-        total: totalPrice 
+        total: totalPrice
+      }, {
+        referrerPolicy: 'unsafe-url'
       });
 
       if (cardResponse.data.success) {
-        const paymentResponse = await axios.post('http://huuphuoc.id.vn/api/thanhtoan', {
+               const paymentResponse = await axios.post('http://huuphuoc.id.vn/api/thanhtoan', {
           total: totalPrice - (totalPrice * discount / 100),
           id_nguoidung: typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('data')).id : null,
           id_khoahoc: cartItems.map(item => item.khoahocs.map(khoahoc => khoahoc.id)),
@@ -149,13 +155,17 @@ const Page = () => {
           gia: cartItems.map(item => item.khoahocs.map(khoahoc => khoahoc.gia)),
           giamgia: cartItems.map(item => item.khoahocs.map(khoahoc => khoahoc.giamgia)),
           id_giohang: cartItems.map(item => item.id)
+        }, {
+          referrerPolicy: 'unsafe-url'
         });
 
         if (paymentResponse.data.success) {
-          await axios.post('http://huuphuoc.id.vn/api/xoagiohang', {
+                  await axios.post('http://huuphuoc.id.vn/api/xoagiohang', {
             total: totalPrice.toFixed(2),
             id_nguoidung: typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('data')).id : null,
             id_khoahoc: cartItems.map(item => item.khoahocs.map(khoahoc => khoahoc.id)),
+          }, {
+            referrerPolicy: 'unsafe-url'
           });
 
           await TinhMaGiamGia();

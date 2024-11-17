@@ -43,7 +43,9 @@ function TrangDich() {
     useEffect(() => {
         const fetchCourseData = async () => {
             try {
-                const response = await axios.post('http://huuphuoc.id.vn/api/ShowTrangDichKhoaHoc', { id_khoahoc: id });
+                              const response = await axios.post('https://huuphuoc.id.vn/api/ShowTrangDichKhoaHoc', { id_khoahoc: id }, {
+                  referrerPolicy: 'unsafe-url'
+                });
                 const data = response.data;
                 setFormData({
                     ten: data.khoahoc.ten,
@@ -68,14 +70,16 @@ function TrangDich() {
     }, [id, parsedData.giangvien]);
 
     useEffect(() => {
-        axios.get('http://huuphuoc.id.vn/api/theloai')
-            .then(response => {
-                setCategories(response.data.data);
-                console.log(response.data.data);
-            })
-            .catch(error => {
-                console.error('There was an error fetching the data!', error);
-            });
+      axios.get('https://huuphuoc.id.vn/api/theloai', {
+        referrerPolicy: 'unsafe-url'
+      })
+        .then(response => {
+          setCategories(response.data.data);
+          console.log(response.data.data);
+        })
+        .catch(error => {
+          console.error('There was an error fetching the data!', error);
+        });
     }, []);
 
     const handleCategoryChange = (e) => {
@@ -160,15 +164,17 @@ function TrangDich() {
         });
 
         // Send data to API
-        axios.post('http://huuphuoc.id.vn/api/TrangDichKhoaHoc', submitData)
-            .then(response => {
-                console.log(response.data);
-                // Handle success
-            })
-            .catch(error => {
-                console.error('There was an error submitting the form!', error);
-                // Handle error
-            });
+              axios.post('https://huuphuoc.id.vn/api/TrangDichKhoaHoc', submitData, {
+          referrerPolicy: 'unsafe-url'
+        })
+          .then(response => {
+            console.log(response.data);
+            // Handle success
+          })
+          .catch(error => {
+            console.error('There was an error submitting the form!', error);
+            // Handle error
+          });
     };
 
     return (

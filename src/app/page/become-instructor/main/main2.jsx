@@ -33,17 +33,18 @@ export default function Main2() {
             return;
         }
         try {
-            const response = await fetch('http://huuphuoc.id.vn/api/dangkygiangvien', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ten: formData.ten,
-                    email: formData.email,
-                    id_nguoidung: id_nguoidung,
-                    password: formData.password,
-                }),
+                       const response = await fetch('http://huuphuoc.id.vn/api/dangkygiangvien', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                ten: formData.ten,
+                email: formData.email,
+                id_nguoidung: id_nguoidung,
+                password: formData.password,
+              }),
+              referrerPolicy: 'unsafe-url',
             });
             const result = await response.json();
             if (response.ok) {

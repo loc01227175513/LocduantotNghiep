@@ -27,12 +27,13 @@ export default function Login() {
     };
 
     try {
-      const response = await fetch("http://huuphuoc.id.vn/api/login", {
+           const response = await fetch("https://huuphuoc.id.vn/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+        referrerPolicy: 'unsafe-url',
       });
 
       if (response.ok) {

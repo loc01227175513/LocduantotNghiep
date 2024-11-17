@@ -1,6 +1,5 @@
-// cart.jsx
 export const Addcart = async () => {
-  const url = 'http://huuphuoc.id.vn/api/addcart';
+  const url = 'https://huuphuoc.id.vn/api/addcart';
   const user = localStorage.getItem('data');
 
   if (!user) {
@@ -31,6 +30,7 @@ export const Addcart = async () => {
         id_nguoidung: parsedUser.id,
         id_khoahoc: id_khoahoc,
       }),
+      referrerPolicy: 'unsafe-url',
     });
 
     if (!response.ok) {
@@ -44,7 +44,7 @@ export const Addcart = async () => {
 };
 
 export const Showcart = async () => {
-  const url = 'http://huuphuoc.id.vn/api/showgiohang';
+  const url = 'https://huuphuoc.id.vn/api/showgiohang';
   const user = localStorage.getItem('data');
 
   if (!user) {
@@ -67,6 +67,7 @@ export const Showcart = async () => {
       body: JSON.stringify({
         id_nguoidung: parsedUser.id,
       }),
+      referrerPolicy: 'unsafe-url',
     });
 
     if (!response.ok) {
@@ -86,7 +87,7 @@ export const Showcart = async () => {
 };
 
 export const KhoaHocDaDanKy = async () => {
-  const url = 'http://huuphuoc.id.vn/api/khoahocdadangky';
+  const url = 'https://huuphuoc.id.vn/api/khoahocdadangky';
   const user = localStorage.getItem('data');
 
   if (!user) {
@@ -113,6 +114,7 @@ export const KhoaHocDaDanKy = async () => {
       body: JSON.stringify({
         id_nguoidung: parsedUser.id,
       }),
+      referrerPolicy: 'unsafe-url',
     });
 
     if (!response.ok) {

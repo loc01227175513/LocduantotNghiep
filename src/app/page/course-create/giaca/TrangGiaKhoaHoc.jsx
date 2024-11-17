@@ -19,14 +19,14 @@ function TrangGiaKhoaHoc() {
     useEffect(() => {
         const fetchCoursePrice = async () => {
             try {
-                const response = await fetch('http://huuphuoc.id.vn/api/showgiaKhoaHoc', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ id_khoahoc: id }),
+                               const response = await fetch('https://huuphuoc.id.vn/api/showgiaKhoaHoc', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ id_khoahoc: id }),
+                  referrerPolicy: 'unsafe-url',
                 });
-
                 if (response.ok) {
                     await response.json();
                     setPriceTier(data.gia);
@@ -149,16 +149,17 @@ function TrangGiaKhoaHoc() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://huuphuoc.id.vn/api/capnhatgiaKhoaHoc', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id_khoahoc: id ,
-                    gia: priceTier,
-                    giamgia: discount,
-                }),
+                       const response = await fetch('https://huuphuoc.id.vn/api/capnhatgiaKhoaHoc', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                id_khoahoc: id,
+                gia: priceTier,
+                giamgia: discount,
+              }),
+              referrerPolicy: 'unsafe-url',
             });
 
             if (response.ok) {

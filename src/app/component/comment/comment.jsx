@@ -7,18 +7,20 @@ const Commenthome = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://huuphuoc.id.vn/api/danhgia');
-                const data = await response.json();
-                setData(data.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
+      useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://huuphuoc.id.vn/api/danhgia', {
+            referrerPolicy: 'unsafe-url',
+          });
+          const data = await response.json();
+          setData(data.data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+    
+      fetchData();
     }, []);
 
     const handlePageChange = (page) => {

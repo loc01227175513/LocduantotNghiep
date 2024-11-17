@@ -80,14 +80,16 @@ const NextCategory = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://huuphuoc.id.vn/api/theloai");
+        const response = await fetch("http://huuphuoc.id.vn/api/theloai", {
+          referrerPolicy: 'unsafe-url',
+        });
         const data = await response.json();
         setDanhMuc(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
+  
     fetchData();
   }, []);
 
@@ -245,8 +247,10 @@ const Category = ({ onCategoryChange }) => {
   const [KhoaHoc, setKhoaHoc] = useState([]);
   const [activeCategory, setActiveCategory] = useState('');
 
-  useEffect(() => {
-    fetch("http://huuphuoc.id.vn/api/allkhoahoc")
+   useEffect(() => {
+    fetch("http://huuphuoc.id.vn/api/allkhoahoc", {
+      referrerPolicy: 'unsafe-url',
+    })
       .then((response) => response.json())
       .then((data) => {
         setKhoaHoc(data.data);
@@ -307,17 +311,19 @@ const Category = ({ onCategoryChange }) => {
 const Categoryheader = () => {
   const [DanhMuc, setDanhMuc] = useState([]);
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://huuphuoc.id.vn/api/theloai");
+        const response = await fetch("http://huuphuoc.id.vn/api/theloai", {
+          referrerPolicy: 'unsafe-url',
+        });
         const data = await response.json();
         setDanhMuc(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
+  
     fetchData();
   }, []);
 
