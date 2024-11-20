@@ -151,7 +151,9 @@ export default function Page() {
               <div className="rts-course-filter-area">
                 {/* Search Filter */}
                 <div className="single-filter-left-wrapper">
-                  <h6 className="title">Tìm kiếm</h6>
+                  <h6 className="title">
+                    <i className="fas fa-search" /> Tìm kiếm
+                  </h6>
                   <div className="search-filter filter-body">
                     <div className="input-wrapper">
                       <input
@@ -166,7 +168,9 @@ export default function Page() {
                 </div>
                 {/* Category Filter */}
                 <div className="single-filter-left-wrapper">
-                  <h6 className="title">Loại</h6>
+                  <h6 className="title">
+                    <i className="fas fa-layer-group" /> Loại
+                  </h6>
                   <div className="checkbox-filter filter-body">
                     <div className="checkbox-wrapper">
                       {Array.from(new Set(courses.map((course) => course.chude))).map(
@@ -191,7 +195,9 @@ export default function Page() {
                 </div>
                 {/* Author Filter */}
                 <div className="single-filter-left-wrapper">
-                  <h6 className="title">Tác giả</h6>
+                  <h6 className="title">
+                    <i className="fas fa-chalkboard-teacher" /> Tác giả
+                  </h6>
                   <div className="checkbox-filter filter-body">
                     <div className="checkbox-wrapper">
                       {Array.from(new Set(courses.map((course) => course.giangvien))).map(
@@ -216,7 +222,9 @@ export default function Page() {
                 </div>
                 {/* Price Filter */}
                 <div className="single-filter-left-wrapper">
-                  <h6 className="title">Giá</h6>
+                  <h6 className="title">
+                    <i className="fas fa-tags" /> Giá
+                  </h6>
                   <div className="checkbox-filter filter-body last">
                     <div className="checkbox-wrapper">
                       {['Miễn phí', 'Trả'].map((price, index) => (
@@ -309,6 +317,253 @@ export default function Page() {
           </div>
         </div>
       </div>
+      <style jsx>{`
+      
+  .single-filter-left-wrapper .title i {
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulse 2s infinite;
+  }
+
+  /* Update title JSX to include icons */
+  <h6 className="title">
+    <i className="fas fa-search" /> Tìm kiếm
+  </h6>
+
+  <h6 className="title">
+    <i className="fas fa-layer-group" /> Loại
+  </h6>
+
+  <h6 className="title">
+    <i className="fas fa-chalkboard-teacher" /> Tác giả
+  </h6>
+
+  <h6 className="title">
+    <i className="fas fa-tags" /> Giá
+  </h6>
+
+  /* Enhanced checkbox icons */
+  .check-box input[type="checkbox"] {
+    position: relative;
+    appearance: none;
+  }
+
+  .check-box input[type="checkbox"]:checked::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 0.7rem;
+  }
+
+  /* Enhanced sort icon */
+  .nice-select::after {
+    content: '\f0dc';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+  }
+
+  /* Enhanced view toggle icons */
+  .nav-link i {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-link:hover i {
+    transform: scale(1.1);
+  }
+
+  .nav-link.active i {
+    animation: bounceIn 0.3s ease-out;
+  }
+
+  /* Clear filters button icon */
+  .rts-btn.btn-border i {
+    margin-right: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .rts-btn.btn-border:hover i {
+    transform: rotate(90deg);
+  }
+
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  .rts-course-filter-area {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  }
+
+  .single-filter-left-wrapper {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+  }
+
+  .input-wrapper {
+    position: relative;
+  }
+
+  .input-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    padding-right: 2.5rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .input-wrapper input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    outline: none;
+  }
+
+  .input-wrapper i {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+  }
+
+  .checkbox-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .check-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .check-box input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 4px;
+    border: 2px solid #cbd5e1;
+    transition: all 0.2s ease;
+  }
+
+  .check-box input[type="checkbox"]:checked {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+  }
+
+  .check-box label {
+    color: #475569;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
+  .rts-btn.btn-border {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    color: #64748b;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .rts-btn.btn-border:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+
+  .filter-small-top-full {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+  }
+
+  .nice-select {
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    color: #475569;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .nice-select:hover {
+    border-color: #cbd5e1;
+  }
+
+  .nav-tabs {
+    border: none;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    color: #64748b;
+    transition: all 0.3s ease;
+  }
+
+  .nav-link.active {
+    background: #3b82f6;
+    color: white;
+  }
+
+  .nav-link:not(.active):hover {
+    background: #f1f5f9;
+    color: #3b82f6;
+  }
+
+  .nav-link i {
+    margin-right: 0.5rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .rts-course-filter-area {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+`}</style>
     </div>
   );
 }

@@ -1,429 +1,350 @@
-
-import React from 'react';
+"use client";
+import React, { useEffect } from 'react';
 
 import { Commenthome } from "../comment/comment";
 import { OutstandingCourse, CourseNew, Courseseal, Coursefree } from "../course/course.component";
 import HorizontalScrollImages from "../course/Slider";
 import { NextCategory } from "../category/category.component";
-import Banner  from "../banner/page";
+import Banner from "../banner/page";
 import Image from 'next/image';
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+// Initialize AOS in useEffect
 
 export default function Homecomponent() {
 
-
-
-
+  useEffect(() => {
+    AOS.init({
+      duration: 1500,
+      once: false, // Animation will repeat on scroll
+      mirror: true, // Elements will animate out while scrolling past them
+      easing: 'ease-in-out',
+      anchorPlacement: 'center-center',
+      offset: 100
+    });
+  }, []);
 
   return (
-    <div className="mt-32">
-      <Banner />
-   
+    <div data-aos="zoom-in" data-aos-offset="200" data-aos-duration="1500">
+      <div className="mt-32">
+        <div data-aos="zoom-in">
+          <Banner />
+        </div>
 
-      <div className="bg-light p-3 rounded">
-  <HorizontalScrollImages />
-</div>
+        <div data-aos="zoom-in">
+          <HorizontalScrollImages />
+        </div>
 
-  
+        <div data-aos="zoom-in">
+          <NextCategory />
+        </div>
 
-
-      <NextCategory />
-
-      <OutstandingCourse />
-      {/* course area end */}
-      {/* why choose us section area start */}
-      <div className="why-choose-us bg-blue bg-choose-us-one bg_image rts-section-gap shape-move">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-6">
-              <div className="why-choose-us-area-image pb--50">
-          <Image   width={500} // Add the appropriate width value
-  height={300}
-                  className="one"
-                  src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218768/02_atsgze.jpg"
-                  alt="why-choose"
-                />
-                <div className="border-img">
-            <Image   width={500} // Add the appropriate width value
-  height={300}
-                    className="two ml--20"
-                    src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218908/03_grf0on.jpg"
-                    alt="why-choose"
-                  />
+        <div data-aos="zoom-in">
+          <OutstandingCourse />
+        </div>
+        <div data-aos="zoom-in">
+        <div className="why-choose-us bg-blue bg-choose-us-one bg_image rts-section-gap shape-move"
+          data-aos="zoom-in">
+          <div className="container">
+            <div className="row align-items-center">
+              <div className="col-lg-6">
+                <div className="why-choose-us-area-image pb--50">
+                  <Image width={500} height={300} className="one" src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218768/02_atsgze.jpg" alt="why-choose" />
+                  <div className="border-img">
+                    <Image width={500} height={300} className="two ml--20" src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218908/03_grf0on.jpg" alt="why-choose" />
+                  </div>
+                  <div className="circle-animation">
+                    <a className="uni-circle-text uk-background-white dark:uk-background-gray-80 uk-box-shadow-large uk-visible@m" href="#view_in_opensea">
+                      <svg className="uni-circle-text-path uk-text-secondary uni-animation-spin" viewBox="0 0 100 100" width={200} height={200}>
+                        <defs>
+                          <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"></path>
+                        </defs>
+                        <text fontSize="11.2">
+                          <textPath xlinkHref="#circle">
+                        Về Univercity • Giới thiệu về ảnh ghép •
+                          </textPath>
+                        </text>
+                      </svg>
+                      <i className="fa-regular fa-arrow-up-right" />
+                    </a>
+                  </div>
                 </div>
-                <div className="circle-animation">
-                  <a
-                    className="uni-circle-text uk-background-white dark:uk-background-gray-80 uk-box-shadow-large uk-visible@m"
-                    href="#view_in_opensea"
-                  >
-                    <svg
-                      className="uni-circle-text-path uk-text-secondary uni-animation-spin"
-                      viewBox="0 0 100 100"
-                      width={200}
-                      height={200}
-                    >
-                      <defs>
-                        <path
-                          id="circle"
-                          d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-                        ></path>
-                      </defs>
-                      <text fontSize="11.2">
-                        <textPath xlinkHref="#circle">
-                          About Univercity • About Collage •
-                        </textPath>
-                      </text>
-                    </svg>
-                    <i className="fa-regular fa-arrow-up-right" />
-                  </a>
+              </div>
+              <div className="col-lg-6 pl--90 pl_md--15 mt_md--50 pl_sm--15 pt_sm--50">
+                <div className="title-area-left-style mb-5">
+                  <div className="pre-title d-flex align-items-center mb-3">
+                    <i className="mr-2 bi bi-lightbulb text-warning animate-pulse"></i>
+                    <span className="text-white font-weight-bold">Tại sao chọn chúng tôi</span>
+                  </div>
+                  <h2 className="title text-white display-4 mb-4">
+                    Techstudent - Con đường dẫn đến <span className="text-warning">sự xuất sắc</span>
+                  </h2>
+                  <p className="post-title text-white lead">
+                    Chúng tôi đam mê giáo dục và tận tâm cung cấp các nguồn học tập chất lượng cao cho người học ở mọi hoàn cảnh.
+                  </p>
                 </div>
+
+                <div className="why-choose-grid">
+                  {[
+                    { img: "01_s9m4hw.png", title: "Chất lượng hàng đầu", desc: "Đội ngũ giảng viên xuất sắc" },
+                    { img: "02_vnmc5y.png", title: "Học linh hoạt", desc: "Học mọi lúc, mọi nơi" },
+                    { img: "03_gqwcdw.png", title: "Hỗ trợ 24/7", desc: "Luôn sẵn sàng giúp đỡ" },
+                    { img: "04_zdj1tq.png", title: "Chứng chỉ giá trị", desc: "Được công nhận toàn cầu" },
+                    { img: "05_qkz8ke.png", title: "Cộng đồng lớn", desc: "Kết nối & học hỏi" },
+                    { img: "05_qkz8ke.png", title: "Giá cả hợp lý", desc: "Phù hợp mọi đối tượng" },
+                  ].map((item, index) => (
+                    <div key={index} className="reason-card" data-aos="zoom-in" data-aos-delay={index * 100}>
+                      <div className="icon-wrapper">
+                        <Image
+                          width={500}
+                          height={300}
+                          src={`https://res.cloudinary.com/dnjakwi6l/image/upload/v1728219100/${item.img}`}
+                          alt={item.title}
+                          className="hover-scale"
+                        />
+                      </div>
+                      <h4 className="text-white mt-3 mb-2">{item.title}</h4>
+                      <p className="text-light">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <a href="/page/Cours-Filter" className="rts-btn btn-primary mt-5 hover-effect">
+                  <span className="text-white">Xem tất cả các khóa học</span>
+                  <i className="fas fa-arrow-right ml-2"></i>
+                </a>
               </div>
             </div>
-            <div className="col-lg-6 pl--90 pl_md--15 mt_md--50 pl_sm--15 pt_sm--50">
-              <div className="title-area-left-style">
-                <div className="pre-title">
-                  <i className="mr-1 bi bi-lightbulb" style={{ color: 'white' }}></i>
-                  <span>Tại sao chọn chúng tôi</span>
-                </div>
-                <h2 className="title">
-                  Techstudent Con đường dẫn đến sự xuất sắc và thành công của bạn
-                </h2>
-                <p className="post-title">
-                  Chúng tôi đam mê giáo dục và tận tâm cung cấp các nguồn học tập chất lượng cao cho người học ở mọi hoàn cảnh.
-                </p>
-              </div>
-              <div className="why-choose-main-wrapper-1">
-                {/* single choose reason */}
-                <div className="single-choose-reason-1">
-                  <div className="icon">
-              <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218997/01_s9m4hw.png" alt="icon" />
-                  </div>
-                  <h6 className="title">Giảng viên chuyên gia</h6>
-                </div>
-                {/* single choose reason end */}
-                {/* single choose reason */}
-                <div className="single-choose-reason-1">
-                  <div className="icon">
-              <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728219039/02_vnmc5y.png" alt="icon" />
-                  </div>
-                  <h6 className="title">Interactive Learning</h6>
-                </div>
-                {/* single choose reason end */}
-                {/* single choose reason */}
-                <div className="single-choose-reason-1">
-                  <div className="icon">
-              <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728219054/03_gqwcdw.png" alt="icon" />
-                  </div>
-                  <h6 className="title">Affordable Learning</h6>
-                </div>
-                {/* single choose reason end */}
-                {/* single choose reason */}
-                <div className="single-choose-reason-1">
-                  <div className="icon">
-              <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728219080/04_zdj1tq.png" alt="icon" />
-                  </div>
-                  <h6 className="title">Career Advance</h6>
-                </div>
-                {/* single choose reason end */}
-                {/* single choose reason */}
-                <div className="single-choose-reason-1">
-                  <div className="icon">
-              <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728219100/05_qkz8ke.png" alt="icon" />
-                  </div>
-                  <h6 className="title">Course Selection</h6>
-                </div>
-                {/* single choose reason end */}
-                {/* single choose reason */}
-                <div className="single-choose-reason-1">
-                  <div className="icon">
-              <Image   width={500} // Add the appropriate width value
-  height={300} src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728219100/05_qkz8ke.png" alt="icon" />
-                  </div>
-                  <h6 className="title">Support Community</h6>
-                </div>
-                {/* single choose reason end */}
-              </div>
-              <a
-                href="single-course.html"
-                className="rts-btn btn-primary-white with-arrow"
-              >
-                View All Course <i className="fa-regular fa-arrow-right" />
-              </a>
+            <div className="shape-image">
+              <div className="shape one" data-speed="0.04" data-revert="true"></div>
+              <div className="shape two" data-speed="0.04"></div>
+              <div className="shape three" data-speed="0.04"></div>
             </div>
           </div>
         </div>
-        <div className="shape-image">
-          <div className="shape one" data-speed="0.04" data-revert="true">
-            {/* <Image src="assets/images/banner/15.png" alt="" /> */}
-          </div>
-          <div className="shape two" data-speed="0.04">
-            {/* <Image src="assets/images/banner/shape/banner-shape02-w.svg" alt="" /> */}
-          </div>
-          <div className="shape three" data-speed="0.04">
-            {/* <Image src="assets/images/banner/16.png" alt="" /> */}
+        </div>
+        <div data-aos="zoom-in">
+          <CourseNew />
+        </div>
+        <div data-aos="zoom-in">
+        <div className="fun-facts-area bg-gradient py-5" data-aos="zoom-in">
+          {/* Each fact item */}
+          <div className="fact-item" data-aos="zoom-in" data-aos-delay="100">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="fun-facts-wrapper d-flex flex-wrap justify-content-around">
+
+                    <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.2s">
+                      <div className="icon-wrapper mb-3">
+                        <i className="fas fa-user-graduate fa-3x text-primary"></i>
+                      </div>
+                      <h2 className="counter-value mb-2">
+                        <span className="counter">65,972</span>+
+                      </h2>
+                      <p className="fact-label">Tổng Học Viên Đăng Ký</p>
+                    </div>
+
+                    <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.4s">
+                      <div className="icon-wrapper mb-3">
+                        <i className="fas fa-graduation-cap fa-3x text-success"></i>
+                      </div>
+                      <h2 className="counter-value mb-2">
+                        <span className="counter">5,321</span>+
+                      </h2>
+                      <p className="fact-label">Học Viên Tốt Nghiệp</p>
+                    </div>
+
+                    <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.6s">
+                      <div className="icon-wrapper mb-3">
+                        <i className="fas fa-users fa-3x text-info"></i>
+                      </div>
+                      <h2 className="counter-value mb-2">
+                        <span className="counter">44,239</span>+
+                      </h2>
+                      <p className="fact-label">Học Viên Đang Học</p>
+                    </div>
+
+                    <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.8s">
+                      <div className="icon-wrapper mb-3">
+                        <i className="fas fa-star fa-3x text-warning"></i>
+                      </div>
+                      <h2 className="counter-value mb-2">
+                        <span className="counter">75,992</span>+
+                      </h2>
+                      <p className="fact-label">Đánh Giá Tích Cực</p>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        </div>
+        <div data-aos="zoom-in">
+          <Courseseal />
+        </div>
+
+        <div data-aos="zoom-in">
+          <Coursefree />
+        </div>
+        <div data-aos="zoom-in">
+        {/* feedback area start */}
+        <div className="rts-feedback-area" >
+          <div className="rts-feedback-area rts-section-gap bg-light-1 shape-move small:mb-16 ">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="title-area-center-style text-center animate__animated animate__fadeIn">
+                    <div className="pre-title d-flex align-items-center justify-content-center mb-3">
+                      <i className="bi bi-lightbulb me-2" style={{
+                        color: '#32ADE6',
+                        fontSize: '1.5rem',
+                        filter: 'drop-shadow(0 0 2px rgba(50, 173, 230, 0.3))'
+                      }}></i>
+                      <span className="fw-bold" style={{
+                        letterSpacing: '0.5px',
+                        color: '#32ADE6'
+                      }}>Đánh giá của sinh viên</span>
+                    </div>
+                    <h2 className="title mb-4" style={{
+                      fontSize: '2.5rem',
+                      fontWeight: '700',
+                      background: 'linear-gradient(45deg, #32ADE6, #2196F3)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent'
+                    }}>
+                      Phản hồi từ học viên của chúng tôi
+                    </h2>
+                    <p className="post-title mx-auto" style={{
+                      maxWidth: '600px',
+                      lineHeight: '1.8',
+                      color: '#666'
+                    }}>
+                      Khám phá những trải nghiệm học tập thú vị và đột phá mới trong hành trình phát triển của bạn
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <Commenthome />
+            </div>
+          </div>
+        </div>
+        </div>
+        <style jsx>{`
+        [data-aos] {
+          pointer-events: none;
+        }
+        [data-aos].aos-animate {
+          pointer-events: auto;
+        }
+
+        /* Optional: Add custom transitions */
+        [data-aos="custom-fade"] {
+          opacity: 0;
+          transition-property: opacity, transform;
+          
+          &.aos-animate {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Optional: Add scroll-based parallax effect */
+        .parallax {
+          transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+          .parallax {
+            transform: translateY(var(--parallax-y, 0));
+          }
+        }
+        .fun-facts-area {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .fact-item {
+          padding: 2rem;
+          transition: all 0.3s ease;
+        }
+        
+        .fact-item:hover {
+          transform: translateY(-5px);
+        }
+        
+        .icon-wrapper {
+          height: 80px;
+          width: 80px;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.9);
+          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .counter-value {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #2d3748;
+        }
+        
+        .fact-label {
+          font-size: 1.1rem;
+          color: #4a5568;
+          margin: 0;
+        }
+        .why-choose-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          margin: 3rem 0;
+        }
+        
+        .reason-card {
+          padding: 1.5rem;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.05);
+          transition: all 0.3s ease;
+        }
+      
+        .reason-card:hover {
+          transform: translateY(-5px);
+          background: rgba(255, 255, 255, 0.1);
+        }
+      
+        .hover-scale {
+          transition: transform 0.3s ease;
+        }
+      
+        .hover-scale:hover {
+          transform: scale(1.05);
+        }
+      
+        .animate-pulse {
+          animation: pulse 2s infinite;
+        }
+      
+        .hover-effect {
+          transition: all 0.3s ease;
+        }
+      
+        .hover-effect:hover {
+          transform: translateX(10px);
+        }
+      
+        @keyframes pulse {
+          0% { opacity: 1; }
+          50% { opacity: 0.5; }
+          100% { opacity: 1; }
+        }
+      `}</style>
       </div>
-      {/* why choose us section area end */}
-      {/* up coming events area start */}
-
-
-
-      <CourseNew />
-
-
-
-
-      {/* up coming events area end */}
-      {/* fun facts area start */}
-      <div className="fun-facts-area-1 shape-move bg_image ptb--50">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="fun-facts-main-wrapper-1">
-                {/* single  */}
-                <div className="single-fun-facts">
-                  <div className="icon">
-                    {/* <Image src="assets/images/fun-facts/01.svg" alt="icon" /> */}
-                  </div>
-                  <h5 className="title">
-                    <span className="counter">65,972</span>
-                  </h5>
-                  <span className="enr">Students Enrolled</span>
-                </div>
-                {/* single end */}
-                {/* single  */}
-                <div className="single-fun-facts">
-                  <div className="icon">
-                    {/* <Image src="assets/images/fun-facts/02.svg" alt="icon" /> */}
-                  </div>
-                  <h5 className="title">
-                    <span className="counter">5,321</span>
-                  </h5>
-                  <span className="enr">Completed Course</span>
-                </div>
-                {/* single end */}
-                {/* single  */}
-                <div className="single-fun-facts">
-                  <div className="icon">
-                    {/* <Image src="assets/images/fun-facts/03.svg" alt="icon" /> */}
-                  </div>
-                  <h5 className="title">
-                    <span className="counter">44,239</span>
-                  </h5>
-                  <span className="enr">Students Learner</span>
-                </div>
-                {/* single end */}
-                {/* single  */}
-                <div className="single-fun-facts">
-                  <div className="icon">
-                    {/* <Image src="assets/images/fun-facts/04.svg" alt="icon" /> */}
-                  </div>
-                  <h5 className="title">
-                    <span className="counter">75,992</span>
-                  </h5>
-                  <span className="enr">Students Enrolled</span>
-                </div>
-                {/* single end */}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="shape-image">
-          <div className="shape one" data-speed="0.04" data-revert="true">
-            {/* <Image src="assets/images/banner/15.png" alt="" /> */}
-          </div>
-          <div className="shape three" data-speed="0.04">
-            {/* <Image src="assets/images/banner/16.png" alt="" /> */}
-          </div>
-        </div>
-      </div>
-
-      <Courseseal />
-
-      <Coursefree />
-
-
-
-
-      {/* fun facts area end */}
-      {/* instructor area start */}
-
-      {/* instructor area start */}
-      {/* feedback area start */}
-      <div className="rts-feedback-area rts-section-gap bg-light-1 shape-move small:mb-16 ">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="title-area-center-style">
-                <div className="pre-title">
-                  <i className="mr-1 bi bi-lightbulb" style={{ color: '#32ADE6' }}></i>
-                  <span>Đánh giá của sinh viên</span>
-                </div>
-                <h2 className="title">Phản hồi của sinh viên của chúng tôi</h2>
-                <p className="post-title">
-                Bạn sẽ tìm thấy một cái gì đó để khơi dậy sự tò mò của bạn và tăng cường
-                </p>
-              </div>
-            </div>
-          </div>
-          <Commenthome />
-
-        </div>
-      </div>
-      {/* feedback area end */}
-      {/* rts blog area start */}
-      {/* rts blog area end */}
-      {/* cart area start */}
-      <div className="cart-bar">
-        <div className="cart-header">
-          <h3 className="cart-heading"> Giỏ hàng của tôi (3 mặt hàng)</h3>
-          <div className="close-cart">
-            <i className="fal fa-times" />
-          </div>
-        </div>
-        <div className="product-area">
-          <div className="product-item">
-            <div className="product-detail">
-              <div className="product-thumb">
-                {/* <Image src="assets/images/course/cart/01.jpg" alt="product-thumb" /> */}
-              </div>
-              <div className="item-wrapper">
-                <span className="product-name">Xây dựng bản đồ</span>
-                <div className="item-wrapper">
-                  <span className="product-variation">
-                    <span className="color">Màu xanh lá /</span>
-                    <span className="size">xl</span>
-                  </span>
-                </div>
-                <div className="item-wrapper">
-                  <span className="product-qnty">3 ×</span>
-                  <span className="product-price">$198.00</span>
-                </div>
-              </div>
-            </div>
-            <div className="cart-edit">
-              <div className="quantity-edit">
-                <button className="button">
-                  <i className="fal fa-minus minus" />
-                </button>
-                <input type="text" className="input" defaultValue={3} />
-                <button className="button plus">
-                  +<i className="fal fa-plus plus" />
-                </button>
-              </div>
-              <div className="item-wrapper d-flex mr--5 align-items-center">
-                <a href="#" className="product-edit">
-                  <i className="fal fa-edit" />
-                </a>
-                <a href="#" className="delete-cart">
-                  <i className="fal fa-times" />
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="product-item">
-            <div className="product-detail">
-              <div className="product-thumb">
-                {/* <Image src="assets/images/course/cart/02.jpg" alt="product-thumb" /> */}
-              </div>
-              <div className="item-wrapper">
-                <span className="product-name"> Bridge product</span>
-                <div className="item-wrapper">
-                  <span className="product-variation">
-                    <span className="color">Green /</span>
-                    <span className="size">XL</span>
-                  </span>
-                </div>
-                <div className="item-wrapper">
-                  <span className="product-qnty">2 ×</span>
-                  <span className="product-price">$88.00</span>
-                </div>
-              </div>
-            </div>
-            <div className="cart-edit">
-              <div className="quantity-edit">
-                <button className="button">
-                  <i className="fal fa-minus minus" />
-                </button>
-                <input type="text" className="input" defaultValue={2} />
-                <button className="button plus">
-                  +<i className="fal fa-plus plus" />
-                </button>
-              </div>
-              <div className="item-wrapper d-flex mr--5 align-items-center">
-                <a href="#" className="product-edit">
-                  <i className="fal fa-edit" />
-                </a>
-                <a href="#" className="delete-cart">
-                  <i className="fal fa-times" />
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="product-item last-child">
-            <div className="product-detail">
-              <div className="product-thumb">
-                {/* <Image src="assets/images/course/cart/03.jpg" alt="product-thumb" /> */}
-              </div>
-              <div className="item-wrapper">
-                <span className="product-name">Labour helmet</span>
-                <div className="item-wrapper">
-                  <span className="product-variation">
-                    <span className="color">Green /</span>
-                    <span className="size">XL</span>
-                  </span>
-                </div>
-                <div className="item-wrapper">
-                  <span className="product-qnty">1 ×</span>
-                  <span className="product-price">$289.00</span>
-                </div>
-              </div>
-            </div>
-            <div className="cart-edit">
-              <div className="quantity-edit">
-                <button className="button">
-                  <i className="fal fa-minus minus" />
-                </button>
-                <input type="text" className="input" defaultValue={2} />
-                <button className="button plus">
-                  +<i className="fal fa-plus plus" />
-                </button>
-              </div>
-              <div className="item-wrapper d-flex mr--5 align-items-center">
-                <a href="#" className="product-edit">
-                  <i className="fal fa-edit" />
-                </a>
-                <a href="#" className="delete-cart">
-                  <i className="fal fa-times" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="cart-bottom-area">
-          <span className="spend-shipping">
-            <i className="fal fa-truck" /> SPENT{" "}
-            <span className="amount">$199.00</span> MORE FOR FREE SHIPPING
-          </span>
-          <span className="total-price">
-            TOTAL: <span className="price">$556</span>
-          </span>
-          <a href="checkout.html" className="checkout-btn cart-btn">
-            PROCEED TO CHECKOUT
-          </a>
-          <a href="cart.html" className="view-btn cart-btn">
-            VIEW CART
-          </a>
-        </div>
-      </div>
-      {/* cart area edn */}
-
     </div>
   )
 }

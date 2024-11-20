@@ -7,6 +7,7 @@ import Header from "../../component/header/page";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { motion } from "framer-motion";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -53,11 +54,31 @@ export default function Login() {
   return (
     <>
       <Header />
-      <div className="login-registration-wrapper">
+      <motion.div 
+        className="login-registration-wrapper"
+        initial="hidden"
+        animate="visible"
+        style={{
+          background: "linear-gradient(45deg, #4285f4, #34a853)",
+          minHeight: "100vh",
+          padding: "2rem 0",
+          overflowY: "scroll"
+        }}
+      >
         <div className="container">
           <div className="row g-0">
             <div className="col-lg-6" style={{ marginTop: 150 }}>
-              <div className="login-page-form-area">
+              <motion.div 
+                className="login-page-form-area"
+                style={{
+                  background: "rgba(255, 255, 255, 0.9)",
+                  borderRadius: "15px",
+                  backdropFilter: "blur(10px)",
+                  boxShadow: "0 8px 32px rgba(31, 38, 135, 0.15)",
+                  padding: "2rem",
+                  border: "1px solid rgba(255, 255, 255, 0.18)"
+                }}
+              >
                 <h4 className="title">Nhập Email Đổi Mật Khẩu👋</h4>
                 <Formik
                   initialValues={initialValues}
@@ -91,21 +112,24 @@ export default function Login() {
                     </Form>
                   )}
                 </Formik>
-              </div>
+              </motion.div>
             </div>
             <div className="col-lg-6">
-              <div className="contact-thumbnail-login-p flex justify-center items-center">
+              <motion.div 
+                className="contact-thumbnail-login-p flex justify-center items-center"
+              >
                 <Image  
                   src="https://frontends.udemycdn.com/components/auth/desktop-illustration-x1.webp"
-                  width="100%"
+                  width={500} 
+                  height={300}   
                   className="img-fluid bg-transparent"
                   alt="Student Home"
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
       <ToastContainer />
     </>
   );

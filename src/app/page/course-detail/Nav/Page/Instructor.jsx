@@ -1,10 +1,73 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaStar, FaFacebook, FaInstagram, FaLinkedin, FaPinterest, FaYoutube, FaUsers, FaVideo } from "react-icons/fa";
 import Link from "next/link";
 import Image from 'next/image';
-export default function Instructor({ course }) {
-  const highestRating = course.danhgia.reduce((max, review) => Math.max(max, parseFloat(review.rating)), 0);
 
+const styles = `
+  @keyframes softPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes starShine {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes floatIcon {
+    0% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-5px) rotate(5deg); }
+    100% { transform: translateY(0) rotate(0); }
+  }
+
+  .instructor-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .instructor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  }
+
+  .instructor-image {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .instructor-image:hover {
+    transform: scale(1.08) rotate(2deg);
+  }
+
+  .social-icon {
+    transition: all 0.3s ease;
+  }
+
+  .social-icon:hover {
+    animation: floatIcon 0.8s ease infinite;
+    filter: brightness(1.2);
+  }
+
+  .star-icon {
+    animation: starShine 3s ease infinite;
+  }
+
+  .student-count {
+    animation: softPulse 2.5s ease-in-out infinite;
+  }
+
+  .stat-item {
+    transition: all 0.3s ease;
+  }
+
+  .stat-item:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export default function Instructor({ course }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const highestRating = course.danhgia.reduce((max, review) => Math.max(max, parseFloat(review.rating)), 0);
   const StartFilter = (rating) => {
     let star = 0;
     if (rating >= 4.5) {
@@ -27,65 +90,93 @@ export default function Instructor({ course }) {
 
   const HocSinh = course.thanhToan.filter((item) => item.id_nguoidung).length;
   console.log(course.thongtingiangvien);
-  
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   return (
-    <div className="single-instructor-area-details flex p-4 border rounded-lg shadow-md">
-      <Link href={`/page/Profile-insructor?id=${course.thongtingiangvien.id}`} className="w-1/4">
-        <Image width={500} height={300}    src={course.thongtingiangvien.hinh} alt="instructor" className="w-full h-auto rounded-full" />
-      </Link>
-      <div className="inner-instructor-area ml-4 flex-1">
-        <h5 className="title text-xl font-semibold">{course.thongtingiangvien.ten}</h5>
-        <span className="deg text-gray-600">{course.trinhdo}</span>
-        <div className="stars-area-wrapper mt-2">
-          <div className="stars-area flex items-center">
-            <span className="text-yellow-500 mr-2">{highestRating}</span>
-            {[...Array(5)].map((_, index) => (
-              <FaStar key={index} className={index < starCount ? "text-yellow-500" : "text-gray-300"} />
-            ))}
+    <>
+      <style>{styles}</style>
+      <div className={`instructor-card single-instructor-area-details flex p-6 border rounded-xl shadow-md bg-white 
+        ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700`}>
+        <Link href={`/page/Profile-insructor?id=${course.thongtingiangvien.id}`} 
+          className="w-1/4 overflow-hidden rounded-xl">
+          <div className="relative group">
+            <Image
+              width={500}
+              height={300}
+              src={course.thongtingiangvien.hinh}
+              alt={`Instructor ${course.thongtingiangvien.ten}`}
+              className="w-full h-auto rounded-xl instructor-image"
+              priority
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
           </div>
-          <div className="users-area flex items-center mt-2">
-            <FaUsers className="text-blue-500 mr-1" />
-            <span className="text-gray-700">{HocSinh} Sinh viên</span>
+        </Link>
+
+        <div className="inner-instructor-area ml-6 flex-1">
+          <h5 className="title text-2xl font-bold hover:text-blue-600 transition-colors duration-300">
+            {course.thongtingiangvien.ten}
+          </h5>
+          <span className="deg text-gray-600 font-medium">{course.trinhdo}</span>
+
+          <div className="stats-grid grid grid-cols-3 gap-4 mt-4">
+            <div className="stat-item p-3 rounded-lg bg-gray-50 hover:bg-gray-100">
+              <div className="stars-area flex items-center">
+                <span className="text-yellow-500 font-bold mr-2">{highestRating}</span>
+                {[...Array(5)].map((_, index) => (
+                  <FaStar key={index} 
+                    className={`${index < starCount ? "text-yellow-500" : "text-gray-300"} star-icon`}
+                  />
+                ))}
+              </div>
+            </div>
+            
+            <div className="stat-item p-3 rounded-lg bg-gray-50 hover:bg-gray-100">
+              <div className="users-area flex items-center">
+                <FaUsers className="text-blue-500 mr-2 text-xl" />
+                <span className="text-gray-700 font-semibold student-count">
+                  {HocSinh} Sinh viên
+                </span>
+              </div>
+            </div>
+
+            <div className="stat-item p-3 rounded-lg bg-gray-50 hover:bg-gray-100">
+              <div className="courses-area flex items-center">
+                <FaVideo className="text-green-500 mr-2 text-xl" />
+                <span className="text-gray-700 font-semibold">
+                  {course.Tongkhoahoc.length} Khóa học
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="courses-area flex items-center mt-2">
-            <FaVideo className="text-green-500 mr-1" />
-            <span className="text-gray-700">{course.Tongkhoahoc.length} Khóa học</span>
+
+          <p className="disc mt-4 text-gray-700 leading-relaxed">
+            {course.thongtingiangvien.tieusu}
+          </p>
+
+          <div className="follow-us mt-6">
+            <span className="text-lg font-semibold">Follow Me</span>
+            <ul className="social-links flex space-x-4 mt-3">
+              {[
+                { icon: FaFacebook, color: "blue", label: "Facebook" },
+                { icon: FaInstagram, color: "pink", label: "Instagram" },
+                { icon: FaLinkedin, color: "blue", label: "LinkedIn" },
+                { icon: FaPinterest, color: "red", label: "Pinterest" },
+                { icon: FaYoutube, color: "red", label: "YouTube" }
+              ].map((social, index) => (
+                <li key={index}>
+                  <a href="#" 
+                    aria-label={social.label}
+                    className={`text-${social.color}-600 hover:text-${social.color}-800 social-icon p-2 inline-block`}>
+                    <social.icon size={24} />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-        <p className="disc mt-4 text-gray-800">
-          {course.thongtingiangvien.tieusu}
-        </p>
-        <div className="follow-us mt-4">
-          <span className="text-lg font-medium">Follow</span>
-          <ul className="social-links flex space-x-4 mt-2">
-            <li>
-              <a href="#" className="text-blue-600 hover:text-blue-800">
-                <FaFacebook size={20} />
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-pink-600 hover:text-pink-800">
-                <FaInstagram size={20} />
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-blue-700 hover:text-blue-900">
-                <FaLinkedin size={20} />
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-red-600 hover:text-red-800">
-                <FaPinterest size={20} />
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-red-700 hover:text-red-900">
-                <FaYoutube size={20} />
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
-    </div>
+    </>
   );
 }

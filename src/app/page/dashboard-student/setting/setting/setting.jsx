@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { updateUser, ShowUser, UpdatePassWord } from '../../../../../service/User/user';
 import { MangXaHoiss, ShowMangXaHoi } from '../../../../../service/MangXaHoi/MangXaHoi';
 import Image from 'next/image';
-
+import { FaEye, FaEyeSlash, FaLock } from 'react-icons/fa';
+import { FaFacebookF, FaSkype, FaLinkedinIn, FaPinterest, FaGithub, FaCheck } from 'react-icons/fa';
 
 
 
@@ -41,7 +42,7 @@ const Profile = () => {
 
   const fetchUserData = async () => {
     try {
-      const userData = await ShowUser(); 
+      const userData = await ShowUser();
       console.log(userData);
       setFormData({
         ten: userData.data.ten || '',
@@ -83,28 +84,143 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile-form">
-      <h3>Profile</h3>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="ten">Tên</label>
-          <input type="text" id="ten" placeholder="Nhập tên của bạn" value={formData.ten} onChange={handleChange} />
+    <div className="profile-form" style={{
+      padding: '2rem',
+      borderRadius: '16px',
+      background: 'white',
+      boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)'
+    }}>
+      <h3 style={{
+        fontSize: '24px',
+        fontWeight: '600',
+        marginBottom: '2rem',
+        background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent'
+      }}>Profile Settings</h3>
+
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
+        {formData.hinh && (
+          <div className="image-preview" style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '1rem'
+          }}>
+            <Image
+              width={120}
+              height={120}
+              src={formData.hinh}
+              alt="Profile"
+              style={{
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: '4px solid #2563eb',
+                transition: 'transform 0.3s ease',
+                cursor: 'pointer'
+              }}
+            />
+          </div>
+        )}
+
+        <div className="form-group" style={{ position: 'relative' }}>
+          <label htmlFor="hinh" style={{
+            display: 'block',
+            marginBottom: '0.5rem',
+            color: '#64748b',
+            fontSize: '0.875rem'
+          }}>Profile Picture</label>
+          <input
+            type="file"
+            id="hinh"
+            onChange={handleChange}
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              border: '2px dashed #e5e7eb',
+              borderRadius: '8px',
+              cursor: 'pointer'
+            }}
+          />
         </div>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" placeholder="Nhập email của bạn" value={formData.email} onChange={handleChange} />
-        </div>
-        <div className="form-group">
-          <label htmlFor="dienthoai">Điện thoại</label>
-          <input type="text" id="dienthoai" placeholder="Nhập số điện thoại của bạn" value={formData.dienthoai} onChange={handleChange} />
-        </div>
-        <div className="form-group">
-          <label htmlFor="hinh">Hình</label>
-          <input type="file" id="hinh" onChange={handleChange} />
-          {formData.hinh && <Image width={500} height={300}    src={formData.hinh} alt="Profile" style={{ width: '100px', height: '100px', marginTop: '10px' }} />}
-        </div>
-        <button type="submit" className="rts-btn btn-primary">Cập nhật thông tin</button>
+
+        {['ten', 'email', 'dienthoai'].map((field) => (
+          <div key={field} className="form-group" style={{ position: 'relative' }}>
+            <label
+              htmlFor={field}
+              style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                color: '#64748b',
+                fontSize: '0.875rem'
+              }}
+            >
+              {field === 'ten' ? 'Tên' : field === 'dienthoai' ? 'Điện thoại' : 'Email'}
+            </label>
+            <input
+              type={field === 'email' ? 'email' : 'text'}
+              id={field}
+              value={formData[field]}
+              onChange={handleChange}
+              placeholder={`Nhập ${field === 'ten' ? 'tên' : field === 'dienthoai' ? 'điện thoại' : 'email'} của bạn`}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                borderRadius: '8px',
+                border: '1px solid #e5e7eb',
+                transition: 'all 0.3s ease',
+                outline: 'none'
+              }}
+            />
+          </div>
+        ))}
+
+        <button
+          type="submit"
+          style={{
+            marginTop: '1rem',
+            padding: '0.75rem 1.5rem',
+            background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            fontWeight: '500'
+          }}
+        >
+          Cập nhật thông tin
+        </button>
       </form>
+      <style jsx>{`
+      .profile-form {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.form-group input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.image-preview img:hover {
+  transform: scale(1.05);
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+      `}</style>
     </div>
   );
 };
@@ -134,7 +250,13 @@ const MangXaHoi = () => {
     pinterest: '',
     github: ''
   });
-
+  const socialIcons = {
+    facebook: { icon: <FaFacebookF />, color: '#1877f2' },
+    skype: { icon: <FaSkype />, color: '#00aff0' },
+    linkedin: { icon: <FaLinkedinIn />, color: '#0077b5' },
+    pinterest: { icon: <FaPinterest />, color: '#e60023' },
+    github: { icon: <FaGithub />, color: '#333' }
+  };
   useEffect(() => {
     if (ShowMangXaHoi1) {
       setFormData({
@@ -176,106 +298,139 @@ const MangXaHoi = () => {
   };
 
   return (
-    <div
-      className="tab-pane fade show active"
-      id="pills-home"
-      role="tabpanel"
-      aria-labelledby="pills-home-tab"
-    >
-      <div className="social-profile-link-wrapper">
-        <h5 className="title">Social Profile Link</h5>
+    <div style={{
+      padding: '2rem',
+      borderRadius: '16px',
+      background: 'white',
+      boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)'
+    }}>
+      <h3 style={{
+        fontSize: '24px',
+        fontWeight: '600',
+        marginBottom: '2rem',
+        background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent'
+      }}>Social Media Profiles</h3>
 
-        <form onSubmit={handleSubmit}>
-          <div className="single-profile-wrapper">
-            <div className="left">
-              <div className="icon">
-                <i className="fa-brands fa-facebook-f" />
-                <span>Facebook</span>
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
+        {Object.entries(socialIcons).map(([platform, { icon, color }]) => (
+          <div key={platform} style={{
+            display: 'flex',
+            alignItems: 'center',
+            padding: '1rem',
+            borderRadius: '12px',
+            border: '1px solid #e5e7eb',
+            transition: 'all 0.3s ease',
+            ':hover': {
+              borderColor: color,
+              transform: 'translateY(-2px)',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)'
+            }
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+              width: '140px',
+              color: color
+            }}>
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                background: `${color}15`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.2rem'
+              }}>
+                {icon}
               </div>
+              <span style={{ fontWeight: '500' }}>
+                {platform.charAt(0).toUpperCase() + platform.slice(1)}
+              </span>
             </div>
-            <div className="right">
+
+            <div style={{ flex: 1, position: 'relative' }}>
               <input
                 type="text"
-                id="facebook"
-                placeholder="https://www.facebook.com/username"
+                id={platform}
+                placeholder={`https://www.${platform}.com/username`}
+                value={formData[platform]}
                 onChange={handleChange}
-                value={formData.facebook}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '8px',
+                  border: '1px solid #e5e7eb',
+                  transition: 'all 0.3s ease',
+                  ':focus': {
+                    borderColor: color,
+                    outline: 'none',
+                    boxShadow: `0 0 0 3px ${color}15`
+                  }
+                }}
               />
+              {formData[platform] && (
+                <div style={{
+                  position: 'absolute',
+                  right: '1rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  color: '#10b981'
+                }}>
+                  <FaCheck />
+                </div>
+              )}
             </div>
           </div>
-          <div className="single-profile-wrapper">
-            <div className="left">
-              <div className="icon">
-                <i className="fa-brands fa-skype" />
-                <span>Skype</span>
-              </div>
-            </div>
-            <div className="right">
-              <input
-                type="text"
-                id="skype"
-                placeholder="https://www.skype.com/username"
-                onChange={handleChange}
-                value={formData.skype}
-              />
-            </div>
-          </div>
-          <div className="single-profile-wrapper">
-            <div className="left">
-              <div className="icon">
-                <i className="fa-brands fa-linkedin" />
-                <span>LinkedIn</span>
-              </div>
-            </div>
-            <div className="right">
-              <input
-                type="text"
-                id="linkedin"
-                placeholder="https://www.linkedin.com/username"
-                onChange={handleChange}
-                value={formData.linkedin}
-              />
-            </div>
-          </div>
-          <div className="single-profile-wrapper">
-            <div className="left">
-              <div className="icon">
-                <i className="fa-brands fa-pinterest" />
-                <span>Pinterest</span>
-              </div>
-            </div>
-            <div className="right">
-              <input
-                type="text"
-                id="pinterest"
-                placeholder="https://www.pinterest.com/username"
-                onChange={handleChange}
-                value={formData.pinterest}
-              />
-            </div>
-          </div>
-          <div className="single-profile-wrapper">
-            <div className="left">
-              <div className="icon">
-                <i className="fa-brands fa-github" />
-                <span>Github</span>
-              </div>
-            </div>
-            <div className="right">
-              <input
-                type="text"
-                id="github"
-                placeholder="https://www.github.com/username"
-                onChange={handleChange}
-                value={formData.github}
-              />
-            </div>
-          </div>
-          <button type="submit" className="rts-btn btn-primary">
-            Update Profile
-          </button>
-        </form>
-      </div>
+        ))}
+
+        <button
+          type="submit"
+          style={{
+            marginTop: '1rem',
+            padding: '1rem 2rem',
+            background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontWeight: '500',
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          Update Social Profiles
+        </button>
+      </form>
+      <style jsx>{`@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.social-profile-link-wrapper {
+  animation: slideIn 0.5s ease-out;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+input:focus {
+  transform: scale(1.01);
+}` }</style>
     </div>
   );
 };
@@ -300,7 +455,11 @@ const Password = () => {
       [id]: value,
     }));
   };
-
+  const [showPasswords, setShowPasswords] = useState({
+    old_password: false,
+    password: false,
+    password_confirmation: false
+  });
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -316,45 +475,105 @@ const Password = () => {
       console.error(error);
     }
   };
-
+  const togglePasswordVisibility = (field) => {
+    setShowPasswords(prev => ({
+      ...prev,
+      [field]: !prev[field]
+    }));
+  };
   return (
-    <div className="setting-change-password-area">
-      <form onSubmit={handleSubmit} className="form-password-area">
-        <div className="single-input">
-          <label htmlFor="old_password">Current Password</label>
-          <input
-            id="old_password"
-            type="password"
-            placeholder="Current Password"
-            value={formData.old_password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="single-input">
-          <label htmlFor="password">New Password</label>
-          <input
-            id="password"
-            type="password"
-            placeholder="New Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="single-input">
-          <label htmlFor="password_confirmation">Re-type New Password</label>
-          <input
-            id="password_confirmation"
-            type="password"
-            placeholder="Re-type New Password"
-            value={formData.password_confirmation}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" className="rts-btn btn-primary">
-          Reset Password
+    <div style={{
+      padding: '2rem',
+      borderRadius: '16px',
+      background: 'white',
+      boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)'
+    }}>
+      <h3 style={{
+        fontSize: '24px',
+        fontWeight: '600',
+        marginBottom: '2rem',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+        background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent'
+      }}>
+        <FaLock /> Change Password
+      </h3>
+
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
+        {['old_password', 'password', 'password_confirmation'].map((field) => (
+          <div key={field} style={{ position: 'relative' }}>
+            <label
+              htmlFor={field}
+              style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                color: '#64748b',
+                fontSize: '0.875rem'
+              }}
+            >
+              {field === 'old_password' ? 'Current Password' :
+                field === 'password' ? 'New Password' : 'Re-type New Password'}
+            </label>
+            <div style={{ position: 'relative' }}>
+              <input
+                id={field}
+                type={showPasswords[field] ? 'text' : 'password'}
+                value={formData[field]}
+                onChange={handleChange}
+                required
+                placeholder="••••••••"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem 2.5rem 0.75rem 1rem',
+                  borderRadius: '8px',
+                  border: '1px solid #e5e7eb',
+                  transition: 'all 0.3s ease',
+                  outline: 'none'
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => togglePasswordVisibility(field)}
+                style={{
+                  position: 'absolute',
+                  right: '0.75rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  color: '#64748b',
+                  cursor: 'pointer',
+                  padding: '0.25rem'
+                }}
+              >
+                {showPasswords[field] ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+          </div>
+        ))}
+
+        <button
+          type="submit"
+          style={{
+            marginTop: '1rem',
+            padding: '0.75rem 1.5rem',
+            background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            fontWeight: '500'
+          }}
+        >
+          <FaLock /> Update Password
         </button>
       </form>
     </div>

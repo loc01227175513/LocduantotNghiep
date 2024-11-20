@@ -2,11 +2,114 @@
 import React, { useEffect, useState } from "react";
 import { CourseDetails } from "../../../../../service/course/course.service";
 import Link from "next/link";
-import { FaStar, FaRegStar } from 'react-icons/fa'; // Import star icons
+import { FaStar, FaRegStar, FaCheck, FaBookmark, FaCalendar, FaUsers } from 'react-icons/fa';
 import Image from 'next/image';
+import { KhoaHocYeuThich } from "../../../../../service/YeuThich/YeuThich";
+const styles = `
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  .course-card {
+    transition: all 0.3s ease;
+  }
+
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.4s ease-out forwards;
+  }
+
+  .objective-item {
+    animation: slideIn 0.4s ease-out forwards;
+    animation-delay: calc(var(--item-index) * 100ms);
+    opacity: 0;
+  }
+
+  .course-image {
+    transition: transform 0.3s ease;
+  }
+
+  .course-card:hover .course-image {
+    transform: scale(1.05);
+  }
+
+  .bookmark-icon {
+    transition: all 0.2s ease;
+  }
+
+  .bookmark-icon:hover {
+    transform: scale(1.2);
+  }
+
+  @keyframes iconColorChange {
+    0% { color: #3B82F6; }
+    33% { color: #10B981; }
+    66% { color: #F59E0B; }
+    100% { color: #3B82F6; }
+  }
+
+  @keyframes iconPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .animated-icon {
+    animation: iconColorChange 6s infinite;
+    transition: transform 0.3s ease;
+  }
+
+  .animated-icon:hover {
+    animation: iconPulse 0.5s ease;
+  }
+
+  .star-icon {
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .star-icon:hover {
+    transform: scale(1.2);
+    color: #FBBF24;
+  }
+`;
+
 export default function Mota({ course }) {
   console.log(course);
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+  const handleYeuThich = async (id) => {
+    try {
+      const response = await KhoaHocYeuThich(id);
+      console.log(response);
+      toast.success("Added to favorites!");
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Error adding to favorites!");
+    }
+  };
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
@@ -26,13 +129,12 @@ export default function Mota({ course }) {
     const rawDescription = course?.mota;
     descriptionSections = splitDescription(rawDescription);
 
-    // If splitDescription returns a JSON string, parse it
     if (typeof descriptionSections === 'string') {
       descriptionSections = JSON.parse(descriptionSections);
     }
   } catch (error) {
     console.error("Error processing description:", error);
-    descriptionSections = []; // Fallback to an empty array or handle as needed
+    descriptionSections = [];
   }
 
   let muctieu;
@@ -40,15 +142,13 @@ export default function Mota({ course }) {
     muctieu = JSON.parse(course?.muctieu);
   } catch (error) {
     console.error("Error parsing muctieu:", error);
-    muctieu = []; // Fallback to an empty array or handle as needed
+    muctieu = [];
   }
 
-  // Ensure muctieu is an array before calling filter
   if (!Array.isArray(muctieu)) {
     muctieu = [];
   }
 
-  // Function to render stars based on averageRating
   const renderStars = (rating) => {
     const filledStars = Math.floor(rating);
     const stars = [];
@@ -56,138 +156,134 @@ export default function Mota({ course }) {
     for (let i = 1; i <= 5; i++) {
       stars.push(
         i <= filledStars ? (
-          <FaStar key={i} className="text-yellow-400 w-5 h-5" aria-label="Filled Star" />
+          <FaStar key={i} className="text-yellow-400 w-5 h-5 star-icon" aria-label="Filled Star" />
         ) : (
-          <FaRegStar key={i} className="text-gray-300 w-5 h-5" aria-label="Empty Star" />
+          <FaRegStar key={i} className="text-gray-300 w-5 h-5 star-icon" aria-label="Empty Star" />
         )
       );
     }
     return stars;
   };
-  console.log(course,"course");
-  
+
+  console.log(course, "course");
 
   return (
     <>
-      {/* Tab Content */}
-      <div className="tab-content mt-12" id="myTabContent">
-        <div
-          className="tab-pane fade show active"
-          id="home"
-          role="tabpanel"
-          aria-labelledby="home-tab"
-        >
-          <div className="course-content-wrapper">
-            <h5 className="title mb-2.5 text-gray-800">Về khóa học</h5>
-            <p className="disc text-gray-600"></p>
-            <h5 className="title mb-2.5 text-gray-800">Sự miêu tả</h5>
-            {descriptionSections.map((section, index) => (
-              <p key={index} className="disc text-gray-700">
-                {section}.
-              </p>
-            ))}
+      <style>{styles}</style>
+      <div className={`course-description ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div className="tab-content mt-12" id="myTabContent">
+          <div className="tab-pane fade show active p-6 bg-white rounded-lg shadow-sm">
+            <h4 className="text-2xl font-bold text-gray-800 mb-6">Về khóa học</h4>
 
-            <div className="module-wrapper mt-6">
-              <h6 className="title mb-2.5 text-gray-800">Bạn sẽ học được gì?</h6>
-              <div className="inner-content">
-                <div className="single-wrapper">
-                  {muctieu.filter(item => item !== "").map((item, index) => (
-                    <div className="single-codule flex items-center text-green-600 mb-2" key={index}>
-                      <i className="fa-regular fa-check mr-2"></i>
-                      {item}
-                    </div>
-                  ))}
-                </div>
+            <div className="description-section space-y-4">
+              {descriptionSections.map((section, index) => (
+                <p key={index} className="text-gray-700 leading-relaxed animate-slide-in"
+                  style={{ animationDelay: `${index * 100}ms` }}>
+                  {section}.
+                </p>
+              ))}
+            </div>
+
+            <div className="objectives-section mt-8">
+              <h5 className="text-xl font-semibold text-gray-800 mb-4">
+                Bạn sẽ học được gì?
+              </h5>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {muctieu.filter(item => item !== "").map((item, index) => (
+                  <div key={index}
+                    className="objective-item flex items-center p-3 bg-green-50 rounded-lg"
+                    style={{ '--item-index': index }}>
+                    <FaCheck className="text-green-500 mr-3 animated-icon" />
+                    <span className="text-gray-700">{item}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
-        <div
-          className="tab-pane fade"
-          id="profile"
-          role="tabpanel"
-          aria-labelledby="profile-tab"
-        ></div>
-      </div>
 
-      <div className="wrapper-bottom-course-details-page grid gap-5 mt-12 px-4 sm:px-0">
-        <div className="flex justify-between items-center mb-6">
-          <h5 className="mb-0 title text-gray-800">
-            Nhiều khóa học hơn bởi {course.thongtingiangvien.ten}.
-          </h5>
-          <a
-            href={`/instructor/${course.thongtingiangvien.id}`}
-            className="rts-btn with-arrow text-blue-500 hover:text-blue-600 flex items-center"
-          >
-          </a>
-        </div>
+        <div className="related-courses mt-12">
+          <div className="flex justify-between items-center mb-6 px-4 sm:px-0">
+            <h4 className="text-2xl font-bold text-gray-800">
+              Khóa học khác từ {course.thongtingiangvien.ten}
+            </h4>
+          </div>
 
-        {/* Các khóa học khác của giảng viên này */}
-        <div className="flex gap-6 overflow-x-auto">
-          {course.Tongkhoahoc.map((item) => {
-            // Calculate averageRating per course
-            const averageRating = item.danhgia && item.danhgia.length > 0
-              ? item.danhgia.reduce((acc, rating) => acc + parseInt(rating.danhgia, 10), 0) / item.danhgia.length
-              : 0;
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-0">
+            {course.Tongkhoahoc.map((item, index) => {
+              const averageRating = item.danhgia?.length > 0
+                ? item.danhgia.reduce((acc, rating) => acc + parseInt(rating.danhgia, 10), 0) / item.danhgia.length
+                : 0;
 
-            return (
-              <div className="min-w-[300px] bg-white shadow-md rounded-lg relative" key={item.id}>
-                <a href={`/page/course-detail?id=${item.id}`} className="block">
-                  <Image width={500} height={300}   
-                    src={item.hinh}
-                    alt="course"
-                    className="w-full h-96 object-cover rounded-t-lg"
-                  />
-                </a>
-                <div
-                  className="save-icon text-blue-500 hover:text-blue-600 absolute top-4 right-4 cursor-pointer"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal-login"
-                >
-                  <i className="fa-sharp fa-light fa-bookmark"></i>
-                </div>
-                <div className="tags-area-wrapper flex space-x-2 mt-2 px-4">
-                  <div className="single-tag bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                    <span>{item.chude.ten}</span>
-                  </div>
-                  <div className="single-tag bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-                    <span>Finance</span>
-                  </div>
-                </div>
-                <div className="lesson-studente flex justify-between mt-3 px-4">
-                  <div className="lesson flex items-center text-gray-700">
-                    <i className="fa-light fa-calendar-lines-pen mr-1"></i>
-                    <span>{item.baihocs.length} Bài học</span>
-                  </div>
-                  <div className="lesson flex items-center text-gray-700">
-                    <i className="fa-light fa-user-group mr-1"></i>
-                    <span>{course.thanhToan.length} Sinh viên</span>
-                  </div>
-                </div>
-                <a href={`/page/course-detail?id=${item.id}`} className="block px-4">
-                  <h5 className="title mt-2 text-gray-800 hover:text-blue-500">
-                    {item.ten}
-                  </h5>
-                </a>
-                <p className="teacher px-4 text-gray-600">{course.thongtingiangvien.ten}</p>
-                <div className="rating-and-price flex justify-between items-center mt-2 px-4 pb-4">
-                  <div className="rating-area flex items-center">
-                    <span className="mr-2">{averageRating.toFixed(1)}</span>
-                    <div className="stars flex">
-                      {renderStars(averageRating)}
+              return (
+                <div key={item.id}
+                  className="course-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl"
+                  style={{ animationDelay: `${index * 150}ms` }}>
+                  <div className="relative overflow-hidden">
+                    <Image
+                      width={500}
+                      height={500}
+                      src={item.hinh}
+                      alt={item.ten}
+                      className="course-image w-full  object-cover"
+                    />
+
+                    <div className="absolute top-4 right-4 flex items-center space-x-2">
+                      {item.gia === 0 ? (
+                        <span className="px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full">
+                          Miễn phí
+                        </span>
+                      ) : item.giamgia > 0 ? (
+                        <span className="px-3 py-1 bg-red-500 text-white text-xs font-medium rounded-full">
+                          -{Math.round(((item.gia - item.giamgia) / item.gia) * 100)}%
+                        </span>
+                      ) : null}
+
+                      <button
+                        className="bookmark-icon flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        aria-label="Bookmark"
+                        onClick={() => handleYeuThich(item.id)}
+                      >
+                        <FaBookmark className="text-blue-500 w-5 h-5 animated-icon" />
+                      </button>
                     </div>
                   </div>
-                  <div className="price-area">
-                    <div className="price text-green-600">
-                      {item.gia === 0 ? 'Miễn phí' : `$${item.gia}`}
+
+                  <div className="p-5">
+                    <div className="flex gap-2 mb-3">
+                      <span className="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
+                        {item.chude.ten}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
+                      <span className="flex items-center">
+                        <FaCalendar className="mr-2 animated-icon" />
+                        {item.baihocs.length} Bài học
+                      </span>
+                      <span className="flex items-center">
+                        <FaUsers className="mr-2 animated-icon" />
+                        {course.thanhToan.length} Học viên
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center mt-4">
+                      <div className="flex items-center">
+                        {renderStars(averageRating)}
+                        <span className="ml-2 text-gray-600">
+                          {averageRating.toFixed(1)}
+                        </span>
+                      </div>
+                      <div className="text-lg font-bold text-green-600">
+                        {item.gia === 0 || item.giamgia === 0 ? 'Miễn phí' : `$${item.giamgia}`}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-        {/* Đóng các khóa học khác của giảng viên này */}
       </div>
     </>
   );

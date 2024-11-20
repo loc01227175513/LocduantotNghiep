@@ -24,11 +24,20 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'frontends.udemycdn.com' // Add this entry
+        hostname: 'frontends.udemycdn.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.vus.edu.vn' // Add this entry
       },
     ],
   },
-  webpack: (config) => {
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.devtool = 'source-map';
+    } else {
+      config.devtool = false;
+    }
     config.module.rules.push({
       test: /\.ico$/,
       loader: 'file-loader',
@@ -40,7 +49,6 @@ const nextConfig = {
     });
     return config;
   },
-  devtool: 'source-map',
 };
 
 module.exports = nextConfig;
