@@ -14,6 +14,7 @@ import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
 import Axios from 'axios';
 
 export default function Page() {
+    const [isYTReady, setIsYTReady] = useState(false);  
     let id = null;
     if (typeof window !== 'undefined') {
         const urlParams = new URLSearchParams(window.location.search);
@@ -37,9 +38,26 @@ export default function Page() {
     useEffect(() => {
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
+        tag.onload = () => {
+            window.onYouTubeIframeAPIReady = () => {
+                setIsYTReady(true);
+            };
+        };
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }, []);
+
+    const getYouTubeVideoID = (url) => {
+        try {
+            // Check if URL is absolute
+            const urlObj = new URL(url);
+            return urlObj.searchParams.get('v');
+        } catch (e) {
+            // If URL constructor fails, assume url is a video ID
+            console.error('Invalid URL:', url, 'Assuming it is a video ID.');
+            return url;
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -111,44 +129,29 @@ export default function Page() {
         }
     }, [parsedData, currentVideoId]);
 
-    const loadYouTubeIFrameAPI = useCallback(() => {
-        return new Promise((resolve) => {
-            if (window.YT && window.YT.Player) {
-                resolve(window.YT);
+    const initializePlayer = useCallback(() => {
+        if (isYTReady && videoUrl) {
+            console.log('Initializing YouTube Player with URL:', videoUrl);
+            const videoId = getYouTubeVideoID(videoUrl);
+            console.log('Extracted Video ID:', videoId);
+            if (videoId) {
+                playerRef.current = new window.YT.Player('player', {
+                    events: {
+                        onStateChange: onPlayerStateChange,
+                    },
+                    videoId: videoId,
+                });
             } else {
-                const tag = document.createElement('script');
-                tag.src = "https://www.youtube.com/iframe_api";
-                window.onYouTubeIframeAPIReady = () => {
-                    resolve(window.YT);
-                };
-                document.body.appendChild(tag);
+                console.error('Invalid video URL or ID:', videoUrl);
             }
-        });
-    }, []);
-
-    const initializePlayer = useCallback(async () => {
-        await loadYouTubeIFrameAPI();
-        if (window.YT && window.YT.Player && videoUrl) {
-            playerRef.current = new window.YT.Player('player', {
-                events: {
-                    onStateChange: onPlayerStateChange,
-                },
-                videoId: extractVideoId(videoUrl),
-            });
         }
-    }, [loadYouTubeIFrameAPI, onPlayerStateChange, videoUrl]);
+    }, [isYTReady, videoUrl, onPlayerStateChange]);
 
     useEffect(() => {
-        if (videoUrl) {
+        if (isYTReady && videoUrl) {
             initializePlayer();
         }
-    }, [videoUrl, initializePlayer]);
-
-    // Helper function to extract video ID from URL
-    const extractVideoId = (url) => {
-        const urlObj = new URL(url);
-        return urlObj.searchParams.get('v') || url.split('/').pop();
-    };
+    }, [isYTReady, videoUrl, initializePlayer]);
 
     useEffect(() => {
         const checkVideoWatched = async () => {
@@ -165,7 +168,7 @@ export default function Page() {
                     const updatedWatchedVideos = { ...watchedVideos };
                     khoahoc.baihocs.forEach((lesson) => {
                         lesson.video.forEach((video) => {
-                            console.log('Checking video:', response.data.data);
+                            console.log('Checking video:', video.id);
 
                             const isVideoMatched = response.data.data.some((responseVideo) => {
                                 return responseVideo.id_video === video.id;
