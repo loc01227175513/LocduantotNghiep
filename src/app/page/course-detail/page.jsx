@@ -258,12 +258,8 @@ const Khac = ({ course }) => {
 
 const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiDung, isCourseRegistered, isCourseInCart }) => {
   const handleThanhToanKhoaHocFree = async () => {
-    try {
       await ThanhToanKhoaHocFree(course.id_giangvien);
       toast.success("Bạn đã Nhận Kháo Học Miễn phí!");
-    } catch (error) {
-      toast.error("Thanh toán thất bại: " + error.message);
-    }
   }
 
   return (

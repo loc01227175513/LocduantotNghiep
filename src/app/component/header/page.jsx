@@ -19,8 +19,8 @@ const DropdownMenu = () => {
   return (
     <div className="right-information d-flex">
       <div className="custom-dropdown-wrapper me-4">
-        <button 
-          className="btn dropdown-toggle custom-dropdown" 
+        <button
+          className="btn dropdown-toggle custom-dropdown"
           onClick={() => setLangOpen(!langOpen)}
         >
           <span>English</span>
@@ -34,9 +34,9 @@ const DropdownMenu = () => {
           </ul>
         )}
       </div>
-      
+
       {/* Currency dropdown remains the same */}
-      
+
       <style jsx>{`
         .custom-dropdown-wrapper {
           position: relative;
@@ -132,30 +132,30 @@ const DropdownMenu = () => {
 const Contact = () => {
   return (
     <div className="header-top-one-wrapper gradient-bg text-white py-3">
-    <div className="container">
-      <div className="row">
-        <div className="col-lg-12">
-          <div className="header-top-one d-flex justify-content-between align-items-center">
-            <div className="left-information">
-              <Link href="mailto:techstudent@gmail.com" className="contact-link me-4">
-                <i className="fa-light fa-envelope me-2 bounce" />
-                techstudent@gmail.com
-              </Link>
-              <Link href="tel:+123456789" className="contact-link">
-                <i className="fa-light fa-phone me-2 bounce" />
-                +123 456 789
-              </Link>
-            </div>
-            <div className="right-information d-flex">
-         
-              <DropdownMenu />
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="header-top-one d-flex justify-content-between align-items-center">
+              <div className="left-information">
+                <Link href="mailto:techstudent@gmail.com" className="contact-link me-4">
+                  <i className="fa-light fa-envelope me-2 bounce" />
+                  techstudent@gmail.com
+                </Link>
+                <Link href="tel:+123456789" className="contact-link">
+                  <i className="fa-light fa-phone me-2 bounce" />
+                  +123 456 789
+                </Link>
+              </div>
+              <div className="right-information d-flex">
+
+                <DropdownMenu />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  
-    <style jsx>{`
+
+      <style jsx>{`
       .gradient-bg {
         background: linear-gradient(135deg, #1e3c72 0%, #ff6b6b 100%);
         box-shadow: 0 2px 10px rgba(0,0,0,0.2);
@@ -206,7 +206,7 @@ const Contact = () => {
 
       /* Rest of the styles remain the same */
     `}</style>
-  </div>
+    </div>
   );
 };
 
@@ -271,7 +271,7 @@ export default function Header() {
   useEffect(() => {
     let timeoutId;
     const currentDropdown = dropdownRef.current;
-  
+
     const handleClickOutside = (event) => {
       if (currentDropdown && !currentDropdown.contains(event.target)) {
         timeoutId = setTimeout(() => {
@@ -279,19 +279,19 @@ export default function Header() {
         }, 4000); // 4 second delay
       }
     };
-  
+
     const handleMouseEnter = () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
     };
-  
+
     if (currentDropdown) {
       currentDropdown.addEventListener('mouseenter', handleMouseEnter);
     }
-  
+
     document.addEventListener('mousedown', handleClickOutside);
-  
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       if (currentDropdown) {
@@ -683,7 +683,7 @@ export default function Header() {
                             <div className="max-h-64 overflow-y-auto">
                               {thongBao.slice(0, 3).map((notification, index) => (
                                 <div key={index} className="flex items-start gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
-                                     <Image width={40} height={40}      src={notification.noidung.hinh} alt="Notification" className="w-10 h-10 rounded-lg object-cover" />
+                                  <Image width={40} height={40} src={notification.noidung.hinh} alt="Notification" className="w-10 h-10 rounded-lg object-cover" />
                                   <div>
                                     <p className="font-medium text-gray-800">{notification.noidung.ten}</p>
                                     <p className="text-sm text-gray-500">Từ: {notification.giangvien.ten}</p>
@@ -910,52 +910,52 @@ export default function Header() {
                 </div>
 
                 {data ? (
-  data.vaitro !== 0 ? (
-    <Link href="/page/lecturer-dashboard" className="group ml-4">
-      <div className="m-4 transform transition-all duration-300 hover:scale-105">
-        <p className="p-3 m-0 font-bold text-center rounded-lg bg-gradient-to-r from-[#ff6b6b] to-[#1e3c72] text-white shadow-lg hover:shadow-xl flex items-center justify-center gap-2 hover:from-[#1e3c72] hover:to-[#ff6b6b] transition-all duration-300 animate-gradient">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 animate-bounce"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-            />
-          </svg>
-          Giảng viên
-        </p>
-      </div>
-    </Link>
-  ) : (
-    <Link href="/page/become-instructor" className="group ml-4">
-      <div className="m-4 transform transition-all duration-300 hover:scale-105">
-        <p className="p-3 m-0 font-bold text-center rounded-lg bg-gradient-to-r from-[#ff6b6b] to-[#1e3c72] text-white shadow-lg hover:shadow-xl flex items-center justify-center gap-2 hover:from-[#1e3c72] hover:to-[#ff6b6b] transition-all duration-300 animate-gradient">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 animate-bounce"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-            />
-          </svg>
-          Đăng ký giảng viên
-        </p>
-      </div>
-    </Link>
-  )
-) : null}
+                  data.vaitro !== 0 ? (
+                    <Link href="/page/lecturer-dashboard" className="group ml-4">
+                      <div className="m-4 transform transition-all duration-300 hover:scale-105">
+                        <p className="p-3 m-0 font-bold text-center rounded-lg bg-gradient-to-r from-[#ff6b6b] to-[#1e3c72] text-white shadow-lg hover:shadow-xl flex items-center justify-center gap-2 hover:from-[#1e3c72] hover:to-[#ff6b6b] transition-all duration-300 animate-gradient">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 animate-bounce"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                            />
+                          </svg>
+                          Giảng viên
+                        </p>
+                      </div>
+                    </Link>
+                  ) : (
+                    <Link href="/page/become-instructor" className="group ml-4">
+                      <div className="m-4 transform transition-all duration-300 hover:scale-105">
+                        <p className="p-3 m-0 font-bold text-center rounded-lg bg-gradient-to-r from-[#ff6b6b] to-[#1e3c72] text-white shadow-lg hover:shadow-xl flex items-center justify-center gap-2 hover:from-[#1e3c72] hover:to-[#ff6b6b] transition-all duration-300 animate-gradient">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 animate-bounce"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                            />
+                          </svg>
+                          Đăng ký giảng viên
+                        </p>
+                      </div>
+                    </Link>
+                  )
+                ) : null}
 
 
 
@@ -1009,9 +1009,9 @@ export default function Header() {
                           {thongBao.slice(0, 3).map((notification, index) => (
                             <div key={index} className="flex items-start gap-3 p-2 hover:bg-blue-50 
                               rounded-lg transition-colors duration-200 cursor-pointer">
-                             <Image
-                              width={40} height={40}
-                              src={notification.noidung.hinh}
+                              <Image
+                                width={40} height={40}
+                                src={notification.noidung.hinh}
                                 alt="Notification"
                                 className="w-10 h-10 rounded-lg object-cover" />
                               <div>
@@ -1158,42 +1158,42 @@ export default function Header() {
 
 
       {isOpenSearch && (
-  <div className="fixed inset-0 flex items-center justify-center z-50
+        <div className="fixed inset-0 flex items-center justify-center z-50
     animate-[fadeIn_0.3s_ease-out]">
-    <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 backdrop-blur-md
-      animate-[fadeIn_0.3s_ease-out]" 
-      onClick={closeSearch}>
-    </div>
-    <div className="relative flex flex-col items-center p-8 rounded-2xl
+          <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 backdrop-blur-md
+      animate-[fadeIn_0.3s_ease-out]"
+            onClick={closeSearch}>
+          </div>
+          <div className="relative flex flex-col items-center p-8 rounded-2xl
       bg-gradient-to-b from-white/95 to-white/90
       backdrop-filter backdrop-blur-xl
       shadow-[0_20px_70px_-15px_rgba(0,0,0,0.3),inset_0_0_20px_rgba(255,255,255,0.7)]
       border border-white/20
       animate-[scaleIn_0.3s_ease-out]
       transform transition-all duration-300 hover:scale-[1.02]">
-      <form onSubmit={formSearch} className="flex w-full min-w-[450px]">
-        <div className="flex border-2 border-gray-200/80 rounded-xl w-full 
+            <form onSubmit={formSearch} className="flex w-full min-w-[450px]">
+              <div className="flex border-2 border-gray-200/80 rounded-xl w-full 
           shadow-inner bg-white/90
           focus-within:border-blue-400 focus-within:ring-4 
           focus-within:ring-blue-100/50 transition duration-200">
-          <div className="flex items-center pl-4">
-            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-          <input
-            type="text"
-            placeholder="Tìm kiếm"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-grow p-4 pl-3 focus:outline-none rounded-l-xl text-lg
+                <div className="flex items-center pl-4">
+                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="flex-grow p-4 pl-3 focus:outline-none rounded-l-xl text-lg
               bg-transparent placeholder-gray-400
               animate-[slideIn_0.4s_ease-out]"
-          />
-          <button
-            type="submit"
-            className="bg-gradient-to-r from-blue-500 to-blue-600 m-1
+                />
+                <button
+                  type="submit"
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 m-1
               px-6 py-2 text-white rounded-lg font-medium
               shadow-md hover:shadow-lg
               hover:from-blue-600 hover:to-blue-700
@@ -1201,17 +1201,17 @@ export default function Header() {
               transition duration-200 
               hover:scale-[1.02] transform
               flex items-center gap-2"
-          >
-            <span>Search</span>
-            <svg className="w-5 h-5 animate-[bounce_1s_infinite]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </form>
-      <button
-        className="mt-6 px-8 py-2.5 rounded-lg font-medium
+                >
+                  <span>Search</span>
+                  <svg className="w-5 h-5 animate-[bounce_1s_infinite]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                      d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </form>
+            <button
+              className="mt-6 px-8 py-2.5 rounded-lg font-medium
           bg-gradient-to-r from-red-500 to-red-600
           text-white shadow-md hover:shadow-lg
           hover:from-red-600 hover:to-red-700
@@ -1219,22 +1219,22 @@ export default function Header() {
           transition-all duration-200
           hover:scale-105 transform
           flex items-center gap-2"
-        onClick={closeSearch}
-      >
-        <span>Hủy</span>
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-            d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-  </div>
-)}
+              onClick={closeSearch}
+            >
+              <span>Hủy</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
 
       <div>
 
-        
-      <style jsx>{`
+
+        <style jsx>{`
         @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }

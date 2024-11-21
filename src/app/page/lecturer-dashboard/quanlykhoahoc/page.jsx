@@ -96,6 +96,14 @@ export default function Quanlykhoahoc() {
     return true;
   });
 
+  // Helper function to validate image source
+  const validImageSrc = (src) => {
+    if (typeof src === 'string' && (src.startsWith('/') || src.startsWith('http://') || src.startsWith('https://'))) {
+      return src;
+    }
+    return '/default-course.jpg'; // Ensure this default image exists in your public directory
+  };
+
   return (
     <div className="overflow-y-scroll col-lg-9 h-lvh">
       <div className="right-sidebar-dashboard">
@@ -192,37 +200,37 @@ export default function Quanlykhoahoc() {
               </div>
             )}
 
-<div className="flex justify-between items-center mt-4 search-filter-container">
-  <section>
-    <select
-      id="course-select"
-      onChange={(e) => setSelectedStatus(e.target.value)}
-      className="custom-select"
-    >
-      <option value="">Tất cả khóa học</option>
-      <option value="active">Đang phát hành</option>
-      <option value="Notyet">Bản Nháp</option>
-      <option value="Pending">Đã hoàn thành</option>
-    </select>
-  </section>
-  <form className="search-form">
-    <div className="search-wrapper">
-      <i className="bi bi-search search-icon"></i>
-      <input
-        type="text"
-        placeholder="Tìm kiếm khóa học..."
-        className="search-input"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-    </div>
-  </form>
-</div>
+            <div className="flex justify-between items-center mt-4 search-filter-container">
+              <section>
+                <select
+                  id="course-select"
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                  className="custom-select"
+                >
+                  <option value="">Tất cả khóa học</option>
+                  <option value="active">Đang phát hành</option>
+                  <option value="Notyet">Bản Nháp</option>
+                  <option value="Pending">Đã hoàn thành</option>
+                </select>
+              </section>
+              <form className="search-form">
+                <div className="search-wrapper">
+                  <i className="bi bi-search search-icon"></i>
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm khóa học..."
+                    className="search-input"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+              </form>
+            </div>
             {filteredKhoahoc &&
               filteredKhoahoc.map((item) => {
                 const gia = Number(item.gia || 0);
                 const giamgia = Number(item.giamgia || 0);
-                const hinh = Number(item.hinh || 0);
+                const hinh = item.hinh; // Assuming hinh should be a string URL
 
                 let nonZeroCount = 3; // Initially assume all three values are non-zero
                 let totalPercentage = 0;
@@ -233,7 +241,7 @@ export default function Quanlykhoahoc() {
                 if (giamgia === 0) {
                   nonZeroCount -= 1;
                 }
-                if (hinh === 0) {
+                if (!hinh || hinh === '0') { // Adjusted condition for hinh
                   nonZeroCount -= 1;
                 }
                 const total = (100 / 3) * nonZeroCount;
@@ -246,11 +254,11 @@ export default function Quanlykhoahoc() {
                   <Link href={`/page/course-create?id=${item.id}`} key={item.id}>
                     <div className="single-progress-course">
                       <a href="single-course.html">
-                        <Image 
+                        <Image
                           width={100}
                           height={100}
                           className="rounded-lg hover:border-red-600 border-2 hover:opacity-75 transition-opacity duration-300"
-                          src={item.hinh}
+                          src={validImageSrc(hinh)}
                           alt="img"
                         />
                       </a>
@@ -380,40 +388,40 @@ button[type="submit"]:hover {
   background: #2563eb;
 }
 
-  /* Existing styles... */
+/* Existing styles... */
 
-  .edit-icon, .delete-icon {
-    font-size: 1.5rem;
-    padding: 8px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
+.edit-icon, .delete-icon {
+  font-size: 1.5rem;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
 
-  .edit-icon {
-    color: #3b82f6;
-  }
+.edit-icon {
+  color: #3b82f6;
+}
 
-  .edit-icon:hover {
-    background: #dbeafe;
-    transform: scale(1.1) rotate(-5deg);
-    color: #2563eb;
-  }
+.edit-icon:hover {
+  background: #dbeafe;
+  transform: scale(1.1) rotate(-5deg);
+  color: #2563eb;
+}
 
-  .delete-icon {
-    color: #ef4444;
-  }
+.delete-icon {
+  color: #ef4444;
+}
 
-  .delete-icon:hover {
-    background: #fee2e2;
-    transform: scale(1.1) rotate(5deg);
-    color: #dc2626;
-  }
+.delete-icon:hover {
+  background: #fee2e2;
+  transform: scale(1.1) rotate(5deg);
+  color: #dc2626;
+}
 
-  /* Add animation for icon click feedback */
-  .edit-icon:active, .delete-icon:active {
-    transform: scale(0.95);
-  }
+/* Add animation for icon click feedback */
+.edit-icon:active, .delete-icon:active {
+  transform: scale(0.95);
+}
 /* Update existing styles with new color treatments */
 
 .title {
@@ -547,7 +555,7 @@ select {
 
 select:focus {
   border-color: #3b82f6;
-  box-shadow: 0 0 0 4px rgba(59,130,246,0.1);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
   outline: none;
 }
 
@@ -840,8 +848,6 @@ button[type="submit"]:hover::before {
   transform: scale(2);
   opacity: 0;
 }
-
-
 
       `}</style>
     </div>

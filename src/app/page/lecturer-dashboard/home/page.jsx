@@ -47,7 +47,7 @@ import {
   BanknotesIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/solid';
-
+import {Area } from 'recharts';
 
 const KhoaHocDangKyCss = `
 .single-dashboard-card {
@@ -284,10 +284,11 @@ const CourseProgressStyles = `
   }
 `;
 
+
 export default function Homedashboardlecturer() {
   const [data, setData] = useState([]);
   const [khoahoc, setKhoahoc] = useState([]);
-  const [doanhthu, setDoanhthu] = useState([]);
+  const [doanhthu, setDoanhthu] = useState({});
   const [khoahocdamua, setKhoahocdamua] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -314,24 +315,26 @@ export default function Homedashboardlecturer() {
   }, []);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('lecturerId'));
-
-    fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ id_giangvien: data.giangvien }),
-      referrerPolicy: 'unsafe-url',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setDoanhthu(data.data);
+    const storedData = localStorage.getItem('lecturerId');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_giangvien: parsedData.giangvien }),
+        referrerPolicy: 'unsafe-url',
       })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setDoanhthu(data.data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
   }, []);
 
   useEffect(() => {
@@ -342,17 +345,18 @@ export default function Homedashboardlecturer() {
       console.log(doanhthu, "doanhthu");
     }
   }, [isDataLoaded, data, khoahoc, khoahocdamua, doanhthu]);
+
   console.log(doanhthu, "doanhthu");
 
   const khoahocdadangky = khoahoc.length;
   const khoahocdahoanthanh = khoahoc.filter((item) => item.trangthai === "Progress").length;
   const khoahoctamdung = khoahoc.filter((item) => item.trangthai === "Notyet").length;
   const khoahocdanghoc = khoahocdamua.length;
-  const tongdoanhthu = doanhthu.tongdoanhthu;
-  const sodukhadung = doanhthu.sodukhadung;
+  const tongdoanhthu = doanhthu.tongdoanhthu || 0;
+  const sodukhadung = doanhthu.sodukhadung || 0;
   const activeCoursesCount = khoahoc.filter(course => course.trangthai === "active").length;
   const TongSoHS = khoahoc.reduce((total, course) => {
-    return total + course.ThanhToan.length;
+    return total + (course.ThanhToan ? course.ThanhToan.length : 0);
   }, 0);
   const cardData = [
     { icon: BookOpenIcon, value: khoahocdadangky, label: "Khóa học đã đăng ký" },
@@ -360,19 +364,24 @@ export default function Homedashboardlecturer() {
     { icon: TrophyIcon, value: khoahocdahoanthanh, label: "Khóa học đã hoàn thành" },
     { icon: BookmarkIcon, value: khoahocdadangky, label: "Tổng khóa học của tôi" },
     { icon: UserIcon, value: TongSoHS, label: "Tổng số học sinh" },
-    { icon: CurrencyDollarIcon, value: sodukhadung ?? 0, label: "Số dư khả dụng" },
+    { icon: CurrencyDollarIcon, value: sodukhadung, label: "Số dư khả dụng" },
     { icon: UserGroupIcon, value: activeCoursesCount, label: "Tổng khóa học đang phát hành" },
     { icon: ClockIcon, value: khoahoctamdung, label: "Tổng khóa học tạm dừng" },
-    { icon: BanknotesIcon, value: tongdoanhthu ?? 0, label: "Tổng thu nhập" },
+    { icon: BanknotesIcon, value: tongdoanhthu, label: "Tổng thu nhập" },
   ];
   console.log(khoahoc, "khoahoc");
+
+  const validImageSrc = (src) => {
+    if (typeof src === 'string' && (src.startsWith('/') || src.startsWith('http://') || src.startsWith('https://'))) {
+      return src;
+    }
+    return '/default-course.jpg';
+  };
 
   return (
     <div className="overflow-y-scroll col-lg-9 h-lvh">
       <div className="right-sidebar-dashboard">
-
         <style jsx>{KhoaHocDangKyCss}</style>
-
 
         <div className="row g-5">
           {cardData.map((card, index) => (
@@ -419,7 +428,6 @@ export default function Homedashboardlecturer() {
         <style jsx>{CourseProgressStyles}</style>
 
         {khoahoc.map((item, index) => {
-          const widthPercentage = item.completed;
           const discountPercent = item.gia > 0 ? Math.round((item.giamgia / item.gia) * 100) : 0;
 
           return (
@@ -441,8 +449,8 @@ export default function Homedashboardlecturer() {
                         width={120}
                         height={120}
                         className="rounded-lg border-2 hover:border-blue-500 shadow-sm"
-                        src={item.hinh}
-                        alt={item.ten}
+                        src={validImageSrc(item.hinh)}
+                        alt={item.ten || 'Course Image'}
                       />
                     </motion.div>
 
@@ -455,9 +463,9 @@ export default function Homedashboardlecturer() {
                         {item.ten}
                       </motion.h5>
                       <div className={`
-                text-sm font-medium rounded-full px-3 py-1 inline-flex items-center gap-2
-                animate-pulse
-                ${item.giamgia === 0
+                        text-sm font-medium rounded-full px-3 py-1 inline-flex items-center gap-2
+                        animate-pulse
+                        ${item.giamgia === 0
                           ? 'bg-green-100 text-green-600'
                           : 'bg-red-100 text-red-600'
                         }`}
@@ -485,7 +493,7 @@ export default function Homedashboardlecturer() {
                             width={40}
                             height={40}
                             className="rounded-full border-2 border-gray-200"
-                            src={item.giangvien.avatar || '/default-avatar.jpg'}
+                            src={validImageSrc(item.giangvien.avatar)}
                             alt={item.giangvien.name || 'Giảng viên'}
                           />
                           <span className="ml-2 text-sm text-gray-600">
@@ -517,10 +525,12 @@ export default function Homedashboardlecturer() {
                     key={item.id}
                   >
                     <div className="card h-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                     <Image  width={300} height={200}  
-                        src={item.hinh || '/default-course.jpg'}
+                      <Image
+                        width={300}
+                        height={200}
+                        src={validImageSrc(item.hinh)}
                         className="card-img-top h-48 object-cover"
-                        alt={item.ten}
+                        alt={item.ten || 'Course Image'}
                       />
                       <div className="card-body p-4">
                         <div className="flex justify-between items-start mb-3">
@@ -560,7 +570,7 @@ export default function Homedashboardlecturer() {
                               width={40}
                               height={40}
                               className="rounded-full border-2 border-gray-200"
-                              src={item.giangvien.avatar || '/default-avatar.jpg'}
+                              src={validImageSrc(item.giangvien.avatar)}
                               alt={item.giangvien.name || 'Giảng viên'}
                             />
                             <span className="ml-2 text-sm text-gray-600">
@@ -601,67 +611,73 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 
+// React JSX
+
 const DoanhThuChart = () => {
   const [doanhthu, setDoanhthu] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [metric, setMetric] = useState('tongdoanhthu');
 
+  const fetchDoanhThu = async () => {
+    setLoading(true);
+    setError(null);
+    const storedData = localStorage.getItem('lecturerId');
+
+    if (!storedData) {
+      setError('No lecturer data found.');
+      setLoading(false);
+      return;
+    }
+
+    const data = JSON.parse(storedData);
+
+    try {
+      const response = await fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_giangvien: data.giangvien }),
+        referrerPolicy: 'unsafe-url',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (Array.isArray(result.data)) {
+        setDoanhthu(result.data);
+      } else if (typeof result.data === 'object' && result.data !== null) {
+        setDoanhthu([result.data]);
+      } else {
+        throw new Error('Unexpected data format received from API.');
+      }
+
+    } catch (error) {
+      console.error('Error fetching doanh thu:', error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchDoanhThu = async () => {
-      const storedData = localStorage.getItem('lecturerId');
-
-      if (!storedData) {
-        setError('No lecturer data found.');
-        setLoading(false);
-        return;
-      }
-
-      const data = JSON.parse(storedData);
-
-      try {
-        const response = await fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ id_giangvien: data.giangvien }),
-          referrerPolicy: 'unsafe-url',
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-
-        if (Array.isArray(result.data)) {
-          setDoanhthu(result.data);
-        } else if (typeof result.data === 'object' && result.data !== null) {
-          setDoanhthu([result.data]); // Wrap single object in array
-        } else {
-          throw new Error('Unexpected data format received from API.');
-        }
-
-      } catch (error) {
-        console.error('Error fetching doanh thu:', error);
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchDoanhThu();
   }, []);
 
-  // Prepare data for the chart
+  const handleReload = () => {
+    fetchDoanhThu();
+  };
+
   const chartData = doanhthu.map(item => ({
     date: new Date(item.created_at).toLocaleDateString(),
     tongdoanhthu: parseFloat(item.tongdoanhthu),
     sodukhadung: parseFloat(item.sodukhadung),
   }));
 
-  // Calculate summary statistics
   const totalRevenue = chartData.reduce((acc, item) => acc + item.tongdoanhthu, 0);
   const averageRevenue = chartData.length ? (totalRevenue / chartData.length).toFixed(2) : 0;
   const maxRevenue = chartData.length ? Math.max(...chartData.map(i => i.tongdoanhthu)) : 0;
@@ -685,6 +701,9 @@ const DoanhThuChart = () => {
           Thống Kê Doanh Thu theo Thời Gian
         </Typography>
         <Typography color="error">{error}</Typography>
+        <button onClick={handleReload} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
+          Reload Data
+        </button>
       </Box>
     );
   }
@@ -696,16 +715,12 @@ const DoanhThuChart = () => {
           Thống Kê Doanh Thu theo Thời Gian
         </Typography>
         <Typography sx={{ color: '#ffffff' }}>No data available.</Typography>
+        <button onClick={handleReload} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
+          Reload Data
+        </button>
       </Box>
     );
   }
-
-  const LoadingSkeleton = () => (
-    <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#1a202c', borderRadius: '8px' }}>
-      <Skeleton variant="text" width="40%" height={40} />
-      <Skeleton variant="rectangular" width="100%" height={400} />
-    </Box>
-  );
 
   const handleMetricChange = (event) => {
     setMetric(event.target.value);
@@ -731,6 +746,9 @@ const DoanhThuChart = () => {
           }
         }}
       >
+        <button onClick={handleReload} className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+          Reload Data
+        </button>
         <motion.div
           initial={{ x: -20 }}
           animate={{ x: 0 }}
@@ -750,7 +768,6 @@ const DoanhThuChart = () => {
           </Typography>
         </motion.div>
 
-        {/* Summary Statistics */}
         <Box sx={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
           <Box>
             <Typography variant="subtitle1" sx={{ color: '#ffffff' }}>Tổng Doanh Thu</Typography>
@@ -770,7 +787,6 @@ const DoanhThuChart = () => {
           </Box>
         </Box>
 
-        {/* Metric Selector */}
         <Box sx={{ marginBottom: '20px', display: 'flex', justifyContent: 'flex-end' }}>
           <Select
             value={metric}
@@ -800,54 +816,67 @@ const DoanhThuChart = () => {
         </Box>
 
         <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={chartData}>
+          <LineChart 
+            data={chartData}
+            margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+          >
             <defs>
               <linearGradient id="colorTongDoanhThu" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                <stop offset="5%" stopColor="#8884d8" stopOpacity={1} />
+                <stop offset="95%" stopColor="#8884d8" stopOpacity={0.1} />
               </linearGradient>
               <linearGradient id="colorSoDuKhaDung" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                <stop offset="5%" stopColor="#4CAF50" stopOpacity={1} />
+                <stop offset="95%" stopColor="#4CAF50" stopOpacity={0.1} />
               </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
             </defs>
 
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="#ffffff33" // Semi-transparent white
+            <CartesianGrid 
+              strokeDasharray="5 5"
+              stroke="#ffffff22"
               className="animate-pulse"
             />
 
             <XAxis
               dataKey="date"
               stroke="#ffffff"
-              tick={{ fill: '#ffffff' }}
+              tick={{ fill: '#ffffff', fontSize: 12 }}
               tickLine={{ stroke: '#ffffff' }}
             />
 
             <YAxis
               stroke="#ffffff"
-              tick={{ fill: '#ffffff' }}
+              tick={{ fill: '#ffffff', fontSize: 12 }}
               tickLine={{ stroke: '#ffffff' }}
             />
 
             <Tooltip
               contentStyle={{
-                backgroundColor: 'rgba(26, 32, 44, 0.9)', // Dark tooltip background
-                borderRadius: '8px',
-                padding: '10px',
-                border: 'none',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.5)'
+                backgroundColor: 'rgba(26, 32, 44, 0.95)',
+                borderRadius: '12px',
+                padding: '12px',
+                border: '1px solid rgba(255,255,255,0.1)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                backdropFilter: 'blur(8px)'
               }}
-              labelStyle={{ color: '#ffffff' }}
-              itemStyle={{ color: '#ffffff' }}
+              labelStyle={{ color: '#ffffff', fontWeight: 'bold', marginBottom: '8px' }}
+              itemStyle={{ color: '#ffffff', padding: '4px 0' }}
               formatter={(value) => `${value.toLocaleString()} VND`}
+              animationDuration={200}
             />
 
             <Legend
               wrapperStyle={{
                 color: '#ffffff',
-                animation: 'barPulse 2s infinite',
+                padding: '20px',
+                fontWeight: 'bold'
               }}
             />
 
@@ -855,16 +884,38 @@ const DoanhThuChart = () => {
               type="monotone"
               dataKey={metric}
               stroke={metric === 'tongdoanhthu' ? 'url(#colorTongDoanhThu)' : 'url(#colorSoDuKhaDung)'}
-              strokeWidth={3}
-              dot={{ strokeWidth: 2 }}
-              activeDot={{ r: 8, strokeWidth: 0 }}
+              strokeWidth={4}
+              dot={{ 
+                stroke: metric === 'tongdoanhthu' ? '#8884d8' : '#4CAF50',
+                strokeWidth: 2,
+                r: 4,
+                fill: '#fff'
+              }}
+              activeDot={{ 
+                r: 8, 
+                strokeWidth: 0,
+                fill: metric === 'tongdoanhthu' ? '#8884d8' : '#4CAF50',
+                filter: 'url(#glow)'
+              }}
               name={metric === 'tongdoanhthu' ? 'Tổng Doanh Thu' : 'Số Dư Khả Dụng'}
               animationDuration={2000}
-              animationEasing="ease-in-out"
+              animationEasing="ease-out"
+              filter="url(#glow)"
             />
           </LineChart>
         </ResponsiveContainer>
       </Box>
+      <style jsx>{`
+        @keyframes pulse {
+          0% { opacity: 0.6; }
+          50% { opacity: 1; }
+          100% { opacity: 0.6; }
+        }
+        
+        .animate-pulse {
+          animation: pulse 2s infinite;
+        }
+      `}</style>
     </motion.div>
   );
 };
@@ -874,19 +925,25 @@ const CustomChart = () => {
   const [showLatest, setShowLatest] = useState(false);
   const [filter, setFilter] = useState('all');
   const [isLoading, setIsLoading] = useState(true);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const khoahocRes = await GiangvienKhoaHoc();
+      setKhoahoc(khoahocRes.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const khoahocRes = await GiangvienKhoaHoc();
-        setKhoahoc(khoahocRes.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-      setIsLoading(false);
-    };
     fetchData();
   }, []);
+
+  const handleReload = () => {
+    fetchData();
+  };
 
   const latestTimestamp = khoahoc.length
     ? Math.max(...khoahoc.map(item => new Date(item.created_at).getTime()))
@@ -921,6 +978,7 @@ const CustomChart = () => {
   const totalCourses = chartData.length;
   const averagePrice = chartData.length ? (chartData.reduce((acc, item) => acc + item.gia, 0) / chartData.length).toFixed(2) : 0;
   const totalDiscount = chartData.reduce((acc, item) => acc + item.giamgia, 0);
+
   if (isLoading) {
     return (
       <Box sx={{ width: '100%' }} className="p-4 bg-gray-800 rounded-lg animate-pulse">
@@ -928,138 +986,187 @@ const CustomChart = () => {
       </Box>
     );
   }
-  return (
+   return (
     <Box
-      sx={{ width: '100%' }}
-      className="p-4 bg-gray-800 rounded-lg transform transition-all hover:scale-[1.01] duration-300"
+    sx={{ width: '100%' }}
+    className="p-4 bg-gray-800/95 backdrop-blur rounded-lg transform transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] duration-500"
+  >
+    <button onClick={handleReload} className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+      Reload Data
+    </button>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 100, damping: 10 }}
+      className="relative"
     >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+      <Typography 
+        variant="h6" 
+        gutterBottom 
+        className="stock-ticker-text relative z-10"
+        sx={{ color: '#FFFFFF' }}
       >
-        <Typography variant="h6" gutterBottom sx={{ color: '#FFFFFF' }}>
-          Thống Kê Khóa Học
-        </Typography>
-      </motion.div>
-
-      {/* Summary Statistics */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-around', mb: 3 }}>
-        <Typography variant="subtitle1" sx={{ color: '#FFFFFF' }}>Tổng Khóa Học: {totalCourses}</Typography>
-        <Typography variant="subtitle1" sx={{ color: '#FFFFFF' }}>Giá Trung Bình: {averagePrice} VND</Typography>
-        <Typography variant="subtitle1" sx={{ color: '#FFFFFF' }}>Tổng Giảm Giá: {totalDiscount}%</Typography>
-      </Box>
-
-      {/* Filters */}
-      <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showLatest}
-              onChange={() => setShowLatest(!showLatest)}
-              sx={{
-                color: '#ffffff',
-                '&.Mui-checked': { color: '#4ade80' },
-              }}
-            />
-          }
-          label={showLatest ? 'Hiện tất cả' : 'Xem khóa học mới nhất'}
-          sx={{ color: '#ffffff' }}
-        />
-        <Select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          displayEmpty
-          sx={{ width: '200px' }}
-        >
-          <MenuItem value="all">Tất cả</MenuItem>
-          <MenuItem value="discount">Có Giảm Giá</MenuItem>
-          <MenuItem value="priceAbove100">Giá Trên 100 VND</MenuItem>
-        </Select>
-      </Stack>
-
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart
-          data={chartData}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-        >
-          <defs>
-            {/* Enhanced gradients with more vibrant colors */}
-            <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.9}>
+        Thống Kê Khóa Học
+        <span className="absolute -z-10 blur-[40px] inset-0 bg-indigo-500/30 animate-pulse-slow" />
+      </Typography>
+    </motion.div>
+      
+    <ResponsiveContainer width="100%" height={400}>
+      <LineChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <defs>
+            <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#4f46e5" stopOpacity={0.3}>
                 <animate
                   attributeName="stop-color"
-                  values="#4f46e5;#818cf8;#4f46e5"
-                  dur="4s"
+                  values="#4f46e5;#22c55e;#4f46e5"
+                  dur="5s"
                   repeatCount="indefinite"
                 />
               </stop>
-              <stop offset="95%" stopColor="#4f46e5" stopOpacity={0.2} />
+              <stop offset="100%" stopColor="#4f46e5" stopOpacity={0.05} />
             </linearGradient>
-
-            {/* ... other gradients ... */}
+            
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+    
+            <filter id="neon-glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+    
+            <marker
+              id="arrowUp"
+              viewBox="0 0 10 10"
+              refX="5"
+              refY="5"
+              markerWidth="6"
+              markerHeight="6"
+              orient="auto"
+              className="animate-pulse"
+            >
+              <path d="M 0 7 L 5 2 L 10 7" fill="none" stroke="#22c55e" strokeWidth="2"/>
+            </marker>
           </defs>
-
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke="#374151"
-            className="animate-pulse opacity-50"
+    
+          <CartesianGrid 
+            strokeDasharray="3 3" 
+            stroke="#374151" 
+            className="animate-fade-in-out"
           />
-
-          <XAxis
-            dataKey="ten"
-            tick={{ fill: '#FFFFFF' }}
-            angle={-45}
-            textAnchor="end"
-            height={60}
-            className="transition-transform duration-500 ease-in-out"
+    
+          <XAxis 
+            dataKey="name" 
+            stroke="#ffffff" 
+            className="animate-slide"
           />
-
+    
+          <YAxis 
+            stroke="#ffffff"
+            className="animate-number-scroll"
+          />
+    
+          <Area
+            type="monotone"
+            dataKey="gia"
+            stroke="none"
+            fill="url(#areaGradient)"
+            className="animate-enhanced-wave"
+          />
+    
           <Line
             type="monotone"
             dataKey="gia"
-            stroke="url(#priceGradient)"
+            stroke="#4f46e5"
             strokeWidth={3}
-            dot={{
-              r: 4,
-              strokeWidth: 2,
-              fill: '#fff',
-              className: 'animate-pulse'
+            filter="url(#neon-glow)"
+            dot={(props) => {
+              const isUp = props.value > (chartData[props.index - 1]?.gia ?? props.value);
+              return (
+                <svg 
+                  x={props.cx - 8}
+                  y={props.cy - 8}
+                  width="16"
+                  height="16"
+                  className={`trend-icon ${isUp ? 'trend-up' : 'trend-down'}`}
+                >
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="6"
+                    fill={isUp ? '#22c55e' : '#ef4444'}
+                    className="animate-pulse-slow"
+                  />
+                  <path
+                    d={isUp ? 'M4 8l4-4 4 4' : 'M4 4l4 4 4-4'}
+                    stroke="#fff"
+                    strokeWidth="2"
+                    fill="none"
+                  />
+                </svg>
+              );
             }}
             activeDot={{
-              r: 8,
-              className: 'animate-ping'
+              r: 10,
+              fill: '#4f46e5',
+              className: "active-dot"
             }}
-            className="filter drop-shadow-lg"
           />
-
-          {/* Similar enhancements for other Line components */}
-
-          <Tooltip
-            content={<CustomTooltip />}
-            wrapperStyle={{
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '10px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              animation: 'fadeIn 0.3s ease-in-out'
+    
+          <Tooltip 
+            contentStyle={{ 
+              backgroundColor: 'rgba(17, 24, 39, 0.9)',
+              border: '1px solid #4f46e5',
+              borderRadius: '8px'
             }}
+            className="animate-tooltip"
           />
         </LineChart>
       </ResponsiveContainer>
+    
       <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
+        .stock-ticker-text {
+          text-shadow: 0 0 15px rgba(79, 70, 229, 0.8);
+          animation: tickerGlow 3s ease-in-out infinite;
         }
-        
-        @keyframes ping {
-          75%, 100% {
-            transform: scale(2);
-            opacity: 0;
-          }
+    
+        .animate-enhanced-wave {
+          animation: enhancedWave 4s ease-in-out infinite;
         }
+    
+        @keyframes enhancedWave {
+          0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+          50% { transform: translateY(-10px) scale(1.05); opacity: 0.9; }
+        }
+    
+        .active-dot {
+          filter: url(#neon-glow);
+          animation: activeDotPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+    
+        @keyframes activeDotPulse {
+          0% { transform: scale(1); filter: brightness(1); }
+          50% { transform: scale(1.5); filter: brightness(1.5); }
+          100% { transform: scale(1); filter: brightness(1); }
+        }
+    
+        .animate-tooltip {
+          animation: fadeInTooltip 1.5s ease-in-out infinite;
+        }
+    
+        @keyframes fadeInTooltip {
+          0%, 100% { opacity: 0.8; }
+          50% { opacity: 1; }
+        }
+    
+        /* Existing and enhanced animations remain unchanged */
       `}</style>
     </Box>
   );

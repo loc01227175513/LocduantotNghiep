@@ -111,31 +111,44 @@ export default function Page() {
         }
     }, [parsedData, currentVideoId]);
 
-    const initializePlayer = useCallback(() => {
-        if (typeof window !== 'undefined' && window.YT) {
+    const loadYouTubeIFrameAPI = useCallback(() => {
+        return new Promise((resolve) => {
+            if (window.YT && window.YT.Player) {
+                resolve(window.YT);
+            } else {
+                const tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                window.onYouTubeIframeAPIReady = () => {
+                    resolve(window.YT);
+                };
+                document.body.appendChild(tag);
+            }
+        });
+    }, []);
+
+    const initializePlayer = useCallback(async () => {
+        await loadYouTubeIFrameAPI();
+        if (window.YT && window.YT.Player && videoUrl) {
             playerRef.current = new window.YT.Player('player', {
                 events: {
                     onStateChange: onPlayerStateChange,
                 },
-                videoId: videoUrl.split('/').pop(),
+                videoId: extractVideoId(videoUrl),
             });
-        } else if (typeof window !== 'undefined') {
-            window.onYouTubeIframeAPIReady = () => {
-                playerRef.current = new window.YT.Player('player', {
-                    events: {
-                        onStateChange: onPlayerStateChange,
-                    },
-                    videoId: videoUrl.split('/').pop(),
-                });
-            };
         }
-    }, [videoUrl, onPlayerStateChange]);
+    }, [loadYouTubeIFrameAPI, onPlayerStateChange, videoUrl]);
 
     useEffect(() => {
         if (videoUrl) {
             initializePlayer();
         }
     }, [videoUrl, initializePlayer]);
+
+    // Helper function to extract video ID from URL
+    const extractVideoId = (url) => {
+        const urlObj = new URL(url);
+        return urlObj.searchParams.get('v') || url.split('/').pop();
+    };
 
     useEffect(() => {
         const checkVideoWatched = async () => {
