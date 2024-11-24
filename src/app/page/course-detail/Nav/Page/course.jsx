@@ -94,10 +94,10 @@ export default function Course({ course, formattedTotalTime }) {
       <style>{styles}</style>
       <div className="container mt-4 max-w-3xl mx-auto">
         <div className="p-6 shadow-lg border border-gray-200 rounded-xl bg-gradient-to-r from-blue-50 to-white hover:scale-105 transition-all duration-300">
-          <h1 className="text-3xl font-extrabold mb-3 animated-gradient-text">
-            Nội dung khóa học
+          <h1 className="text-3xl font-medium mb-3 animated-gradient-text">
+           <strong>Nội dung khóa học</strong> 
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-3xl text-gray-600">
             <span className="badge bg-blue-500 text-white font-medium mr-2 pulse-badge inline-block">
               {course.baihocs.length} Bài giảng
             </span>

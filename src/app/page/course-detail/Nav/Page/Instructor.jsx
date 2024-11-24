@@ -156,7 +156,7 @@ export default function Instructor({ course }) {
           </p>
 
           <div className="follow-us mt-6">
-            <span className="text-lg font-semibold">Follow Me</span>
+            <span className="text-xl font-semibold">Follow Me</span>
             <ul className="social-links flex space-x-4 mt-3">
               {[
                 { icon: FaFacebook, color: "blue", label: "Facebook" },

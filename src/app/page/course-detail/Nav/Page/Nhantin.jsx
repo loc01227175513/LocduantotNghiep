@@ -302,22 +302,22 @@ const handleMessageSubmit = async (e, senderType) => {
                                                   ${!isConsecutive ? 'mt-4' : 'mt-1'}`}
                                     >
                                         <div className={`flex items-end space-x-2 max-w-[70%] 
-                                                      ${isUserSender ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                                            {!isConsecutive && (
-                                                <div className="w-8 h-8 rounded-full bg-blue-500 flex-shrink-0 
-                                                              flex items-center justify-center">
-                                                    <span className="text-white text-sm">
-                                                        {isUserSender ? nguoiDung?.ten?.[0] : giangVien[0]?.ten?.[0]}
-                                                    </span>
-                                                </div>
-                                            )}
+                                                                                               ${isUserSender ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                                                        {!isConsecutive && (
+                                                            <div className="w-8 h-8 rounded-full bg-blue-500 flex-shrink-0 
+                                                                          flex items-center justify-center">
+                                                                <span style={{ color: 'white', fontSize: '15px' }}>
+                                                                    {isUserSender ? nguoiDung?.ten?.[0] : giangVien[0]?.ten?.[0]}
+                                                                </span>
+                                                            </div>
+                                                        )}
                                             
-                                            <div className={`group relative p-3 rounded-lg 
-                                                          ${isUserSender 
-                                                            ? 'bg-blue-600 text-white' 
-                                                            : 'bg-gray-600 text-gray-100'}`}
+                                            <div className={`group relative p-3 rounded-lg  
+                                                              ${isUserSender 
+                                                                ? 'bg-blue-600 text-white' 
+                                                                : 'bg-gray-600 text-gray-100'}`}
                                             >
-                                                <p>{msg.content}</p>
+                                                <p style={{ color: 'white', fontSize: '15px' }}>{msg.content}</p>
                                                 <div className="absolute bottom-0 right-0 transform translate-y-full 
                                                               opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <div className="flex space-x-1 mt-1">
@@ -335,7 +335,7 @@ const handleMessageSubmit = async (e, senderType) => {
                                                 
                                                 {messageReactions[msg.id]?.length > 0 && (
                                                     <div className="absolute -bottom-2 right-2 bg-gray-700 
-                                                                  rounded-full px-2 py-0.5 text-xs">
+                                                                  rounded-full px-2 py-0.5 text-lg" style={{ color: 'white', fontSize: '15px' }}>
                                                         {messageReactions[msg.id].join(' ')}
                                                     </div>
                                                 )}
@@ -360,7 +360,7 @@ const handleMessageSubmit = async (e, senderType) => {
                                 name="noidung"
                                 value={userFormData.noidung}
                                 onChange={(e) => setUserFormData(prev => ({ ...prev, noidung: e.target.value }))}
-                                className="flex-grow bg-gray-600 text-white rounded-lg px-4 py-2 
+                                className="flex-grow text-2xl bg-gray-600 text-white rounded-lg px-4 py-2 
                                          focus:ring-2 focus:ring-blue-500"
                                 placeholder="Nhập tin nhắn..."
                                 rows="1"

@@ -97,10 +97,10 @@ const OutstandingCourse = () => {
                     </div>
                     <span className="font-bold text-blue-400 tracking-wide uppercase">Courses</span>
                   </div>
-                  <h2 className="title text-4xl font-extrabold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    Khám phá các khóa học nổi bật
+                  <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    <strong> Khám phá các khóa học nổi bật</strong>
                   </h2>
-                  <p className="post-title text-gray-400 text-lg max-w-2xl leading-relaxed">
+                  <p className="post-title text-gray-400 text-xl max-w-2xl leading-relaxed">
                     Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao
                   </p>
                 </div>
@@ -127,10 +127,10 @@ const OutstandingCourse = () => {
                     >
                       <div className="rts-single-course">
                         <a href={`/page/course-detail?id=${item.id}`} className="thumbnail relative">
-                          <Image width={500} height={300} src={item.hinh} alt="course" />
+                          <Image width={500} height={300} src={item.hinh} alt="course" style={{height:"150px"}} />
                           {/* Free course badge */}
                           {(item.gia === 0 || item.giamgia === 0) && (
-                            <div className="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg transform -rotate-12 z-10">
+                            <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg transform -rotate-12 z-10">
                               Miễn Phí
                             </div>
                           )}
@@ -173,7 +173,7 @@ const OutstandingCourse = () => {
                         </div>
                         <div className="course-card">
                           <a href={`/page/course-detail?id=${item.id}`} className="title-link">
-                            <h5 className="title">{item.ten}</h5>
+                            <h5 className="title ">{item.ten}</h5>
                           </a>
                           <p className="teacher">
                             <i className="fas fa-user-tie mr-2 text-blue-500"></i>
@@ -411,10 +411,10 @@ const CourseNew = () => {
                     </div>
                     <span className="font-bold text-blue-400 tracking-wide uppercase">Courses</span>
                   </div>
-                  <h2 className="title text-4xl font-extrabold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    Khám phá các khóa học mới
+                  <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    <strong> Khám phá các khóa học mới</strong>
                   </h2>
-                  <p className="post-title text-gray-400 text-lg max-w-2xl leading-relaxed">
+                  <p className="post-title text-gray-400 text-xl max-w-2xl leading-relaxed">
                     Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao
                   </p>
                 </div>
@@ -442,10 +442,10 @@ const CourseNew = () => {
                     >
                       <div className="rts-single-course">
                         <a href={`/page/course-detail?id=${item.id}`} className="thumbnail relative">
-                          <Image width={500} height={300} src={item.hinh} alt="course" />
+                          <Image width={500} height={300} src={item.hinh} alt="course " style={{height:"150px"}} />
                           {/* Free course badge */}
                           {(item.gia === 0 || item.giamgia === 0) && (
-                            <div className="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg transform -rotate-12 z-10">
+                            <div className="absolute top-3 left-3 bg-red-500   text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg transform -rotate-12 z-10">
                               Miễn Phí
                             </div>
                           )}
@@ -488,10 +488,10 @@ const CourseNew = () => {
                         </div>
                         <div className="course-item">
                           <a href={`/page/course-detail?id=${item.id}`} className="course-link">
-                            <h5 className="course-title">{item.ten}</h5>
+                            <h5 className="text-xl"><strong>{item.ten}</strong></h5>
                           </a>
-                          <p className="teacher-info">
-                            <i className="fas fa-user-circle text-blue-500 mr-2"></i>
+                                                   <p className="teacher-info flex items-center font-semibold  hover:text-blue-600 transition-all duration-300" >
+                            <i className="fas fa-user-circle text-blue-500 mr-3 text-xl"></i>
                             {item.giangvien}
                           </p>
                           <div className="details-container">
@@ -704,10 +704,10 @@ const Courseseal = () => {
                     </div>
                     <span className="font-bold text-blue-400 tracking-wide uppercase">Khóa học</span>
                   </div>
-                  <h2 className="title text-4xl font-extrabold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    Khám phá các khóa học giảm giá
+                  <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    <strong> Khám phá các khóa học giảm giá</strong>
                   </h2>
-                  <p className="post-title text-gray-400 text-lg max-w-2xl leading-relaxed">
+                  <p className="post-title text-gray-400 text-xl max-w-2xl leading-relaxed">
                     Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao
                   </p>
                 </div>
@@ -735,7 +735,7 @@ const Courseseal = () => {
                     >
                       <div className="rts-single-course">
                         <a href={`/page/course-detail?id=${item.id}`} className="thumbnail relative">
-                          <Image width={500} height={300} src={item.hinh} alt="course" />
+                          <Image width={500} height={300} src={item.hinh} alt="course" style={{height:"150px"}}/>
                           {item.giamgia < item.gia && (
                             <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg transform -rotate-12 z-10">
                               -{Math.round((1 - item.giamgia / item.gia) * 100)}% OFF
@@ -774,24 +774,24 @@ const Courseseal = () => {
                         </div>
                         <div className="course-container">
                           <a href={`/page/course-detail?id=${item.id}`} className="course-link">
-                            <h5 className="title">{item.ten}</h5>
+                            <h5 className=" text-xl"> <strong>{item.ten}</strong></h5>
                           </a>
-                          <p className="teacher">
-                            <i className="fas fa-user-circle text-blue-500 mr-2"></i>
+                          <p className="teacher flex items-center font-semibold hover:text-blue-600 transition-all duration-300" style={{ fontSize: '13px',marginTop:"-5px" }}>
+                            <i className="fas fa-user-circle text-blue-500 mr-4" style={{ fontSize: '15px' }}></i>
                             {item.giangvien}
                           </p>
-                          <div className="rating-and-price">
-                            <div className="rating-area">
-                              <span className="rating-score">{averageRating.toFixed(1)}</span>
-                              <div className="stars">{renderStars(averageRating)}</div>
+                          <div className="rating-and-price flex items-center justify-between gap-4">
+                            <div className="rating-area flex items-center gap-2">
+                              <span className="rating-score text-sm font-medium" style={{ fontSize: '11px' }}>{averageRating.toFixed(1)}</span>
+                              <div className="stars text-xs text-yellow-400">{renderStars(averageRating)}</div>
                             </div>
                             <div className="price-area">
                               {item.gia === 0 || item.giamgia === 0 ? (
-                                <span className="free-tag">Miễn Phí</span>
+                                <span className="free-tag font-medium text-green-600" style={{ fontSize: '13px' }}>Miễn Phí</span>
                               ) : (
-                                <div className="price-wrapper">
-                                  <span className="original">${item.gia}</span>
-                                  <span className="discounted">${item.giamgia}</span>
+                                <div className="price-wrapper flex items-center gap-1">
+                                  <span className="original line-through text-gray-400" style={{ fontSize: '13px' }}>${item.gia}</span>
+                                  <span className="discounted font-bold text-blue-600" style={{ fontSize: '13px' }}>${item.giamgia}</span>
                                 </div>
                               )}
                             </div>
@@ -1009,10 +1009,10 @@ const Coursefree = () => {
                     </div>
                     <span className="font-bold text-blue-400 tracking-wide uppercase">Khóa học</span>
                   </div>
-                  <h2 className="title text-4xl font-extrabold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    Khám phá các khóa học miễn phí
+                  <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    <strong> Khám phá các khóa học miến phí</strong>
                   </h2>
-                  <p className="post-title text-gray-400 text-lg max-w-2xl leading-relaxed">
+                  <p className="post-title text-gray-400 text-xl max-w-2xl leading-relaxed">
                     Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao
                   </p>
                 </div>
@@ -1040,8 +1040,8 @@ const Coursefree = () => {
                     >
                       <div className="rts-single-course">
                         <a href={`/page/course-detail?id=${item.id}`} className="thumbnail relative">
-                          <Image width={500} height={300} src={item.hinh} alt="course" />
-                          <div className="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg transform -rotate-12 z-10">
+                          <Image width={500} height={300} src={item.hinh} alt="course" style={{height:"150px"}} />
+                          <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg transform -rotate-12 z-10">
                             Miễn Phí
                           </div>
                         </a>

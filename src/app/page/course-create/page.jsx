@@ -65,7 +65,7 @@ const CourseCreatePage = () => {
     }
   };
 
-  const MenuItem = ({ icon: Icon, text, onClick, isActive }) => (
+   const MenuItem = ({ icon: Icon, text, onClick, isActive }) => (
     <motion.button
       whileHover={{ x: 5, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
@@ -101,7 +101,7 @@ const CourseCreatePage = () => {
         />
       </motion.div>
       <span className={`
-        text-sm font-medium
+        text-xl font-medium
         ${isActive ? 'text-white' : 'group-hover:text-blue-600'}
       `}>
         {text}
@@ -168,10 +168,10 @@ const CourseCreatePage = () => {
                   <h5 className="p-3 mb-4 text-xl font-bold text-gray-800 bg-gray-100 rounded-xl shadow-sm">
                     1. Lên kế hoạch cho khóa học của bạn
                   </h5>
-                  <div className="mb-6">
+                                  <div className="mb-6">
                     <MenuItem 
                       icon={Users}
-                      text="Người học dự định"
+                      text="Người học dự định lên"
                       onClick={() => setView("Mota")}
                       isActive={view === "Mota"}
                     />

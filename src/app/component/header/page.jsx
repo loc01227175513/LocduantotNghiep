@@ -394,7 +394,7 @@ export default function Header() {
                   <div className="category-area">
                     <div className="category-btn hover:bg-gray-100 transition-all duration-300 flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer border border-gray-200 hover:border-primary">
                       <i className="bi bi-grid text-xl text-primary"></i>
-                      <span className="font-medium">Thể loại</span>
+                      <span className="font-medium text-xl">Thể loại</span>
                       <i className="fas fa-chevron-down text-sm ml-auto transition-transform group-hover:rotate-180"></i>
                       <Categoryheader />
                     </div>
@@ -491,7 +491,7 @@ export default function Header() {
                               >
                                 &times;
                               </button>
-                              <div className="max-w-7xl mx-auto px-4 mt-12 bg-white">
+                              <div className="max-w-7xl mx-auto px-4 mt-12 bg-white ">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
                                   {/* Courses Section */}
                                   <div className="space-y-3 p-4 hover:bg-gray-50 rounded-xl transition-colors">
@@ -742,9 +742,9 @@ export default function Header() {
 
 
 
-                <div className="bg-white shadow-lg relative z-50">
-                  <nav className="max-w-7xl mx-auto px-4">
-                    <ul className="hidden md:flex flex-wrap items-center justify-start space-x-8">
+                <div className="bg-white shadow-md relative z-50">
+                  <nav className="max-w-8xl mx-auto">
+                    <ul className="hidden sm:flex flex-wrap items-center justify-start space-x-8" style={{ zoom: '80%' }}>
                       {/* Home */}
                       <li className="group relative py-6">
                         <Link
@@ -752,7 +752,7 @@ export default function Header() {
                           href="/"
                         >
                           <i className="fas fa-home text-lg" />
-                          <span className="font-medium">Trang chủ</span>
+                          <span className="font-medium text-3xl">Trang chủ</span>
                         </Link>
                       </li>
 
@@ -763,7 +763,7 @@ export default function Header() {
                           href="#"
                         >
                           <i className="fas fa-info-circle text-lg" />
-                          <span className="font-medium">Về chúng tôi</span>
+                          <span className="font-medium text-3xl">Về chúng tôi</span>
                         </Link>
                       </li>
 
@@ -774,15 +774,17 @@ export default function Header() {
                           href="#"
                         >
                           <i className="fas fa-graduation-cap text-lg" />
-                          <span className="font-medium">Khóa học</span>
+                          <span className="font-medium text-3xl">Khóa học</span>
                         </Link>
 
-                        <div className="hidden group-hover:block absolute left-1/2 transform -translate-x-1/2 top-full w-screen bg-white shadow-xl z-50">
-                          <div className="max-w-7xl mx-auto px-4">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
+                                               <div className="hidden group-hover:block absolute left-1/2 transform -translate-x-1/2 top-full w-screen bg-white shadow-xl z-50">
+                          <div className="mx-auto px-4">
+                            {/* Custom grid with two larger columns and one smaller column on medium screens and above */}
+                            <div className="grid grid-cols-1 md:grid-cols-[2fr_2fr_1fr] gap-8 p-8">
+                              
                               {/* Courses Section */}
                               <div className="space-y-4 p-6 hover:bg-gray-50 rounded-xl transition-colors">
-                                <h3 className="font-bold text-lg text-gray-800 border-b-2 border-blue-500 pb-2">
+                                <h3 className="font-bold text-2xl text-gray-800 border-b-2 border-blue-500 pb-2">
                                   Khóa học
                                 </h3>
                                 <ul className="space-y-4">
@@ -810,10 +812,10 @@ export default function Header() {
                                   </li>
                                 </ul>
                               </div>
-
+                        
                               {/* Other Section */}
                               <div className="space-y-4 p-6 hover:bg-gray-50 rounded-xl transition-colors">
-                                <h3 className="font-bold text-lg text-gray-800 border-b-2 border-green-500 pb-2">
+                                <h3 className="font-bold text-2xl text-gray-800 border-b-2 border-green-500 pb-2">
                                   Khác
                                 </h3>
                                 <ul className="space-y-4">
@@ -841,19 +843,20 @@ export default function Header() {
                                   </li>
                                 </ul>
                               </div>
-
+                        
                               {/* Promo Section */}
                               <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
                                 <Link href="/page/KhuyenMai" className="block text-center space-y-4">
                                   <div className="w-16 h-16 mx-auto bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center transform hover:rotate-12 transition-transform">
                                     <i className="fas fa-gift text-2xl text-white" />
                                   </div>
-                                  <p className="font-bold text-lg bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                                  <p className="font-bold text-2xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                                     Nhận Khuyến Mãi
                                   </p>
                                   <span className="text-gray-600">Khám phá ưu đãi đặc biệt</span>
                                 </Link>
                               </div>
+                              
                             </div>
                           </div>
                         </div>
@@ -866,7 +869,7 @@ export default function Header() {
                           href="#"
                         >
                           <i className="fas fa-columns text-lg" />
-                          <span className="font-medium">Trang tính</span>
+                          <span className="font-medium text-3xl">Trang tính</span>
                         </Link>
                         <ul className="hidden group-hover:block absolute right-0 top-full bg-white shadow-lg rounded-lg py-3 min-w-[200px] z-50">
                           <li>
@@ -913,7 +916,7 @@ export default function Header() {
                   data.vaitro !== 0 ? (
                     <Link href="/page/lecturer-dashboard" className="group ml-4">
                       <div className="m-4 transform transition-all duration-300 hover:scale-105">
-                        <p className="p-3 m-0 font-bold text-center rounded-lg bg-gradient-to-r from-[#ff6b6b] to-[#1e3c72] text-white shadow-lg hover:shadow-xl flex items-center justify-center gap-2 hover:from-[#1e3c72] hover:to-[#ff6b6b] transition-all duration-300 animate-gradient">
+                        <p className="p-3 m-0 font-bold text-center text-xl rounded-lg bg-gradient-to-r from-[#ff6b6b] to-[#1e3c72] text-white shadow-lg hover:shadow-xl flex items-center justify-center gap-2 hover:from-[#1e3c72] hover:to-[#ff6b6b] transition-all duration-300 animate-gradient">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5 animate-bounce"
@@ -1052,7 +1055,7 @@ export default function Header() {
                       </>
                     ) : (
                       <div className="flex items-center gap-4">
-                        <button onClick={handleLogout} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-full transition-colors">
+                        <button onClick={handleLogout} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-full transition-colors text-xl">
                           Đăng xuất
                         </button>
                         <div className="relative" ref={dropdownRef}>

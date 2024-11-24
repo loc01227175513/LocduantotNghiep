@@ -23,7 +23,7 @@ export default function HorizontalScrollImages() {
       align="center"
       minH="10vh"
       overflow="hidden"
-      w="600px"
+      w="1250px"
       mx="auto"
       position="relative"
       bg="gray.50"
@@ -48,44 +48,44 @@ export default function HorizontalScrollImages() {
         zIndex: 2,
       }}
     >
-      <Flex
-        animation={`${scroll} 30s linear infinite`}
-        minW="200%"
-        align="center"
+    <Flex
+  animation={`${scroll} 10s linear infinite`} // Reduced from 30s to 15s
+  minW="200%"
+  align="center"
+  _hover={{
+    animationPlayState: 'paused'
+  }}
+>
+  {[...images, ...images].map((src, index) => (
+    <Box
+      key={index}
+      mx={4}
+      boxShadow="lg"
+      borderRadius="xl"
+      p={3}
+      bg="white"
+      transition="all 0.3s ease"
+      _hover={{
+        transform: 'scale(1.05)',
+        boxShadow: '2xl',
+      }}
+    >
+      <Image
+        src={src}
+        alt={`icon-${index}`}
+        boxSize="8rem"
+        border="1px"
+        borderColor="gray.100"
+        borderRadius="lg"
+        p={2}
+        transition="all 0.3s ease"
         _hover={{
-          animationPlayState: 'paused'
+          borderColor: 'blue.200',
         }}
-      >
-        {[...images, ...images].map((src, index) => (
-          <Box
-            key={index}
-            mx={4}
-            boxShadow="lg"
-            borderRadius="xl"
-            p={3}
-            bg="white"
-            transition="all 0.3s ease"
-            _hover={{
-              transform: 'scale(1.05)',
-              boxShadow: '2xl',
-            }}
-          >
-            <Image
-              src={src}
-              alt={`icon-${index}`}
-              boxSize="8rem"
-              border="1px"
-              borderColor="gray.100"
-              borderRadius="lg"
-              p={2}
-              transition="all 0.3s ease"
-              _hover={{
-                borderColor: 'blue.200',
-              }}
-            />
-          </Box>
-        ))}
-      </Flex>
+      />
+    </Box>
+  ))}
+</Flex>
     </Flex>
   );
 }

@@ -79,18 +79,18 @@ export default function FooterComponent() {
                   <input 
                     type="email" 
                     className="w-full px-4 py-3 rounded-l-lg border focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                    placeholder="Enter your email"
+                    placeholder="Nhập email của bạn"
                   />
                   <button 
                     type="submit" 
                     className="px-6 py-3 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition duration-300"
                   >
-                    Subscribe
+                  Gữi
                   </button>
                 </div>
                 <label className="flex items-center">
                   <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                  <span className="ml-2 text-sm text-gray-600">
+                  <span className="ml-2 text-xl text-gray-600">
                   Tôi đồng ý với các điều khoản của chính sách dịch vụ và quyền riêng tư
                   </span>
                 </label>

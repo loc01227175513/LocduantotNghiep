@@ -145,13 +145,13 @@ const Cart = () => {
         <div className="table-responsive shadow-lg p-4 mb-5 bg-white rounded-xl hover:shadow-2xl transition-all duration-500 animate-slideIn">
           <table className="table table-hover align-middle">
             <thead className="bg-indigo-100">
-              <tr className="text-indigo-700">
-                <th className="py-4"></th>
-                <th className="py-4">Hình ảnh</th>
-                <th className="py-4">Sản phẩm</th>
-                <th className="py-4">Giá</th>
-                <th className="py-4">Giảm Giá</th>
-                <th className="py-4">Tổng phụ</th>
+              <tr className="text-indigo-700 ">
+                <th className="py-4 text-xl"></th>
+                <th className="py-4 text-xl">Hình ảnh</th>
+                <th className="py-4 text-xl">Sản phẩm</th>
+                <th className="py-4 text-xl">Giá</th>
+                <th className="py-4 text-xl" >Giảm Giá</th>
+                <th className="py-4 text-xl">Tổng phụ</th>
               </tr>
             </thead>
             <tbody>
@@ -179,12 +179,12 @@ const Cart = () => {
                         style={{ maxWidth: '120px' }} 
                       />
                     </td>
-                    <td className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
-                      {khoahoc.ten}
+                    <td className="font-semibold  text-gray-800 hover:text-indigo-600 transition-colors duration-300">
+                      <h3 className='text-2xl'>{khoahoc.ten}</h3>
                     </td>
-                    <td className="text-gray-600 animate-pulse">đ{khoahoc.gia}</td>
-                    <td className="text-red-500 animate-bounce-soft">-đ{khoahoc.giamgia}</td>
-                    <td className="font-bold text-indigo-600 animate-numberChange">đ{khoahoc.giamgia}</td>
+                    <td className="text-gray-600 animate-pulse text-2xl">đ{khoahoc.gia}</td>
+                    <td className="text-red-500 animate-bounce-soft text-2xl">-đ{khoahoc.giamgia}</td>
+                    <td className="font-bold text-indigo-600 animate-numberChange text-2xl">đ{khoahoc.giamgia}</td>
                   </tr>
                 ))
               ))}
@@ -210,29 +210,29 @@ const Cart = () => {
           <div className="col-md-6 animate-slideInRight">
             <div className="card shadow-lg rounded-xl border-0 hover:shadow-2xl transition-all duration-500">
               <div className="card-header bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-t-xl">
-                <h3 className="mb-0 py-3 px-4">💰 Tổng Giỏ Hàng</h3>
+                <h3 className="mb-0 py-3 px-4 text-white text-xl">💰 Tổng Giỏ Hàng</h3>
               </div>
               <div className="card-body p-4">
                 <table className="table mb-3">
                   <tbody>
                     <tr>
                       <th className="text-gray-600">Tổng phụ</th>
-                      <td className="text-right">đ{totalBeforeDiscount}</td>
+                      <td className="text-right text-3xl">đ{totalBeforeDiscount}</td>
                     </tr>
                     <tr>
                       <th className="text-gray-600">Giảm giá</th>
-                      <td className="text-right text-red-500">-đ{totalDiscount}</td>
+                      <td className="text-right text-3xl text-red-500">-đ{totalDiscount}</td>
                     </tr>
                     <tr className="bg-indigo-50 rounded">
                       <th className="text-indigo-700">Tổng cộng</th>
-                      <td className="text-right"><strong className="text-2xl text-indigo-700">đ{totalBeforeDiscount - totalDiscount}</strong></td>
+                      <td className="text-right"><strong className="text-3xl text-indigo-700 ">đ{totalBeforeDiscount - totalDiscount}</strong></td>
                     </tr>
                   </tbody>
                 </table>
                 {parsedData ? (
                   <div className="flex">
                     <a href="/page/checkout" 
-                       className="bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-4 px-6 rounded-xl text-center w-full hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200">
+                       className="bg-gradient-to-r text-3xl from-green-500 to-emerald-600 text-white font-bold py-4 px-6 rounded-xl text-center w-full hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200">
                       Tiến hành thanh toán →
                     </a>
                   </div>

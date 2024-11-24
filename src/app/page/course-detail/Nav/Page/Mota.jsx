@@ -226,6 +226,7 @@ export default function Mota({ course }) {
                       src={item.hinh}
                       alt={item.ten}
                       className="course-image w-full  object-cover"
+                      style={{height: '180px'}}
                     />
 
                     <div className="absolute top-4 right-4 flex items-center space-x-2">
@@ -250,19 +251,19 @@ export default function Mota({ course }) {
                   </div>
 
                   <div className="p-5">
-                    <div className="flex gap-2 mb-3">
-                      <span className="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
-                        {item.chude.ten}
+                    <div className="flex gap-2 mb-5">
+                      <span className="px-3  py-1 text-xl bg-blue-100 text-blue-800 rounded-full">
+                       <strong> {item.chude.ten}</strong>
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
-                      <span className="flex items-center">
-                        <FaCalendar className="mr-2 animated-icon" />
+                      <span className="flex items-center text-xl">
+                        <FaCalendar className="mr-2 animated-icon " />
                         {item.baihocs.length} Bài học
                       </span>
-                      <span className="flex items-center">
-                        <FaUsers className="mr-2 animated-icon" />
+                      <span className="flex items-center text-xl">
+                        <FaUsers className="mr-2 animated-icon " />
                         {course.thanhToan.length} Học viên
                       </span>
                     </div>
@@ -274,7 +275,7 @@ export default function Mota({ course }) {
                           {averageRating.toFixed(1)}
                         </span>
                       </div>
-                      <div className="text-lg font-bold text-green-600">
+                      <div className="text-xl font-bold text-green-600">
                         {item.gia === 0 || item.giamgia === 0 ? 'Miễn phí' : `$${item.giamgia}`}
                       </div>
                     </div>

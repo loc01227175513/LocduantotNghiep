@@ -28,16 +28,16 @@ export default function Homecomponent() {
 
   return (
     <div data-aos="zoom-in" data-aos-offset="200" data-aos-duration="1500">
-      <div className="mt-32">
+      <div className="mt-60 ">
         <div data-aos="zoom-in">
           <Banner />
         </div>
 
-        <div data-aos="zoom-in">
+           <div data-aos="zoom-in" className="m-8 ">
           <HorizontalScrollImages />
         </div>
 
-        <div data-aos="zoom-in">
+        <div data-aos="zoom-in ">
           <NextCategory />
         </div>
 
@@ -105,13 +105,13 @@ export default function Homecomponent() {
                           className="hover-scale"
                         />
                       </div>
-                      <h4 className="text-white mt-3 mb-2">{item.title}</h4>
-                      <p className="text-light">{item.desc}</p>
+                      <h4 className="text-white mt-3 mb-2 text-xl"><strong>{item.title}</strong></h4>
+                      <p className="text-light  text-xl">{item.desc}</p>
                     </div>
                   ))}
                 </div>
 
-                <a href="/page/Cours-Filter" className="rts-btn btn-primary mt-5 hover-effect">
+                <a href="/page/Cours-Filter" className="rts-btn btn-primary mt-5 hover-effect border-white">
                   <span className="text-white">Xem tất cả các khóa học</span>
                   <i className="fas fa-arrow-right ml-2"></i>
                 </a>
@@ -144,7 +144,7 @@ export default function Homecomponent() {
                       <h2 className="counter-value mb-2">
                         <span className="counter">65,972</span>+
                       </h2>
-                      <p className="fact-label">Tổng Học Viên Đăng Ký</p>
+                      <p className="text-xl">Tổng Học Viên Đăng Ký</p>
                     </div>
 
                     <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.4s">
@@ -154,7 +154,7 @@ export default function Homecomponent() {
                       <h2 className="counter-value mb-2">
                         <span className="counter">5,321</span>+
                       </h2>
-                      <p className="fact-label">Học Viên Tốt Nghiệp</p>
+                      <p className="text-xl">Học Viên Tốt Nghiệp</p>
                     </div>
 
                     <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.6s">
@@ -164,7 +164,7 @@ export default function Homecomponent() {
                       <h2 className="counter-value mb-2">
                         <span className="counter">44,239</span>+
                       </h2>
-                      <p className="fact-label">Học Viên Đang Học</p>
+                      <p className="text-xl">Học Viên Đang Học</p>
                     </div>
 
                     <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.8s">
@@ -174,7 +174,7 @@ export default function Homecomponent() {
                       <h2 className="counter-value mb-2">
                         <span className="counter">75,992</span>+
                       </h2>
-                      <p className="fact-label">Đánh Giá Tích Cực</p>
+                      <p className="text-xl">Đánh Giá Tích Cực</p>
                     </div>
 
                   </div>

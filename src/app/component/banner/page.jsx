@@ -59,10 +59,10 @@ const Banner = () => {
                 
                 <h1 className="text-5xl font-extrabold leading-tight bg-gradient-to-r from-gray-900 via-blue-600 to-gray-600 bg-clip-text text-transparent animate-gradient">
                   {banner.tieude}
-                  <span className="block text-blue-500">việc học trực tuyến</span>
+                  <span className="block text-blue-500 font-bold">việc học trực tuyến</span>
                 </h1>
                 
-                <p className="text-gray-600 text-lg max-w-2xl leading-relaxed backdrop-blur-sm">
+                <p className="text-gray-600 text-2xl max-w-2xl leading-relaxed backdrop-blur-sm">
                   {banner.mota}
                 </p>
 
@@ -84,7 +84,7 @@ const Banner = () => {
                     </div>
                     <div className="space-y-1">
                       <h6 className="font-bold text-gray-900">2000+ sinh viên</h6>
-                      <span className="text-sm text-gray-500">Tham gia lớp học trực tuyến của chúng tôi</span>
+                      <span className="text-xl text-gray-500">Tham gia lớp học trực tuyến của chúng tôi</span>
                     </div>
                   </div>
                 </div>

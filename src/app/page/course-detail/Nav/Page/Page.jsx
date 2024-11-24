@@ -61,7 +61,7 @@ export default function Page({ course, formattedTotalTime }) {
     { label: 'Thông tin khóa học', value: 'mota' },
     { label: 'Nội dung khóa học', value: 'course' },
     { label: 'Người hướng dẫn', value: 'instructor' },
-    { label: 'Ôn tập', value: 'review' },
+    { label: 'Đánh giá', value: 'review' },
     { label: 'Nhắn tin', value: 'nhan-tin' }
   ];
 

@@ -214,7 +214,7 @@ function TrangGiaKhoaHoc() {
                     </svg>
                     <h3 className="text-xl font-bold text-gray-800">Đặt giá khóa học của bạn</h3>
                 </div>
-                <p className="mb-6 text-gray-600 text-sm leading-relaxed">
+                <p className="mb-6 text-gray-600 text-xl leading-relaxed">
                     Chọn tiền tệ ưu tiên và cấp giá của bạn.Các khóa học miễn phí phải dưới 2 giờ trong tổng chiều dài.
                     Các khóa học kiểm tra thực hành không thể được cung cấp miễn phí.
                 </p>

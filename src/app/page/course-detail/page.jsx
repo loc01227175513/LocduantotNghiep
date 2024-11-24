@@ -319,9 +319,9 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
                         </div>
                       </div>
                     </div>
-                    <div className="price-area">
+                    <div className="price-area ">
                       {course.gia === 0 && course.giamgia === 0 ? (
-                        <h3 className="title price-free">Miễn phí</h3>
+                                               <p className=" p-4 text-white font-bold text-4xl text-center w-full" >Miễn phí</p>
                       ) : (
                         <>
                           <h3 className="title price-current bg-white">
@@ -348,7 +348,7 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
                       </Link>
                     ) : isCourseRegistered || course.gia === 0 || course.giamgia == 0 ? (
                       <Link href={`/page/Study?id=${course.id}`}>
-                        <button onClick={handleThanhToanKhoaHocFree} className="rts-btn btn-primary">
+                        <button onClick={handleThanhToanKhoaHocFree} className="rts-btn btn-primary p-4 " style={{fontSize:"13px"}}>
                           Đi đến khóa học
                         </button>
                       </Link>
@@ -374,55 +374,55 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
 
                       </>
                     )}
-                    <div className="p-1 font-bold text-black what-includes">
-                      <span className="m">Đảm bảo hoàn lại tiền 30 ngày</span>
-                      <h5 className="title">Khóa học này bao gồm:</h5>
-                      <div className="single-include">
-                        <div className="left">
-                          <i className="fa-light fa-chart-bar" />
-                          <span>Cấp độ</span>
-                        </div>
-                        <div className="right">
-                          <span>{course.trinhdo}</span>
-                        </div>
-                      </div>
-                      <div className="single-include">
-                        <div className="left">
-                          <i className="fa-light fa-timer" />
-                          <span>Khoảng thời gian</span>
-                        </div>
-                        <div className="right">
-                          <span>{formattedTotalTime}</span>
-                        </div>
-                      </div>
-                      <div className="single-include">
-                        <div className="left">
-                          <i className="fa-regular fa-floppy-disk" />
-                          <span>Chủ thể</span>
-                        </div>
-                        <div className="right">
-                          <span> {course.chude}</span>
-                        </div>
-                      </div>
-                      <div className="single-include">
-                        <div className="left">
-                          <i className="fa-regular fa-pen-to-square" />
-                          <span>Cập nhật</span>
-                        </div>
-                        <div className="right">
-                          <span>{course.created_at}</span>
-                        </div>
-                      </div>
-                      <div className="single-include">
-                        <div className="left">
-                          <i className="fa-sharp fa-light fa-file-certificate" />
-                          <span>Giấy chứng nhận</span>
-                        </div>
-                        <div className="right">
-                          <span>Giấy chứng nhận hoàn thành </span>
-                        </div>
-                      </div>
-                    </div>
+                                                          <div className="p-1 font-bold text-black what-includes text-left">
+                                        <span className="m text-left block">Đảm bảo hoàn lại tiền 30 ngày</span>
+                                        <h5 className="title text-left">Khóa học này bao gồm:</h5>
+                                        <div className="single-include flex">
+                                          <div className="left">
+                                            <i className="fa-light fa-chart-bar" />
+                                            <span className="text-left">Cấp độ</span>
+                                          </div>
+                                          <div className="right">
+                                            <span className="text-left">{course.trinhdo}</span>
+                                          </div>
+                                        </div>
+                                        <div className="single-include flex">
+                                          <div className="left">
+                                            <i className="fa-light fa-timer" />
+                                            <span className="text-left">Khoảng thời gian</span>
+                                          </div>
+                                          <div className="right">
+                                            <span className="text-left">{formattedTotalTime}</span>
+                                          </div>
+                                        </div>
+                                        <div className="single-include flex">
+                                          <div className="left">
+                                            <i className="fa-regular fa-floppy-disk" />
+                                            <span className="text-left">Chủ thể</span>
+                                          </div>
+                                          <div className="right">
+                                            <span className="text-left">{course.chude}</span>
+                                          </div>
+                                        </div>
+                                        {/* <div className="single-include flex">
+                                          <div className="left">
+                                            <i className="fa-regular fa-pen-to-square" />
+                                            <span className="text-left">Cập nhật</span>
+                                          </div>
+                                          <div className="right">
+                                            <span className="text-left">{course.created_at}</span>
+                                          </div>
+                                        </div>
+                                        <div className="single-include flex">
+                                          <div className="left">
+                                            <i className="fa-sharp fa-light fa-file-certificate" />
+                                            <span className="text-left">Giấy chứng nhận</span>
+                                          </div>
+                                          <div className="right">
+                                            <span className="text-left">Giấy chứng nhận hoàn thành</span>
+                                          </div>
+                                        </div> */}
+                                      </div>
                   </div>
                   {/* single course-sidebar end */}
                 </div>
@@ -545,12 +545,17 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
     text-shadow: 0 2px 15px rgba(79, 70, 229, 0.2);
   }
 
-  .price-free {
-    font-size: 2.5rem;
-    background: linear-gradient(135deg, #10b981, #059669);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+ .price-free {
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #10b981, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: 100%;
+}
 
   .what-includes span {
     color: #4b5563;
@@ -820,7 +825,7 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
   /* Price Area Styling */
   .price-area {
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     background: linear-gradient(135deg, #6366f1, #ec4899, #8b5cf6);
     border-radius: 16px;
     color: white;
@@ -1188,6 +1193,7 @@ export default function Coursedetailcomponent() {
                     fontSize: "2.5rem",
                     marginTop: "20px",
                     fontWeight: "700",
+                    paddingLeft: "15px",
                     color: "white",
                     overflow: "visible",
                     whiteSpace: "nowrap",
@@ -1227,7 +1233,12 @@ export default function Coursedetailcomponent() {
                       borderRadius: "20px"
                     }}>
                       <i className="fa-light fa-calendar-lines-pen" style={{ marginRight: "8px" }} />
-                      <span>Cập nhật lần cuối {course?.created_at}</span>
+                                        <span>
+                        Cập nhật lần cuối {
+                          course?.created_at && 
+                          `${new Date(course.created_at).getDate()}/${new Date(course.created_at).getMonth() + 1}/${new Date(course.created_at).getFullYear()}`
+                        }
+                      </span>
                     </div>
                   </div>
                   <div className="author-area" style={{
@@ -1241,29 +1252,28 @@ export default function Coursedetailcomponent() {
                         margin: "0",
                         animation: "popIn 0.5s ease-out"
                       }}>
-                        <span className="animated-text" style={{
-                          fontSize: "1.2em",
-                          fontWeight: "700"
-                        }}>Qua</span>
-                        <span style={{
+                        <span className="animated-text text-white text-xl" >Giảng Viên:</span>
+                        <span className="text-2xl" style={{
                           marginLeft: "5px",
                           background: "linear-gradient(45deg, #fff, #ffd700)",
                           WebkitBackgroundClip: "text",
                           WebkitTextFillColor: "transparent"
-                        }}>{course.giangvien}.</span>
+                        }}>
+                          <strong>{course.giangvien}</strong>.</span>
                       </h6>
                     </div>
                     <p style={{
                       margin: "10px 0 0 0",
                       animation: "popIn 0.5s ease-out 0.2s backwards"
                     }}>
-                      <span className="animated-text">Thể loại: </span>
-                      <span style={{
+                      <span className="animated-text text-white text-xl">Thể loại: </span>
+                      <span className="text-white"  style={{
                         backgroundColor: "rgba(255,255,255,0.2)",
                         padding: "3px 15px",
                         borderRadius: "20px",
                         transition: "all 0.3s ease",
                         cursor: "pointer"
+                       
                       }} onMouseOver={(e) => {
                         e.target.style.backgroundColor = "rgba(255,215,0,0.3)";
                         e.target.style.transform = "translateX(5px)";
@@ -1334,7 +1344,7 @@ export default function Coursedetailcomponent() {
                             {/* Single course style */}
                             <div className="single-course-style-three">
                               <a href={`/page/course-detail?id=${course.id}`} className="thumbnail">
-                                <Image width={500} height={300} src={course.hinh} alt="course" />
+                                <Image width={500} height={300} src={course.hinh} alt="course" style={{height:"180px"}} />
                                 <div className="course-tags">
                                   {course.gia === 0 ? (
                                     <span className="tag free">Miễn phí</span>
@@ -1345,7 +1355,7 @@ export default function Coursedetailcomponent() {
                               </a>
                               <div className="body-area">
                                 <div className="course-top relative">
-                                  <div className="tags">Người bán tốt nhất</div>
+                                  {/* <div className="tags">Người bán tốt nhất</div> */}
                                   <div className="price">
                                     {course.gia === 0 || course.giamgia === 0 ? (
                                       <span className="text-green-500 font-bold">Miễn Phí</span>
@@ -1359,15 +1369,15 @@ export default function Coursedetailcomponent() {
                                 </div>
                                 <div className="course-card hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 p-4 rounded-lg">
                                   <a href={`/page/course-detail?id=${course.id}`} className="block">
-                                    <h5 className="text-xl font-medium hover:text-primary-600 transition-all duration-300 ease-in-out">
-                                      {course.ten}
+                                    <h5 className="text-2xl font-medium hover:text-primary-600 transition-all duration-300 ease-in-out">
+                                     <strong>{course.ten}</strong> 
                                     </h5>
                                   </a>
 
                                   <div className="flex items-center justify-between mt-3">
-                                    <div className="flex items-center gap-3 group">
+                                    <div className="flex items-center  group">
                                       <i className="fa-light fa-user-teacher text-2xl text-primary-500 transition-all duration-300 ease-in-out transform group-hover:scale-110 group-hover:rotate-6" />
-                                      <span className="text-sm text-gray-700 transition-colors duration-300 group-hover:text-primary-600">{course.giangvien}</span>
+                                      <span className="text-xl text-gray-700 transition-colors duration-300 group-hover:text-primary-600">{course.giangvien}</span>
                                     </div>
 
                                     <div className="flex items-center gap-2 transition-transform duration-300 hover:scale-105">
@@ -1381,7 +1391,7 @@ export default function Coursedetailcomponent() {
                                       <i className="fa-light fa-calendar-lines-pen text-2xl text-primary-500 transition-all duration-300 ease-in-out transform group-hover:scale-110 group-hover:rotate-6" />
                                       <div className="transition-colors duration-300 group-hover:text-primary-600">
                                         <span className="font-medium">{course.baihocs}</span>
-                                        <span className="text-sm ml-1">Bài Học</span>
+                                        <span className="text-xl ml-1">Bài Học</span>
                                       </div>
                                     </div>
 
@@ -1389,7 +1399,7 @@ export default function Coursedetailcomponent() {
                                       <i className="fa-light fa-users text-2xl text-primary-500 transition-all duration-300 ease-in-out transform group-hover:scale-110 group-hover:rotate-6" />
                                       <div className="transition-colors duration-300 group-hover:text-primary-600">
                                         <span className="font-medium">{course.dangky}</span>
-                                        <span className="text-sm ml-1">Sinh Viên</span>
+                                        <span className="text-xl ml-1">Sinh Viên</span>
                                       </div>
                                     </div>
                                   </div>
@@ -1600,16 +1610,15 @@ export default function Coursedetailcomponent() {
 }
 
 .animated-text {
-  background: linear-gradient(90deg, #ffd700, #fff, #ffd700);
+  background: linear-gradient(90deg, #ffd700, transparent, #ffd700);
   background-size: 200% auto;
-  color: transparent;
+  color: white;
   background-clip: text;
   -webkit-background-clip: text;
   animation: textShine 3s linear infinite;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   transition: all 0.3s ease;
 }
-
 .animated-text:hover {
   transform: scale(1.05);
   letter-spacing: 1px;

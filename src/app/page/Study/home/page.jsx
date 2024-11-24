@@ -517,7 +517,7 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
             <motion.h3 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-lg font-semibold text-gray-800 mb-4"
+                className="text-2xl font-semibold text-gray-800 mb-4"
             >
                 Thông tin khóa học
             </motion.h3>
@@ -546,13 +546,13 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
                             transition={{ delay: index * 0.1 }}
                         >
                             <motion.p 
-                                className="text-sm text-gray-500"
+                                className="text-2xl text-gray-500"
                                 whileHover={{ scale: 1.02 }}
                             >
                                 {item.label}
                             </motion.p>
                             <motion.p 
-                                className="font-medium text-gray-800"
+                                className="font-medium  text-gray-800"
                                 whileHover={{ scale: 1.02 }}
                             >
                                 {item.value}
@@ -803,7 +803,7 @@ const AnimatedDisclosure = ({ title, isOpen, onToggle, content }) => (
             <motion.span
                 initial={false}
                 animate={{ scale: isOpen ? 1.05 : 1 }}
-                className="text-lg font-medium text-gray-800"
+                className="text-2xl font-medium text-gray-800"
             >
                 {title}
             </motion.span>
@@ -1048,7 +1048,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
                 >
                     <div className="flex justify-between items-center">
                         <h2 className="text-2xl font-bold text-gray-900">Con đường học tập của tôi</h2>
-                        <div className="text-sm font-medium text-gray-500">
+                        <div className="text-xl font-medium text-gray-500">
                            Tiến triển: {getTotalProgress(khoahoc?.baihocs)}%
                         </div>
                     </div>
@@ -1071,7 +1071,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
                                                     <span className="font-medium text-gray-900">{lesson.ten}</span>
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <span className="text-sm text-gray-500">
+                                                    <span className="text-xl text-gray-500">
                                                         {lesson.video.filter(v => watchedVideos[v.id]).length} / {lesson.video.length} hoàn thành
                                                     </span>
                                                     <motion.div
@@ -1115,9 +1115,9 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
                                                                             <span className={`text-xl font-semibold ${isWatched ? 'text-gray-500' : 'text-gray-900'}`}>
                                                                                 {video.ten}
                                                                             </span>
-                                                                            <span className="text-sm text-gray-500">{video.thoiluong}</span>
+                                                                            <span className="text-xl text-gray-500">{video.thoiluong}</span>
                                                                         </div>
-                                                                        <div className="text-xs text-gray-500">
+                                                                        <div className="text-xl text-gray-500">
                                                                             {isWatched ? 'Hoàn thành' : 'Không bắt đầu'}
                                                                         </div>
                                                                     </div>

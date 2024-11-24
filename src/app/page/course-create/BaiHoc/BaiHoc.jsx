@@ -113,7 +113,7 @@ const NoiDungBaiHoc = ({
                         className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-blue-700"
                         {...provided.dragHandleProps}
                       >
-                        <span className="font-semibold text-white text-lg">{item.name}</span>
+                        <span className="font-semibold text-white text-2xl">{item.name}</span>
                         <div className="flex space-x-3">
                           <button
                             onClick={() => {
