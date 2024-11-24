@@ -30,7 +30,7 @@ export default function Khoahoccuatoi() {
   return (
     <div className="overflow-y-scroll col-lg-9 h-[550px]">
       <div className="exrolled-course-wrapper-dashed">
-       <p className="text-black text-3xl font-bold">khóa học của tôi</p>
+        <p className="text-black text-3xl font-bold">khóa học của tôi</p>
 
         <ul className="nav nav-tabs custom-tabs" id="myTab" role="tablist">
           {[
@@ -215,285 +215,113 @@ const Khoahocdanghoc = () => {
       .then((res) => {
         setKhoahocdanghoc(res.data);
         // console.log(res.data);
-        
-        setIsLoading(false);})
-        .catch((error) => {
-          console.error("Error fetching dashboard data:", error);
-          setIsLoading(false);
-        });
-    }, []);
-  
-    const DanhGiaTrungBinh = khoahocdanghoc1.map((item) => {
-      if (item.danhgia?.length > 0) {
-        const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia), 0);
-        return (total / item.danhgia.length).toFixed(1);
-      }
-      return 0;
-    });
-  
-    return (
-      <div className="courses-masonry">
-        {isLoading ? (
-          <div className="loading-skeleton">
-            {[1, 2, 3].map((n) => (
-              <div key={n} className="skeleton-card animate-pulse" />
-            ))}
-          </div>
-        ) : (
-          <div className="flex gap-4 w-full overflow-x-scroll">
-            {khoahocdanghoc1.map((item, index) => (
-              <div
-                className="max-w-[300px] "
-                key={index}
-                
-              >
-                <Link href={`/page/course-detail?id=${item.id}`} className="">
-                  <div className="course-card">
-                    <div className="course-image course-img-2 p-4 rounded-2xl relative">
-                    <div className="category-badge absolute text-2xl p-1 text-black bg-blue-100 rounded-lg ">
-                        {item.chuDe.ten}
-                        
-  
-                      </div>
+
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching dashboard data:", error);
+        setIsLoading(false);
+      });
+  }, []);
+
+  const DanhGiaTrungBinh = khoahocdanghoc1.map((item) => {
+    if (item.danhgia?.length > 0) {
+      const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia), 0);
+      return (total / item.danhgia.length).toFixed(1);
+    }
+    return 0;
+  });
+
+  return (
+    <div className="courses-masonry">
+      {isLoading ? (
+        <div className="loading-skeleton">
+          {[1, 2, 3].map((n) => (
+            <div key={n} className="skeleton-card animate-pulse" />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+          {khoahocdanghoc1.map((item, index) => (
+            <div key={index} className="w-full">
+              <Link href={`/page/course-detail?id=${item.id}`}>
+                <div className="course-card bg-white rounded-lg shadow hover:shadow-md transition-all h-full">
+                  <div className="relative p-3">
+                    <div className="absolute top-9 left-10 z-10 text-base font-medium py-1 px-2 text-black bg-blue-100 rounded">
+                      {item.chuDe.ten}
+                    </div>
+
+                    <div className="aspect-[16/9] w-full overflow-hidden rounded-lg">
                       <Image
-                        width={250}
-                        height={120}
+                        width={300}
+                        height={169}
                         src={item.hinh}
                         alt={item.ten}
-                        className="hover-scale max-w-full max-h-[150px] rounded-2xl"
+                        className="object-cover w-full h-full hover:scale-105 transition-transform"
                       />
-                      <div className="m-2 rounded-2xl ">
-                     
-                      <div className="">
-                      <div className="course-meta">
-                        
-                       
-                        <div className="flex justify-start gap-4 p-2 mt-4">
-                        <span className="lessons">
-                          <i className="fas fa-book-open" />
+                    </div>
+
+                    <div className="p-3 space-y-3">
+                      <div className="flex text-lg text-gray-600 space-x-4">
+                        <span className="flex items-center">
+                          <i className="fas fa-book-open text-gray-400 mr-2" />
                           {item.baihoc.length} Bài học
                         </span>
-                        <span className="students">
-                          <i className="fas fa-users" />
+                        <span className="flex items-center">
+                          <i className="fas fa-users text-gray-400 mr-2" />
                           {item.ThanhToan.length} Học sinh
                         </span>
                       </div>
-                      </div>
-  
-                     <div className="flex items-center justify-between mt-4 ">
-                     <h5 className="text-4xl font-bold p-2">{item.ten}                    </h5>
-                      <div className="mr-5">
-                      <span className="rating-score">{DanhGiaTrungBinh[index]}</span>
-                        <i 
-                                className={`fa-star fas`}
-                              />
-                      </div>
-                     </div>
-                     
-  
-  
-                      <div className="instructor-rating border-b pb-4 mt-4">
-                        <p className="instructor-name">{item.giangVien.ten}</p>
-                      
-                      </div><div className="price-wrapper relative">
-                        {item.gia === 0 ? (
-                          <p className="text-2xl text-green-500 mt-4">Miễn phí</p>
-                        ) : (
-                          <>
-                            <p className="original-price mt-4">${item.gia}</p>
-                            {item.giamgia > 0 && (
-                              <>
-                                <span className="discounted-price mt-4 ml-4 ">${item.giamgia}</span>
-                                <span className="discount-badge absolute right-14 top-5">
-                                  {Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% giảm
-                                </span>
-                              </>
-                            )}
-                          </>
-                        )}
-                        
+
+                      <div className="flex items-start justify-between gap-2">
+                        <h5 className="text-2xl font-bold leading-tight">{item.ten}</h5>
+                        <div className="flex items-center whitespace-nowrap">
+                          <span className="text-xl font-medium mr-1">{DanhGiaTrungBinh[index]}</span>
+                          <i className="fas fa-star text-yellow-400 text-xl" />
+                        </div>
                       </div>
 
+                      <p className="text-xl text-gray-600 border-b pb-2">{item.giangVien.ten}</p>
 
-
-                    <button className="download-cert-btn mt-4">
-                      <i className="fas fa-certificate" />
-                      Tải xuống chứng chỉ
-                    </button>
-                  </div>
+                                                                <div className="flex items-center gap-4 my-2">
+                                            {item.gia === 0 ? (
+                                              <p className="text-2xl font-medium text-green-500">
+                                                Miễn phí
+                                              </p>
+                                            ) : (
+                                              <>
+                                                <div className="flex items-center gap-3">
+                                                  <p className={`text-2xl font-medium ${
+                                                    item.giamgia > 0 ? 'line-through text-gray-400' : ''
+                                                  }`}>
+                                                    ${item.gia}
+                                                  </p>
+                                                  {item.giamgia > 0 && (
+                                                    <span className="text-2xl font-medium text-green-500">
+                                                      ${item.giamgia}
+                                                    </span>
+                                                  )}
+                                                </div>
+                                                {item.giamgia > 0 && (
+                                                  <span className="text-lg bg-red-100 text-red-600 px-3 py-1.5 rounded ml-auto">
+                                                    {Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% giảm
+                                                  </span>
+                                                )}
+                                              </>
+                                            )}
+                                          </div>
+                      <button className="w-full bg-blue-50 text-blue-600 py-2 px-4 rounded text-xl hover:bg-blue-100 transition-colors">
+                        <i className="fas fa-certificate mr-2" />
+                        Tải xuống chứng chỉ
+                      </button>
                     </div>
                   </div>
-
-                  
                 </div>
               </Link>
             </div>
           ))}
         </div>
       )}
-      <style jsx>{`
-        .price-wrapper {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .free-price {
-          color: #22c55e;
-          font-weight: 600;
-          font-size: 1.1rem;
-        }
-
-        .original-price {
-          color: #6b7280;
-          text-decoration: line-through;
-        }
-
-        .discounted-price {
-          color: #ef4444;
-          font-weight: 600;
-          font-size: 15px;
-        }
-
-        .discount-badge {
-          background: #fee2e2;
-          color: #ef4444;
-          padding: 0.2rem 0.5rem;
-          border-radius: 12px;
-          font-size: 1rem;
-          font-weight: 500;
-        }
-
-
-
-        .loading-skeleton {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 2rem;
-        }
-
-        .skeleton-card {
-          height: 400px;
-          background: #f0f0f0;
-          border-radius: 12px;
-        }
-
-        .course-card {
-          background: white;
-          border-radius: 12px;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-          transition: all 0.3s ease;
-          overflow: hidden;
-        }
-
-        .course-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .course-image {
-          position: relative;
-          overflow: hidden;
-        }
-
-        .hover-scale {
-          transition: transform 0.5s ease;
-        }
-
-        .course-card:hover .hover-scale {
-          transform: scale(1.05);
-        }
-
-
-        .course-content {
-          padding: 1.5rem;
-        }
-
-        .seller-badge {
-          padding: 0.3rem 0.8rem;border-radius: 15px;
-          font-size: 0.8rem;
-        }
-
-        .seller-badge.best {
-          background: #ffedd5;
-          color: #f97316;
-        }
-
-        .seller-badge.new {
-          background: #dcfce7;
-          color: #22c55e;
-        }
-
-        .rating-wrapper {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .rating-score {
-          font-weight: 600;
-        }
-
-        .stars-wrapper {
-          display: flex;
-        }
-
-        .fa-star {
-          color: #f59e0b;
-          margin-right: 2px;
-        }
-
-        .course-stats {
-          display: flex;
-          justify-content: space-between;
-          margin-top: 1rem;
-        }
-
-        .lessons, .students {
-          display: flex;
-          align-items: center;
-          gap: 0.3rem;
-        }
-
-        .progress-wrapper {
-          height: 4px;
-          background: #f0f0f0;
-          border-radius: 2px;
-          margin: 1rem 0;
-        }
-
-        .progress-bar {
-          height: 100%;
-          background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-          border-radius: 2px;
-          transition: width 0.3s ease;
-        }
-
-        .download-cert-btn {
-          width: 100%;
-          padding: 0.8rem;
-          border: none;
-          background: #3b82f6;
-          color: white;
-          border-radius: 8px;
-          transition: all 0.3s ease;
-          cursor: pointer;
-        }
-
-        .download-cert-btn:hover {
-          background: #2563eb;
-        }
-
-        @keyframes pulse {
-          0% { opacity: 0.6; }
-          50% { opacity: 1; }
-          100% { opacity: 0.6; }
-        }
-
-        .animate-pulse {
-          animation: pulse 1.5s infinite;
-        }
-      `}</style>
     </div>
   );
 };
@@ -510,8 +338,6 @@ const Khoahocdathanhtoan = () => {
     GiangvienKhoaHocDaMua()
       .then((res) => {
         setCoursesInProgress(res.data);
-      
-        
         setIsLoading(false);
       })
       .catch((error) => {
@@ -519,8 +345,6 @@ const Khoahocdathanhtoan = () => {
         setIsLoading(false);
       });
   }, []);
-  console.log(coursesInProgress);
-  
 
   const averageRatings = coursesInProgress.map((item) => {
     if (item.danhgia?.length > 0) {
@@ -539,264 +363,85 @@ const Khoahocdathanhtoan = () => {
           ))}
         </div>
       ) : (
-        <div className="flex gap-4 w-full overflow-x-scroll">
-          {coursesInProgress
-           .map((item, index) => (
-              <div
-                className="max-w-[300px]"
-                key={index}
-                
-              >
-                <Link href={`/page/course-detail?id=${item.khoahocs.id}`}>
-                  <div className="course-card">
-                    <div className="course-image course-img-2 p-4 rounded-2xl relative">
-                    <div className="category-badge absolute text-2xl p-1 text-black bg-blue-100 rounded-lg">
-                        {item.chude.ten}
-                      </div>
-                      <Image
-                        width={250}
-                        height={120}
-                        src={item.khoahocs.hinh}
-                        alt={item.khoahocs.ten}
-                        className="hover-scale max-w-full max-h-[150px] rounded-2xl"
-                      />
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+          {coursesInProgress.map((item, index) => (
+            <div key={index} className="w-full">
+              <Link href={`/page/course-detail?id=${item.khoahocs.id}`}>
+                <div className="course-card bg-white rounded-lg shadow hover:shadow-md transition-all h-full">
+                  <div className="relative p-3">
+                    <div className="absolute top-9 left-10 z-10 text-base font-medium py-1 px-2 text-black bg-blue-100 rounded">
+                      {item.chude.ten}
                     </div>
 
-                    <div className="course-content">
-                      <div className="course-meta">
-                      <div className="course-stats m-0">
-                        <span className="lessons">
-                          <i className="fas fa-book-open" />
+                    <div className="aspect-[16/9] w-full overflow-hidden rounded-lg">
+                      <Image
+                        width={300}
+                        height={169}
+                        src={item.khoahocs.hinh}
+                        alt={item.khoahocs.ten}
+                        className="object-cover w-full h-full hover:scale-105 transition-transform"
+                      />
+                    </div>
+
+                    <div className="p-3 space-y-3">
+                      <div className="flex text-lg text-gray-600 space-x-4">
+                        <span className="flex items-center">
+                          <i className="fas fa-book-open text-gray-400 mr-2" />
                           {item.baihoc.length} Bài học
                         </span>
-                        <span className="students">
-                          <i className="fas fa-users" />
+                        <span className="flex items-center">
+                          <i className="fas fa-users text-gray-400 mr-2" />
                           {item.thanhtoan.length} Học sinh
                         </span>
                       </div>
 
+                      <div className="flex items-start justify-between gap-2">
+                        <h5 className="text-2xl font-bold leading-tight">{item.khoahocs.ten}</h5>
+                        <div className="flex items-center whitespace-nowrap">
+                          <span className="text-xl font-medium mr-1">{averageRatings[index]}</span>
+                          <i className="fas fa-star text-yellow-400 text-xl" />
+                        </div>
                       </div>
-
-                      <div className="border-b pb-4 flex items-center justify-between mt-4">
-                      <h5 className=" text-3xl font-bold ">{item.khoahocs.ten}</h5>
-                      <div className="mr-5">
-                    <span className="rating-score">{averageRatings[index]}</span>
-                      <i 
-                              className={`fa-star fas`}
-                            />
-                    </div>
-                      </div>
-
 
                       <div className="price-wrapper mt-4">
-                          {item.gia === 0 ? (
-                            <span className="free-price">Miễn phí</span>
-                          ) : (
-                            <>
-                              <span className="original-price">${item.gia}</span>
-                              {item.giamgia > 0 && (
-                                <>
-                                  <span className="discounted-price">${item.giamgia}</span>
-                                  <span className="discount-badge">
-                                    {Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% giảm
-                                  </span>
-                                </>
-                              )}
-                            </>
-                          )}
-                        </div>
-
-
+                        {item.gia === 0 ? (
+                          <span className="free-price text-2xl font-medium text-green-500">Miễn phí</span>
+                        ) : (
+                          <div className="flex items-center gap-3">
+                            <span className={`text-2xl font-medium ${item.giamgia > 0 ? 'line-through text-gray-400' : ''}`}>
+                              ${item.gia}
+                            </span>
+                            {item.giamgia > 0 && (
+                              <>
+                                <span className="text-2xl font-medium text-green-500">${item.giamgia}</span>
+                                <span className="text-lg bg-red-100 text-red-600 px-3 py-1.5 rounded ml-auto">
+                                  {Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% giảm
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </div>
 
                       <div className="progress-wrapper">
                         <div
-                          className="progress-bar"style={{ width: `${(item.khoahocdahoc.length / item.baihoc.length) * 100}%` }}
-                          />
-                        </div>
-  
-                        <button className="download-cert-btn mt-4">
-                          <i className="fas fa-certificate" />
-                          Tải xuống chứng chỉ
-                        </button>
+                          className="progress-bar bg-blue-500 h-2 rounded"
+                          style={{ width: `${(item.khoahocdahoc.length / item.baihoc.length) * 100}%` }}
+                        />
                       </div>
+
+                      <button className="w-full bg-blue-50 text-blue-600 py-2 px-4 rounded text-xl hover:bg-blue-100 transition-colors mt-4">
+                        <i className="fas fa-certificate mr-2" />
+                        Tải xuống chứng chỉ
+                      </button>
                     </div>
-                  </Link>
+                  </div>
                 </div>
-              ))}
-          </div>
-        )}
-        <style jsx>{`
-          .price-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-          }
-  
-          .free-price {
-            color: #22c55e;
-            font-weight: 600;
-            font-size: 1.1rem;
-          }
-  
-          .original-price {
-            color: #6b7280;
-            text-decoration: line-through;
-          }
-  
-          .discounted-price {
-            color: #ef4444;
-            font-weight: 600;
-            font-size: 1.1rem;
-          }
-  
-          .discount-badge {
-            background: #fee2e2;
-            color: #ef4444;
-            padding: 0.2rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 500;
-          }
-  
-  
-          .loading-skeleton {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-          }
-  
-          .skeleton-card {
-            height: 400px;
-            background: #f0f0f0;
-            border-radius: 12px;
-          }
-  
-          .course-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            overflow: hidden;
-          }
-  
-          .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-          }
-  
-          .course-image {
-            position: relative;
-            overflow: hidden;
-          }
-  
-          .hover-scale {
-            transition: transform 0.5s ease;
-          }
-  
-          .course-card:hover .hover-scale {
-            transform: scale(1.05);
-          }
-  
-          .category-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255,255,255,0.9);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 300;
-          }
-  
-          .course-content {
-            padding: 1.5rem;
-          }
-  
-          .seller-badge {
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-          }
-  
-          .seller-badge.best {
-            background: #ffedd5;
-            color: #f97316;
-          }
-  
-          .seller-badge.new {
-            background: #dcfce7;
-            color: #22c55e;
-          }
-  
-          .rating-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-          }
-  
-          .rating-score {
-            font-weight: 600;
-          }
-  
-          .stars-wrapper {
-            display: flex;
-          }
-  
-          .fa-star {
-            color: #f59e0b;
-            margin-right: 2px;}
-
-        .course-stats {
-          display: flex;
-          justify-content: space-between;
-          margin-top: 1rem;
-        }
-
-        .lessons, .students {
-          display: flex;
-          align-items: center;
-          gap: 0.3rem;
-        }
-
-        .progress-wrapper {
-          height: 4px;
-          background: #f0f0f0;
-          border-radius: 2px;
-          margin: 1rem 0;
-        }
-
-        .progress-bar {
-          height: 100%;
-          background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-          border-radius: 2px;
-          transition: width 0.3s ease;
-        }
-
-        .download-cert-btn {
-          width: 100%;
-          padding: 0.8rem;
-          border: none;
-          background: #3b82f6;
-          color: white;
-          border-radius: 8px;
-          transition: all 0.3s ease;
-          cursor: pointer;
-        }
-
-        .download-cert-btn:hover {
-          background: #2563eb;
-        }
-
-        @keyframes pulse {
-          0% { opacity: 0.6; }
-          50% { opacity: 1; }
-          100% { opacity: 0.6; }
-        }
-
-        .animate-pulse {
-          animation: pulse 1.5s infinite;
-        }
-      `}</style>
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -838,87 +483,80 @@ const Khoahocdahoanthanh = () => {
           ))}
         </div>
       ) : (
-        <div className="flex gap-4 w-full overflow-x-scroll">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
           {coursesInProgress
             ?.filter((item) => item.khoahocdahoc.length > 0)
             .map((item, index) => (
-              <div
-                className="max-w-[300px]"
-                key={index}
-                
-              >
+              <div key={index} className="w-full">
                 <Link href={`/page/course-detail?id=${item.khoahocs.id}`}>
-                  <div className="course-card">
-                    <div className="course-image course-img-2 p-4 rounded-2xl relative">
-                    <div className="category-badge absolute text-2xl p-1 text-black bg-blue-100 rounded-lg">
+                  <div className="course-card bg-white rounded-lg shadow hover:shadow-md transition-all h-full">
+                    <div className="relative p-3">
+                      <div className="absolute top-9 left-10 z-10 text-base font-medium py-1 px-2 text-black bg-blue-100 rounded">
                         {item.chude.ten}
                       </div>
-                      <Image
-                        width={250}
-                        height={120}src={item.khoahocs.hinh}
-                        alt={item.khoahocs.ten}
-                        className="hover-scale max-w-full max-h-[150px] rounded-2xl"
-                      />
 
-                    </div>
-
-                    <div className="course-content">
-                      <div className="course-meta">
-                      <div className="course-stats m-0">
-                        <span className="lessons">
-                          <i className="fas fa-book-open" />
-                          {item.baihoc.length} Bài học
-                        </span>
-                        <span className="students">
-                          <i className="fas fa-users" />
-                          {item.thanhtoan.length} Học sinh
-                        </span>
+                      <div className="aspect-[16/9] w-full overflow-hidden rounded-lg">
+                        <Image
+                          width={300}
+                          height={169}
+                          src={item.khoahocs.hinh}
+                          alt={item.khoahocs.ten}
+                          className="object-cover w-full h-full hover:scale-105 transition-transform"
+                        />
                       </div>
 
-                      </div>
+                      <div className="p-3 space-y-3">
+                        <div className="flex text-lg text-gray-600 space-x-4">
+                          <span className="flex items-center">
+                            <i className="fas fa-book-open text-gray-400 mr-2" />
+                            {item.baihoc.length} Bài học
+                          </span>
+                          <span className="flex items-center">
+                            <i className="fas fa-users text-gray-400 mr-2" />
+                            {item.thanhtoan.length} Học sinh
+                          </span>
+                        </div>
 
-                      <div className="border-b pb-4 flex items-center justify-between mt-4">
-                      <h5 className=" text-3xl font-bold ">{item.khoahocs.ten}</h5>
-                      <div className="mr-5">
-                    <span className="rating-score">{averageRatings[index]}</span>
-                      <i 
-                              className={`fa-star fas`}
-                            />
-                    </div>
-                      </div>
+                        <div className="flex items-start justify-between gap-2">
+                          <h5 className="text-2xl font-bold leading-tight">{item.khoahocs.ten}</h5>
+                          <div className="flex items-center whitespace-nowrap">
+                            <span className="text-xl font-medium mr-1">{averageRatings[index]}</span>
+                            <i className="fas fa-star text-yellow-400 text-xl" />
+                          </div>
+                        </div>
 
-
-                      <div className="price-wrapper mt-4">
+                        <div className="price-wrapper mt-4">
                           {item.gia === 0 ? (
-                            <span className="free-price">Miễn phí</span>
+                            <span className="free-price text-2xl font-medium text-green-500">Miễn phí</span>
                           ) : (
-                            <>
-                              <span className="original-price">${item.gia}</span>
+                            <div className="flex items-center gap-3">
+                              <span className={`text-2xl font-medium ${item.giamgia > 0 ? 'line-through text-gray-400' : ''}`}>
+                                ${item.gia}
+                              </span>
                               {item.giamgia > 0 && (
                                 <>
-                                  <span className="discounted-price">${item.giamgia}</span>
-                                  <span className="discount-badge">
+                                  <span className="text-2xl font-medium text-green-500">${item.giamgia}</span>
+                                  <span className="text-lg bg-red-100 text-red-600 px-3 py-1.5 rounded ml-auto">
                                     {Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% giảm
                                   </span>
                                 </>
                               )}
-                            </>
+                            </div>
                           )}
                         </div>
 
+                        <div className="progress-wrapper">
+                          <div
+                            className="progress-bar bg-blue-500 h-2 rounded"
+                            style={{ width: `${(item.khoahocdahoc.length / item.baihoc.length) * 100}%` }}
+                          />
+                        </div>
 
-
-                      <div className="progress-wrapper">
-                        <div
-                          className="progress-bar"
-                          style={{ width: `${(item.khoahocdahoc.length / item.baihoc.length) * 100}%` }}
-                        />
+                        <button className="w-full bg-blue-50 text-blue-600 py-2 px-4 rounded text-xl hover:bg-blue-100 transition-colors mt-4">
+                          <i className="fas fa-certificate mr-2" />
+                          Tải xuống chứng chỉ
+                        </button>
                       </div>
-
-                      <button className="download-cert-btn mt-4">
-                        <i className="fas fa-certificate" />
-                        Tải xuống chứng chỉ
-                      </button>
                     </div>
                   </div>
                 </Link>
@@ -926,176 +564,7 @@ const Khoahocdahoanthanh = () => {
             ))}
         </div>
       )}
-      <style jsx>{`
-        .price-wrapper {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .free-price {color: #22c55e;
-          font-weight: 600;
-          font-size: 1.1rem;
-        }
-
-        .original-price {
-          color: #6b7280;
-          text-decoration: line-through;
-        }
-
-        .discounted-price {
-          color: #ef4444;
-          font-weight: 600;
-          font-size: 1.1rem;
-        }
-
-        .discount-badge {
-          background: #fee2e2;
-          color: #ef4444;
-          padding: 0.2rem 0.5rem;
-          border-radius: 12px;
-          font-size: 0.8rem;
-          font-weight: 500;
-        }
-
-
-        .loading-skeleton {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 2rem;
-        }
-
-        .skeleton-card {
-          height: 400px;
-          background: #f0f0f0;
-          border-radius: 12px;
-        }
-
-        .course-card {
-          background: white;
-          border-radius: 12px;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-          transition: all 0.3s ease;
-          overflow: hidden;
-        }
-
-        .course-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .course-image {
-          position: relative;
-          overflow: hidden;
-        }
-
-        .hover-scale {
-          transition: transform 0.5s ease;
-        }
-
-        .course-card:hover .hover-scale {
-          transform: scale(1.05);
-        }
-
-        .category-badge {
-          position: absolute;
-          top: 1rem;
-          right: 1rem;
-          background: rgba(255,255,255,0.9);
-          padding: 0.5rem 1rem;
-          border-radius: 20px;
-          font-weight: 300;
-        }
-
-        .course-content {
-          padding: 1.5rem;
-        }
-
-        .seller-badge {
-          padding: 0.3rem 0.8rem;
-          border-radius: 15px;
-          font-size: 0.8rem;
-        }
-
-        .seller-badge.best {
-          background: #ffedd5;
-          color: #f97316;
-        }
-
-        .seller-badge.new {
-          background: #dcfce7;
-          color: #22c55e;
-        }
-
-        .rating-wrapper {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .rating-score {
-          font-weight: 600;
-        }
-
-        .stars-wrapper {
-          display: flex;
-        }
-
-        .fa-star {
-          color: #f59e0b;
-          margin-right: 2px;
-        }
-
-        .course-stats {
-          display: flex;
-          justify-content: space-between;
-          margin-top: 1rem;
-        }
-
-        .lessons, .students {
-          display: flex;
-          align-items: center;
-          gap: 0.3rem;
-        }
-
-        .progress-wrapper {
-          height: 4px;
-          background: #f0f0f0;
-          border-radius: 2px;
-          margin: 1rem 0;
-        }
-
-        .progress-bar {
-          height: 100%;
-          background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-          border-radius: 2px;
-          transition: width 0.3s ease;
-        }
-
-        .download-cert-btn {width: 100%;
-          padding: 0.8rem;
-          border: none;
-          background: #3b82f6;
-          color: white;
-          border-radius: 8px;
-          transition: all 0.3s ease;
-          cursor: pointer;
-        }
-
-        .download-cert-btn:hover {
-          background: #2563eb;
-        }
-
-        @keyframes pulse {
-          0% { opacity: 0.6; }
-          50% { opacity: 1; }
-          100% { opacity: 0.6; }
-        }
-
-        .animate-pulse {
-          animation: pulse 1.5s infinite;
-        }
-      `}</style>
+     
     </div>
   );
 };

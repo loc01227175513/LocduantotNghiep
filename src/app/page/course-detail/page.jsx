@@ -108,147 +108,6 @@ const Khac = ({ course }) => {
         </div>
 
       </div>
-      <style jsx>{`
-  /* Container Styling */
-  .course-single-information {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    border-radius: 24px;
-    padding: 35px;
-    margin-bottom: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 
-      0 10px 30px rgba(99, 102, 241, 0.1),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-  }
-
-  .course-single-information:hover {
-    transform: translateY(-8px) scale(1.02);
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 
-      0 20px 40px rgba(99, 102, 241, 0.15),
-      0 0 20px rgba(99, 102, 241, 0.1),
-      inset 0 0 0 2px rgba(139, 92, 246, 0.2);
-  }
-
-  /* Title Styling */
-  .title {
-    font-size: 1.6rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #4f46e5, #0ea5e9, #8b5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 2rem;
-    padding-bottom: 1.2rem;
-    border-bottom: 2px solid rgba(99, 102, 241, 0.1);
-    letter-spacing: -0.5px;
-  }
-
-  /* Checkmark Items */
-  .single-check {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    color: #4b5563;
-    font-weight: 500;
-  }
-
-  .single-check:hover {
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.1), transparent);
-    transform: translateX(10px);
-    color: #4f46e5;
-  }
-
-  .fa-circle-check {
-    color: #4f46e5;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    filter: drop-shadow(0 2px 5px rgba(79, 70, 229, 0.3));
-  }
-
-  .single-check:hover .fa-circle-check {
-    transform: scale(1.2) rotate(10deg);
-    color: #8b5cf6;
-  }
-
-  /* Tags Styling */
-  .tags-wrapper span {
-    display: inline-block;
-    padding: 8px 16px;
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(14, 165, 233, 0.1));
-    border-radius: 20px;
-    color: #4f46e5;
-    font-weight: 600;
-    transition: all 0.4s ease;
-    border: 1px solid rgba(99, 102, 241, 0.2);
-  }
-
-  .tags-wrapper span:hover {
-    background: linear-gradient(135deg, #4f46e5, #0ea5e9);
-    color: white;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
-  }
-
-  /* Social Media Icons */
-  .social-share-course-side-bar ul {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-  }
-
-  .social-share-course-side-bar a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  }
-
-  .social-share-course-side-bar a:hover {
-    transform: translateY(-8px) rotate(8deg);
-  }
-
-  .fa-facebook-f:hover { color: #1877f2; }
-  .fa-instagram:hover { 
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .fa-linkedin:hover { color: #0077b5; }
-  .fa-pinterest:hover { color: #e60023; }
-  .fa-youtube:hover { color: #ff0000; }
-
-  /* Animations */
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-
-  .pulse {
-    animation: pulse 2s infinite;
-  }
-
-  .float {
-    animation: float 3s ease-in-out infinite;
-  }
-`}</style>
     </>
   );
 };
@@ -258,8 +117,8 @@ const Khac = ({ course }) => {
 
 const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiDung, isCourseRegistered, isCourseInCart }) => {
   const handleThanhToanKhoaHocFree = async () => {
-      await ThanhToanKhoaHocFree(course.id_giangvien);
-      toast.success("Bạn đã Nhận Kháo Học Miễn phí!");
+    await ThanhToanKhoaHocFree(course.id_giangvien);
+    toast.success("Bạn đã Nhận Kháo Học Miễn phí!");
   }
 
   return (
@@ -321,7 +180,7 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
                     </div>
                     <div className="price-area ">
                       {course.gia === 0 && course.giamgia === 0 ? (
-                                               <p className=" p-4 text-white font-bold text-4xl text-center w-full" >Miễn phí</p>
+                        <p className=" p-4 text-white font-bold text-4xl text-center w-full" >Miễn phí</p>
                       ) : (
                         <>
                           <h3 className="title price-current bg-white">
@@ -348,7 +207,7 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
                       </Link>
                     ) : isCourseRegistered || course.gia === 0 || course.giamgia == 0 ? (
                       <Link href={`/page/Study?id=${course.id}`}>
-                        <button onClick={handleThanhToanKhoaHocFree} className="rts-btn btn-primary p-4 " style={{fontSize:"13px"}}>
+                        <button onClick={handleThanhToanKhoaHocFree} className="rts-btn btn-primary p-4 " style={{ fontSize: "13px" }}>
                           Đi đến khóa học
                         </button>
                       </Link>
@@ -374,37 +233,37 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
 
                       </>
                     )}
-                                                          <div className="p-1 font-bold text-black what-includes text-left">
-                                        <span className="m text-left block">Đảm bảo hoàn lại tiền 30 ngày</span>
-                                        <h5 className="title text-left">Khóa học này bao gồm:</h5>
-                                        <div className="single-include flex">
-                                          <div className="left">
-                                            <i className="fa-light fa-chart-bar" />
-                                            <span className="text-left">Cấp độ</span>
-                                          </div>
-                                          <div className="right">
-                                            <span className="text-left">{course.trinhdo}</span>
-                                          </div>
-                                        </div>
-                                        <div className="single-include flex">
-                                          <div className="left">
-                                            <i className="fa-light fa-timer" />
-                                            <span className="text-left">Khoảng thời gian</span>
-                                          </div>
-                                          <div className="right">
-                                            <span className="text-left">{formattedTotalTime}</span>
-                                          </div>
-                                        </div>
-                                        <div className="single-include flex">
-                                          <div className="left">
-                                            <i className="fa-regular fa-floppy-disk" />
-                                            <span className="text-left">Chủ thể</span>
-                                          </div>
-                                          <div className="right">
-                                            <span className="text-left">{course.chude}</span>
-                                          </div>
-                                        </div>
-                                        {/* <div className="single-include flex">
+                    <div className="p-1 font-bold text-black what-includes text-left">
+                      <span className="m text-left block">Đảm bảo hoàn lại tiền 30 ngày</span>
+                      <h5 className="title text-left">Khóa học này bao gồm:</h5>
+                      <div className="single-include flex">
+                        <div className="left">
+                          <i className="fa-light fa-chart-bar" />
+                          <span className="text-left">Cấp độ</span>
+                        </div>
+                        <div className="right">
+                          <span className="text-left">{course.trinhdo}</span>
+                        </div>
+                      </div>
+                      <div className="single-include flex">
+                        <div className="left">
+                          <i className="fa-light fa-timer" />
+                          <span className="text-left">Khoảng thời gian</span>
+                        </div>
+                        <div className="right">
+                          <span className="text-left">{formattedTotalTime}</span>
+                        </div>
+                      </div>
+                      <div className="single-include flex">
+                        <div className="left">
+                          <i className="fa-regular fa-floppy-disk" />
+                          <span className="text-left">Chủ thể</span>
+                        </div>
+                        <div className="right">
+                          <span className="text-left">{course.chude}</span>
+                        </div>
+                      </div>
+                      {/* <div className="single-include flex">
                                           <div className="left">
                                             <i className="fa-regular fa-pen-to-square" />
                                             <span className="text-left">Cập nhật</span>
@@ -422,7 +281,7 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
                                             <span className="text-left">Giấy chứng nhận hoàn thành</span>
                                           </div>
                                         </div> */}
-                                      </div>
+                    </div>
                   </div>
                   {/* single course-sidebar end */}
                 </div>
@@ -512,444 +371,7 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
         </div>
 
       </div>
-      <style jsx>{`
-    /* Text Color Variables */
-  :root {
-    --primary: #4f46e5;
-    --secondary: #0ea5e9; 
-    --accent: #8b5cf6;
-    --text-gradient: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-  }
-
-  /* Text Gradient Animation */
-  @keyframes textGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* Enhanced Text Styling */
-  .title, h2, h3, h4, h5 {
-    background: var(--text-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% auto;
-    animation: textGradient 4s ease infinite;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-  }
-
-  .price-current {
-    font-size: 2.8rem;
-    font-weight: 900;
-    text-shadow: 0 2px 15px rgba(79, 70, 229, 0.2);
-  }
-
- .price-free {
-  font-size: 2.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: linear-gradient(135deg, #10b981, #059669);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  width: 100%;
-}
-
-  .what-includes span {
-    color: #4b5563;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-
-  .single-include:hover span {
-    background: var(--text-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transform: translateX(5px);
-  }
-
-  .clock-area span {
-    font-weight: 600;
-    background: linear-gradient(135deg, #fff, #e5e7eb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  }
-
-  .single-include .left span {
-    background: var(--text-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 600;
-  }
-
-  .single-include .right span {
-    color: #6366f1;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-
-  .single-include:hover .right span {
-    background: var(--text-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transform: translateX(-5px);
-  }
-
-  /* Button Text */
-  .rts-btn {
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-  }
-
-  /* Text Animation */
-  @keyframes textFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
-  }
-
-  .title {
-    animation: textFloat 3s ease-in-out infinite;
-  }
-
-  /* Text Hover Effects */
-  .what-includes .title:hover,
-  .course-single-information .title:hover {
-    text-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
-    letter-spacing: 0;
-  }
-   /* Advanced Animations */
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  @keyframes gradient-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  @keyframes glow {
-    0%, 100% { filter: brightness(1); }
-    50% { filter: brightness(1.2); }
-  }
-
-  /* Container Animation */
-  .right-course-details {
-    animation: float 6s ease-in-out infinite;
-    background: linear-gradient(
-      135deg, 
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 0.7)
-    );
-    background-size: 200% 200%;
-    animation: gradient-shift 15s ease infinite;
-  }
-
-  /* Video Player Enhancements */
-  .vedio-icone {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    transform: translateZ(0);
-    transition: transform 0.3s ease;
-  }
-
-  .vedio-icone:hover {
-    transform: scale(1.02) translateZ(0);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Price Area Animations */
-  .price-area {
-    animation: glow 3s ease-in-out infinite;
-    background: linear-gradient(
-      135deg,
-      #6366f1,
-      #ec4899,
-      #8b5cf6,
-      #6366f1
-    );
-    background-size: 300% 300%;
-    animation: gradient-shift 8s ease infinite;
-  }
-
-.price-discount {
-    transform-origin: center;
-    animation: 
-      pulse 2s infinite,
-      spin 12s linear infinite;
-    color: white;
-}
-  /* Button Hover Effects */
-  .rts-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      120deg,
-      transparent,
-      rgba(255, 255, 255, 0.4),
-      transparent
-    );
-    transition: 0.5s;
-  }
-
-  .rts-btn:hover::before {
-    left: 100%;
-  }
-
-  /* Feature List Animations */
-  .single-include {
-    position: relative;
-    z-index: 1;
-  }
-
-  .single-include::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #6366f1, transparent);
-    transition: width 0.3s ease;
-  }
-
-  .single-include:hover::after {
-    width: 100%;
-  }
-
-  /* Icon Animations */
-  .fa-light, .fa-regular {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  .single-include:hover .fa-light,
-  .single-include:hover .fa-regular {
-    animation: 
-      spin 1s ease-out,
-      glow 2s infinite;
-  }
-
-  /* Clock Area Enhancement */
-  .clock-area {
-    position: relative;
-    overflow: hidden;
-    padding: 15px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: white;
-    text-align: center;
-    animation: pulse 2s infinite;
-  }
-
-  .clock-area i {
-    animation: spin 10s linear infinite;
-  }
-
-  /* Course Information Hover */
-  .course-single-information:hover {
-    transform: perspective(1000px) rotateX(5deg);
-    box-shadow: 
-      0 20px 40px rgba(99, 102, 241, 0.2),
-      0 0 0 2px rgba(99, 102, 241, 0.1);
-  }
-
-  /* Enhanced Transitions */
-  * {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Shimmer Effect Enhancement */
-  @keyframes enhanced-shimmer {
-    0% {
-      transform: translateX(-150%) skewX(-45deg);
-    }
-    50% {
-      transform: translateX(-60%) skewX(-45deg);
-    }
-    100% {
-      transform: translateX(150%) skewX(-45deg);
-    }
-  }
-
-  .right-course-details::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.4),
-      transparent
-    );
-    transform: translateX(-150%) skewX(-45deg);
-    animation: enhanced-shimmer 3s infinite;
-  }
-  /* Modern Glass Container */
-  .right-course-details {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    border-radius: 24px;
-    padding: 30px;
-    box-shadow: 
-      0 10px 30px rgba(99, 102, 241, 0.1),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-    transition: all 0.4s ease;
-  }
-
-  .right-course-details:hover {
-    transform: translateY(-5px);
-    box-shadow: 
-      0 20px 40px rgba(99, 102, 241, 0.15),
-      inset 0 0 0 2px rgba(139, 92, 246, 0.2);
-  }
-
-  /* Price Area Styling */
-  .price-area {
-    text-align: center;
-    padding: 10px;
-    background: linear-gradient(135deg, #6366f1, #ec4899, #8b5cf6);
-    border-radius: 16px;
-    color: white;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .price-area::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
-    animation: shimmer 2s infinite;
-  }
-
-  .price-current {
-    font-size: 2.5rem;
-    font-weight: 800;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  }
-
-.price-original {
-    text-decoration: line-through;
-    opacity: 0.7;
-
-}
-  .price-discount {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #10b981;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-weight: 600;
-    animation: pulse 2s infinite;
-  }
-
-  /* Button Styling */
-  .rts-btn {
-    padding: 12px 24px;
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: white;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
-  }
-
-  .btn-border {
-    background: transparent;
-    border: 2px solid #6366f1;
-    color: #6366f1;
-  }
-
-  .btn-border:hover {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: white;
-    border-color: transparent;
-  }
-
-  /* What Includes Section */
-  .what-includes {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 16px;
-    padding: 25px;
-    margin-top: 20px;
-  }
-
-  .single-include {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(99, 102, 241, 0.1);
-    transition: all 0.3s ease;
-  }
-
-  .single-include:hover {
-    transform: translateX(10px);
-    background: linear-gradient(
-      90deg,
-      rgba(99, 102, 241, 0.1),
-      transparent
-    );
-  }
-
-  /* Icon Animations */
-  .fa-light, .fa-regular {
-    color: #6366f1;
-    transition: all 0.3s ease;
-  }
-
-  .single-include:hover .fa-light,
-  .single-include:hover .fa-regular {
-    transform: scale(1.2) rotate(10deg);
-    color: #8b5cf6;
-  }
-
-  /* Animations */
-  @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-`}</style>
+     
     </>
 
 
@@ -1233,9 +655,9 @@ export default function Coursedetailcomponent() {
                       borderRadius: "20px"
                     }}>
                       <i className="fa-light fa-calendar-lines-pen" style={{ marginRight: "8px" }} />
-                                        <span>
+                      <span>
                         Cập nhật lần cuối {
-                          course?.created_at && 
+                          course?.created_at &&
                           `${new Date(course.created_at).getDate()}/${new Date(course.created_at).getMonth() + 1}/${new Date(course.created_at).getFullYear()}`
                         }
                       </span>
@@ -1267,13 +689,13 @@ export default function Coursedetailcomponent() {
                       animation: "popIn 0.5s ease-out 0.2s backwards"
                     }}>
                       <span className="animated-text text-white text-xl">Thể loại: </span>
-                      <span className="text-white"  style={{
+                      <span className="text-white" style={{
                         backgroundColor: "rgba(255,255,255,0.2)",
                         padding: "3px 15px",
                         borderRadius: "20px",
                         transition: "all 0.3s ease",
                         cursor: "pointer"
-                       
+
                       }} onMouseOver={(e) => {
                         e.target.style.backgroundColor = "rgba(255,215,0,0.3)";
                         e.target.style.transform = "translateX(5px)";
@@ -1344,7 +766,7 @@ export default function Coursedetailcomponent() {
                             {/* Single course style */}
                             <div className="single-course-style-three">
                               <a href={`/page/course-detail?id=${course.id}`} className="thumbnail">
-                                <Image width={500} height={300} src={course.hinh} alt="course" style={{height:"180px"}} />
+                                <Image width={500} height={300} src={course.hinh} alt="course" style={{ height: "180px" }} />
                                 <div className="course-tags">
                                   {course.gia === 0 ? (
                                     <span className="tag free">Miễn phí</span>
@@ -1370,7 +792,7 @@ export default function Coursedetailcomponent() {
                                 <div className="course-card hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 p-4 rounded-lg">
                                   <a href={`/page/course-detail?id=${course.id}`} className="block">
                                     <h5 className="text-2xl font-medium hover:text-primary-600 transition-all duration-300 ease-in-out">
-                                     <strong>{course.ten}</strong> 
+                                      <strong>{course.ten}</strong>
                                     </h5>
                                   </a>
 
@@ -1428,246 +850,6 @@ export default function Coursedetailcomponent() {
       </>
       <ToastContainer position="top-right" autoClose={3000} />
       <Footercomponent />
-      <style jsx>{`
-      .thumbnail {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-}
-
-.thumbnail:hover {
-    transform: scale(1.02);
-}
-
-.course-tags {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.tag {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    animation: slideIn 0.3s ease;
-}
-
-.tag.free {
-    background: linear-gradient(135deg, #00b09b, #96c93d);
-    color: white;
-}
-
-.tag.discount {
-    background: linear-gradient(135deg, #ff416c, #ff4b2b);
-    color: white;
-}
-
-@
-      .thumbnail {
-    position: relative;
-}
-
-.course-tags {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.tag {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.tag.free {
-    background-color: #28a745;
-    color: white;
-}
-
-.tag.discount {
-    background-color: #dc3545;
-    color: white;
-}
-      @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.single-course-style-three {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.single-course-style-three:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-}
-
-.thumbnail {
-  position: relative;
-  overflow: hidden;
-}
-
-.thumbnail img {
-  transition: transform 0.5s ease;
-}
-
-.thumbnail:hover img {
-  transform: scale(1.1);
-}
-
-.body-area {
-  padding: 20px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-}
-
-.tags {
-  background: linear-gradient(45deg, #ffd700, #ff8c00);
-  color: white;
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-  animation: shimmer 2s infinite linear;
-  background-size: 200% 100%;
-}
-
-.price span {
-  padding: 5px 10px;
-  border-radius: 8px;
-}
-
-.stars {
-  display: flex;
-  gap: 5px;
-  color: #ffd700;
-}
-
-.stars li {
-  transition: transform 0.2s ease;
-}
-
-.stars li:hover {
-  transform: scale(1.2);
-}
-
-.lesson-students {
-  border-top: 1px solid rgba(255,255,255,0.1);
-  margin-top: 15px;
-  padding-top: 15px;
-}
-
-.lesson, .students {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-}
-
-.lesson:hover, .students:hover {
-  opacity: 1;
-}
-
-.title {
-  font-size: 1.2em;
-  font-weight: 600;
-  margin: 15px 0;
-  background: linear-gradient(45deg, #fff, #ffd700);
-  -webkit-background-clip: text;
-  color: transparent; /* Ensure text is visible */
-  transition: all 0.3s ease;
-}
-
-.teacher {
-  font-style: italic;
-  color: #ffd700;
-}
-        @keyframes textShine {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-@keyframes popIn {
-  0% { transform: scale(0.95); opacity: 0.5; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.animated-text {
-  background: linear-gradient(90deg, #ffd700, transparent, #ffd700);
-  background-size: 200% auto;
-  color: white;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: textShine 3s linear infinite;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-}
-.animated-text:hover {
-  transform: scale(1.05);
-  letter-spacing: 1px;
-}
-        @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
-@keyframes shine {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.single-course-left-align-wrapper {
-  animation: fadeIn 0.8s ease-out;
-}
-
-.stars-area, .students, .calender-area-stars {
-  animation: float 3s ease-in-out infinite;
-}
-
-.title {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  background-size: 200% auto;
-  animation: shine 3s linear infinite;
-}
-
-.fa-star {
-  animation: pulse 2s infinite;
-}
-
-.rating-area > div:hover {
-  transform: translateY(-5px);
-  transition: transform 0.3s ease;
-}
-`}</style>
     </div>
   );
 }

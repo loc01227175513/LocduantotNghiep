@@ -85,80 +85,6 @@ const Headerdashboardstudent1 = () => {
 
     <div className="col-lg-12">
       <div className="dashboard-banner-area-start bg_image student-dashboard" style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-        {/* {data.vaitro != 0 ? (
-          <div className="rating-area-banner-dashboard"
-            style={{
-              marginBottom: '20px',
-              display: 'flex',
-              justifyContent: 'flex-end'
-            }}>
-            <a href="/page/lecturer-dashboard"
-              className="create-btn"
-              style={{
-                ...buttonStyle('#4CAF50', '#45a049'),
-                padding: '12px 24px',
-                borderRadius: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                transform: 'translateY(0)',
-                ':hover': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
-                }
-              }}>
-              <i className="fa-regular fa-circle-plus"
-                style={{
-                  marginRight: '12px',
-                  fontSize: '1.1em',
-                  transition: 'transform 0.3s ease'
-                }}></i>
-              Giảng viên
-            </a>
-          </div>
-        ) : (
-          <div
-            className="rating-area-banner-dashboard"
-            style={{
-              marginBottom: '20px',
-              background: 'linear-gradient(135deg, #f5f7fa 0%, #e4eff7 100%)',
-              padding: '25px',
-              borderRadius: '12px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
-              transition: 'transform 0.2s ease'
-            }}
-          >
-            <a
-              href="/page/become-instructor"
-              className="create-btn"
-              style={{
-                ...buttonStyle('#2196F3', '#1976D2'),
-                display: 'inline-flex',
-                alignItems: 'center',
-                padding: '12px 24px',
-                borderRadius: '8px',
-                fontSize: '16px',
-                fontWeight: '500',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 2px 4px rgba(33, 150, 243, 0.3)',
-                ':hover': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 4px 8px rgba(33, 150, 243, 0.4)'
-                }
-              }}
-            >
-              <i
-                className="fa-regular fa-circle-plus"
-                style={{
-                  marginRight: '12px',
-                  fontSize: '18px'
-                }}
-              />
-              Tạo tài khoản giảng viên
-            </a>
-          </div>
-        )} */}
         <div className="author-profile-image-and-name" style={{
           textAlign: 'center',
           background: 'linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%)',
@@ -330,11 +256,6 @@ const Headerdashboardstudent1 = () => {
           )}
         </div>
       </div>
-      <style jsx>{`@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-} ` }</style>
     </div>
 
 
@@ -342,18 +263,6 @@ const Headerdashboardstudent1 = () => {
   )
 }
 
-const buttonStyle = (backgroundColor, hoverColor) => ({
-  display: 'flex',
-  alignItems: 'center',
-  textDecoration: 'none',
-  color: '#fff',
-  backgroundColor: backgroundColor,
-  padding: '10px 20px',
-  borderRadius: '5px',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-  transition: 'background-color 0.3s',
-  cursor: 'pointer'
-});
 
 const infoBoxStyle = {
   marginBottom: '10px',
@@ -429,6 +338,23 @@ const Headerdashboardstudent2 = ({ page }) => {
     { id: 'yeuthich', icon: <FaHeart />, text: 'Yêu Thích', link: '/page/dashboard-student/YeuThich' },
   ];
 
+  const iconStyle = {
+    width: '40px',
+    height: '40px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '8px',
+    marginRight: '12px',
+    transition: 'all 0.3s ease',
+    fontSize: '2rem' // Increased from 1.25rem to 2rem
+  };
+
+  const textStyle = {
+    fontSize: '2rem', // Increased from 1.5rem to 2rem
+    fontWeight: '500'
+  };
+
   return (
     <div className="col-lg-3">
       <div style={{
@@ -460,21 +386,14 @@ const Headerdashboardstudent2 = ({ page }) => {
               }}
             >
               <span style={{
-                width: '32px',
-                height: '32px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: '8px',
+                ...iconStyle,
                 background: pagess === item.id ? '#2563eb' : '#f1f5f9',
-                color: pagess === item.id ? 'white' : '#64748b',
-                marginRight: '12px',
-                transition: 'all 0.3s ease'
+                color: pagess === item.id ? 'white' : '#64748b'
               }}>
                 {item.icon}
               </span>
               <span style={{
-                fontSize: '0.875rem',
+                ...textStyle,
                 fontWeight: pagess === item.id ? '600' : '500'
               }}>
                 {item.text}
@@ -488,7 +407,7 @@ const Headerdashboardstudent2 = ({ page }) => {
           paddingTop: '1.5rem'
         }}>
           <h4 style={{
-            fontSize: '0.875rem',
+            fontSize: '2rem', // Increased from 1.5rem to 2rem
             color: '#94a3b8',
             marginBottom: '1rem',
             paddingLeft: '1rem'
@@ -504,53 +423,21 @@ const Headerdashboardstudent2 = ({ page }) => {
               color: '#64748b',
               transition: 'all 0.3s ease',
               marginBottom: '0.5rem',
-              textDecoration: 'none'
+              textDecoration: 'none',
+              fontSize: '2rem' // Increased from 1.5rem to 2rem
             }}
           >
-            <FaCog style={{ marginRight: '12px' }} />
-            <span>Cài đặt</span>
+            <span style={{
+              ...iconStyle,
+              background: '#f1f5f9',
+              color: '#64748b'
+            }}>
+              <FaCog />
+            </span>
+            <span style={textStyle}>Cài đặt</span>
           </Link>
-
-
         </div>
       </div>
-      <style jsx>{`@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-a:hover {
-  background: #f8fafc !important;
-  transform: translateX(5px) !important;
-}
-
-.col-lg-3 {
-  animation: slideIn 0.5s ease-out;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}`}</style>
     </div>
   );
 };
