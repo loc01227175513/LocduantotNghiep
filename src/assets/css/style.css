@@ -14193,7 +14193,7 @@ xclip
   color: #fff;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -14351,12 +14351,13 @@ xclip
     display: none;
   }
 }
+
 .header-one-wrapper .left-side-header .category-area .category-btn span {
-  color: var(--color-primary);
+  color: rgb(51 65 85 / var(--tw-text-opacity, 1));
   font-weight: 500;
 }
 .header-one-wrapper .left-side-header .category-area .category-btn i {
-  color: var(--color-primary);
+  color: rgb(51 65 85 / var(--tw-text-opacity, 1));
 }
 .header-one-wrapper .left-side-header .category-area:hover .category-sub-menu {
   visibility: visible;

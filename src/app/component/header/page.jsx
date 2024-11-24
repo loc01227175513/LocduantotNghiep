@@ -20,17 +20,16 @@ const DropdownMenu = () => {
     <div className="right-information d-flex">
       <div className="custom-dropdown-wrapper me-4">
         <button
-          className="btn dropdown-toggle custom-dropdown"
+          className="btn dropdown-toggle custom-dropdown "
           onClick={() => setLangOpen(!langOpen)}
         >
-          <span>English</span>
-          <i className="bi bi-chevron-down ms-2"></i>
+          <span className='text-xl'>English</span>
         </button>
         {langOpen && (
-          <ul className="dropdown-menu show">
-            <li><button className="dropdown-item">Deutsch</button></li>
-            <li><button className="dropdown-item">Portuguese</button></li>
-            <li><button className="dropdown-item">Russian</button></li>
+          <ul className="dropdown-menu show ">
+            <li><button className="dropdown-item text-xl">Deutsch</button></li>
+            <li><button className="dropdown-item text-xl">Portuguese</button></li>
+            <li><button className="dropdown-item text-xl">Russian</button></li>
           </ul>
         )}
       </div>
@@ -46,7 +45,7 @@ const DropdownMenu = () => {
           background: linear-gradient(135deg, #ff6b6b 0%, #1e3c72 100%);
           color: white;
           padding: 0.7rem 1.2rem;
-          border: none;
+          border: 1px solid white;
           border-radius: 8px;
           font-weight: 500;
           letter-spacing: 0.5px;
@@ -86,9 +85,8 @@ const DropdownMenu = () => {
         }
 
         .dropdown-item {
-          padding: 0.8rem 1.2rem;
+          padding: 4px 8px;
           cursor: pointer;
-          transition: all 0.3s ease;
           border-radius: 8px;
           font-weight: 500;
           color: #333;
@@ -96,7 +94,7 @@ const DropdownMenu = () => {
         }
 
         .dropdown-item:hover {
-          background: linear-gradient(135deg, #ff6b6b 0%, #1e3c72 100%);
+          background: #endregion;
           color: white;
           transform: translateX(5px);
           text-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -137,12 +135,12 @@ const Contact = () => {
           <div className="col-lg-12">
             <div className="header-top-one d-flex justify-content-between align-items-center">
               <div className="left-information">
-                <Link href="mailto:techstudent@gmail.com" className="contact-link me-4">
-                  <i className="fa-light fa-envelope me-2 bounce" />
+                <Link href="mailto:techstudent@gmail.com" className="contact-link ">
+                  <i className="fa-light fa-envelope  bounce" />
                   techstudent@gmail.com
                 </Link>
                 <Link href="tel:+123456789" className="contact-link">
-                  <i className="fa-light fa-phone me-2 bounce" />
+                  <i className="fa-light fa-phone bounce" />
                   +123 456 789
                 </Link>
               </div>
@@ -391,13 +389,14 @@ export default function Header() {
                     </div>
 
                   </Link>
-                  <div className="category-area">
-                    <div className="category-btn hover:bg-gray-100 transition-all duration-300 flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer border border-gray-200 hover:border-primary">
-                      <i className="bi bi-grid text-xl text-primary"></i>
-                      <span className="font-medium text-xl">Thể loại</span>
+                  <div className="category-area hover:border-[#ff6b6b]">
+                    <div className="category-btn transition-all duration-300 flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer border">
+                      <i className="bi bi-grid text-xl text-slate-700"></i>
+                      <span className="font-medium text-2xl">Thể loại</span>
                       <i className="fas fa-chevron-down text-sm ml-auto transition-transform group-hover:rotate-180"></i>
                       <Categoryheader />
                     </div>
+
                   </div>
                   <div className="lg:hidden">
                     <button
@@ -777,11 +776,11 @@ export default function Header() {
                           <span className="font-medium text-3xl">Khóa học</span>
                         </Link>
 
-                                               <div className="hidden group-hover:block absolute left-1/2 transform -translate-x-1/2 top-full w-screen bg-white shadow-xl z-50">
+                        <div className="hidden group-hover:block absolute left-1/2 transform -translate-x-1/2 top-full w-screen bg-white shadow-xl z-50">
                           <div className="mx-auto px-4">
                             {/* Custom grid with two larger columns and one smaller column on medium screens and above */}
                             <div className="grid grid-cols-1 md:grid-cols-[2fr_2fr_1fr] gap-8 p-8">
-                              
+
                               {/* Courses Section */}
                               <div className="space-y-4 p-6 hover:bg-gray-50 rounded-xl transition-colors">
                                 <h3 className="font-bold text-2xl text-gray-800 border-b-2 border-blue-500 pb-2">
@@ -812,7 +811,7 @@ export default function Header() {
                                   </li>
                                 </ul>
                               </div>
-                        
+
                               {/* Other Section */}
                               <div className="space-y-4 p-6 hover:bg-gray-50 rounded-xl transition-colors">
                                 <h3 className="font-bold text-2xl text-gray-800 border-b-2 border-green-500 pb-2">
@@ -843,7 +842,7 @@ export default function Header() {
                                   </li>
                                 </ul>
                               </div>
-                        
+
                               {/* Promo Section */}
                               <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
                                 <Link href="/page/KhuyenMai" className="block text-center space-y-4">
@@ -856,7 +855,7 @@ export default function Header() {
                                   <span className="text-gray-600">Khám phá ưu đãi đặc biệt</span>
                                 </Link>
                               </div>
-                              
+
                             </div>
                           </div>
                         </div>
@@ -916,7 +915,7 @@ export default function Header() {
                   data.vaitro !== 0 ? (
                     <Link href="/page/lecturer-dashboard" className="group ml-4">
                       <div className="m-4 transform transition-all duration-300 hover:scale-105">
-                        <p className="p-3 m-0 font-bold text-center text-xl rounded-lg bg-gradient-to-r from-[#ff6b6b] to-[#1e3c72] text-white shadow-lg hover:shadow-xl flex items-center justify-center gap-2 hover:from-[#1e3c72] hover:to-[#ff6b6b] transition-all duration-300 animate-gradient">
+                        <p className="p-3 m-0 font-medium text-center text-xl rounded-lg bg-gradient-to-r  text-slate-700   border-1 hover:border-[#ff6b6b] flex items-center justify-center gap-2 ">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5 animate-bounce"

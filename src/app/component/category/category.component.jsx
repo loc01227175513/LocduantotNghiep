@@ -326,7 +326,7 @@ const Categoryheader = () => {
   return (
     <ul className="category-sub-menu">
       <li>
-        <ul className="category-list">
+        <ul className="">
           {firstHalf.map((item, index) => (
             <li key={index} className="category-item">
               <Link href={`/page/Cours-Filter?id=${item.id}`} className="menu-item cv">
@@ -341,7 +341,7 @@ const Categoryheader = () => {
             </li>
           ))}
         </ul>
-        <ul className="category-list">
+        <ul className="">
           {secondHalf.map((item, index) => (
             <li key={index} className="category-item">
               <Link href={`/page/Cours-Filter?id=${item.id}`} className="menu-item cv">
@@ -356,19 +356,6 @@ const Categoryheader = () => {
             </li>
           ))}
         </ul>
-        {/* <ul>
-          {secondHalf.map((item, index) => (
-            <li key={index}>
-              <Link href={`/page/Cours-Filter?id=${item.id}`} className="menu-item cv w-96">
-                <div className="text">
-                  <Image width={500} height={300} src={item.hinh} alt="" />
-                  <h4>{item.ten}</h4>
-                  <p>130+ Khóa học</p>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul> */}
       </li>
       <style jsx>{`
   .category-sub-menu {
