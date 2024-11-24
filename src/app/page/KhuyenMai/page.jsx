@@ -9,7 +9,7 @@ export default function Page() {
     <>
       <Header />
 
-      <div className="flex h-screen mt-60 mb-60">
+      <div className="flex h-screen">
         <VoucherShop />
       </div>
 
