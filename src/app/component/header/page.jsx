@@ -460,16 +460,7 @@ export default function Header() {
                         </li>
 
                         {/* About */}
-                        <li className="group relative py-6">
-                          <Link
-                            className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
-                            href="#"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            <i className="fas fa-info-circle text-lg" />
-                            <span className="font-medium">Về chúng tôi</span>
-                          </Link>
-                        </li>
+                
 
                         <li className="group relative py-6">
                           <button
@@ -756,15 +747,7 @@ export default function Header() {
                       </li>
 
                       {/* About */}
-                      <li className="group relative py-6">
-                        <Link
-                          className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
-                          href="#"
-                        >
-                          <i className="fas fa-info-circle text-lg" />
-                          <span className="font-medium text-3xl">Về chúng tôi</span>
-                        </Link>
-                      </li>
+                    
 
                       {/* Courses Mega Menu */}
                       <li className="group relative py-6">
