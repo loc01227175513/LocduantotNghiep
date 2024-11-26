@@ -87,23 +87,23 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <div className="profile-card">
-        <h3 className="profile-title">Your Profile</h3>
+        <h3 className="profile-title">Thông tin của bạn</h3>
         <form onSubmit={handleSubmit}>
           <div className="form-grid">
             <div className="form-group">
-              <label htmlFor="ten">Full Name</label>
-              <input type="text" id="ten" value={formData.ten} onChange={handleChange} />
+              <label htmlFor="ten">Họ tên</label>
+              <input type="text" id="ten" className='' value={formData.ten} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label htmlFor="email">Email Address</label>
+              <label htmlFor="email">Email</label>
               <input type="email" id="email" value={formData.email} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label htmlFor="dienthoai">Phone Number</label>
+              <label htmlFor="dienthoai">Số điện thoại</label>
               <input type="text" id="dienthoai" value={formData.dienthoai} onChange={handleChange} />
             </div>
             <div className="form-group full-width">
-              <label htmlFor="tieusu">Bio</label>
+              <label htmlFor="tieusu">Tiểu sử</label>
               <textarea id="tieusu" value={formData.tieusu} onChange={handleChange} rows="4" />
             </div>
           </div>
@@ -126,14 +126,14 @@ const Profile = () => {
             </div>
             <div className="upload-controls">
               <label htmlFor="hinh" className="upload-button">
-                Choose Photo
+                Chọn hình ảnh
                 <input type="file" id="hinh" onChange={handleChange} hidden />
               </label>
             </div>
           </div>
 
-          <button type="submit" className="submit-button">
-            Save Changes
+          <button type="submit" className="submit-button bg-">
+            <p className='text-white text-2xl'>Lưu</p>
           </button>
         </form>
       </div>
@@ -336,7 +336,7 @@ const MangXaHoi = () => {
     <style>{styles}</style>
      <div className="social-profiles-container">
       <div className="social-profile-card">
-        <h3 className="profile-title">Social Media Links</h3>
+        <h3 className="profile-title">Link mạng xã hội</h3>
 
         <form onSubmit={handleSubmit} className="social-form">
           {[
@@ -356,17 +356,18 @@ const MangXaHoi = () => {
               <input
                 type="url"
                 id={platform.id}
-                className="social-input"
+                className="social-input placeholder:text-xl text-xl"
                 placeholder={`https://${platform.placeholder}`}
                 onChange={handleChange}
                 value={formData[platform.id]}
+                
               />
             </div>
           ))}
           
           <button type="submit" className="submit-button">
             <i className="fas fa-save"></i>
-            Save Changes
+            Lưu
           </button>
         </form>
       </div>
@@ -528,7 +529,7 @@ const Password = () => {
   return (
     <div className="password-change-container">
       <form onSubmit={handleSubmit} className="password-form">
-        <h2>Change Password</h2>
+        <h2>Đổi mật khẩu</h2>
         {Object.keys(formData).map((field) => (
           <div key={field} className="form-group">
             <label htmlFor={field}>
@@ -542,7 +543,7 @@ const Password = () => {
                 value={formData[field]}
                 onChange={handleChange}
                 required
-                className="password-input"
+                className="password-input placeholder:text-xl"
               />
               <button
                 type="button"
@@ -555,8 +556,9 @@ const Password = () => {
           </div>
         ))}
         <button type="submit" className="submit-button">
-          Reset Password
-        </button>
+          <p className='text-xl text-white'>          Đổi mật khẩu
+          </p>   
+     </button>
       </form>
 
       <style jsx>{`

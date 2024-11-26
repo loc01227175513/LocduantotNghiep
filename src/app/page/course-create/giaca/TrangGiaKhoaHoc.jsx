@@ -176,10 +176,10 @@ function TrangGiaKhoaHoc() {
     return (
         <div className="max-w-4xl p-8 mx-auto bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-xl">
             <h2 className="mb-6 text-3xl font-bold text-center flex items-center justify-center gap-3">
-                <svg className="w-8 h-8 text-indigo-600 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-8 h-8 text-sky-500 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-sky-400">
                     Giá cả khóa học
                 </span>
             </h2>
@@ -195,7 +195,7 @@ function TrangGiaKhoaHoc() {
                         <h3 className="font-bold text-yellow-800">Hoàn thành ứng dụng cao cấp của bạn</h3>
                         <p className="text-yellow-700">Đặt giá của bạn sau khi phê duyệt phương thức xuất chi</p>
                         <a href="/instructor/user/edit-instructor-info/"
-                            className="inline-flex items-center mt-2 text-indigo-600 hover:text-indigo-800 font-semibold transition-colors group">
+                            className="inline-flex items-center mt-2  hover:text-indigo-800 font-semibold transition-colors group">
                             Hoàn thành ứng dụng
                             <svg className="w-5 h-5 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -208,7 +208,7 @@ function TrangGiaKhoaHoc() {
 
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                 <div className="flex items-center mb-3">
-                    <svg className="w-6 h-6 mr-2 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-6 h-6 mr-2 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                             d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -293,8 +293,8 @@ function TrangGiaKhoaHoc() {
                         type="submit"
                         disabled={isSaveDisabled}
                         className={`w-full p-3 mt-6 text-white font-semibold rounded-lg
-                          bg-gradient-to-r from-indigo-600 to-purple-600
-                          hover:from-indigo-700 hover:to-purple-700
+                          bg-gradient-to-r from-sky-500 to-sky-400
+                          hover:from-sky-500 hover:to-sky-400
                           focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
                           transition-all duration-200 flex items-center justify-center
                           ${isSaveDisabled ? 'opacity-50 cursor-not-allowed' : 'transform hover:-translate-y-0.5'}`}>

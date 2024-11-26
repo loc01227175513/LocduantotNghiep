@@ -172,33 +172,33 @@ function TrangDich() {
         <div className="max-w-4xl p-8 mx-auto bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-100"
             style={{ animation: "float 6s ease-in-out infinite" }}>
             <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-300% animate-shimmer"
+                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-500  to-sky-400 bg-300% animate-shimmer"
                     style={{ animation: "shimmer 8s linear infinite" }}>
-                    Create Your Course
+                  Tạo khóa học của bạn
                 </h1>
                 <p className="mt-3 text-gray-600 text-lg">
-                    Make your course stand out and reach more students on Udemy
+                    Làm cho khóa học của bạn nổi bật và tiếp cận nhiều sinh viên hơn trên Udemy
                 </p>
             </div>
 
             <form className="space-y-8" onSubmit={handleSubmit}>
                 <div className="transition-all duration-200 hover:transform hover:scale-[1.01]">
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Course Title</label>
+                    <label className="block text-xl font-semibold text-gray-700 mb-2">Course Title</label>
                     <input
                         type="text"
                         name="ten"
-                        className="block w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                        placeholder="Enter an attention-grabbing title"
+                        className="placeholder:text-xl block w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Nhập tiêu đề thu hút sự chú ý"
                         value={formData.ten}
                         onChange={handleInputChange}
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Mô tả khóa học</label>
+                    <label className="block text-xl font-medium text-gray-700">Mô tả khóa học</label>
                     <textarea
                         name="mota"
-                        className="block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-                        placeholder="Enter your course description"
+                        className="placeholder:text-xl block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                        placeholder="Nhập mô tả khóa học của bạn"
                         value={formData.mota}
                         onChange={handleInputChange}
                     />
@@ -206,7 +206,7 @@ function TrangDich() {
 
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                     <div className="group">
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Level</label>
+                        <label className="block text-xl font-semibold text-gray-700 mb-2">Level</label>
                         <select
                             name="trinhdo"
                             className="block w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg group-hover:border-purple-300 focus:ring-2 focus:ring-purple-500 transition-all duration-200"
@@ -214,14 +214,14 @@ function TrangDich() {
                             onChange={handleInputChange}
                         >
                             <option value="-1">-- Chọn cấp độ --</option>
-                            <option value="Trình độ sơ cấp">Beginner Level</option>
-                            <option value="Trình độ trung cấp">Intermediate Level</option>
-                            <option value="Cấp độ chuyên gia">Expert Level</option>
-                            <option value="Tất cả các cấp độ">All Levels</option>
+                            <option value="Trình độ sơ cấp"> Cấp độ mới bắt đầu</option>
+                            <option value="Trình độ trung cấp">Cấp độ trung gian</option>
+                            <option value="Cấp độ chuyên gia">Trình độ chuyên môn</option>
+                            <option value="Tất cả các cấp độ">Tất cả các cấp độ</option>
                         </select>
                     </div>
                     <div className="group">
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+                        <label className="block text-xl font-semibold text-gray-700 mb-2">Loại</label>
                         <select
                             name="id_theloai"
                             className="block w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg group-hover:border-purple-300 focus:ring-2 focus:ring-purple-500 transition-all duration-200"
@@ -241,7 +241,7 @@ function TrangDich() {
 
                 {category && (
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Chọn chuyên ngành</label>
+                        <label className="block text-xl font-medium text-gray-700">Chọn chuyên ngành</label>
                         <select
                             name="id_theloaicon"
                             className="block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -263,11 +263,11 @@ function TrangDich() {
                 )}
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Search Topics</label>
+                    <label className="block text-xl font-medium text-gray-700">Search Topics</label>
                     <input
                         type="text"
-                        className="block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-                        placeholder="Search for topics"
+                        className="placeholder:text-xl block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                        placeholder="Tìm kiếm các chủ đề"
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />
@@ -275,7 +275,7 @@ function TrangDich() {
 
                 {searchTerm && filteredTopics.length > 0 && (
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Filtered Topics</label>
+                        <label className="block text-xl font-medium text-gray-700">Filtered Topics</label>
                         <ul className="block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md">
                             {filteredTopics.map(topic => (
                                 <li key={topic.id} onClick={() => handleTopicClick(topic.ten, topic.id)} className="p-1 cursor-pointer hover:bg-gray-100">
@@ -287,14 +287,14 @@ function TrangDich() {
                 )}
 
                 <div className="mt-8">
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Course Image</label>
+                    <label className="block text-xl font-semibold text-gray-700 mb-2">Course Image</label>
                     <div className="flex items-center justify-center w-full">
                         <label className="flex flex-col w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-all duration-200">
                             <div className="flex flex-col items-center justify-center pt-7">
                                 <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
-                                <p className="pt-1 text-sm text-gray-500">Upload course thumbnail</p>
+                                <p className="pt-1 text-xl text-gray-500">Tải lên khóa học khóa học</p>
                             </div>
                             <input type="file" className="hidden" name="hinh" onChange={handleFileChange} />
                         </label>
@@ -345,98 +345,11 @@ function TrangDich() {
                 </div>
 
                 <button type="submit"
-                    className="w-full py-4 text-lg font-medium text-white bg-gradient-to-r from-purple-500 to-red-500 rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                    className="w-full py-4 text-lg font-medium text-white bg-gradient-to-r from-sky-500 to-sky-300 rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2"
                     style={{ animation: "pulse 2s infinite" }}>
-                    Create Course
+                   Tạo khóa học
                 </button>
             </form>
-            <style jsx>{`@keyframes float {
-  0% {
-    transform: translateY(0px);
-    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.1);
-  }
-  50% {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 15px 0px rgba(0,0,0,0.05);
-  }
-  100% {
-    transform: translateY(0px);
-    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.1);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(147, 51, 234, 0.7);
-  }
-  70% {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 10px rgba(147, 51, 234, 0);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(147, 51, 234, 0);
-  }
-}
-
-@keyframes fadeScale {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate3d(0);
-  }
-  50% {
-    transform: translateY(-10px) rotate3d(1, 1, 0, 2deg);
-  }
-}
-
-@keyframes fadeScale {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.background-animate {
-  background-size: 200%;
-  animation: shimmer 2s linear infinite;
-}
-
-@keyframes shimmer {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: -200% 0;
-  }
-}
-
-
-
-
-`}</style>
         </div>
     );
 }

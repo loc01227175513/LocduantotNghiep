@@ -341,15 +341,31 @@ export default function Homedashboardlecturer() {
 
   useEffect(() => {
     if (isDataLoaded) {
-      console.log(data.giangvien);
-      console.log("khoahoc", khoahoc);
-      console.log(khoahocdamua);
-      console.log(doanhthu, "doanhthu");
+      // console.log(data.giangvien);
+      // console.log("khoahoc", khoahoc);
+      // console.log(khoahocdamua);
+      // console.log(doanhthu, "doanhthu");
     }
   }, [isDataLoaded, data, khoahoc, khoahocdamua, doanhthu]);
 
-  console.log(doanhthu, "doanhthu");
+  // console.log(doanhthu, "doanhthu");
+  const khoahocbanchay = khoahoc.reduce((max, current) => {
+    return (current.ThanhToan.length > max.ThanhToan.length) ? current : max;
+  }, { khoahoc: '', ThanhToan: [] });
 
+  console.log(khoahocbanchay);
+  const khoahocMaxSotien = khoahoc.reduce((max, current) => {
+    // Tính tổng số tiền cho khóa học hiện tại
+    const totalSotienCurrent = current.ThanhToan.reduce((sum, item) => sum + item.tong, 0);
+  
+    // Tính tổng số tiền cho khóa học có nhiều tiền nhất cho đến hiện tại
+    const totalSotienMax = max.ThanhToan.reduce((sum, item) => sum + item.tong, 0);
+  
+    // So sánh tổng số tiền, chọn khóa học có tổng số tiền cao hơn
+    return totalSotienCurrent > totalSotienMax ? current : max;
+  }, { khoahoc: '', ThanhToan: [] });
+
+  
   const khoahocdadangky = khoahoc.length;
   const khoahocdahoanthanh = khoahoc.filter((item) => item.trangthai === "Progress").length;
   const khoahoctamdung = khoahoc.filter((item) => item.trangthai === "Notyet").length;
@@ -381,7 +397,7 @@ export default function Homedashboardlecturer() {
   };
 
   return (
-    <div className="overflow-y-scroll col-lg-9 h-[550px]">
+    <div className="overflow-y-scroll col-lg-9 ịadkljas"  >
       <div className="right-sidebar-dashboard">
         <style jsx>{KhoaHocDangKyCss}</style>
 
@@ -429,11 +445,17 @@ export default function Homedashboardlecturer() {
               <CustomChart />
               <div className=' flex-grow rounded-lg'>
               <div className="ml-4 h-full flex flex-col gap-4 ">
-              <div className="flex-1 flex items-center justify-center bg-gray-800/95 rounded-lg transform transition-transform duration-300 hover:scale-105">
-              <p >khóa học đắt nhất</p>
+              <div className="flex-1 text-center  bg-gray-800/95 rounded-lg transform transition-transform duration-300 hover:scale-105">
+              <p className='mt-4'>khóa học bán chạy nhất</p>
+              <p className='text-blue-300 text-3xl font-bold mt-2'>{khoahocbanchay.ten}</p>
+              <p className='text-7xl mt-3 text-green-300'>{khoahocbanchay.ThanhToan.length}</p>
+              <p className='text-white mt-2'>Học sinh</p>
                 </div>
-                <div className="flex-1 flex items-center justify-center bg-gray-800/95 rounded-lg transform transition-transform duration-300 hover:scale-105">
-                <p>khóa học rẻ nhất</p>
+                <div className="flex-1 text-center bg-gray-800/95 rounded-lg transform transition-transform duration-300 hover:scale-105">
+                <p className='text-xl mt-4'>khóa học có doanh thu cao nhất</p>
+              <p className='text-blue-300 text-3xl font-bold mt-2'>{khoahocMaxSotien.ten}</p>
+              <p className='text-5xl mt-4 text-green-300'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0)}</p>
+              <p className='text-white mt-4'>Thu nhập</p>
                 </div>
             </div>
 
@@ -449,106 +471,28 @@ export default function Homedashboardlecturer() {
         </div>
         </div>
 
-        <style jsx>{CourseProgressStyles}</style>
+        {/* <style jsx>{CourseProgressStyles}</style> */}
 
-        {khoahoc.map((item, index) => {
-          const discountPercent = item.gia > 0 ? Math.round((item.giamgia / item.gia) * 100) : 0;
 
-          return (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-              key={item.id}
-              className="mb-4"
-            >
-              <Link href={`/page/course-create?id=${item.id}`}>
-                <div className="single-progress-course p-4 bg-white rounded-xl hover:shadow-lg transition-all duration-300 border border-gray-100">
-                  <div className="flex items-center gap-6">
-                    <motion.div
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <Image
-                        width={120}
-                        height={120}
-                        className="rounded-lg border-2 hover:border-blue-500 shadow-sm"
-                        src={validImageSrc(item.hinh)}
-                        alt={item.ten || 'Course Image'}
-                      />
-                    </motion.div>
 
-                    <div className="information-progress-course flex-1">
-                      <motion.h5
-                        className="text-xl font-semibold mb-2 text-gray-800"
-                        whileHover={{ x: 5, color: "#2563EB" }}
-                        transition={{ type: "spring", stiffness: 500 }}
-                      >
-                        {item.ten}
-                      </motion.h5>
-                      <div className={`
-                        text-sm font-medium rounded-full px-3 py-1 inline-flex items-center gap-2
-                        animate-pulse
-                        ${item.giamgia === 0
-                          ? 'bg-green-100 text-green-600'
-                          : 'bg-red-100 text-red-600'
-                        }`}
-                      >
-                        {item.giamgia === 0 ? (
-                          <>
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                            <span>Miễn phí</span>
-                          </>
-                        ) : (
-                          <>
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16a1 1 0 11-2 0V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 013 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.616a1 1 0 01.894-1.79l1.599.8L7 4.323V3a1 1 0 011-1h2z" />
-                            </svg>
-                            <span>Giảm {discountPercent}%</span>
-                          </>
-                        )}
-                      </div>
-                      {/* Instructor Information */}
-                      {item.giangvien && (
-                        <div className="mt-2 flex items-center">
-                          <Image
-                            width={40}
-                            height={40}
-                            className="rounded-full border-2 border-gray-200"
-                            src={validImageSrc(item.giangvien.avatar)}
-                            alt={item.giangvien.name || 'Giảng viên'}
-                          />
-                          <span className="ml-2 text-sm text-gray-600">
-                            {item.giangvien.name || 'Tên giảng viên'}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          );
-        })}
-
-        <div className="container mt-5">
+        <div className=" mt-5">
           <div className="row">
             <div className="col-12">
               <div className="d-flex justify-content-between align-items-center mb-4">
-                <h5 className="mb-0 font-bold text-2xl">Các khóa học của tôi</h5>
-                <a href="#" className="btn btn-primary btn-sm hover:scale-105 transition-transform">
+                <h5 className="mb-0 font-bold text-3xl">Các khóa học của tôi</h5>
+                <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn btn-primary btn-sm hover:scale-105 transition-transform text-2xl">
                   Xem tất cả
-                </a>
+                </Link>
               </div>
               <div className="row">
                 {khoahoc.map((item) => (
-                  <div
+                    <div
                     className="col-md-6 col-lg-4 mb-4"
                     key={item.id}
                   >
-                    <div className="card h-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <Link href={`/page/course-detail?id=${item.id}`}>
+
+                    <div className="card h-100 hover:shadow-lg hover:cursor-pointer transition-all duration-300 transform hover:-translate-y-1">
                       <Image
                         width={300}
                         height={200}
@@ -558,7 +502,7 @@ export default function Homedashboardlecturer() {
                       />
                       <div className="card-body p-4">
                         <div className="flex justify-between items-start mb-3">
-                          <h6 className="card-title font-semibold text-lg">{item.ten}</h6>
+                          <h6 className="card-title font-semibold text-2xl">{item.ten}</h6>
                           <span className={`badge ${item.trangthai === 'Hoàn thành' ? 'bg-green-500' : 'bg-blue-500'
                             } text-white rounded-full px-3 py-1`}>
                             {item.trangthai}
@@ -604,6 +548,7 @@ export default function Homedashboardlecturer() {
                         )}
                       </div>
                     </div>
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -671,6 +616,8 @@ const DoanhThuChart = () => {
       }
 
       const result = await response.json();
+      console.log(result);
+      
 
       if (Array.isArray(result.data)) {
         setDoanhthu(result.data);
@@ -725,7 +672,7 @@ const DoanhThuChart = () => {
           Thống Kê Doanh Thu theo Thời Gian
         </Typography>
         <Typography color="error">{error}</Typography>
-        <button onClick={handleReload} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
+        <button onClick={handleReload} className="mt-4 px-4 py-2 bg-[#ff6b6b] text-white rounded">
           Reload Data
         </button>
       </Box>
@@ -739,7 +686,7 @@ const DoanhThuChart = () => {
           Thống Kê Doanh Thu theo Thời Gian
         </Typography>
         <Typography sx={{ color: '#ffffff' }}>No data available.</Typography>
-        <button onClick={handleReload} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
+        <button onClick={handleReload} className="mt-4 px-4 py-2  bg-[#ff6b6b] text-white rounded">
           Reload Data
         </button>
       </Box>
@@ -770,7 +717,7 @@ const DoanhThuChart = () => {
           }
         }}
       >
-        <button onClick={handleReload} className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-[#ff6b6b] text-white rounded">
           Reload Data
         </button>
         <motion.div
@@ -1015,7 +962,7 @@ const CustomChart = () => {
     sx={{ width: '70%' }}
     className="p-4 bg-gray-800/95 backdrop-blur rounded-lg h-[400px] transform transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] duration-500"
   >
-    <button onClick={handleReload} className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+    <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-[#ff6b6b] text-white rounded">
       Reload Data
     </button>
     <motion.div

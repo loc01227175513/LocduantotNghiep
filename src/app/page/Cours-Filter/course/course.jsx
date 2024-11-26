@@ -32,7 +32,7 @@ const Grid = ({ courses }) => {
           <Link href={`/page/course-detail?id=${course.id}`} key={course.id}>
             <div className="rts-single-course">
               <a href="single-course.html">
-                <Image width={500} height={300} src={course.hinh} className="w-full" alt="course" />
+                <Image width={500} height={300} src={course.hinh} className="w-full h-[150px]" alt="course" />
                 {course.gia === 0 ? (
                   <div className="free-badge">Miễn Phí</div>
                 ) : course.giamgia > 0 ? (
@@ -54,35 +54,40 @@ const Grid = ({ courses }) => {
                   <i className="fa-sharp fa-light fa-bookmark" />
                 </div>
               </div>
-              <div className="tags-area-wrapper">
-                <div className="single-tag">
-                  <span>{course.chude}</span>
+              <div className="relative">
+                <div className="absolute right-0">
+                  <div className="single-tag ">
+                    <span >{course.chude}</span>
+                  </div>
+                </div>
+                <div className="lesson-studente ">
+                  <div className="lesson">
+                    <i className="fa-light fa-calendar-lines-pen" />
+                    <span>{course.baihocs} Lessons</span>
+                  </div>
+                  <div className="lesson">
+                    <i className="fa-light fa-user-group" />
+                    <span>{course.dangky} Students</span>
+                  </div>
                 </div>
               </div>
-              <div className="lesson-studente">
-                <div className="lesson">
-                  <i className="fa-light fa-calendar-lines-pen" />
-                  <span>{course.baihocs} Lessons</span>
-                </div>
-                <div className="lesson">
-                  <i className="fa-light fa-user-group" />
-                  <span>{course.dangky} Students</span>
-                </div>
-              </div>
+
               <a href="single-course.html">
                 <h5 className="title">{course.ten}</h5>
               </a>
-              <p className="teacher">{course.giangvien}</p>
+              <p className="teacher ">{course.giangvien}</p>
               <div className="rating-and-price">
                 <div className="rating-area">
                   <span>{DanhGiaTrungBinh(course.danhgia).toFixed(1)}</span>
                   <div className="stars">
                     <ul>
-                      {[...Array(5)].map((_, i) => (
-                        <li key={i}>
-                          <i className={`fa-sharp fa-solid fa-star${i < DanhGiaTrungBinh(course.danhgia) ? ' text-warning' : '-o'}`} />
-                        </li>
-                      ))}
+                      <ul>
+                        {[...Array(5)].map((_, i) => (
+                          <li key={i}>
+                            <i className={`fa-sharp fa-solid fa-star${i < (isNaN(DanhGiaTrungBinh(course.danhgia)) || DanhGiaTrungBinh(course.danhgia) === "NaN" ? 0 : DanhGiaTrungBinh(course.danhgia)) ? ' text-warning' : '-o'}`} />
+                          </li>
+                        ))}
+                      </ul>
                     </ul>
                   </div>
                 </div>
@@ -114,20 +119,24 @@ const Grid = ({ courses }) => {
       border-radius: 8px;
     }
 
-    .free-badge, .discount-badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: white;
-      animation: badgePulse 2s infinite;
-    }
+  .free-badge, .discount-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 40px; /* Adjust the width and height as needed */
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20%;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  animation: badgePulse 2s infinite;
+}
 
     .free-badge {
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      background: red;
     }
 
     .discount-badge {
@@ -171,8 +180,8 @@ const Grid = ({ courses }) => {
 
   .save-icon {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0rem;
+    right:0rem;
     background: rgba(255,255,255,0.9);
     padding: 0.5rem;
     border-radius: 50%;
@@ -186,12 +195,13 @@ const Grid = ({ courses }) => {
   }
 
   .single-tag span {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    background: -webkit-linear-gradient(315deg,#1e3c72 0%,#ff6b6b 100%);
     color: white;
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
     font-weight: 500;
+    
   }
 
   .lesson-studente {
@@ -217,12 +227,12 @@ const Grid = ({ courses }) => {
   }
 
   .rts-single-course:hover .title {
-    color: #4f46e5;
+    color: #ff6b6b ;
   }
 
   .teacher {
     color: #4b5563;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #e5e7eb;
@@ -316,7 +326,7 @@ const List = ({ courses }) => {
             <div className="rts-single-course list-view">
               <div className="course-image">
                 <a href="single-course.html">
-                  <Image width={500} height={300} src={course.hinh} alt="course" />
+                  <Image width={500} height={300} className="h-[200px] w-full justify-between" src={course.hinh} alt="course" />
                   {course.gia === 0 ? (
                     <div className="free-badge">Miễn Phí</div>
                   ) : course.giamgia > 0 ? (
@@ -330,17 +340,13 @@ const List = ({ courses }) => {
               <div className="course-content">
                 <div className="content-wrapper">
                   <div className="top-content">
-                    <div className="tags-area-wrapper">
-                      <div className="single-tag">
-                        <span>{course.chude}</span>
-                      </div>
-                    </div>
-
-                    <h5 className="title">{course.ten}</h5>
+                    <h5 className="my-4 text-3xl font-bold">
+                      {course.ten}
+                    </h5>
                     <p className="teacher">{course.giangvien}</p>
 
-                    <div className="lesson-studente">
-                      <div className="lesson">
+                    <div className="lesson-studente relative ">
+                      <div className="lesson ">
                         <i className="fa-light fa-calendar-lines-pen" />
                         <span>{course.baihocs} Lessons</span>
                       </div>
@@ -348,9 +354,14 @@ const List = ({ courses }) => {
                         <i className="fa-light fa-user-group" />
                         <span>{course.dangky} Students</span>
                       </div>
+                      <div className="single-tag">
+                      <span>{course.chude}</span>
                     </div>
+                    </div>
+                    <div className="tags-area-wrapper">
+                    
                   </div>
-
+                  </div>
                   <div className="bottom-content">
                     <div className="rating-area">
                       <span>{DanhGiaTrungBinh(course.danhgia).toFixed(1)}</span>
@@ -365,13 +376,16 @@ const List = ({ courses }) => {
                       </div>
                     </div>
 
-                    <div className="price-area">
+                    <div className="price-area ">
                       {(course.gia === 0 && course.giamgia === 0) ? (
                         <div className="price">Miễn phí</div>
                       ) : (
                         <>
-                          <div className="not price">${course.gia}</div>
-                          <div className="price">${course.giamgia}</div>
+                          <div className="flex">
+                            <div className="line-through text-black text-2xl m-3">${course.gia}</div>
+                            <div className="text-red-600 text-2xl m-3">${course.giamgia}</div>
+                          </div>
+
                         </>
                       )}
                     </div>
@@ -379,18 +393,18 @@ const List = ({ courses }) => {
                 </div>
 
                 <div className="save-icon" data-bs-toggle="modal" data-bs-target="#exampleModal-login">
-                <div
-                  className="save-icon"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal-login"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    handleYeuThich(course.id);
-                  }}
-                >
-                  <i className="fa-sharp fa-light fa-bookmark" />
+                  <div
+                    className="save-icon"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal-login"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      handleYeuThich(course.id);
+                    }}
+                  >
+                    <i className="fa-sharp fa-light fa-bookmark" />
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
           </Link>
@@ -415,7 +429,7 @@ const List = ({ courses }) => {
 
 .save-icon:hover {
   transform: scale(1.15);
-  background: #4f46e5;
+  background:#ff6b6b ;
   box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
@@ -429,12 +443,12 @@ const List = ({ courses }) => {
 
 .save-icon i {
   font-size: 1.25rem;
-  color: #4f46e5;
+  color: #ff6b6b ;
   transition: all 0.3s ease;
 }
 
 .save-icon.saved {
-  background: #4f46e5;
+  background: #ff6b6b ;
   animation: savePop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -455,7 +469,7 @@ const List = ({ courses }) => {
   bottom: -30px;
   left: 50%;
   transform: translateX(-50%);
-  background: #4f46e5;
+  background:#ff6b6b ;
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
@@ -514,10 +528,7 @@ const List = ({ courses }) => {
     transform: translateY(-4px);
   }
 
-  .title {
-    font-size: 1.5rem;
-    margin: 1rem 0;
-  }
+
 
   .lesson-studente {
     margin: 1rem 0;
@@ -536,16 +547,18 @@ const List = ({ courses }) => {
       position: absolute;
       top: 12px;
       left: 12px;
-      padding: 6px 12px;
-      border-radius: 20px;
+        width:45px; 
+        text-align:center;
+     padding : 0.3rem;
+      border-radius: 5px;
       font-size: 0.875rem;
-      font-weight: 600;
+      font-weight: 400;
       color: white;
       animation: badgePulse 2s infinite;
     }
 
     .free-badge {
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      background: red;
     }
 
     .discount-badge {
@@ -604,10 +617,10 @@ const List = ({ courses }) => {
   }
 
   .single-tag span {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    background: -webkit-linear-gradient(315deg,#1e3c72 0%,#ff6b6b 100%);
     color: white;
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
+    padding: 0.8rem 1rem;
+    border-radius: 5px;
     font-size: 0.85rem;
     font-weight: 500;
   }
@@ -635,12 +648,12 @@ const List = ({ courses }) => {
   }
 
   .rts-single-course:hover .title {
-    color: #4f46e5;
+    color: #ff6b6b ;
   }
 
   .teacher {
     color: #4b5563;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #e5e7eb;
@@ -679,7 +692,7 @@ const List = ({ courses }) => {
   .price {
     color: #ef4444;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.8rem;
     background: #fef2f2;
     padding: 0.4rem 0.8rem;
     border-radius: 6px;

@@ -56,7 +56,7 @@ const Headerdashboardstudent2 = ({ page }) => {
 
   return (
     <>
-      <div className="col-lg-3 rts-sticky-column-item h-[550px] overflow-y-scroll">
+      <div className="col-lg-3 rts-sticky-column-item ịadkljas overflow-y-scroll">
         <div className="left-sindebar-dashboard theiaStickySidebar">
           <div className="dashboard-left-single-wrapper">
             <Link
@@ -94,29 +94,29 @@ const Headerdashboardstudent2 = ({ page }) => {
               <i className="fa-sharp fa-light fa-bag-shopping" />
               <p>Lịch sử đơn hàng</p>
             </Link>
-          </div>
-          <div className="dashboard-left-single-wrapper mt--40">
-            <Link href={"/page/lecturer-dashboard/quanlykhoahoc"} className="single-item">
+            <Link 
+              href={"/page/lecturer-dashboard/quanlykhoahoc"} 
+              className={`single-item ${pagess === 'quanlykhoahoc' ? 'active' : ''}`}
+              onClick={() => click("quanlykhoahoc")}
+
+            >
               <i className="fa-light fa-book" />
               <p>Quản lý khóa học</p>
             </Link>
 
     
 
-            <Link href="announcement.html" className="single-item">
+            {/* <Link href="announcement.html"
+            className={`single-item ${pagess === 'thongbao' ? 'active' : ''}`}
+            onClick={() => click("thongbao")}
+            >
               <i className="fa-solid fa-megaphone" />
               <p>Thông báo</p>
-            </Link>
-
-            {/* <Link href="withdrowals.html" className="single-item">
-              <i className="fa-regular fa-box" />
-              <p>Rút tiền</p>
             </Link> */}
-            <Link href="/page/lecturer-dashboard/NhanTinGiangVien" className="single-item">
-              <i className="fa-regular fa-box" />
-              <p>Nhắn Tin Giảng Viên</p>
-            </Link>
+
+           
           </div>
+
           <div className="dashboard-left-single-wrapper bbnone mt--40">
             <h4 className="title mb--5">User</h4>
             <Link href="/page/lecturer-dashboard/setting" className="single-item">

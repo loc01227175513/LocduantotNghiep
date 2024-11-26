@@ -6,7 +6,26 @@ import { KhoaHocDaHoc } from "../../../../service/dashbordStuden/Dashboard-servi
 export default function Homedashboardstudent() {
   const [data, setData] = useState([]);
   const [khoahocdahoc, setKhoahocdahoc] = useState([]);
-
+  const calculateMinutesDifference =(date) => { 
+    const now = new Date(); 
+    const pastDate = new Date(date); 
+  
+    const diffInMs = now.getTime() - pastDate.getTime();
+    
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+  
+    if (diffInMinutes > 10080) {
+      return date.split("T")[0]; 
+    } else if (diffInMinutes > 1440) { 
+      return `${Math.floor(diffInMinutes / 1440)} ngày trước`; 
+    } else if (diffInMinutes >= 60) {
+      return `${Math.floor(diffInMinutes / 60)} giờ trước`; 
+    } else if (diffInMinutes < 60) { 
+      return `${diffInMinutes} phút trước`;
+    }
+  
+    return `${diffInMinutes} phút trước`;
+  }
   useEffect(() => {
     Dashboard()
       .then((res) => {
@@ -103,7 +122,7 @@ export default function Homedashboardstudent() {
                   <p> Giảng viên </p>
                 </div>
                 <div className="rating">
-                  <p> Ngày đăn ký </p>
+                  <p> Ngày đăng ký </p>
                 </div>
               </div>
               {/* single course inroll end */}
@@ -121,15 +140,20 @@ export default function Homedashboardstudent() {
                       <p>{khoahoc.tenGiangVien} </p>
                     </div>
                     <div className="rating">
-                      <p>{khoahoc.updated_at}</p>
+                      <p>{calculateMinutesDifference(khoahoc.
+                        updated_at)
+                      }</p>
                     </div>
                   </div>
                 ))
               )}
+              {/* single course inroll end */}
             </div>
+            {/* my course enroll wrapper end */}
           </div>
         </div>
       </div>
+
     </div>
   );
 }

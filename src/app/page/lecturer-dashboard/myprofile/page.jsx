@@ -36,35 +36,31 @@ export default function Myprofilelecturer() {
   }
 
   return (
-    <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll h-[550px]">
+
+    <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas">
       <div className="right-sidebar-my-profile-dash theiaStickySidebar pt--30">
         <p className="text-black font-bold text-3xl">Hồ sơ của tôi</p>
-        {/* single My portfolio start*/}
        <div className="p-4">
        <div className="my-single-portfolio-dashed  mt-6">
           <div className="name">Ngày đăng ký</div>
           <div className="value "><p className="p-0 m-0 ">{calculateMinutesDifference(lecturer.created_at)}</p></div>
         </div>
-        {/* single My portfolio end*/}
-        {/* single My portfolio start*/}
+
         <div className="my-single-portfolio-dashed ">
           <div className="name">Tên người dùng:</div>
           <div className="value"><p>{lecturer.ten}</p></div>
         </div>
-        {/* single My portfolio end*/}
-        {/* single My portfolio start*/}
+
         <div className="my-single-portfolio-dashed ">
           <div className="name">E-mail:</div>
           <div className="value"><p>{lecturer.email}</p></div>
         </div>
-        {/* single My portfolio end*/}
-        {/* single My portfolio start*/}
+
         <div className="my-single-portfolio-dashed ">
           <div className="name">Số điện thoại:</div>
           <div className="value"><p>{lecturer.dienthoai ? lecturer.dienthoai : "chưa có"}</p></div>
         </div>
-        {/* single My portfolio end*/}
-        {/* single My portfolio start*/}
+
         <div className="my-single-portfolio-dashed ">
           <div className="name">Kỹ năng/nghề nghiệp</div>
           <div className="value">
@@ -74,8 +70,7 @@ export default function Myprofilelecturer() {
               </p>
           </div>
         </div>
-        {/* single My portfolio end*/}
-        {/* single My portfolio start*/}
+
         <div className="my-single-portfolio-dashed highlight-border">
           <div className="name">Tiểu sử</div>
           <div className="value">
@@ -85,7 +80,6 @@ export default function Myprofilelecturer() {
           </div>
         </div>
        </div>
-        {/* single My portfolio end*/}
       </div>
 
     </div>

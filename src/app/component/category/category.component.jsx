@@ -94,13 +94,13 @@ const NextCategory = () => {
       <div className="flex justify-center gap-2 mt-8">
         <button
           className={`w-10 h-10 rounded-full border ${buttonPrev
-            ? 'bg-gradient-to-r from-blue-500 to-blue-400 text-white'
+            ? 'bg-gradient-to-r from-blue-800 to-blue-400 text-white'
             : 'bg-gray-200 text-gray-500 cursor-not-allowed'
             }`}
           onClick={prevs}
           disabled={!buttonPrev}
         >
-          <i className="bi bi-arrow-left"></i>
+          <i className="bi bi-arrow-left text-lg"></i>
         </button>
 
         {startPage > 1 && (
@@ -118,8 +118,8 @@ const NextCategory = () => {
         {pages.map((p) => (
           <button
             key={p}
-            className={`w-10 h-10 border rounded-full flex items-center justify-center text-sm ${p === page
-              ? 'bg-gradient-to-r from-blue-500 to-blue-400 text-white'
+            className={`w-10 h-10 border rounded-full flex items-center justify-center text-lg ${p === page
+              ? 'bg-gradient-to-r from-blue-800 to-blue-400 text-white'
               : 'bg-gray-100 text-gray-800'
               }`}
             onClick={() => setPage(p)}
@@ -142,13 +142,13 @@ const NextCategory = () => {
 
         <button
           className={`w-10 h-10 rounded-full border ${buttonNext
-            ? 'bg-gradient-to-r from-blue-500 to-blue-400 text-white'
+            ? 'bg-gradient-to-r from-blue-800 to-blue-400 text-white'
             : 'bg-gray-200 text-gray-500 cursor-not-allowed'
             }`}
           onClick={nexts}
           disabled={!buttonNext}
         >
-          <i className="bi bi-arrow-right"></i>
+          <i className="bi bi-arrow-right text-lg"></i>
         </button>
       </div>
     );
@@ -160,13 +160,13 @@ const NextCategory = () => {
         <div className="text-center mb-12">
           <div className="inline-block mb-4">
             <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/10 mb-4 mx-auto">
-              <i className="bi bi-grid-3x3-gap text-blue-500 text-2xl animate-pulse"></i>
+              <i className="bi bi-grid-3x3-gap text-blue-800 text-2xl animate-pulse"></i>
             </div>
           </div>
-          <h2 className="text-4xl font-medium mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-medium mb-4 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 bg-clip-text text-transparent">
            <strong>Khám phá hơn 2000 khóa học trực tuyến miễn phí</strong> 
           </h2>
-          <p className="text-gray-600 text-2xl max-w-2xl mx-auto">
+          <p className="text-2xl max-w-2xl mx-auto text-blue-800">
             Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn 
           </p>
         </div>
@@ -177,27 +177,28 @@ const NextCategory = () => {
               key={index}
               className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
-              <Link href={`/page/Cours-Filter?id=${item.id}`}>
-                <div className="relative">
-                  <div className="aspect-w-16 aspect-h-9 overflow-hidden">
-                    <Image
-                      width={500} height={300}
-                      src={item.image}
-                      alt=""
-                      className="w-full h-40 object-cover transform group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-6 text-center">
-                    <h6 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
-                      {item.name}
-                    </h6>
-                    <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
-                      <i className="bi bi-collection text-blue-500"></i>
-                      <span className="text-xl">130+ khóa học</span>
-                    </p>
-                  </div>
-                </div>
-              </Link>
+            <Link href={`/page/Cours-Filter?id=${item.id}`}>
+  <div className="relative">
+    <div className="aspect-w-16 aspect-h-9 overflow-hidden">
+      <Image
+        width={500}
+        height={180}
+        src={item.image}
+        alt=""
+        className="w-full h-45 object-cover transform group-hover:scale-110 transition-transform duration-300"
+      />
+    </div>
+    <div className="p-6 text-center">
+      <h6 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
+        {item.name}
+      </h6>
+      <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
+        <i className="bi bi-collection text-blue-800 text-2xl"></i>
+        <span className="text-2xl">130+ khóa học</span>
+      </p>
+    </div>
+  </div>
+</Link>
             </div>
           ))}
         </div>
@@ -244,24 +245,24 @@ const Category = ({ onCategoryChange }) => {
       <div className="flex flex-wrap gap-3 p-4 relative">
       {/* Enhanced Dropdown Button */}
       <div className="relative">
-        <button
-          className={`px-6 py-3 rounded-xl text-xl font-semibold transition-all duration-300 
-            flex items-center gap-2 border-2
-            ${activeCategory === ''
-              ? 'bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 text-white border-transparent shadow-xl shadow-blue-500/30 hover:shadow-blue-500/40'
-              : 'bg-white text-gray-700 border-gray-200 hover:border-blue-400 hover:text-blue-600'}`}
-          onClick={() => setShowDropdown(!showDropdown)}
-        >
-          <span>Tất cả thể loại</span>
-          <svg 
-            className={`w-5 h-5 transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
+      <button
+  className={`px-6 py-3 rounded-xl text-xl font-semibold transition-all duration-300 
+    flex items-center gap-2 border border-gray-200
+    ${activeCategory === ''
+      ? 'bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 text-white border-transparent shadow-xl shadow-blue-500/30 hover:shadow-blue-500/40'
+      : 'bg-white text-gray-700 border-white hover:border-blue-400 hover:text-blue-600'}`} // Đổi border-gray-200 thành border-white
+  onClick={() => setShowDropdown(!showDropdown)}
+>
+  <span className="text-xl">Tất cả thể loại</span>
+  <svg 
+    className={`w-5 h-5 transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} 
+    fill="none" 
+    viewBox="0 0 24 24" 
+    stroke="currentColor"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+  </svg>
+</button>
     
         {/* Enhanced Dropdown Menu */}
         {showDropdown && (
@@ -331,11 +332,11 @@ const Categoryheader = () => {
             <li key={index} className="category-item">
               <Link href={`/page/Cours-Filter?id=${item.id}`} className="menu-item cv">
                 <div className="text ">
-                  <div className="image-wrapper flex justify-center items-center">
-                    <Image width={500} height={300} src={item.hinh} alt="" className="" />
+                  <div className="imgtl">
+                    <Image width={500} height={300} src={item.hinh} alt=""/>
                   </div>
-                  <p className="font-medium text-md text-black text-center"><strong>{item.ten}</strong></p>
-                  <p className="course-count">130+ Khóa học</p>
+                  <p className="font-medium text-md text-black text-center pt-1 pb-1"><strong>{item.ten}</strong></p>
+                  <p className="course-count text-center">130+ Khóa học</p>
                 </div>
               </Link>
             </li>
@@ -346,11 +347,11 @@ const Categoryheader = () => {
             <li key={index} className="category-item">
               <Link href={`/page/Cours-Filter?id=${item.id}`} className="menu-item cv">
                 <div className="text ">
-                  <div className="image-wrapper flex justify-center items-center">
+                  <div className="imgtl">
                     <Image width={500} height={300} src={item.hinh} alt="" className="" />
                   </div>
-                  <p className="font-medium text-md text-black text-center"><strong>{item.ten}</strong></p>
-                  <p className="course-count">130+ Khóa học</p>
+                  <p className="font-medium text-md text-black text-center pt-1 pb-1"><strong>{item.ten}</strong></p>
+                  <p className="course-count text-center">130+ Khóa học</p>
                 </div>
               </Link>
             </li>

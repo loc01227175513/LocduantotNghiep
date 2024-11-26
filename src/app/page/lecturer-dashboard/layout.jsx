@@ -26,18 +26,8 @@ export default function Layoutdashboardlecturer({children}){
   <div className="dashboard--area-main pt--100">
     <div className="container">
       <div className="row g-5">
-
-
       <Headerdashboardstudent2 page={"home"}/>
-
-
-
-
         {children}
-
-
-
-
       </div>
     </div>
   </div>

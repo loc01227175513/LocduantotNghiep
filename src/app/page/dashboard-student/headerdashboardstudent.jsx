@@ -85,6 +85,80 @@ const Headerdashboardstudent1 = () => {
 
     <div className="col-lg-12">
       <div className="dashboard-banner-area-start bg_image student-dashboard" style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        {/* {data.vaitro != 0 ? (
+          <div className="rating-area-banner-dashboard"
+            style={{
+              marginBottom: '20px',
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}>
+            <a href="/page/lecturer-dashboard"
+              className="create-btn"
+              style={{
+                ...buttonStyle('#4CAF50', '#45a049'),
+                padding: '12px 24px',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                transform: 'translateY(0)',
+                ':hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+                }
+              }}>
+              <i className="fa-regular fa-circle-plus"
+                style={{
+                  marginRight: '12px',
+                  fontSize: '1.1em',
+                  transition: 'transform 0.3s ease'
+                }}></i>
+              Giảng viên
+            </a>
+          </div>
+        ) : (
+          <div
+            className="rating-area-banner-dashboard"
+            style={{
+              marginBottom: '20px',
+              background: 'linear-gradient(135deg, #f5f7fa 0%, #e4eff7 100%)',
+              padding: '25px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
+              transition: 'transform 0.2s ease'
+            }}
+          >
+            <a
+              href="/page/become-instructor"
+              className="create-btn"
+              style={{
+                ...buttonStyle('#2196F3', '#1976D2'),
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '12px 24px',
+                borderRadius: '8px',
+                fontSize: '16px',
+                fontWeight: '500',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 2px 4px rgba(33, 150, 243, 0.3)',
+                ':hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 4px 8px rgba(33, 150, 243, 0.4)'
+                }
+              }}
+            >
+              <i
+                className="fa-regular fa-circle-plus"
+                style={{
+                  marginRight: '12px',
+                  fontSize: '18px'
+                }}
+              />
+              Tạo tài khoản giảng viên
+            </a>
+          </div>
+        )} */}
         <div className="author-profile-image-and-name" style={{
           textAlign: 'center',
           background: 'linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%)',
@@ -256,6 +330,7 @@ const Headerdashboardstudent1 = () => {
           )}
         </div>
       </div>
+      
     </div>
 
 
@@ -263,6 +338,18 @@ const Headerdashboardstudent1 = () => {
   )
 }
 
+const buttonStyle = (backgroundColor, hoverColor) => ({
+  display: 'flex',
+  alignItems: 'center',
+  textDecoration: 'none',
+  color: '#fff',
+  backgroundColor: backgroundColor,
+  padding: '10px 20px',
+  borderRadius: '5px',
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+  transition: 'background-color 0.3s',
+  cursor: 'pointer'
+});
 
 const infoBoxStyle = {
   marginBottom: '10px',
@@ -327,118 +414,93 @@ const closeStyle = {
 
 
 const Headerdashboardstudent2 = ({ page }) => {
-  const [pagess, setPagess] = useState(page);
+  const [pagess, setPagess] = useState(page)
 
-  const menuItems = [
-    { id: 'home', icon: <FaHome />, text: 'Bảng điều khiển', link: '/page/dashboard-student' },
-    { id: 'hoso', icon: <FaUser />, text: 'Hồ sơ', link: '/page/dashboard-student/myprofile' },
-    { id: 'khoahocdanghoc', icon: <FaGraduationCap />, text: 'Các khóa học đang học', link: '/page/dashboard-student/khoahocdanghoc' },
-    { id: 'lichsumuahang', icon: <FaShoppingBag />, text: 'Lịch sử đơn hàng', link: '/page/dashboard-student/lichsudonhang' },
-    { id: 'khuyenmai', icon: <FaTag />, text: 'Khuyến mãi', link: '/page/dashboard-student/khuyenmai' },
-    { id: 'yeuthich', icon: <FaHeart />, text: 'Yêu Thích', link: '/page/dashboard-student/YeuThich' },
-  ];
-
-  const iconStyle = {
-    width: '40px',
-    height: '40px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '8px',
-    marginRight: '12px',
-    transition: 'all 0.3s ease',
-    fontSize: '2rem' // Increased from 1.25rem to 2rem
-  };
-
-  const textStyle = {
-    fontSize: '2rem', // Increased from 1.5rem to 2rem
-    fontWeight: '500'
-  };
-
+  const click = (pages) => {
+    setPagess(pages)
+  }
   return (
-    <div className="col-lg-3">
-      <div style={{
-        background: 'white',
-        borderRadius: '16px',
-        padding: '1.5rem',
-        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)',
-        height: '90vh',
-        overflowY: 'auto'
-      }}>
-        <div style={{ marginBottom: '2rem' }}>
-          {menuItems.map((item) => (
+    <>
+      <div className="col-lg-3 rts-sticky-column-item  overflow-y-scroll">
+        <div className="left-sindebar-dashboard theiaStickySidebar">
+          <div className="dashboard-left-single-wrapper">
             <Link
-              key={item.id}
-              href={item.link}
-              onClick={() => setPagess(item.id)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '0.875rem 1rem',
-                margin: '0.5rem 0',
-                borderRadius: '12px',
-                transition: 'all 0.3s ease',
-                color: pagess === item.id ? '#2563eb' : '#64748b',
-                background: pagess === item.id ? '#2563eb0f' : 'transparent',
-                transform: pagess === item.id ? 'scale(1.02)' : 'scale(1)',
-                cursor: 'pointer',
-                textDecoration: 'none'
-              }}
+              href={"/page/dashboard-student"}
+              className={`single-item ${pagess === 'home' ? 'active' : ''}`}
+              onClick={() => click("home")}
             >
-              <span style={{
-                ...iconStyle,
-                background: pagess === item.id ? '#2563eb' : '#f1f5f9',
-                color: pagess === item.id ? 'white' : '#64748b'
-              }}>
-                {item.icon}
-              </span>
-              <span style={{
-                ...textStyle,
-                fontWeight: pagess === item.id ? '600' : '500'
-              }}>
-                {item.text}
-              </span>
+              <i className="fa-light fa-house" />
+              <p>Bảng điều khiển</p>
             </Link>
-          ))}
-        </div>
 
-        <div style={{
-          borderTop: '2px solid #f1f5f9',
-          paddingTop: '1.5rem'
-        }}>
-          <h4 style={{
-            fontSize: '2rem', // Increased from 1.5rem to 2rem
-            color: '#94a3b8',
-            marginBottom: '1rem',
-            paddingLeft: '1rem'
-          }}>Người dùng</h4>
+            <Link
+              href={"/page/dashboard-student/myprofile"}
+              className={`single-item ${pagess === 'hoso' ? 'active' : ''}`}
+              onClick={() => click("hoso")}
+            >
+              <i className="fa-regular fa-user" />
+              <p>Hồ sơ của tôi</p>
+            </Link>
 
-          <Link
-            href="/page/dashboard-student/setting"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              padding: '0.875rem 1rem',
-              borderRadius: '12px',
-              color: '#64748b',
-              transition: 'all 0.3s ease',
-              marginBottom: '0.5rem',
-              textDecoration: 'none',
-              fontSize: '2rem' // Increased from 1.5rem to 2rem
-            }}
-          >
-            <span style={{
-              ...iconStyle,
-              background: '#f1f5f9',
-              color: '#64748b'
-            }}>
-              <FaCog />
-            </span>
-            <span style={textStyle}>Cài đặt</span>
-          </Link>
+            <Link
+              href={"/page/dashboard-student/khoahocdanghoc"}
+              className={`single-item ${pagess === 'khoahoc' ? 'active' : ''}`}
+              onClick={() => click("khoahoc")}
+            >
+              <i className="fa-light fa-graduation-cap" />
+              <p>Khóa học đang học</p>
+            </Link>
+
+            <Link
+              href={"/page/dashboard-student/lichsudonhang"}
+              className={`single-item ${pagess === 'lichsudonhang' ? 'active' : ''}`}
+              onClick={() => click("lichsudonhang")}
+            >
+              <i className="fa-sharp fa-light fa-bag-shopping" />
+              <p>Lịch sử đơn hàng</p>
+            </Link>
+            <Link
+              href={"/page/dashboard-student/khuyenmai"}
+              className={`single-item ${pagess === 'khuyenmai' ? 'active' : ''}`}
+              onClick={() => click("khuyenmai")}
+            >
+              <i className="fa-sharp fa-light fa-bag-shopping" />
+              <p>Khuyến mãi</p>
+            </Link>
+            <Link 
+              href={"/page/dashboard-student/YeuThich"} 
+              className={`single-item ${pagess === 'quanlykhoahoc' ? 'active' : ''}`}
+              onClick={() => click("quanlykhoahoc")}
+
+            >
+              <i className="fa-light fa-book" />
+              <p>Yêu thích</p>
+            </Link>
+
+    
+
+            <Link href="announcement.html"
+            className={`single-item ${pagess === 'thongbao' ? 'active' : ''}`}
+            onClick={() => click("thongbao")}
+            >
+              <i className="fa-solid fa-megaphone" />
+              <p>Thông báo</p>
+            </Link>
+
+           
+          </div>
+
+          <div className="dashboard-left-single-wrapper bbnone mt--40">
+            <h4 className="title mb--5">User</h4>
+            <Link href="/page/dashboard-student/setting" className="single-item">
+              <i className="fa-sharp fa-regular fa-gear" />
+              <p>Cài đặt</p>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+
+    </>
   );
 };
 

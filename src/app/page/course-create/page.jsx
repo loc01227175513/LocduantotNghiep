@@ -168,7 +168,7 @@ const CourseCreatePage = () => {
                   <h5 className="p-3 mb-4 text-xl font-bold text-gray-800 bg-gray-100 rounded-xl shadow-sm">
                     1. Lên kế hoạch cho khóa học của bạn
                   </h5>
-                                  <div className="mb-6">
+                  <div className="mb-6">
                     <MenuItem 
                       icon={Users}
                       text="Người học dự định lên"
@@ -282,6 +282,12 @@ const CourseCreatePage = () => {
           </AnimatePresence>
         </div>
       </Page>
+
+      <style jsx>{`
+        body {
+          overflow: hidden;
+        }
+      `}</style>
     </Fragment>
   );
 };

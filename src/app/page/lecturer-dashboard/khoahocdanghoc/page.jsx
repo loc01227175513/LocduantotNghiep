@@ -28,7 +28,7 @@ export default function Khoahoccuatoi() {
   };
 
   return (
-    <div className="overflow-y-scroll col-lg-9 h-[550px]">
+    <div className="overflow-y-scroll col-lg-9 ịadkljas">
       <div className="exrolled-course-wrapper-dashed">
         <p className="text-black text-3xl font-bold">khóa học của tôi</p>
 
@@ -224,6 +224,7 @@ const Khoahocdanghoc = () => {
       });
   }, []);
 
+
   const DanhGiaTrungBinh = khoahocdanghoc1.map((item) => {
     if (item.danhgia?.length > 0) {
       const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia), 0);
@@ -235,85 +236,89 @@ const Khoahocdanghoc = () => {
   return (
     <div className="courses-masonry">
       {isLoading ? (
-        <div className="loading-skeleton">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-14708">
           {[1, 2, 3].map((n) => (
-            <div key={n} className="skeleton-card animate-pulse" />
+            <div key={n} className="h-[400px] bg-[#f0f0f0] rounded-[12px] animate-pulse" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+        <div className="flex gap-10   w-full overflow-x-scroll">
           {khoahocdanghoc1.map((item, index) => (
-            <div key={index} className="w-full">
+            <div className="min-w-[300px]" key={index}>
               <Link href={`/page/course-detail?id=${item.id}`}>
-                <div className="course-card bg-white rounded-lg shadow hover:shadow-md transition-all h-full">
-                  <div className="relative p-3">
-                    <div className="absolute top-9 left-10 z-10 text-base font-medium py-1 px-2 text-black bg-blue-100 rounded">
-                      {item.chuDe.ten}
-                    </div>
-
-                    <div className="aspect-[16/9] w-full overflow-hidden rounded-lg">
-                      <Image
-                        width={300}
-                        height={169}
-                        src={item.hinh}
-                        alt={item.ten}
-                        className="object-cover w-full h-full hover:scale-105 transition-transform"
-                      />
-                    </div>
-
-                    <div className="p-3 space-y-3">
-                      <div className="flex text-lg text-gray-600 space-x-4">
-                        <span className="flex items-center">
-                          <i className="fas fa-book-open text-gray-400 mr-2" />
-                          {item.baihoc.length} Bài học
-                        </span>
-                        <span className="flex items-center">
-                          <i className="fas fa-users text-gray-400 mr-2" />
-                          {item.ThanhToan.length} Học sinh
-                        </span>
-                      </div>
-
-                      <div className="flex items-start justify-between gap-2">
-                        <h5 className="text-2xl font-bold leading-tight">{item.ten}</h5>
-                        <div className="flex items-center whitespace-nowrap">
-                          <span className="text-xl font-medium mr-1">{DanhGiaTrungBinh[index]}</span>
-                          <i className="fas fa-star text-yellow-400 text-xl" />
+                <div className="course-card bg-white rounded-lg shadow-md transition-transform duration-300 ease-in-out overflow-hidden hover:translate-y-[-5px] hover:shadow-lg">
+                  <div className="relative rounded-2xl">
+                  <div className="absolute left-5 top-5 text-xl p-2 text-white bg-gradient-to-r from-sky-600 to-sky-400 rounded-lg">
+  {item.chuDe?.ten}
+</div>
+                    <Image
+                      width={250}
+                      height={120}
+                      src={item.hinh}
+                      alt={item.ten}
+                      className="transition-transform duration-500 ease-in-out hover:scale-105 w-full h-[150px] rounded-2xl"
+                    />
+                    <div className="m-2 rounded-2xl">
+                      <div className="relative ">
+                        <div className="course-meta">
+                          <div className="flex justify-between gap-4 mt-4">
+                            <span className="flex items-center gap-1">
+                              <i className="fas fa-book-open" />
+                              {item.baihoc?.length} Bài học
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <i className="fas fa-users" />
+                              {item.ThanhToan?.length} Học sinh
+                            </span>
+                          </div>
                         </div>
+                        <div className="flex items-center justify-between mt-4">
+                          <h5 className="text-4xl font-bold ">{item.ten}</h5>
+                          <div className="flex items-center">
+                            <span className="font-semibold">
+                              {DanhGiaTrungBinh[index]}
+                            </span>
+                            <i className="fas fa-star text-[#f59e0b] ml-1" />
+                          </div>
+                        </div>
+                        <div className="border-b mt-2 mb-2">
+                          <p className="instructor-name text-lg">{item.giangVien?.ten}</p>
+                        </div>
+                        <div className="flex items-center gap-2 relative">
+                          {item.gia === 0 ? (
+                            <p className="text-2xl text-green-500 mt-4">Miễn phí</p>
+                          ) : (
+                            <>
+                              <p className="text-gray-500 line-through mt-4">
+                                ${item.gia}
+                              </p>
+                              {item.giamgia > 0 && (
+                                <>
+                                  <span className="text-red-500 font-semibold text-[15px] mt-4 ml-4">
+                                    ${item.giamgia}
+                                  </span>
+                                  <span className="text-lg bg-red-100 text-red-700 rounded-sm p-1 absolute mt-2 right-0 bottom-0">
+                                    {Math.round(
+                                      ((item.gia - item.giamgia) / item.gia) * 100
+                                    )}
+                                    % giảm
+                                  </span>
+                                </>
+                              )}
+                            </>
+                          )}
+                        </div>
+                        <div className="progress-wrapper h-1 bg-gray-200 rounded mt-4">
+                          <div
+                            className="progress-bar h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded transition-width duration-300 ease-in-out"
+                            style={{ width: `${(item.khoahocdahoc?.length / item.baihoc?.length) * 100}%` }}
+                          />
+                        </div>
+                        <button className="w-full p-3 bg-blue-500 text-white rounded-[8px] transition-all duration-300 ease-in-out cursor-pointer hover:bg-blue-600 mt-4">
+                          <i className="fas fa-certificate" />
+                          Tải xuống chứng chỉ
+                        </button>
                       </div>
-
-                      <p className="text-xl text-gray-600 border-b pb-2">{item.giangVien.ten}</p>
-
-                                                                <div className="flex items-center gap-4 my-2">
-                                            {item.gia === 0 ? (
-                                              <p className="text-2xl font-medium text-green-500">
-                                                Miễn phí
-                                              </p>
-                                            ) : (
-                                              <>
-                                                <div className="flex items-center gap-3">
-                                                  <p className={`text-2xl font-medium ${
-                                                    item.giamgia > 0 ? 'line-through text-gray-400' : ''
-                                                  }`}>
-                                                    ${item.gia}
-                                                  </p>
-                                                  {item.giamgia > 0 && (
-                                                    <span className="text-2xl font-medium text-green-500">
-                                                      ${item.giamgia}
-                                                    </span>
-                                                  )}
-                                                </div>
-                                                {item.giamgia > 0 && (
-                                                  <span className="text-lg bg-red-100 text-red-600 px-3 py-1.5 rounded ml-auto">
-                                                    {Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% giảm
-                                                  </span>
-                                                )}
-                                              </>
-                                            )}
-                                          </div>
-                      <button className="w-full bg-blue-50 text-blue-600 py-2 px-4 rounded text-xl hover:bg-blue-100 transition-colors">
-                        <i className="fas fa-certificate mr-2" />
-                        Tải xuống chứng chỉ
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -338,6 +343,8 @@ const Khoahocdathanhtoan = () => {
     GiangvienKhoaHocDaMua()
       .then((res) => {
         setCoursesInProgress(res.data);
+
+
         setIsLoading(false);
       })
       .catch((error) => {
@@ -345,6 +352,8 @@ const Khoahocdathanhtoan = () => {
         setIsLoading(false);
       });
   }, []);
+  console.log(coursesInProgress);
+
 
   const averageRatings = coursesInProgress.map((item) => {
     if (item.danhgia?.length > 0) {
@@ -357,84 +366,81 @@ const Khoahocdathanhtoan = () => {
   return (
     <div className="courses-masonry">
       {isLoading ? (
-        <div className="loading-skeleton">
+        <div className="loading-skeleton grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[1, 2, 3].map((n) => (
-            <div key={n} className="skeleton-card animate-pulse" />
+            <div key={n} className="skeleton-card animate-pulse h-96 bg-gray-200 rounded-lg" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+        <div className="flex  gap-10 w-full overflow-x-scroll">
           {coursesInProgress.map((item, index) => (
-            <div key={index} className="w-full">
-              <Link href={`/page/course-detail?id=${item.khoahocs.id}`}>
-                <div className="course-card bg-white rounded-lg shadow hover:shadow-md transition-all h-full">
-                  <div className="relative p-3">
-                    <div className="absolute top-9 left-10 z-10 text-base font-medium py-1 px-2 text-black bg-blue-100 rounded">
+            <div className="min-w-[300px]" key={index}>
+              <Link href={`/page/course-detail?id=${item.id}`}>
+                <div className="course-card bg-white rounded-lg shadow-md transition-transform duration-300 ease-in-out overflow-hidden hover:translate-y-[-5px] hover:shadow-lg">
+                  <div className="relative   rounded-2xl">
+                                       <div className="absolute left-5 top-5 text-xl p-2 text-white bg-gradient-to-r from-sky-600 to-sky-400 rounded-lg">
                       {item.chude.ten}
                     </div>
+                    <Image
+                      width={250}
+                      height={120}
+                      src={item.khoahocs.hinh}
+                      alt={item.khoahocs.ten}
+                      className="hover-scale w-full h-[150px] rounded-2xl transition-transform duration-500 ease-in-out hover:scale-105"
+                    />
+                  </div>
 
-                    <div className="aspect-[16/9] w-full overflow-hidden rounded-lg">
-                      <Image
-                        width={300}
-                        height={169}
-                        src={item.khoahocs.hinh}
-                        alt={item.khoahocs.ten}
-                        className="object-cover w-full h-full hover:scale-105 transition-transform"
-                      />
-                    </div>
-
-                    <div className="p-3 space-y-3">
-                      <div className="flex text-lg text-gray-600 space-x-4">
-                        <span className="flex items-center">
-                          <i className="fas fa-book-open text-gray-400 mr-2" />
+                  <div className="course-content ">
+                    <div className="course-meta">
+                      <div className="course-stats flex justify-between mt-4">
+                        <span className="lessons flex items-center gap-1">
+                          <i className="fas fa-book-open" />
                           {item.baihoc.length} Bài học
                         </span>
-                        <span className="flex items-center">
-                          <i className="fas fa-users text-gray-400 mr-2" />
+                        <span className="students flex items-center gap-1">
+                          <i className="fas fa-users" />
                           {item.thanhtoan.length} Học sinh
                         </span>
                       </div>
-
-                      <div className="flex items-start justify-between gap-2">
-                        <h5 className="text-2xl font-bold leading-tight">{item.khoahocs.ten}</h5>
-                        <div className="flex items-center whitespace-nowrap">
-                          <span className="text-xl font-medium mr-1">{averageRatings[index]}</span>
-                          <i className="fas fa-star text-yellow-400 text-xl" />
-                        </div>
-                      </div>
-
-                      <div className="price-wrapper mt-4">
-                        {item.gia === 0 ? (
-                          <span className="free-price text-2xl font-medium text-green-500">Miễn phí</span>
-                        ) : (
-                          <div className="flex items-center gap-3">
-                            <span className={`text-2xl font-medium ${item.giamgia > 0 ? 'line-through text-gray-400' : ''}`}>
-                              ${item.gia}
-                            </span>
-                            {item.giamgia > 0 && (
-                              <>
-                                <span className="text-2xl font-medium text-green-500">${item.giamgia}</span>
-                                <span className="text-lg bg-red-100 text-red-600 px-3 py-1.5 rounded ml-auto">
-                                  {Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% giảm
-                                </span>
-                              </>
-                            )}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="progress-wrapper">
-                        <div
-                          className="progress-bar bg-blue-500 h-2 rounded"
-                          style={{ width: `${(item.khoahocdahoc.length / item.baihoc.length) * 100}%` }}
-                        />
-                      </div>
-
-                      <button className="w-full bg-blue-50 text-blue-600 py-2 px-4 rounded text-xl hover:bg-blue-100 transition-colors mt-4">
-                        <i className="fas fa-certificate mr-2" />
-                        Tải xuống chứng chỉ
-                      </button>
                     </div>
+
+                    <div className="border-b pb-4 flex items-center justify-between mt-4">
+                      <h5 className="text-3xl font-bold">{item.khoahocs.ten}</h5>
+                      <div className="">
+                        <span className="rating-score font-semibold">{averageRatings[index]}</span>
+                        <i className="fa-star fas text-yellow-500 ml-1" />
+                      </div>
+                    </div>
+
+                    <div className="price-wrapper mt-4 relative flex items-center gap-2">
+                      {item.gia === 0 ? (
+                        <p className="free-price text-2xl text-green-500 font-semibold">Miễn phí</p>
+                      ) : (
+                        <>
+                          <p className="original-price text-gray-500 line-through">${item.gia}</p>
+                          {item.giamgia > 0 && (
+                            <>
+                              <p className="discounted-price text-4xl text-red-500 font-semibold">${item.giamgia}</p>
+                              <span className="text-lg bg-red-100 text-red-700 rounded-sm p-1 absolute mt-2 right-0 bottom-0">
+                                {Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% giảm
+                              </span>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </div>
+
+                    <div className="progress-wrapper h-1 bg-gray-200 rounded mt-4">
+                      <div
+                        className="progress-bar h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded transition-width duration-300 ease-in-out"
+                        style={{ width: `${(item.khoahocdahoc.length / item.baihoc.length) * 100}%` }}
+                      />
+                    </div>
+
+                    <button className="download-cert-btn mt-4 w-full py-2 bg-blue-500 text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-blue-600">
+                      <i className="fas fa-certificate" />
+                      Tải xuống chứng chỉ
+                    </button>
                   </div>
                 </div>
               </Link>
@@ -477,86 +483,83 @@ const Khoahocdahoanthanh = () => {
   return (
     <div className="courses-masonry">
       {isLoading ? (
-        <div className="loading-skeleton">
+        <div className="loading-skeleton grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[1, 2, 3].map((n) => (
-            <div key={n} className="skeleton-card animate-pulse" />
+            <div key={n} className="skeleton-card animate-pulse h-96 bg-gray-200 rounded-lg" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+        <div className="flex  gap-10 w-full overflow-x-scroll">
           {coursesInProgress
             ?.filter((item) => item.khoahocdahoc.length > 0)
             .map((item, index) => (
-              <div key={index} className="w-full">
-                <Link href={`/page/course-detail?id=${item.khoahocs.id}`}>
-                  <div className="course-card bg-white rounded-lg shadow hover:shadow-md transition-all h-full">
-                    <div className="relative p-3">
-                      <div className="absolute top-9 left-10 z-10 text-base font-medium py-1 px-2 text-black bg-blue-100 rounded">
+              <div className="min-w-[300px]" key={index}>
+                <Link href={`/page/course-detail?id=${item.id}`}>
+                  <div className="course-card bg-white rounded-lg shadow-md transition-transform duration-300 ease-in-out overflow-hidden hover:translate-y-[-5px] hover:shadow-lg">
+                    <div className="relative   rounded-2xl">
+                                          <div className="absolute left-5 top-5 text-xl p-2 text-white bg-gradient-to-r from-sky-600 to-sky-400 rounded-lg">
                         {item.chude.ten}
                       </div>
+                      <Image
+                        width={250}
+                        height={120}
+                        src={item.khoahocs.hinh}
+                        alt={item.khoahocs.ten}
+                        className="hover-scale w-full h-[150px] rounded-2xl transition-transform duration-500 ease-in-out hover:scale-105"
+                      />
+                    </div>
 
-                      <div className="aspect-[16/9] w-full overflow-hidden rounded-lg">
-                        <Image
-                          width={300}
-                          height={169}
-                          src={item.khoahocs.hinh}
-                          alt={item.khoahocs.ten}
-                          className="object-cover w-full h-full hover:scale-105 transition-transform"
-                        />
-                      </div>
-
-                      <div className="p-3 space-y-3">
-                        <div className="flex text-lg text-gray-600 space-x-4">
-                          <span className="flex items-center">
-                            <i className="fas fa-book-open text-gray-400 mr-2" />
+                    <div className="course-content ">
+                      <div className="course-meta">
+                        <div className="course-stats flex justify-between mt-4">
+                          <span className="lessons flex items-center gap-1">
+                            <i className="fas fa-book-open" />
                             {item.baihoc.length} Bài học
                           </span>
-                          <span className="flex items-center">
-                            <i className="fas fa-users text-gray-400 mr-2" />
+                          <span className="students flex items-center gap-1">
+                            <i className="fas fa-users" />
                             {item.thanhtoan.length} Học sinh
                           </span>
                         </div>
-
-                        <div className="flex items-start justify-between gap-2">
-                          <h5 className="text-2xl font-bold leading-tight">{item.khoahocs.ten}</h5>
-                          <div className="flex items-center whitespace-nowrap">
-                            <span className="text-xl font-medium mr-1">{averageRatings[index]}</span>
-                            <i className="fas fa-star text-yellow-400 text-xl" />
-                          </div>
-                        </div>
-
-                        <div className="price-wrapper mt-4">
-                          {item.gia === 0 ? (
-                            <span className="free-price text-2xl font-medium text-green-500">Miễn phí</span>
-                          ) : (
-                            <div className="flex items-center gap-3">
-                              <span className={`text-2xl font-medium ${item.giamgia > 0 ? 'line-through text-gray-400' : ''}`}>
-                                ${item.gia}
-                              </span>
-                              {item.giamgia > 0 && (
-                                <>
-                                  <span className="text-2xl font-medium text-green-500">${item.giamgia}</span>
-                                  <span className="text-lg bg-red-100 text-red-600 px-3 py-1.5 rounded ml-auto">
-                                    {Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% giảm
-                                  </span>
-                                </>
-                              )}
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="progress-wrapper">
-                          <div
-                            className="progress-bar bg-blue-500 h-2 rounded"
-                            style={{ width: `${(item.khoahocdahoc.length / item.baihoc.length) * 100}%` }}
-                          />
-                        </div>
-
-                        <button className="w-full bg-blue-50 text-blue-600 py-2 px-4 rounded text-xl hover:bg-blue-100 transition-colors mt-4">
-                          <i className="fas fa-certificate mr-2" />
-                          Tải xuống chứng chỉ
-                        </button>
                       </div>
+
+                      <div className="border-b pb-4 flex items-center justify-between mt-4">
+                        <h5 className="text-3xl font-bold">{item.khoahocs.ten}</h5>
+                        <div className="">
+                          <span className="rating-score font-semibold">{averageRatings[index]}</span>
+                          <i className="fa-star fas text-yellow-500 ml-1" />
+                        </div>
+                      </div>
+
+                      <div className="price-wrapper mt-4 relative flex items-center gap-2">
+                        {item.gia === 0 ? (
+                          <span className="free-price text-2xl text-green-500 font-semibold">Miễn phí</span>
+                        ) : (
+                          <>
+                            <span className="original-price text-gray-500 line-through">${item.gia}</span>
+                            {item.giamgia > 0 && (
+                              <>
+                                <span className="discounted-price text-4xl text-red-500 font-semibold">${item.giamgia}</span>
+                                <span className="text-lg bg-red-100 text-red-700 rounded-sm p-1 absolute mt-2 right-0 bottom-0">
+                                  {Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% giảm
+                                </span>
+                              </>
+                            )}
+                          </>
+                        )}
+                      </div>
+
+                      <div className="progress-wrapper h-1 bg-gray-200 rounded mt-4">
+                        <div
+                          className="progress-bar h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded transition-width duration-300 ease-in-out"
+                          style={{ width: `${(item.khoahocdahoc.length / item.baihoc.length) * 100}%` }}
+                        />
+                      </div>
+
+                      <button className="download-cert-btn mt-4 w-full py-2 bg-blue-500 text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-blue-600">
+                        <i className="fas fa-certificate" />
+                        Tải xuống chứng chỉ
+                      </button>
                     </div>
                   </div>
                 </Link>
@@ -564,7 +567,6 @@ const Khoahocdahoanthanh = () => {
             ))}
         </div>
       )}
-     
     </div>
   );
 };

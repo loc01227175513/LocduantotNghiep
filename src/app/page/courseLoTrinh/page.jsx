@@ -8,11 +8,11 @@ export default function Page() {
     return (
         <>
             <Header />
-            <div className='container  mb-60 px-4 mt-60 w-screen'>
-              
-                        <Roadmap />
-                
-            </div>
+
+
+            <Roadmap />
+
+
             <Footercomponent />
         </>
     );

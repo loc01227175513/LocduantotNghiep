@@ -201,30 +201,30 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
                     </div>
                     {!NguoiDung ? (
                       <Link href={`/page/login`}>
-                        <button className="rts-btn btn-primary">
+                        <button className="rts-btn ">
                           Đi Đến Đăng nhập
                         </button>
                       </Link>
                     ) : isCourseRegistered || course.gia === 0 || course.giamgia == 0 ? (
                       <Link href={`/page/Study?id=${course.id}`}>
-                        <button onClick={handleThanhToanKhoaHocFree} className="rts-btn btn-primary p-4 " style={{ fontSize: "13px" }}>
+                        <button onClick={handleThanhToanKhoaHocFree} className="rts-btn  p-4 " style={{ fontSize: "13px" }}>
                           Đi đến khóa học
                         </button>
                       </Link>
 
                     ) : isCourseInCart ? (
                       <Link href="/page/cart">
-                        <button className="rts-btn btn-primary">
+                        <button className="rts-btn ">
                           Đi xe đẩy
                         </button>
                       </Link>
                     ) : course.trangthai === 'Notyet' || course.trangthai === 'Pending' ? (
-                      <button className="rts-btn btn-primary">
+                      <button className="rts-btn ">
                         Bản Demo
                       </button>
                     ) : (
                       <>
-                        <button onClick={handleAddCart} className="rts-btn btn-primary">
+                        <button onClick={handleAddCart} className="rts-btn ">
                           Thêm vào giỏ hàng
                         </button>
                         <Link href="/page/checkout" className="rts-btn btn-border" onClick={handleAddCart}>

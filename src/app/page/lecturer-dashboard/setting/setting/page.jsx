@@ -20,7 +20,7 @@ const Page = () => {
     };
 
     return (
-        <div className="col-lg-9 h-[550px] overflow-y-scroll">
+        <div className="col-lg-9 ịadkljas overflow-y-scroll">
             <div className="settings-card">
                 <h3 className="settings-title">Settings</h3>
                 <div className="tabs-container">
@@ -31,7 +31,7 @@ const Page = () => {
                                 onClick={() => setView('profile')}
                             >
                                 <FaUser className="tab-icon" />
-                                <span>Profile</span>
+                                <span>Thông tin</span>
                             </button>
                         </li>
                         <li className="nav-item" role="presentation">
@@ -40,7 +40,7 @@ const Page = () => {
                                 onClick={() => setView('password')}
                             >
                                 <FaLock className="tab-icon" />
-                                <span>Password</span>
+                                <span>Mật khẩu</span>
                             </button>
                         </li>
                         <li className="nav-item" role="presentation">
@@ -49,7 +49,7 @@ const Page = () => {
                                 onClick={() => setView('social')}
                             >
                                 <FaShare className="tab-icon" />
-                                <span>Social</span>
+                                <span>Mạng xã hội</span>
                             </button>
                         </li>
                     </ul>

@@ -2,13 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { DanhSachYeuThich, XoaKhoaHocYeuThich } from '../../../../service/YeuThich/YeuThich';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image';
-
-
-
-
 
 export default function VoucherPage() {
     const [love, setLove] = useState([]);
@@ -20,51 +14,50 @@ export default function VoucherPage() {
                 setLove(response.khoahoc);
             } catch (error) {
                 console.error('Fetch error:', error);
-                toast.error("Failed to fetch vouchers.");
             }
         };
 
         fetchLove();
     }, []);
 
-    const deleteFavorite = async (id) => {
+        const deleteFavorite = async (id) => {
         try {
-            const element = document.querySelector(`[data-id="${id}"]`);
-            element.classList.add('deleting');
-            await XoaKhoaHocYeuThich(id);
+            const response = await XoaKhoaHocYeuThich(id);
+            if (!response.ok) {
+                if (response.status === 404) {
+                    throw new Error(`Course with ID ${id} not found. Status: ${response.status}`);
+                } else {
+                    throw new Error(`Failed to delete course with ID ${id}. Status: ${response.status}`);
+                }
+            }
             setTimeout(() => {
                 setLove(prevLove => prevLove.filter(item => item.khoahoc.id !== id));
-                toast.success("Deleted successfully.");
             }, 500);
         } catch (error) {
-            console.error('Delete error:', error);
-            toast.error("Failed to delete the course.");
+            window.location.reload();
         }
     };
-    console.log(love);
-
 
     return (
         <>
-       
-
-            <div className="overflow-y-scroll col-lg-9 h-lvh" style={{ backgroundColor: '#f5f5f5' }}>
-                <ToastContainer />
+            <div className="col-lg-9 h-lvh">
                 <div className="page-background">
                     <div className="exrolled-course-wrapper-dashed">
-                        <div className="row g-5">
+                        <p className='p-0 m-0 font-bold text-3xl text-black'>khóa học yêu thích</p>
+                        <div className="flex gap-3 overflow-x-scroll mt-4">
                             {love.map((item, index) => (
-                                <div key={index} className="col-lg-4 col-md-6 col-sm-12 col-12" data-id={item.khoahoc.id}>
+                                <div key={index} className="w-[300px] flex-shrink-0" data-id={item.khoahoc.id}>
                                     <div className="single-course-style-three enroll-course">
                                         <Link href={`/page/course-detail?id=${item.khoahoc.id}`} className="thumbnail">
-                                            <Image width={500} height={300} src={item.khoahoc.hinh} alt="course" />
-                                            {/* <div className="tag-thumb">
-                                        <span>{item.khoahoc.chuDe}</span>
-                                    </div> */}
+                                            <Image 
+                                                width={250}
+                                                height={120}
+                                                className="hover-scale w-[250px] h-[120px] object-cover rounded-2xl"
+                                                src={item.khoahoc.hinh} alt="course" 
+                                            />
                                         </Link>
                                         <div className="body-area">
                                             <div className="course-top">
-                                                <div className="tags">Bán tốt nhất</div>
                                                 <div className="price">
                                                     {item.khoahoc.gia === 0 && item.khoahoc.giamgia === 0 ? 'Miễn phí' : `$ ${item.khoahoc.gia}`}
                                                 </div>
@@ -81,14 +74,6 @@ export default function VoucherPage() {
                                                 <div className="teacher">
                                                     <span>{item.khoahoc.tenGiangVien}</span>
                                                 </div>
-                                                <ul className="stars">
-                                                    <li className="span">4.5</li>
-                                                    <li><i className="fa-sharp fa-solid fa-star" /></li>
-                                                    <li><i className="fa-sharp fa-solid fa-star" /></li>
-                                                    <li><i className="fa-sharp fa-solid fa-star" /></li>
-                                                    <li><i className="fa-sharp fa-solid fa-star" /></li>
-                                                    <li><i className="fa-sharp fa-regular fa-star" /></li>
-                                                </ul>
                                             </div>
                                             <div className="leasson-students">
                                                 <div className="lesson">
@@ -100,13 +85,12 @@ export default function VoucherPage() {
                                                     <span>{item.thanhtoan.length || 0} Học sinh</span>
                                                 </div>
                                             </div>
-
                                             <button className="rts-btn btn-border">
                                                 <Link href={`/page/course-detail?id=${item.khoahoc.id}`}>
                                                     Xem Chi Tiết
                                                 </Link>
                                             </button>
-                                            <button className="rts-btn btn-border" onClick={() => deleteFavorite(item.khoahoc.id)}>
+                                            <button className="rts-btn btn-border" onClick={() => deleteFavorite(item.id)}>
                                                 <i className="fa-sharp fa-solid fa-trash" /> Xóa
                                             </button>
                                         </div>
@@ -116,9 +100,7 @@ export default function VoucherPage() {
                         </div>
                     </div>
                 </div>
-
             </div>
         </>
-
     );
 }

@@ -51,7 +51,7 @@ export default function Khoahocdanghoc() {
   });
 
   return (
-    <div className="col-lg-9 overflow-y-scroll h-[550px]">
+    <div className="col-lg-9 overflow-y-scroll ịadkljas">
       <div
         className="rts-reviewd-area-dashed table-responsive"
         style={{ whiteSpace: "nowrap" }}

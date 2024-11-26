@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState, useRef } from 'react';
-import './cart1.css';
-import Image from 'next/image';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Cart } from './cart/cartheader';
-import { Categoryheader } from '../category/category.component';
-import { LayThongBao } from '@/service/ThongBao/ThongBao';
-import Link from 'next/link';
-import { use } from '@/assets/js/plugins/swiper';
+import React, { useEffect, useState, useRef } from "react";
+import "./cart1.css";
+import Image from "next/image";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Cart } from "./cart/cartheader";
+import { Categoryheader } from "../category/category.component";
+import { LayThongBao } from "@/service/ThongBao/ThongBao";
+import Link from "next/link";
+import { use } from "@/assets/js/plugins/swiper";
 const DropdownMenu = () => {
   const [langOpen, setLangOpen] = useState(false);
   const [currencyOpen, setCurrencyOpen] = useState(false);
@@ -23,13 +23,19 @@ const DropdownMenu = () => {
           className="btn dropdown-toggle custom-dropdown "
           onClick={() => setLangOpen(!langOpen)}
         >
-          <span className='text-xl'>English</span>
+          <span className="text-xl">English</span>
         </button>
         {langOpen && (
           <ul className="dropdown-menu show ">
-            <li><button className="dropdown-item text-xl">Deutsch</button></li>
-            <li><button className="dropdown-item text-xl">Portuguese</button></li>
-            <li><button className="dropdown-item text-xl">Russian</button></li>
+            <li>
+              <button className="dropdown-item text-xl">Deutsch</button>
+            </li>
+            <li>
+              <button className="dropdown-item text-xl">Portuguese</button>
+            </li>
+            <li>
+              <button className="dropdown-item text-xl">Russian</button>
+            </li>
           </ul>
         )}
       </div>
@@ -40,7 +46,7 @@ const DropdownMenu = () => {
         .custom-dropdown-wrapper {
           position: relative;
         }
-        
+
         .custom-dropdown {
           background: linear-gradient(135deg, #ff6b6b 0%, #1e3c72 100%);
           color: white;
@@ -68,7 +74,7 @@ const DropdownMenu = () => {
         .custom-dropdown:hover i {
           transform: rotate(180deg);
         }
-        
+
         .dropdown-menu {
           position: absolute;
           top: 120%;
@@ -78,30 +84,22 @@ const DropdownMenu = () => {
           background: rgba(255, 255, 255, 0.95);
           backdrop-filter: blur(10px);
           border-radius: 12px;
-          box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
           animation: slideDown 0.3s ease;
-          border: 1px solid rgba(255,255,255,0.18);
+          border: 1px solid rgba(255, 255, 255, 0.18);
           padding: 0.5rem;
         }
 
         .dropdown-item {
           padding: 4px 8px;
           cursor: pointer;
-          border-radius: 8px;
           font-weight: 500;
           color: #333;
           margin: 2px 0;
         }
 
-        .dropdown-item:hover {
-          background: #endregion;
-          color: white;
-          transform: translateX(5px);
-          text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
         @keyframes slideDown {
-          from { 
+          from {
             opacity: 0;
             transform: translateY(-15px) scale(0.95);
           }
@@ -112,20 +110,30 @@ const DropdownMenu = () => {
         }
 
         @keyframes pulse {
-          0% { box-shadow: 0 0 5px rgba(255, 107, 107, 0.2); }
-          50% { box-shadow: 0 0 20px rgba(30, 60, 114, 0.4); }
-          100% { box-shadow: 0 0 5px rgba(255, 107, 107, 0.2); }
+          0% {
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.2);
+          }
+          50% {
+            box-shadow: 0 0 20px rgba(30, 60, 114, 0.4);
+          }
+          100% {
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.2);
+          }
         }
 
         @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-3px); }
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-3px);
+          }
         }
       `}</style>
     </div>
   );
 };
-
 
 const Contact = () => {
   return (
@@ -135,17 +143,19 @@ const Contact = () => {
           <div className="col-lg-12">
             <div className="header-top-one d-flex justify-content-between align-items-center">
               <div className="left-information">
-                <Link href="mailto:techstudent@gmail.com" className="contact-link ">
+                <Link
+                  href="mailto:techstudent@gmail.com"
+                  className="contact-link text-xl"
+                >
                   <i className="fa-light fa-envelope  bounce" />
                   techstudent@gmail.com
                 </Link>
-                <Link href="tel:+123456789" className="contact-link">
+                <Link href="tel:+123456789" className="contact-link text-xl">
                   <i className="fa-light fa-phone bounce" />
                   +123 456 789
                 </Link>
               </div>
               <div className="right-information d-flex">
-
                 <DropdownMenu />
               </div>
             </div>
@@ -154,60 +164,36 @@ const Contact = () => {
       </div>
 
       <style jsx>{`
-      .gradient-bg {
-        background: linear-gradient(135deg, #1e3c72 0%, #ff6b6b 100%);
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        animation: gradientShift 8s infinite;
-      }
-
-      .contact-link {
-        color: white;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        padding: 5px 10px;
-        border-radius: 4px;
-        text-shadow: 0 0 10px rgba(255,255,255,0.5);
-      }
-
-      .contact-link:hover {
-        background: rgba(255,255,255,0.2);
-        transform: translateY(-2px);
-        color: #ffd700;
-        box-shadow: 0 0 15px rgba(255,215,0,0.3);
-      }
-
-      .bounce {
-        animation: bounceColor 2s infinite;
-      }
-
-      @keyframes bounceColor {
-        0% { 
-          transform: translateY(0);
-          color: white;
+        .gradient-bg {
+          background: linear-gradient(135deg, #1e3c72 0%, #ff6b6b 100%);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+          animation: gradientShift 8s infinite;
         }
-        50% { 
-          transform: translateY(-3px);
-          color: #ffd700;
-        }
-        100% { 
-          transform: translateY(0);
-          color: white;
-        }
-      }
 
-      @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
+        .bounce {
+          animation: bounceColor 2s infinite;
+        }
 
-      /* Rest of the styles remain the same */
-    `}</style>
+        @keyframes bounceColor {
+          0% {
+            transform: translateY(0);
+            color: white;
+          }
+          50% {
+            transform: translateY(-3px);
+            color: #ffd700;
+          }
+          100% {
+            transform: translateY(0);
+            color: white;
+          }
+        }
+
+        /* Rest of the styles remain the same */
+      `}</style>
     </div>
   );
 };
-
 
 export default function Header() {
   const [hasData, setHasData] = useState(false);
@@ -217,19 +203,12 @@ export default function Header() {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [openCart, setOpenCart] = useState(false);
   const [header2, setHeader2] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [thongBao, setThongBao] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCoursesMenuOpen, setIsCoursesMenuOpen] = useState(false);
   const [isDashboardMenuOpen, setIsDashboardMenuOpen] = useState(false);
-
-
-
-
-
-
-
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -239,12 +218,15 @@ export default function Header() {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && localStorage.getItem('data')) {
+    if (typeof window !== "undefined" && localStorage.getItem("data")) {
       setHasData(true);
     }
   }, []);
 
-  const data = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('data')) : null;
+  const data =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("data"))
+      : null;
   console.log(data);
 
   useEffect(() => {
@@ -253,15 +235,15 @@ export default function Header() {
         setThongBao(res);
       })
       .catch((error) => {
-        console.error('Failed to fetch notifications:', error);
+        console.error("Failed to fetch notifications:", error);
       });
   }, []);
 
   const handleLogout = () => {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('lecturerId');
-      localStorage.removeItem('data');
-      localStorage.removeItem('rememberedUser');
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("lecturerId");
+      localStorage.removeItem("data");
+      localStorage.removeItem("rememberedUser");
     }
     window.location.reload();
   };
@@ -285,15 +267,15 @@ export default function Header() {
     };
 
     if (currentDropdown) {
-      currentDropdown.addEventListener('mouseenter', handleMouseEnter);
+      currentDropdown.addEventListener("mouseenter", handleMouseEnter);
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
       if (currentDropdown) {
-        currentDropdown.removeEventListener('mouseenter', handleMouseEnter);
+        currentDropdown.removeEventListener("mouseenter", handleMouseEnter);
       }
       if (timeoutId) {
         clearTimeout(timeoutId);
@@ -335,28 +317,25 @@ export default function Header() {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const formSearch = (e) => {
     e.preventDefault();
-    const encodedSearchTerm = encodeURIComponent(searchTerm).replace(/%20/g, '+');
+    const encodedSearchTerm = encodeURIComponent(searchTerm).replace(
+      /%20/g,
+      "+"
+    );
     window.location.href = `/page/Cours-Filter?search=${encodedSearchTerm}`;
   };
 
   return (
     <>
-
-
-
-
-
-
       <header className="fixed top-0 w-full header-one header--sticky">
         {visible && (
           <div className="scroll" onClick={scrollToTop}>
@@ -366,11 +345,7 @@ export default function Header() {
 
         {openCart && <Cart onAction={closeCartHandler} />}
 
-
-
-
         <Contact />
-
 
         <div className="container">
           <div className="row">
@@ -387,16 +362,14 @@ export default function Header() {
                         alt="logo"
                       />
                     </div>
-
                   </Link>
                   <div className="category-area hover:border-[#ff6b6b]">
-                    <div className="category-btn transition-all duration-300 flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer border">
+                    <div className="category-btn transition-all duration-300 flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer border h-[45px]">
                       <i className="bi bi-grid text-xl text-slate-700"></i>
-                      <span className="font-medium text-2xl">Thể loại</span>
+                      <span className="text-2xl">Thể loại</span>
                       <i className="fas fa-chevron-down text-sm ml-auto transition-transform group-hover:rotate-180"></i>
                       <Categoryheader />
                     </div>
-
                   </div>
                   <div className="lg:hidden">
                     <button
@@ -429,12 +402,8 @@ export default function Header() {
                   </div>
                 </div>
 
-
-
-
-
                 {isMobileMenuOpen && (
-                  <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-md z-50 animate-slide-down transition-transform duration-300 ease-in-out">
+                  <div className="">
                     <nav className="space-y-4 p-4">
                       {/* ... other links */}
                       <div>
@@ -446,30 +415,41 @@ export default function Header() {
                         </button>
                       </div>
 
-                      <ul className="md:flex flex-wrap items-center justify-start space-x-8">
+                      <ul>
                         {/* Home */}
                         <li className="group relative py-6">
                           <Link
-                            className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+                            className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors"
                             href="/"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
-                            <i className="fas fa-home text-lg" />
+                            <i className="fas fa-home text-xl" />
                             <span className="font-medium">Trang chủ</span>
                           </Link>
                         </li>
 
                         {/* About */}
-                
+                        <li className="group relative py-6">
+                          <Link
+                            className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors"
+                            href="#"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <i className="fas fa-info-circle text-xl" />
+                            <span className="font-medium">Về chúng tôi</span>
+                          </Link>
+                        </li>
 
                         <li className="group relative py-6">
                           <button
-                            className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors w-full"
-                            onClick={() => setIsCoursesMenuOpen(!isCoursesMenuOpen)}
+                            className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors w-full"
+                            onClick={() =>
+                              setIsCoursesMenuOpen(!isCoursesMenuOpen)
+                            }
                             aria-haspopup="true"
                             aria-expanded={isCoursesMenuOpen}
                           >
-                            <i className="fas fa-graduation-cap text-lg" />
+                            <i className="fas fa-graduation-cap text-xl" />
                             <span className="font-medium">Khóa học</span>
                           </button>
 
@@ -493,7 +473,9 @@ export default function Header() {
                                         <Link
                                           href="/page/Cours-Filter"
                                           className="text-sm text-gray-600 hover:text-blue-600 flex items-center group"
-                                          onClick={() => setIsMobileMenuOpen(false)}
+                                          onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                          }
                                         >
                                           <i className="fas fa-list mr-2 text-blue-500 group-hover:scale-110 transition-transform" />
                                           <span className="group-hover:translate-x-1 transition-transform">
@@ -505,7 +487,9 @@ export default function Header() {
                                         <Link
                                           href="/page/courseLoTrinh"
                                           className="text-sm text-gray-600 hover:text-blue-600 flex items-center group"
-                                          onClick={() => setIsMobileMenuOpen(false)}
+                                          onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                          }
                                         >
                                           <i className="fas fa-road mr-2 text-blue-500 group-hover:scale-110 transition-transform" />
                                           <span className="group-hover:translate-x-1 transition-transform">
@@ -526,7 +510,9 @@ export default function Header() {
                                         <Link
                                           href="/page/AllGiangVien"
                                           className="text-sm text-gray-600 hover:text-blue-600 flex items-center group"
-                                          onClick={() => setIsMobileMenuOpen(false)}
+                                          onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                          }
                                         >
                                           <i className="fas fa-chalkboard-teacher mr-2 text-green-500 group-hover:scale-110 transition-transform" />
                                           <span className="group-hover:translate-x-1 transition-transform">
@@ -538,7 +524,9 @@ export default function Header() {
                                         <Link
                                           href="/page/NhanTin"
                                           className="text-sm text-gray-600 hover:text-blue-600 flex items-center group"
-                                          onClick={() => setIsMobileMenuOpen(false)}
+                                          onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                          }
                                         >
                                           <i className="fas fa-comments mr-2 text-green-500 group-hover:scale-110 transition-transform" />
                                           <span className="group-hover:translate-x-1 transition-transform">
@@ -551,14 +539,20 @@ export default function Header() {
 
                                   {/* Promo Section */}
                                   <div className="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                                    <Link href="/page/KhuyenMai" className="block text-center space-y-3" onClick={() => setIsMobileMenuOpen(false)}>
+                                    <Link
+                                      href="/page/KhuyenMai"
+                                      className="block text-center space-y-3"
+                                      onClick={() => setIsMobileMenuOpen(false)}
+                                    >
                                       <div className="w-12 h-12 mx-auto bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center transform hover:rotate-12 transition-transform">
                                         <i className="fas fa-gift text-lg text-white" />
                                       </div>
                                       <p className="font-bold text-base bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                                         Nhận Khuyến Mãi
                                       </p>
-                                      <span className="text-sm text-gray-600">Khám phá ưu đãi đặc biệt</span>
+                                      <span className="text-sm text-gray-600">
+                                        Khám phá ưu đãi đặc biệt
+                                      </span>
                                     </Link>
                                   </div>
                                 </div>
@@ -570,12 +564,14 @@ export default function Header() {
                         {/* Dashboard */}
                         <li className="group relative py-6">
                           <button
-                            className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors w-full"
-                            onClick={() => setIsDashboardMenuOpen(!isDashboardMenuOpen)}
+                            className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors w-full"
+                            onClick={() =>
+                              setIsDashboardMenuOpen(!isDashboardMenuOpen)
+                            }
                             aria-haspopup="true"
                             aria-expanded={isDashboardMenuOpen}
                           >
-                            <i className="fas fa-columns text-lg" />
+                            <i className="fas fa-columns text-2xl" />
                             <span className="font-medium">Trang tính</span>
                           </button>
 
@@ -588,7 +584,13 @@ export default function Header() {
                               ></div>
 
                               {/* Sidebar */}
-                              <div className={`fixed top-0 right-0 h-full w-screen bg-white shadow-xl z-50 transform ${isDashboardMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out`}>
+                              <div
+                                className={`fixed top-0 right-0 h-full w-screen bg-white shadow-xl z-50 transform ${
+                                  isDashboardMenuOpen
+                                    ? "translate-x-0"
+                                    : "translate-x-full"
+                                } transition-transform duration-300 ease-in-out`}
+                              >
                                 <button
                                   onClick={() => setIsDashboardMenuOpen(false)}
                                   className="absolute top-4 left-4 text-gray-600 hover:text-red-600 text-2xl"
@@ -601,7 +603,9 @@ export default function Header() {
                                       <Link
                                         href="/page/dashboard-student"
                                         className="block px-6 py-2 hover:bg-blue-50 transition-colors"
-                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        onClick={() =>
+                                          setIsMobileMenuOpen(false)
+                                        }
                                       >
                                         <div className="flex items-center space-x-3">
                                           <i className="fas fa-user-graduate text-blue-500" />
@@ -614,9 +618,11 @@ export default function Header() {
                                         <Link
                                           href="/page/lecturer-dashboard"
                                           className="block px-6 py-2 hover:bg-blue-50 transition-colors"
-                                          onClick={() => setIsMobileMenuOpen(false)}
+                                          onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                          }
                                         >
-                                          <div className="flex items-center space-x-3">
+                                          <div className="flex items-center">
                                             <i className="fas fa-chalkboard-teacher text-blue-500" />
                                             <span>Giảng Viên</span>
                                           </div>
@@ -625,11 +631,13 @@ export default function Header() {
                                         <Link
                                           href="/page/become-instructor"
                                           className="block px-6 py-2 hover:bg-blue-50 transition-colors"
-                                          onClick={() => setIsMobileMenuOpen(false)}
+                                          onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                          }
                                         >
                                           <div className="flex items-center space-x-3">
                                             <i className="fas fa-user-plus text-blue-500" />
-                                            <span>Đăng ký giảng viên</span>
+                                            <span>Giảng viên</span>
                                           </div>
                                         </Link>
                                       )}
@@ -640,26 +648,31 @@ export default function Header() {
                             </>
                           )}
                         </li>
-
-
-
                       </ul>
 
                       <div className="relative group">
-                        <Link href="/page/dashboard-student/YeuThich" className="block transition-transform hover:scale-110">
-                          <i className="fas fa-heart text-2xl text-pink-500"></i>
+                        <Link
+                          href="/page/dashboard-student/YeuThich"
+                          className="block transition-transform hover:scale-110"
+                        >
+                          <i className="fas fa-heart text-2xl"></i>
                           <div className="absolute -top-2 -right-2 bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                             0
                           </div>
                         </Link>
                         <div className="absolute hidden group-hover:block w-48 p-3 bg-white rounded-lg shadow-lg mt-2 transform transition-all duration-200 ease-out">
-                          <p className="text-sm font-medium text-gray-700">Danh sách yêu thích</p>
+                          <p className="text-sm font-medium text-gray-700 hover:text-pink-700">
+                            Danh sách yêu thích
+                          </p>
                         </div>
                       </div>
 
                       {/* Notifications */}
                       <div className="relative group">
-                        <div className="cursor-pointer transition-transform hover:scale-110" onClick={toggleModal}>
+                        <div
+                          className="cursor-pointer transition-transform hover:scale-110"
+                          onClick={toggleModal}
+                        >
                           <i className="fas fa-bell text-2xl text-yellow-500"></i>
                           <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                             {thongBao.length}
@@ -669,17 +682,34 @@ export default function Header() {
                         {/* Notification Dropdown */}
                         {isMobileMenuOpen && (
                           <div className="absolute hidden group-hover:block w-80 p-4 bg-white rounded-lg shadow-lg mt-2 right-0 z-50">
-                            <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b">Thông Báo Mới</h3>
+                            <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b">
+                              Thông Báo Mới
+                            </h3>
                             <div className="max-h-64 overflow-y-auto">
-                              {thongBao.slice(0, 3).map((notification, index) => (
-                                <div key={index} className="flex items-start gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
-                                  <Image width={40} height={40} src={notification.noidung.hinh} alt="Notification" className="w-10 h-10 rounded-lg object-cover" />
-                                  <div>
-                                    <p className="font-medium text-gray-800">{notification.noidung.ten}</p>
-                                    <p className="text-sm text-gray-500">Từ: {notification.giangvien.ten}</p>
+                              {thongBao
+                                .slice(0, 3)
+                                .map((notification, index) => (
+                                  <div
+                                    key={index}
+                                    className="flex items-start gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                                  >
+                                    <Image
+                                      width={40}
+                                      height={40}
+                                      src={notification.noidung.hinh}
+                                      alt="Notification"
+                                      className="w-10 h-10 rounded-lg object-cover"
+                                    />
+                                    <div>
+                                      <p className="font-medium text-gray-800">
+                                        {notification.noidung.ten}
+                                      </p>
+                                      <p className="text-sm text-gray-500">
+                                        Từ: {notification.giangvien.ten}
+                                      </p>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
                             </div>
                           </div>
                         )}
@@ -687,8 +717,11 @@ export default function Header() {
 
                       {/* Shopping Cart */}
                       <div className="relative group">
-                        <div className="cursor-pointer transition-transform hover:scale-110" onClick={openCartHandler}>
-                          <i className="fas fa-shopping-cart text-2xl text-green-500"></i>
+                        <div
+                          className="cursor-pointer transition-transform hover:scale-110"
+                          onClick={openCartHandler}
+                        >
+                          <i className="fas fa-shopping-cart text-3xl hover:text-green-500 text-gray-600"></i>
                           <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                             0
                           </div>
@@ -698,23 +731,32 @@ export default function Header() {
                       <div className="buttons-area flex items-center gap-4">
                         {!hasData ? (
                           <>
-                            <Link href="/page/login" className="px-6 py-2 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-50 transition-colors">
+                            <Link
+                              href="/page/login"
+                              className="px-6 py-2 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-50 transition-colors"
+                            >
                               Đăng nhập
                             </Link>
-                            <Link href="/page/register" className="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full hover:shadow-lg transition-all">
+                            <Link
+                              href="/page/register"
+                              className="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full hover:shadow-lg transition-all"
+                            >
                               Đăng ký
                             </Link>
                           </>
                         ) : (
                           <div className="flex items-center gap-4">
-                            <button onClick={handleLogout} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-full transition-colors">
+                            <button
+                              onClick={handleLogout}
+                              className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                            >
                               Đăng xuất
                             </button>
                             <div className="relative" ref={dropdownRef}>
                               <Image
                                 width={48}
                                 height={48}
-                                src={data?.hinh || '/default-avatar.png'}
+                                src={data?.hinh || "/default-avatar.png"}
                                 alt="Profile"
                                 className="rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all"
                                 onClick={toggleDropdown}
@@ -727,56 +769,65 @@ export default function Header() {
                   </div>
                 )}
 
-
-
-
-
-
                 <div className="bg-white shadow-md relative z-50">
-                  <nav className="max-w-8xl mx-auto">
-                    <ul className="hidden sm:flex flex-wrap items-center justify-start space-x-8" style={{ zoom: '80%' }}>
+                  <nav className="max-w-8xl mx-auto ">
+                    <ul
+                      className="hidden sm:flex flex-wrap items-center justify-start space-x-6"
+                      style={{ zoom: "80%" }}
+                    >
                       {/* Home */}
                       <li className="group relative py-6">
                         <Link
-                          className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+                          className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors"
                           href="/"
                         >
-                          <i className="fas fa-home text-lg" />
-                          <span className="font-medium text-3xl">Trang chủ</span>
+                          <i className="fas fa-home text-2xl" />
+                          <span className="font-medium text-3xl">
+                            Trang chủ
+                          </span>
                         </Link>
                       </li>
 
                       {/* About */}
-                    
+                      <li className="group relative py-6">
+                        <Link
+                          className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors"
+                          href="#"
+                        >
+                          <i className="fas fa-info-circle text-2xl" />
+                          <span className="font-medium text-3xl">
+                            Về chúng tôi
+                          </span>
+                        </Link>
+                      </li>
 
                       {/* Courses Mega Menu */}
                       <li className="group relative py-6">
                         <Link
-                          className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+                          className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors"
                           href="#"
                         >
-                          <i className="fas fa-graduation-cap text-lg" />
+                          <i className="fas fa-graduation-cap text-2xl" />
                           <span className="font-medium text-3xl">Khóa học</span>
                         </Link>
 
-                        <div className="hidden group-hover:block absolute left-1/2 transform -translate-x-1/2 top-full w-screen bg-white shadow-xl z-50">
+                        <div className="hidden group-hover:block absolute left-1/2 transform -translate-x-1/2 top-full w-[1030px] bg-white shadow-xl z-50 border border-black rounded-2xl">
                           <div className="mx-auto px-4">
-                            {/* Custom grid with two larger columns and one smaller column on medium screens and above */}
-                            <div className="grid grid-cols-1 md:grid-cols-[2fr_2fr_1fr] gap-8 p-8">
-
+                            {/* Custom grid with fixed column widths */}
+                            <div className="grid grid-cols-1 md:grid-cols-[300px_300px_300px] gap-8 p-8">
                               {/* Courses Section */}
                               <div className="space-y-4 p-6 hover:bg-gray-50 rounded-xl transition-colors">
-                                <h3 className="font-bold text-2xl text-gray-800 border-b-2 border-blue-500 pb-2">
+                                <h3 className="font-bold text-3xl text-gray-800 border-b-2 border-blue-500 pb-2">
                                   Khóa học
                                 </h3>
-                                <ul className="space-y-4">
+                                <ul className="flex flex-col space-y-4">
                                   <li>
                                     <Link
                                       href="/page/Cours-Filter"
-                                      className="text-gray-600 hover:text-blue-600 flex items-center group"
+                                      className="text-gray-600 hover:text-blue-600 flex items-center"
                                     >
-                                      <i className="fas fa-list mr-3 text-blue-500 group-hover:scale-110 transition-transform" />
-                                      <span className="group-hover:translate-x-1 transition-transform">
+                                      <i className="fas fa-list mr-3 group-hover:scale-110 transition-transform text-3xl" />
+                                      <span className="group-hover:translate-x-1 transition-transform text-3xl">
                                         Khóa học thể loại
                                       </span>
                                     </Link>
@@ -784,10 +835,10 @@ export default function Header() {
                                   <li>
                                     <Link
                                       href="/page/courseLoTrinh"
-                                      className="text-gray-600 hover:text-blue-600 flex items-center group"
+                                      className="text-gray-600 hover:text-blue-600 flex items-center"
                                     >
-                                      <i className="fas fa-road mr-3 text-blue-500 group-hover:scale-110 transition-transform" />
-                                      <span className="group-hover:translate-x-1 transition-transform">
+                                      <i className="fas fa-road mr-3 group-hover:scale-110 transition-transform text-3xl" />
+                                      <span className="group-hover:translate-x-1 transition-transform text-3xl">
                                         Lộ trình khóa học
                                       </span>
                                     </Link>
@@ -797,17 +848,17 @@ export default function Header() {
 
                               {/* Other Section */}
                               <div className="space-y-4 p-6 hover:bg-gray-50 rounded-xl transition-colors">
-                                <h3 className="font-bold text-2xl text-gray-800 border-b-2 border-green-500 pb-2">
-                                  Khác
+                                <h3 className="font-bold text-3xl text-gray-800 border-b-2 border-green-500 pb-2">
+                                  Mục khác
                                 </h3>
-                                <ul className="space-y-4">
+                                <ul className="flex flex-col space-y-4">
                                   <li>
                                     <Link
                                       href="/page/AllGiangVien"
-                                      className="text-gray-600 hover:text-blue-600 flex items-center group"
+                                      className="text-gray-600 hover:text-blue-600 flex items-center"
                                     >
-                                      <i className="fas fa-chalkboard-teacher mr-3 text-green-500 group-hover:scale-110 transition-transform" />
-                                      <span className="group-hover:translate-x-1 transition-transform">
+                                      <i className="fas fa-chalkboard-teacher mr-3 group-hover:scale-110 transition-transform text-3xl" />
+                                      <span className="group-hover:translate-x-1 transition-transform text-3xl">
                                         Giảng Viên Nổi Bật
                                       </span>
                                     </Link>
@@ -815,11 +866,11 @@ export default function Header() {
                                   <li>
                                     <Link
                                       href="/page/NhanTin"
-                                      className="text-gray-600 hover:text-blue-600 flex items-center group"
+                                      className="text-gray-600 hover:text-blue-600 flex items-center"
                                     >
-                                      <i className="fas fa-comments mr-3 text-green-500 group-hover:scale-110 transition-transform" />
-                                      <span className="group-hover:translate-x-1 transition-transform">
-                                        Nhắn tin Với Giảng Viên
+                                      <i className="fas fa-comments mr-3 group-hover:scale-110 transition-transform text-3xl" />
+                                      <span className="group-hover:translate-x-1 transition-transform text-3xl">
+                                        Nhắn tin Giảng Viên
                                       </span>
                                     </Link>
                                   </li>
@@ -827,18 +878,22 @@ export default function Header() {
                               </div>
 
                               {/* Promo Section */}
-                              <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                                <Link href="/page/KhuyenMai" className="block text-center space-y-4">
+                              <div className="p-6 w-[300px] bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                                <Link
+                                  href="/page/KhuyenMai"
+                                  className="block text-center space-y-4"
+                                >
                                   <div className="w-16 h-16 mx-auto bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center transform hover:rotate-12 transition-transform">
                                     <i className="fas fa-gift text-2xl text-white" />
                                   </div>
-                                  <p className="font-bold text-2xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                                  <p className="font-bold text-3xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent pb-3">
                                     Nhận Khuyến Mãi
                                   </p>
-                                  <span className="text-gray-600">Khám phá ưu đãi đặc biệt</span>
+                                  <span className="text-gray-600 text-3xl">
+                                    Khám phá ưu đãi đặc biệt
+                                  </span>
                                 </Link>
                               </div>
-
                             </div>
                           </div>
                         </div>
@@ -847,21 +902,23 @@ export default function Header() {
                       {/* Dashboard */}
                       <li className="group relative py-6">
                         <Link
-                          className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+                          className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors"
                           href="#"
                         >
-                          <i className="fas fa-columns text-lg" />
-                          <span className="font-medium text-3xl">Trang tính</span>
+                          <i className="fas fa-columns text-2xl" />
+                          <span className="font-medium text-3xl">
+                            Trang tính
+                          </span>
                         </Link>
-                        <ul className="hidden group-hover:block absolute right-0 top-full bg-white shadow-lg rounded-lg py-3 min-w-[200px] z-50">
+                        <ul className="hidden group-hover:block absolute right-0 top-full bg-white shadow-lg rounded-lg py-3 min-w-[200px] z-50 border border-black">
                           <li>
                             <Link
                               href="/page/dashboard-student"
-                              className="block px-6 py-2 hover:bg-blue-50 transition-colors"
+                              className="block px-6 py-2 hover:bg-blue-50 transition-colors pt-4 pb-4"
                             >
                               <div className="flex items-center space-x-3">
-                                <i className="fas fa-user-graduate text-blue-500" />
-                                <span>Học Viên</span>
+                                <i className="fas fa-user-graduate text-3xl" />
+                                <span className="text-3xl">Học Viên</span>
                               </div>
                             </Link>
                           </li>
@@ -869,21 +926,21 @@ export default function Header() {
                             {data && data.vaitro !== 0 ? (
                               <Link
                                 href="/page/lecturer-dashboard"
-                                className="block px-6 py-2 hover:bg-blue-50 transition-colors"
+                                className="block px-6 py-2 hover:bg-blue-50 transition-colors pt-4 pb-4"
                               >
                                 <div className="flex items-center space-x-3">
-                                  <i className="fas fa-chalkboard-teacher text-blue-500" />
-                                  <span>Giảng Viên</span>
+                                  <i className="fas fa-chalkboard-teacher text-3xl" />
+                                  <span className="text-3xl">Giảng Viên</span>
                                 </div>
                               </Link>
                             ) : (
                               <Link
                                 href="/page/become-instructor"
-                                className="block px-6 py-2 hover:bg-blue-50 transition-colors"
+                                className="block px-6 py-2 hover:bg-blue-50 transition-colors pt-4 pb-4"
                               >
                                 <div className="flex items-center space-x-3">
-                                  <i className="fas fa-user-plus text-blue-500" />
-                                  <span>Đăng ký giảng viên</span>
+                                  <i className="fas fa-user-plus text-3xl" />
+                                  <span className="text-3xl">Giảng viên</span>
                                 </div>
                               </Link>
                             )}
@@ -896,7 +953,7 @@ export default function Header() {
 
                 {data ? (
                   data.vaitro !== 0 ? (
-                    <Link href="/page/lecturer-dashboard" className="group ml-4">
+                    <Link href="/page/lecturer-dashboard" className="group">
                       <div className="m-4 transform transition-all duration-300 hover:scale-105">
                         <p className="p-3 m-0 font-medium text-center text-xl rounded-lg bg-gradient-to-r  text-slate-700   border-1 hover:border-[#ff6b6b] flex items-center justify-center gap-2 ">
                           <svg
@@ -918,12 +975,12 @@ export default function Header() {
                       </div>
                     </Link>
                   ) : (
-                    <Link href="/page/become-instructor" className="group ml-4">
+                    <Link href="/page/become-instructor" className="group">
                       <div className="m-4 transform transition-all duration-300 hover:scale-105">
-                        <p className="p-3 m-0 font-bold text-center rounded-lg bg-gradient-to-r from-[#ff6b6b] to-[#1e3c72] text-white shadow-lg hover:shadow-xl flex items-center justify-center gap-2 hover:from-[#1e3c72] hover:to-[#ff6b6b] transition-all duration-300 animate-gradient">
+                        <p className="p-3 m-0 font-medium text-center rounded-lg text-black flex items-center justify-center gap-2 h-[50px] border border-gray-300 hover:text-pink-700">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 animate-bounce"
+                            className="h-6 w-6"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -935,43 +992,54 @@ export default function Header() {
                               d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
                             />
                           </svg>
-                          Đăng ký giảng viên
+                          Giảng viên
                         </p>
                       </div>
                     </Link>
                   )
                 ) : null}
 
-
-
-
-                <div className="header-right-area-one bg-white shadow-sm">
+                <div className="header-right-area-one bg-white shadow-md h-[50px]">
                   <div className="actions-area flex items-center gap-6">
                     {/* Search Button */}
-                    <div className="search-btn transition-transform hover:scale-110 lg:block hidden" onClick={openSearch}>
-                      <i className="bi bi-search search text-2xl text-blue-500 hover:text-blue-600"></i>
+                    <div
+                      className="search-btn transition-transform hover:scale-110 lg:block hidden"
+                      onClick={openSearch}
+                    >
+                      <i className="bi bi-search search text-3xl text-blue-500 hover:text-blue-600 pl-5"></i>
                     </div>
-
-
 
                     {/* Favorites */}
                     <div className="relative group lg:block hidden">
-                      <Link href="/page/dashboard-student/YeuThich" className="block transition-transform hover:scale-110">
-                        <i className="fas fa-heart text-2xl text-pink-500"></i>
-                        <div className="absolute -top-2 -right-2 bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      <Link
+                        href="/page/dashboard-student/YeuThich"
+                        className="block transition-transform hover:scale-110"
+                      >
+                        <i className="fas fa-heart text-3xl text-gray-600 hover:text-pink-500"></i>
+                        <div className="absolute -top-2 -right-2 bg-pink-500 text-white text-lg rounded-full w-5 h-5 flex items-center justify-center">
                           0
                         </div>
                       </Link>
-                      <div className="absolute hidden group-hover:block w-48 p-3 bg-white rounded-lg shadow-lg mt-2 transform transition-all duration-200 ease-out">
-                        <p className="text-sm font-medium text-gray-700">Danh sách yêu thích</p>
+                      <div
+                        className="absolute hidden group-hover:block"
+                        style={{ width: "200px" }}
+                      >
+                        <div className="p-3 bg-white rounded-lg shadow-lg mt-2 transform transition-all duration-200 ease-out">
+                          <p className="text-xl font-medium text-gray-700 hover:text-pink-700 pt-3 pb-3">
+                            Danh sách yêu thích
+                          </p>
+                        </div>
                       </div>
                     </div>
 
                     {/* Notifications */}
                     <div className="relative group lg:block hidden">
-                      <div className="relative cursor-pointer group" onClick={toggleModal}>
+                      <div
+                        className="relative cursor-pointer group"
+                        onClick={toggleModal}
+                      >
                         <div className="transition-transform hover:scale-110 duration-[2000ms] z-10 relative">
-                          <i className="fas fa-bell text-2xl text-yellow-500 animate-[wiggle_1s_ease-in-out_infinite]"></i>
+                          <i className="fas fa-bell text-3xl text-gray-600 hover:text-yellow-500 animate-[wiggle_1s_ease-in-out_infinite]"></i>
                           {thongBao.length > 0 && (
                             <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full min-w-[20px] h-5 px-1 flex items-center justify-center transform scale-100 transition-transform duration-200 group-hover:scale-110">
                               {thongBao.length}
@@ -982,28 +1050,40 @@ export default function Header() {
                       </div>
 
                       {/* Notification Dropdown */}
-                      <div className="absolute hidden group-hover:block w-80 p-4 bg-white rounded-lg 
+                      <div
+                        className="absolute hidden group-hover:block w-80 p-4 bg-white rounded-lg 
                             shadow-xl hover:shadow-2xl mt-2 right-0 z-[100]
                             transform transition-all duration-300 ease-in-out origin-top
                             border border-gray-100 hover:border-blue-200
                             hover:scale-[1.02] opacity-0 group-hover:opacity-100
                             transition-[opacity,transform,visibility] delay-[0ms,0ms,2000ms]
-                            group-hover:delay-[0ms,0ms,0ms]" ref={dropdownRef}>
-                        <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b">Thông Báo Mới</h3>
+                            group-hover:delay-[0ms,0ms,0ms]"
+                        ref={dropdownRef}
+                      >
+                        <h3 className="text-xl font-medium text-gray-700">
+                          Thông Báo Mới
+                        </h3>
                         <div className="max-h-64 overflow-y-auto">
                           {thongBao.slice(0, 3).map((notification, index) => (
-                            <div key={index} className="flex items-start gap-3 p-2 hover:bg-blue-50 
-                              rounded-lg transition-colors duration-200 cursor-pointer">
+                            <div
+                              key={index}
+                              className="flex items-start gap-3 p-2 hover:bg-blue-50 
+                              rounded-lg transition-colors duration-200 cursor-pointer"
+                            >
                               <Image
-                                width={40} height={40}
+                                width={40}
+                                height={40}
                                 src={notification.noidung.hinh}
                                 alt="Notification"
-                                className="w-10 h-10 rounded-lg object-cover" />
+                                className="w-10 h-10 rounded-lg object-cover"
+                              />
                               <div>
                                 <p className="font-medium text-gray-800 hover:text-blue-600 transition-colors">
                                   {notification.noidung.ten}
                                 </p>
-                                <p className="text-sm text-gray-500">Từ: {notification.giangvien.ten}</p>
+                                <p className="text-sm text-gray-500">
+                                  Từ: {notification.giangvien.ten}
+                                </p>
                               </div>
                             </div>
                           ))}
@@ -1012,62 +1092,80 @@ export default function Header() {
                     </div>
                     {/* Shopping Cart */}
                     <div className="relative group lg:block hidden">
-                      <div className="cursor-pointer transition-transform hover:scale-110" onClick={openCartHandler}>
-                        <i className="fas fa-shopping-cart text-2xl text-green-500"></i>
-                        <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      <div
+                        className="cursor-pointer transition-transform hover:scale-110"
+                        onClick={openCartHandler}
+                      >
+                        <i className="fas fa-shopping-cart text-3xl hover:text-green-500 text-gray-600"></i>
+                        <div className="absolute -top-2 -right-2 bg-green-500 text-white text-lg rounded-full w-5 h-5 flex items-center justify-center">
                           0
                         </div>
                       </div>
                     </div>
-
-
                   </div>
 
-
                   {/* Auth Buttons */}
-                  <div className="buttons-area flex items-center gap-4">
+                  <div className="buttons-area flex items-center gap-2">
                     {!hasData ? (
                       <>
-                        <Link href="/page/login" className="px-6 py-2 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-50 transition-colors">
-                          Đăng nhập
-                        </Link>
-                        <Link href="/page/register" className="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full hover:shadow-lg transition-all">
+                        <Link
+                          href="/page/register"
+                          className="w-[80px] text-center px-2 py-2 text-black border border-gray-300 rounded-full hover:border-pink-700 hover:text-pink-700 transition-all text-xl whitespace-nowrap"
+                        >
                           Đăng ký
+                        </Link>
+                        <Link
+                          href="/page/login"
+                          className="w-[80px] text-center px-2 py-2  bg-gray-200 text-black border border-gray-300 rounded-full hover:border-pink-700 hover:text-pink-700 transition-colors text-xl whitespace-nowrap"
+                        >
+                          Đăng nhập
                         </Link>
                       </>
                     ) : (
-                      <div className="flex items-center gap-4">
-                        <button onClick={handleLogout} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-full transition-colors text-xl">
-                          Đăng xuất
-                        </button>
+                      <div className="flex items-center gap-0">
                         <div className="relative" ref={dropdownRef}>
                           <Image
-                            width={48}
-                            height={48}
-                            src={data?.hinh || '/default-avatar.png'}
+                            width={45}
+                            height={45}
+                            src={data?.hinh || "/default-avatar.png"}
                             alt="Profile"
                             className="rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all"
                             onClick={toggleDropdown}
                           />
                         </div>
+                        <button
+                          onClick={handleLogout}
+                          className="text-gray-600 hover:text-red-500 rounded-full transition-colors text-xl font-medium"
+                        >
+                          Đăng xuất
+                        </button>
                       </div>
                     )}
                   </div>
                 </div>
-
-
               </div>
             </div>
           </div>
 
-          <div className={`fixed inset-0 h-screen z-[1000] backdrop-blur-sm bg-black/30 transition-all ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-            <div className={`absolute top-0 right-0 w-full sm:w-96 h-full bg-white shadow-2xl transform transition-transform duration-200 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div
+            className={`fixed inset-0 h-screen z-[1000] backdrop-blur-sm bg-black/30 transition-all ${
+              isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          >
+            <div
+              className={`absolute top-0 right-0 h-full bg-white shadow-2xl transform transition-transform duration-200 ease-in-out ${
+                isOpen ? "translate-x-0" : "translate-x-full"
+              } w-[400px]`} // Set width to 800px
+            >
               {/* Header */}
-              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-500 to-cyan-500 ">
+              <div className="flex justify-between items-center p-4 bg-gradient-to-br from-blue-800 to-red-400">
                 <h2 className="text-xl font-bold text-white">
-                  <i className="bi bi-list"></i>
+                  <i className="bi bi-list text-3xl"></i>
                 </h2>
-                <button onClick={closeHeader2} className="rounded-full p-2 hover:bg-white/20 transition-colors w-10">
+                <button
+                  onClick={closeHeader2}
+                  className="rounded-full p-2 hover:bg-white/20 transition-colors w-10"
+                >
                   <i className="bi bi-x-lg text-2xl text-white"></i>
                 </button>
               </div>
@@ -1077,94 +1175,137 @@ export default function Header() {
                 {/* User Profile Section */}
                 <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl mb-4">
                   <Image
-                    width={60}
-                    height={60}
-                    src={data?.hinh || '/default-avatar.png'}
+                    width={70}
+                    height={70}
+                    src={data?.hinh || "/default-avatar.png"}
                     alt="User Avatar"
                     className="rounded-full border-4 border-white shadow-md"
                   />
                   <div>
-                    <p className="font-bold text-gray-800">{data?.ten}</p>
-                    <p className="text-sm text-gray-500">Tài khoản sinh viên</p>
+                    <p className="font-bold text-gray-800 text-3xl">
+                      {data?.ten}
+                    </p>
+                    <p className="text-xl text-gray-500 pt-2">
+                      Tài khoản sinh viên
+                    </p>
                   </div>
                 </div>
 
                 {/* Quick Actions */}
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   <button
-                    className="flex items-center gap-2 p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                    className="flex items-center justify-center gap-2 p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
                     onClick={handleLogout}
                   >
-                    <i className="bi bi-box-arrow-right text-red-600"></i>
-                    <span className="text-red-600 font-medium">Đăng Xuất</span>
+                    <i className="bi bi-box-arrow-right text-red-600 text-xl"></i>
+                    <span className="text-red-600 font-medium text-xl">
+                      Đăng Xuất
+                    </span>
                   </button>
-                  <Link href="/page/dashboard-student/setting" className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-                    <i className="bi bi-gear-fill text-blue-600"></i>
-                    <span className="text-blue-600 font-medium">Cài Đặt</span>
+                  <Link
+                    href="/page/dashboard-student/setting"
+                    className="flex items-center justify-center gap-2 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+                  >
+                    <i className="bi bi-gear-fill text-blue-600 text-xl"></i>
+                    <span className="text-blue-600 font-medium text-xl">
+                      Cài Đặt
+                    </span>
                   </Link>
                 </div>
 
                 {/* Menu Items */}
                 <div className="space-y-2 bg-white">
-                  <Link href="/page/cart" className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
-                    <i className="bi bi-cart text-gray-600"></i>
-                    <span className="font-medium">Giỏ Hàng</span>
+                  <Link
+                    href="/page/cart"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    <i className="bi bi-cart text-gray-600 text-2xl"></i>
+                    <span className="font-medium text-2xl">Giỏ Hàng</span>
                   </Link>
-                  <Link href="/page/dashboard-student/lichsudonhang" className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg">
-                    <i className="bi bi-clock-history text-gray-600"></i>
-                    <span className="font-medium">Lịch Sử Mua</span>
+                  <Link
+                    href="/page/dashboard-student/lichsudonhang"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg"
+                  >
+                    <i className="bi bi-clock-history text-gray-600 text-2xl"></i>
+                    <span className="font-medium text-2xl">Lịch Sử Mua</span>
                   </Link>
-                  <Link href="/page/dashboard-student/myprofile" className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg">
-                    <i className="bi bi-person text-gray-600"></i>
-                    <span className="font-medium">Hồ Sơ</span>
+                  <Link
+                    href="/page/dashboard-student/myprofile"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg"
+                  >
+                    <i className="bi bi-person text-gray-600 text-2xl"></i>
+                    <span className="font-medium text-2xl">Hồ Sơ</span>
                   </Link>
-                  <Link href="#" className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg">
-                    <i className="bi bi-share text-gray-600"></i>
-                    <span className="font-medium">Mạng Xã Hội</span>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg"
+                  >
+                    <i className="bi bi-share text-gray-600 text-2xl"></i>
+                    <span className="font-medium text-2xl">Mạng Xã Hội</span>
                   </Link>
-                  <Link href="#" className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg">
-                    <i className="bi bi-gift text-gray-600"></i>
-                    <span className="font-medium">Ưu Đãi</span>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg"
+                  >
+                    <i className="bi bi-gift text-gray-600 text-2xl"></i>
+                    <span className="font-medium text-2xl">Ưu Đãi</span>
                   </Link>
-                  <Link href="#" className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg">
-                    <i className="bi bi-bell text-gray-600"></i>
-                    <span className="font-medium">Thông Báo</span>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg"
+                  >
+                    <i className="bi bi-bell text-gray-600 text-2xl"></i>
+                    <span className="font-medium text-2xl">Thông Báo</span>
                   </Link>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
-
       </header>
 
-
-
-
       {isOpenSearch && (
-        <div className="fixed inset-0 flex items-center justify-center z-50
-    animate-[fadeIn_0.3s_ease-out]">
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 backdrop-blur-md
-      animate-[fadeIn_0.3s_ease-out]"
-            onClick={closeSearch}>
-          </div>
-          <div className="relative flex flex-col items-center p-8 rounded-2xl
-      bg-gradient-to-b from-white/95 to-white/90
-      backdrop-filter backdrop-blur-xl
-      shadow-[0_20px_70px_-15px_rgba(0,0,0,0.3),inset_0_0_20px_rgba(255,255,255,0.7)]
-      border border-white/20
-      animate-[scaleIn_0.3s_ease-out]
-      transform transition-all duration-300 hover:scale-[1.02]">
+        <div className="fixed inset-0 flex items-center justify-center z-50 animate-[fadeIn_0.3s_ease-out]">
+          <div
+            className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 backdrop-blur-md animate-[fadeIn_0.3s_ease-out]"
+            onClick={closeSearch}
+          ></div>
+          <div className="relative flex flex-col items-center p-8 rounded-2xl bg-gradient-to-b from-white/95 to-white/90 backdrop-filter backdrop-blur-xl shadow-[0_20px_70px_-15px_rgba(0,0,0,0.3),inset_0_0_20px_rgba(255,255,255,0.7)] border border-white/20 animate-[scaleIn_0.3s_ease-out] transform transition-all duration-300 hover:scale-[1.02]">
+            <div className="absolute top-4 right-4">
+              <button
+                className="bg-transparent border-none cursor-pointer"
+                onClick={closeSearch}
+              >
+                <svg
+                  className="w-8 h-8 text-gray-600 hover:text-gray-800 transition duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
             <form onSubmit={formSearch} className="flex w-full min-w-[450px]">
-              <div className="flex border-2 border-gray-200/80 rounded-xl w-full 
-          shadow-inner bg-white/90
-          focus-within:border-blue-400 focus-within:ring-4 
-          focus-within:ring-blue-100/50 transition duration-200">
+              <div className="flex border-2 border-gray-200/80 rounded-xl w-full shadow-inner bg-white/90 focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-100/50 transition duration-200 mt-4">
                 <div className="flex items-center pl-4">
-                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  <svg
+                    className="w-8 h-8 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
                   </svg>
                 </div>
                 <input
@@ -1172,197 +1313,216 @@ export default function Header() {
                   placeholder="Tìm kiếm"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="flex-grow p-4 pl-3 focus:outline-none rounded-l-xl text-lg
-              bg-transparent placeholder-gray-400
-              animate-[slideIn_0.4s_ease-out]"
+                  className="flex-grow focus:outline-none rounded-l-xl text-2xl pt-15 pb-15 bg-transparent placeholder-gray-400 animate-[slideIn_0.4s_ease-out]"
+                  style={{ fontSize: "17px" }}
                 />
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 m-1
-              px-6 py-2 text-white rounded-lg font-medium
-              shadow-md hover:shadow-lg
-              hover:from-blue-600 hover:to-blue-700
-              active:from-blue-700 active:to-blue-800
-              transition duration-200 
-              hover:scale-[1.02] transform
-              flex items-center gap-2"
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 m-1 w-[120px] px-2 py-3 text-white rounded-lg font-medium shadow-md hover:shadow-lg hover:from-blue-600 hover:to-blue-700 active:from-blue-700 active:to-blue-800 transition duration-200 hover:scale-[1.02] transform flex items-center justify-center gap-1"
                 >
-                  <span>Search</span>
-                  <svg className="w-5 h-5 animate-[bounce_1s_infinite]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M9 5l7 7-7 7" />
+                  <span className="text-2xl">Search</span>
+                  <svg
+                    className="w-5 h-5 animate-[bounce_1s_infinite]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
                   </svg>
                 </button>
               </div>
             </form>
-            <button
-              className="mt-6 px-8 py-2.5 rounded-lg font-medium
-          bg-gradient-to-r from-red-500 to-red-600
-          text-white shadow-md hover:shadow-lg
-          hover:from-red-600 hover:to-red-700
-          active:from-red-700 active:to-red-800
-          transition-all duration-200
-          hover:scale-105 transform
-          flex items-center gap-2"
-              onClick={closeSearch}
-            >
-              <span>Hủy</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
           </div>
         </div>
       )}
 
       <div>
-
-
         <style jsx>{`
-        @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 8s ease infinite;
-  }
-  /* Animations */
-  @keyframes colorChange {
-    0% { background-color: #4e54c8; }
-    25% { background-color: #8f94fb; }
-    50% { background-color: #4776E6; }
-    75% { background-color: #8E54E9; }
-    100% { background-color: #4e54c8; }
-  }
+          @keyframes gradient {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
 
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(66, 153, 225, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(66, 153, 225, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(66, 153, 225, 0); }
-  }
+          .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient 8s ease infinite;
+          }
+          /* Animations */
+          @keyframes colorChange {
+            0% {
+              background-color: #4e54c8;
+            }
+            25% {
+              background-color: #8f94fb;
+            }
+            50% {
+              background-color: #4776e6;
+            }
+            75% {
+              background-color: #8e54e9;
+            }
+            100% {
+              background-color: #4e54c8;
+            }
+          }
 
-  @keyframes wiggle {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(10deg); }
-    50% { transform: rotate(0deg); }
-    75% { transform: rotate(-10deg); }
-    100% { transform: rotate(0deg); }
-  }
+          @keyframes pulse {
+            0% {
+              box-shadow: 0 0 0 0 rgba(66, 153, 225, 0.4);
+            }
+            70% {
+              box-shadow: 0 0 0 10px rgba(66, 153, 225, 0);
+            }
+            100% {
+              box-shadow: 0 0 0 0 rgba(66, 153, 225, 0);
+            }
+          }
 
-  @keyframes slide-left {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
-  }
+          @keyframes wiggle {
+            0% {
+              transform: rotate(0deg);
+            }
+            25% {
+              transform: rotate(10deg);
+            }
+            50% {
+              transform: rotate(0deg);
+            }
+            75% {
+              transform: rotate(-10deg);
+            }
+            100% {
+              transform: rotate(0deg);
+            }
+          }
 
-  @keyframes slide-down {
-    from {
-      opacity: 0;
-      transform: translateY(-10%);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+          @keyframes slide-left {
+            from {
+              transform: translateX(100%);
+            }
+            to {
+              transform: translateX(0);
+            }
+          }
 
-  /* Header styles */
-  .header-top-one-wrapper {
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
+          @keyframes slide-down {
+            from {
+              opacity: 0;
+              transform: translateY(-10%);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
 
-  .animated-bg {
-    animation: colorChange 15s infinite;
-    transition: background-color 0.5s ease;
-  }
+          /* Header styles */
+          .header-top-one-wrapper {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          }
 
-  /* Link effects */
-  .hover-effect {
-    color: white !important;
-    text-decoration: none;
-    transition: opacity 0.3s;
-  }
+          .animated-bg {
+            animation: colorChange 15s infinite;
+            transition: background-color 0.5s ease;
+          }
 
-  .hover-effect:hover {
-    opacity: 0.8;
-  }
+          /* Link effects */
+          .hover-effect {
+            color: white !important;
+            text-decoration: none;
+            transition: opacity 0.3s;
+          }
 
-  /* Dropdown styles */
-  .dropdown-toggle, .dropdown-item {
-    transition: all 0.3s ease;
-  }
+          .hover-effect:hover {
+            opacity: 0.8;
+          }
 
-  .dropdown-menu {
-    margin-top: 0.5rem;
-    border-radius: 4px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  }
+          /* Dropdown styles */
+          .dropdown-toggle,
+          .dropdown-item {
+            transition: all 0.3s ease;
+          }
 
-  .dropdown-item {
-    padding: 0.5rem 1.5rem;
-    transition: background-color 0.2s;
-  }
+          .dropdown-menu {
+            margin-top: 0.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          }
 
-  .dropdown-item:hover {
-    background-color: #f8f9fa;
-  }
+          .dropdown-item {
+            padding: 0.5rem 1.5rem;
+            transition: background-color 0.2s;
+          }
 
-  /* Logo styles */
-  .logo-area {
-    display: inline-block;
-    padding: 8px;
-    transition: transform 0.3s ease;
-  }
+          .dropdown-item:hover {
+            background-color: #f8f9fa;
+          }
 
-  .logo-wrapper {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-  }
+          /* Logo styles */
+          .logo-area {
+            display: inline-block;
+            padding: 8px;
+            transition: transform 0.3s ease;
+          }
 
-  .logo-image {
-    transition: all 0.4s ease;
-  }
+          .logo-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+          }
 
-  .logo-area:hover {
-    transform: translateY(-2px);
-  }
+          .logo-image {
+            transition: all 0.4s ease;
+          }
 
-  .logo-area:hover .logo-image {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-  }
+          .logo-area:hover {
+            transform: translateY(-2px);
+          }
 
-  .logo-area:hover .logo-wrapper {
-    animation: pulse 1.5s infinite;
-  }
+          .logo-area:hover .logo-image {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+          }
 
-  /* Category styles */
-  .category-btn {
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
+          .logo-area:hover .logo-wrapper {
+            animation: pulse 1.5s infinite;
+          }
 
-  .category-btn:hover {
-    transform: translateY(-1px);
-  }
+          /* Category styles */
+          .category-btn {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+          }
 
-  /* Utility classes */
-  .text-primary {
-    color: #0066cc;
-  }
+          .category-btn:hover {
+            transform: translateY(-1px);
+          }
 
-  .animate-slide-left {
-    animation: slide-left 0.3s ease-out;
-  }
+          /* Utility classes */
+          .text-primary {
+            color: #0066cc;
+          }
 
-  .animate-slide-down {
-    animation: slide-down 0.3s ease-out;
-  }
-`}</style>
+          .animate-slide-left {
+            animation: slide-left 0.3s ease-out;
+          }
+
+          .animate-slide-down {
+            animation: slide-down 0.3s ease-out;
+          }
+        `}</style>
       </div>
     </>
   );

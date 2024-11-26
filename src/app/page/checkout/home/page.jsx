@@ -36,35 +36,45 @@ const Page = () => {
     if (userData) {
       try {
         const parsedData = JSON.parse(userData);
-        axios.post('https://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id }, {
-          referrerPolicy: 'unsafe-url'
-        })
-          .then(response => {
-            setCartItems(response.data.data);
-            const total = response.data.data.reduce((sum, item) => {
-              return sum + item.khoahocs.reduce((itemSum, khoahoc) => itemSum + khoahoc.giamgia, 0);
-            }, 0);
-            setTotalPrice(total);
-            const totalDiscount = KiemTraKhoaHocGiamGia();
-            setDiscount(totalDiscount);
-          })
-          .catch(() => {
-            // Do nothing
-          });
+        const fetchData = () => {
+          axios
+            .post(
+              'https://huuphuoc.id.vn/api/showgiohang',
+              { id_nguoidung: parsedData.id },
+              { referrerPolicy: 'unsafe-url' }
+            )
+            .then(response => {
+              setCartItems(response.data.data);
+              const total = response.data.data.reduce((sum, item) => {
+                return (
+                  sum +
+                  item.khoahocs.reduce((itemSum, khoahoc) => itemSum + khoahoc.giamgia, 0)
+                );
+              }, 0);
+              setTotalPrice(total);
+              const totalDiscount = KiemTraKhoaHocGiamGia();
+              setDiscount(totalDiscount);
+            })
+            .catch(() => {
+              // Do nothing
+            });
+        };
+        fetchData();
+        const interval = setInterval(fetchData, 5000); // Fetch every 5 seconds
+        return () => clearInterval(interval);
       } catch {
         // Do nothing
       }
     }
-
-
+  
     const handleBeforeUnload = () => {
       if (typeof window !== 'undefined') {
         localStorage.removeItem('appliedCoupons');
       }
     };
-
+  
     window.addEventListener('beforeunload', handleBeforeUnload);
-
+  
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
@@ -181,8 +191,7 @@ const Page = () => {
         setErrorMessage('Thanh toán thất bại. Vui lòng kiểm tra lại thông tin thẻ.');
       }
     } catch {
-      setValidationMessage('');
-      setErrorMessage('Đã xảy ra lỗi trong quá trình thanh toán. Vui lòng thử lại sau.');
+      window.location.reload();
     }
   };
 

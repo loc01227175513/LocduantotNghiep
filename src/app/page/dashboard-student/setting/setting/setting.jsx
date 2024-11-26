@@ -90,14 +90,7 @@ const Profile = () => {
       background: 'white',
       boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)'
     }}>
-      <h3 style={{
-        fontSize: '24px',
-        fontWeight: '600',
-        marginBottom: '2rem',
-        background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent'
-      }}>Profile Settings</h3>
+      <h3 className='text-[#32ADE6] font-bold text-3xl'>Cài đặt thông tin</h3>
 
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
         {formData.hinh && (
@@ -127,8 +120,8 @@ const Profile = () => {
             display: 'block',
             marginBottom: '0.5rem',
             color: '#64748b',
-            fontSize: '0.875rem'
-          }}>Profile Picture</label>
+            fontSize: '1.2rem'
+          }}>Hình đại diện</label>
           <input
             type="file"
             id="hinh"
@@ -151,7 +144,7 @@ const Profile = () => {
                 display: 'block',
                 marginBottom: '0.5rem',
                 color: '#64748b',
-                fontSize: '0.875rem'
+                fontSize: '1.2rem'
               }}
             >
               {field === 'ten' ? 'Tên' : field === 'dienthoai' ? 'Điện thoại' : 'Email'}
@@ -179,7 +172,7 @@ const Profile = () => {
           style={{
             marginTop: '1rem',
             padding: '0.75rem 1.5rem',
-            background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
+            background: '#32ADE6',
             color: 'white',
             border: 'none',
             borderRadius: '8px',
@@ -304,16 +297,9 @@ const MangXaHoi = () => {
       background: 'white',
       boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)'
     }}>
-      <h3 style={{
-        fontSize: '24px',
-        fontWeight: '600',
-        marginBottom: '2rem',
-        background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent'
-      }}>Social Media Profiles</h3>
+      <h3 className='text-3xl text-[#32ADE6] font-bold'>Mạng xã hội</h3>
 
-      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }} className='mt-4'>
         {Object.entries(socialIcons).map(([platform, { icon, color }]) => (
           <div key={platform} style={{
             display: 'flex',
@@ -392,7 +378,7 @@ const MangXaHoi = () => {
           style={{
             marginTop: '1rem',
             padding: '1rem 2rem',
-            background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
+            background: '#32ADE6',
             color: 'white',
             border: 'none',
             borderRadius: '8px',
@@ -405,7 +391,7 @@ const MangXaHoi = () => {
             gap: '0.5rem'
           }}
         >
-          Update Social Profiles
+          Cập nhật
         </button>
       </form>
       <style jsx>{`@keyframes slideIn {
@@ -488,21 +474,11 @@ const Password = () => {
       background: 'white',
       boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)'
     }}>
-      <h3 style={{
-        fontSize: '24px',
-        fontWeight: '600',
-        marginBottom: '2rem',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-        background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent'
-      }}>
-        <FaLock /> Change Password
+      <h3 className='text-3xl font-bold text-[#32ADE6] flex gap-2'>
+        <FaLock /> Cài đặt mật khẩu
       </h3>
 
-      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}  className='mt-4'>
         {['old_password', 'password', 'password_confirmation'].map((field) => (
           <div key={field} style={{ position: 'relative' }}>
             <label
@@ -511,11 +487,11 @@ const Password = () => {
                 display: 'block',
                 marginBottom: '0.5rem',
                 color: '#64748b',
-                fontSize: '0.875rem'
+                fontSize: '1.2rem'
               }}
             >
-              {field === 'old_password' ? 'Current Password' :
-                field === 'password' ? 'New Password' : 'Re-type New Password'}
+              {field === 'old_password' ? 'Mật khẩu hiện tại' :
+                field === 'password' ? 'Mật khẩu mới' : 'Nhập lại mật khẩu'}
             </label>
             <div style={{ position: 'relative' }}>
               <input
@@ -560,7 +536,7 @@ const Password = () => {
           style={{
             marginTop: '1rem',
             padding: '0.75rem 1.5rem',
-            background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
+            background: '#32ADE6',
             color: 'white',
             border: 'none',
             borderRadius: '8px',
@@ -573,7 +549,7 @@ const Password = () => {
             fontWeight: '500'
           }}
         >
-          <FaLock /> Update Password
+          <FaLock /> Cập nhật mật khẩu
         </button>
       </form>
     </div>

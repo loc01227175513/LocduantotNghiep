@@ -156,11 +156,11 @@ function Mota() {
   shadow-[0_20px_70px_-15px_rgba(0,0,0,0.3)]
   border border-white/20 rounded-2xl
   transform transition-all duration-300">
-  <h1 className="mb-6 text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 
+  <h1 className="mb-6 text-3xl font-bold bg-gradient-to-r from-sky-500 to-sky-400
     bg-clip-text text-transparent">
     Người học dự định
   </h1>
-  <p className="mb-8 text-lg text-gray-700 leading-relaxed">
+  <p className="mb-8 text-2xl text-gray-700 leading-relaxed">
     Các mô tả sau đây sẽ hiển thị công khai trên Trang đích khóa học của
     bạn và sẽ có tác động trực tiếp đến hiệu suất khóa học của bạn. Các mô
     tả này sẽ giúp người học quyết định xem khóa học của bạn có phù hợp
@@ -169,7 +169,7 @@ function Mota() {
 
   <div className="relative space-y-8">
     <div className="animate-[fadeIn_0.5s_ease-out]">
-      <label className="block mb-4 text-xl font-semibold">
+      <label className="block mb-4 text-2xl font-semibold">
         Học sinh sẽ học được gì trong khóa học của bạn?
       </label>
       {hocSinhInputs.map((input, index) => (
@@ -240,36 +240,31 @@ function Mota() {
         </div>
       ))}
       <div className="mt-6">
-        <button
-          onClick={() => handleAddInput(hocSinhInputs, setHocSinhInputs)}
-          className="group px-6 py-3 font-semibold text-white 
-            bg-gradient-to-r from-purple-500 to-purple-600
-            rounded-xl shadow-md 
-            hover:shadow-lg hover:from-purple-600 hover:to-purple-700
-            active:from-purple-700 active:to-purple-800
-            transition duration-200 
-            hover:scale-[1.02] transform
-            flex items-center gap-2"
-        >
-          <svg className="w-5 h-5 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-          Thêm mục tiêu
-        </button>
+      <button
+  onClick={() => handleAddInput(hocSinhInputs, setHocSinhInputs)}
+  className="group px-6 py-3 font-semibold text-sky-500
+    border border-sky-500
+    rounded-xl shadow-md 
+    flex items-center gap-2"
+>
+  <svg className="w-5 h-5 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+  </svg>
+  Thêm mục tiêu
+</button>
       </div>
     </div>
   </div>
 
   <div className="mt-10">
-    <button
+        <button
       onClick={handleSubmit}
       className="px-8 py-3 font-semibold text-white
-        bg-gradient-to-r from-green-500 to-green-600
+        bg-gradient-to-r from-sky-500 to-sky-400
         rounded-xl shadow-md
-        hover:shadow-lg hover:from-green-600 hover:to-green-700
-        active:from-green-700 active:to-green-800
-        transition-all duration-200
-        hover:scale-[1.02] transform
+        border border-sky-500
+        hover:shadow-lg hover:from-sky-500 hover:to-blue-400
+        active:to-green-800
         flex items-center gap-2"
     >
       <span>Gửi mục tiêu khóa học</span>

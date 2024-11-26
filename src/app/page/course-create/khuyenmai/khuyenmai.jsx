@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState, useEffect } from 'react';
 import {
@@ -22,13 +23,13 @@ import {
   Circle,
   Icon
 } from '@chakra-ui/react';
-import { 
-  BiCheck, 
-  BiCalendar, 
-  BiGift, 
+import {
+  BiCheck,
+  BiCalendar,
+  BiGift,
   BiTime,
   BiUser,
-  BiTrendingUp 
+  BiTrendingUp
 } from 'react-icons/bi';
 import { motion } from 'framer-motion';
 import { TatCaKhuyenMai, AddKhuyenMaiKhoaHoc } from "../../../../service/khuyenmai/khuyenmai";
@@ -38,7 +39,7 @@ const MotionBox = motion(Box);
 
 const theme = extendTheme({
   colors: {
-    primary: 'rgb(50, 173, 230)',
+    primary: '#87CEEB', // Sky Blue
   },
 });
 
@@ -74,7 +75,7 @@ const containerVariants = {
 };
 
 const cardVariants = {
-  hidden: { 
+  hidden: {
     opacity: 0,
     y: 20
   },
@@ -166,12 +167,10 @@ const CouponForm = () => {
   const handlePublicClick = async () => {
     if (selectedCoupon) {
       try {
-        // Update dataForm in localStorage with the selectedCoupon
         const dataForm = JSON.parse(localStorage.getItem('dataForm')) || {};
         dataForm.id_magiamgia = selectedCoupon;
         localStorage.setItem('dataForm', JSON.stringify(dataForm));
 
-        // Call the API to add the coupon
         await AddKhuyenMaiKhoaHoc(selectedCoupon);
         toast.success('Coupon ID sent successfully!');
       } catch (error) {
@@ -200,7 +199,7 @@ const CouponForm = () => {
         maxW="full"
         minH="100vh"
         py={12}
-        bgGradient="linear(to-br, teal.50, purple.100, pink.50)"
+        bg="gray.50"
         position="relative"
         overflowY="auto"
       >
@@ -208,20 +207,19 @@ const CouponForm = () => {
           as="h2"
           size="xl"
           mb={8}
-          bgGradient="linear(to-r, teal.400, purple.500, pink.500)"
-          bgClip="text"
+          color="gray.700"
           textAlign="center"
           fontWeight="extrabold"
         >
           Mã Giảm Giá Khóa Học
         </Heading>
-        <Box mb={8} px={6} backdropFilter="blur(10px)" bg="whiteAlpha.200" p={6} rounded="xl">
+        <Box mb={8} px={6} bg="gray.100" p={6} rounded="xl">
           <SimpleGrid columns={{ base: 1, md: 4 }} spacing={4}>
             <Select
               placeholder="Lọc theo % giảm giá"
               variant="filled"
               bg="white"
-              _hover={{ bg: "white" }}
+              _hover={{ bg: "gray.50" }}
             >
               <option value="">All</option>
               <option value="10">10% or more</option>
@@ -233,6 +231,8 @@ const CouponForm = () => {
               value={userCountFilter}
               onChange={(e) => setUserCountFilter(e.target.value)}
               mb={4}
+              bg="white"
+              _hover={{ bg: "gray.50" }}
             >
               <option value="">All</option>
               <option value="100">100 or more</option>
@@ -245,6 +245,8 @@ const CouponForm = () => {
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
               mb={4}
+              bg="white"
+              _hover={{ bg: "gray.50" }}
             />
             <Checkbox
               isChecked={bestPromotionFilter}
@@ -276,16 +278,15 @@ const CouponForm = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                bg="rgba(255,255,255,0.95)"
-                boxShadow="lg"
+                bg="white"
+                boxShadow="md"
                 rounded="2xl"
                 p={6}
                 position="relative"
                 onClick={() => handleCardClick(coupon.id)}
                 cursor="pointer"
                 border="1px solid"
-                borderColor={selectedCoupon === coupon.id ? "teal.200" : "gray.100"}
-                backdropFilter="blur(10px)"
+                borderColor={selectedCoupon === coupon.id ? "primary" : "gray.200"}
                 transition={{
                   layout: { duration: 0.3 },
                   opacity: { duration: 0.2 }
@@ -295,8 +296,8 @@ const CouponForm = () => {
                   <Circle
                     as={motion.div}
                     initial={{ scale: 0, rotate: -180 }}
-                    animate={{ 
-                      scale: 1, 
+                    animate={{
+                      scale: 1,
                       rotate: 0,
                       transition: {
                         type: "spring",
@@ -305,16 +306,16 @@ const CouponForm = () => {
                       }
                     }}
                     size="44px"
-                    bgGradient="linear(to-r, pink.400, purple.500)"
+                    bg="primary"
                     color="white"
                     position="absolute"
                     top={-3}
                     right={-3}
-                    shadow="lg"
+                    shadow="md"
                   >
-                    <Icon 
-                      as={BiCheck} 
-                      w={7} 
+                    <Icon
+                      as={BiCheck}
+                      w={7}
                       h={7}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
@@ -331,18 +332,12 @@ const CouponForm = () => {
                         initial={iconAnimations.gift.initial}
                         animate={iconAnimations.gift.animate}
                         whileHover={{ scale: 1.2 }}
+                        color="primary"
                       >
-                        <BiGift
-                          size="24px"
-                          style={{
-                            background: "linear-gradient(45deg, #FF69B4, #8A2BE2)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent"
-                          }}
-                        />
+                        <BiGift size="24px" />
                       </Icon>
                       <Badge
-                        colorScheme={coupon.giamgia >= 50 ? "pink" : "teal"}
+                        colorScheme={coupon.giamgia >= 50 ? "purple" : "primary"}
                         fontSize="lg"
                         px={3}
                         py={1}
@@ -365,16 +360,9 @@ const CouponForm = () => {
                             initial={iconAnimations.user.initial}
                             animate={iconAnimations.user.animate}
                             whileHover={{ scale: 1.3 }}
+                            color="primary"
                           >
-                            <BiUser
-                              size="20px"
-                              style={{
-                                background: "linear-gradient(45deg, #9333ea, #4f46e5)",
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                                filter: "drop-shadow(0 0 2px rgba(147, 51, 234, 0.3))"
-                              }}
-                            />
+                            <BiUser size="20px" />
                           </Icon>
                           <Text>Lượt sử dụng</Text>
                         </HStack>
@@ -385,15 +373,9 @@ const CouponForm = () => {
                             as={motion.div}
                             whileHover={{ scale: 1.2, rotate: 15 }}
                             transition={{ type: "spring", stiffness: 300 }}
+                            color="primary"
                           >
-                            <BiTrendingUp
-                              size="16px"
-                              style={{
-                                background: "linear-gradient(45deg, #06b6d4, #3b82f6)",
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent"
-                              }}
-                            />
+                            <BiTrendingUp size="16px" />
                           </Icon>
                           <Text>{coupon.luotsudung}/{coupon.sudunghientai}</Text>
                         </HStack>
@@ -406,16 +388,9 @@ const CouponForm = () => {
                         initial={iconAnimations.time.initial}
                         animate={iconAnimations.time.animate}
                         whileHover={{ scale: 1.2, rotate: 0 }}
+                        color="primary"
                       >
-                        <BiTime
-                          size="20px"
-                          style={{
-                            background: "linear-gradient(45deg, #06b6d4, #3b82f6)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            filter: "drop-shadow(0 0 2px rgba(6, 182, 212, 0.3))"
-                          }}
-                        />
+                        <BiTime size="20px" />
                       </Icon>
                       <Text fontSize="sm">{coupon.ngaybatdau} - {coupon.ngayketthuc}</Text>
                     </HStack>
@@ -427,28 +402,30 @@ const CouponForm = () => {
         </AnimatePresence>
 
         <Box textAlign="center" mt={8}>
-          <Button
-            as={motion.button}
-            whileHover={{ 
-              scale: 1.05,
-              transition: {
-                duration: 0.2,
-                yoyo: Infinity
-              }
-            }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            bgGradient="linear(to-r, teal.400, purple.500)"
-            color="white"
-            size="lg"
-            onClick={handlePublicClick}
-            rounded="full"
-            px={8}
-            shadow="lg"
-          >
-            Public
-          </Button>
+          <div className="flex justify-end">
+            <Button
+              as={motion.button}
+              whileHover={{
+                scale: 1.05,
+                transition: {
+                  duration: 0.2
+                }
+              }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              bg="primary"
+              color="white"
+              size="lg"
+              onClick={handlePublicClick}
+              width={100}
+              px={8}
+              shadow="md"
+            >
+              Xuất bản
+              <i className="fa-light fa-arrow-right ml-2" />
+            </Button>
+          </div>
         </Box>
       </Container>
       <ToastContainer />
