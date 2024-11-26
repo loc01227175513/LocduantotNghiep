@@ -54,7 +54,7 @@ export default function VoucherPage() {
             ))} */}
 
               {vouchers.map((item) =>(
-                <div className="border-2 border-gray-300 w-[350px] bg-[#32ADE6] rounded-lg p-4 shadow-lg">
+                <div key={item.magiamgia.maso} className="border-2 border-gray-300 w-[350px] bg-[#32ADE6] rounded-lg p-4 shadow-lg">
                 <div className="text-white text-lg font-semibold text-center mb-3 uppercase">
                   Giảm ngay
                 </div>

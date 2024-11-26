@@ -12,8 +12,6 @@ export default function Page() {
       <div className=" w-screen mt-80">
         <VoucherShop />
       </div>
-
-
       <Footercomponent />
 
 
