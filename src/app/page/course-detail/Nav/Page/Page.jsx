@@ -96,7 +96,7 @@ export default function Page({ course, formattedTotalTime }) {
   };
 
   return (
-    <div className="shadow-lg border border-gray-200 p-4 rounded-md bg-white text-black">
+    <div className="shadow-lg border border-gray-200  rounded-md bg-white text-black">
       <motion.div
         variants={menuVariants}
         initial="hidden"
@@ -114,7 +114,7 @@ export default function Page({ course, formattedTotalTime }) {
                 transition: { duration: 0.2 }
               }}
               whileTap={{ scale: 0.95 }}
-              className={`flex-1 text-center py-3 relative ${
+              className={`flex-1 text-center font-bold text-3xl py-3 relative ${
                 page === value
                   ? 'bg-blue-500 text-white font-medium'
                   : 'text-gray-700 hover:bg-blue-50'

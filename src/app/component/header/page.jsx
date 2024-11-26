@@ -1016,9 +1016,6 @@ export default function Header() {
                         className="block transition-transform hover:scale-110"
                       >
                         <i className="fas fa-heart text-3xl text-gray-600 hover:text-pink-500"></i>
-                        <div className="absolute -top-2 -right-2 bg-pink-500 text-white text-lg rounded-full w-5 h-5 flex items-center justify-center">
-                          0
-                        </div>
                       </Link>
                       <div
                         className="absolute hidden group-hover:block"
@@ -1097,9 +1094,6 @@ export default function Header() {
                         onClick={openCartHandler}
                       >
                         <i className="fas fa-shopping-cart text-3xl hover:text-green-500 text-gray-600"></i>
-                        <div className="absolute -top-2 -right-2 bg-green-500 text-white text-lg rounded-full w-5 h-5 flex items-center justify-center">
-                          0
-                        </div>
                       </div>
                     </div>
                   </div>

@@ -201,30 +201,30 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
                     </div>
                     {!NguoiDung ? (
                       <Link href={`/page/login`}>
-                        <button className="rts-btn ">
+                        <button className="rts-btn btn-primary">
                           Đi Đến Đăng nhập
                         </button>
                       </Link>
                     ) : isCourseRegistered || course.gia === 0 || course.giamgia == 0 ? (
                       <Link href={`/page/Study?id=${course.id}`}>
-                        <button onClick={handleThanhToanKhoaHocFree} className="rts-btn  p-4 " style={{ fontSize: "13px" }}>
+                        <button onClick={handleThanhToanKhoaHocFree} className="rts-btn btn-primary p-4 " style={{ fontSize: "13px" }}>
                           Đi đến khóa học
                         </button>
                       </Link>
 
                     ) : isCourseInCart ? (
                       <Link href="/page/cart">
-                        <button className="rts-btn ">
+                        <button className="rts-btn btn-primary">
                           Đi xe đẩy
                         </button>
                       </Link>
                     ) : course.trangthai === 'Notyet' || course.trangthai === 'Pending' ? (
-                      <button className="rts-btn ">
+                      <button className="rts-btn btn-primary">
                         Bản Demo
                       </button>
                     ) : (
                       <>
-                        <button onClick={handleAddCart} className="rts-btn ">
+                        <button onClick={handleAddCart} className="rts-btn btn-primary">
                           Thêm vào giỏ hàng
                         </button>
                         <Link href="/page/checkout" className="rts-btn btn-border" onClick={handleAddCart}>
@@ -371,7 +371,7 @@ const NavPhai = ({ course, formattedTotalTime, firstVideo, handleAddCart, NguoiD
         </div>
 
       </div>
-     
+
     </>
 
 
@@ -674,7 +674,7 @@ export default function Coursedetailcomponent() {
                         margin: "0",
                         animation: "popIn 0.5s ease-out"
                       }}>
-                        <span className="animated-text text-white text-xl" >Giảng Viên:</span>
+                        <span className="animated-text text-white text-2xl" >Giảng Viên:</span>
                         <span className="text-2xl" style={{
                           marginLeft: "5px",
                           background: "linear-gradient(45deg, #fff, #ffd700)",
@@ -688,7 +688,7 @@ export default function Coursedetailcomponent() {
                       margin: "10px 0 0 0",
                       animation: "popIn 0.5s ease-out 0.2s backwards"
                     }}>
-                      <span className="animated-text text-white text-xl">Thể loại: </span>
+                      <span className="animated-text text-white text-2xl">Thể loại: </span>
                       <span className="text-white" style={{
                         backgroundColor: "rgba(255,255,255,0.2)",
                         padding: "3px 15px",
@@ -730,14 +730,14 @@ export default function Coursedetailcomponent() {
               <div className="col-lg-12">
                 <div className="title-between-area">
                   <div className="title-area-left-style">
-                    <div className="pre-title">
+                    <div className="">
                       <i
-                        className="mr-1 bi bi-lightbulb"
-                        style={{ color: "#32ADE6" }}
+                        className="mr-1 px-2 bi bi-lightbulb"
+                        style={{ color: "#32ADE6", }}
                       ></i>
-                      <span>Các khóa học tương tự hơn</span>
+                      <span className="text-4xl text-black"><strong>Các khóa học tương tự hơn</strong></span>
                     </div>
-                    <h2 className="title">Các khóa học liên quan</h2>
+                    <h2 className="title text-xl px-10">Các khóa học liên quan</h2>
                   </div>
                 </div>
               </div>
@@ -764,32 +764,20 @@ export default function Coursedetailcomponent() {
                             style={{ width: "342.25px", marginRight: 30 }}
                           >
                             {/* Single course style */}
-                            <div className="single-course-style-three">
+                            <div className="single-course-style-three relative">
                               <a href={`/page/course-detail?id=${course.id}`} className="thumbnail">
                                 <Image width={500} height={300} src={course.hinh} alt="course" style={{ height: "180px" }} />
                                 <div className="course-tags">
                                   {course.gia === 0 ? (
-                                    <span className="tag free">Miễn phí</span>
+                                    <span className="tag absolute top-0 text-white rounded-md bg-red-600 px-2 m-3 discount">Miễn phí</span>
                                   ) : course.giamgia > 0 ? (
-                                    <span className="tag discount">-{Math.round(((course.gia - course.giamgia) / course.gia) * 100)}%</span>
+                                    <span className="tag absolute top-0 text-white rounded-md bg-red-600 px-2 m-3 discount">-{Math.round(((course.gia - course.giamgia) / course.gia) * 100)}%</span>
                                   ) : null}
                                 </div>
                               </a>
                               <div className="body-area">
-                                <div className="course-top relative">
-                                  {/* <div className="tags">Người bán tốt nhất</div> */}
-                                  <div className="price">
-                                    {course.gia === 0 || course.giamgia === 0 ? (
-                                      <span className="text-green-500 font-bold">Miễn Phí</span>
-                                    ) : (
-                                      <>
-                                        <span className="line-through text-gray-500 mr-2">${course.gia}</span>
-                                        <span className="text-red-500 font-semibold">${course.giamgia}</span>
-                                      </>
-                                    )}
-                                  </div>
-                                </div>
-                                <div className="course-card hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 p-4 rounded-lg">
+
+                                <div className="course-card hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 py-2 rounded-lg">
                                   <a href={`/page/course-detail?id=${course.id}`} className="block">
                                     <h5 className="text-2xl font-medium hover:text-primary-600 transition-all duration-300 ease-in-out">
                                       <strong>{course.ten}</strong>
@@ -799,31 +787,48 @@ export default function Coursedetailcomponent() {
                                   <div className="flex items-center justify-between mt-3">
                                     <div className="flex items-center  group">
                                       <i className="fa-light fa-user-teacher text-2xl text-primary-500 transition-all duration-300 ease-in-out transform group-hover:scale-110 group-hover:rotate-6" />
-                                      <span className="text-xl text-gray-700 transition-colors duration-300 group-hover:text-primary-600">{course.giangvien}</span>
+                                      <span className="text-2xl text-gray-700 transition-colors duration-300 group-hover:text-primary-600">{course.giangvien}</span>
                                     </div>
+                                    <span className="text-xl rounded-md bg-gradient-to-r text-white p-2 from-[#1e3c72] to-[#ff6b6b]"> 
+                                    {course.chude}
+                                    </span>
 
-                                    <div className="flex items-center gap-2 transition-transform duration-300 hover:scale-105">
-                                      <span className="font-medium">{averageRating.toFixed(1)}</span>
-                                      <div className="flex text-yellow-400">{renderStars(averageRating)}</div>
-                                    </div>
                                   </div>
 
                                   <div className="flex items-center gap-6 mt-4 text-gray-600">
                                     <div className="flex items-center gap-3 group">
                                       <i className="fa-light fa-calendar-lines-pen text-2xl text-primary-500 transition-all duration-300 ease-in-out transform group-hover:scale-110 group-hover:rotate-6" />
                                       <div className="transition-colors duration-300 group-hover:text-primary-600">
-                                        <span className="font-medium">{course.baihocs}</span>
-                                        <span className="text-xl ml-1">Bài Học</span>
+                                        <span className="font-medium text-2xl">{course.baihocs}</span>
+                                        <span className="text-2xl ml-1">Bài Học</span>
                                       </div>
                                     </div>
 
-                                    <div className="flex items-center gap-3 group">
+                                    <div className="flex items-center gap-3 group absolute right-0">
                                       <i className="fa-light fa-users text-2xl text-primary-500 transition-all duration-300 ease-in-out transform group-hover:scale-110 group-hover:rotate-6" />
                                       <div className="transition-colors duration-300 group-hover:text-primary-600">
-                                        <span className="font-medium">{course.dangky}</span>
-                                        <span className="text-xl ml-1">Sinh Viên</span>
+                                        <span className="font-medium text-2xl">{course.dangky}</span>
+                                        <span className="text-2xl ml-1">Sinh Viên</span>
                                       </div>
                                     </div>
+                                  </div>
+                                </div>
+                                <div className="course-top">
+                                  {/* <div className="tags">Người bán tốt nhất</div> */}
+                                  <div className="price">
+                                    {course.gia === 0 || course.giamgia === 0 ? (
+                                      <span className="text-[#ff6b6b] font-bold absolute bottom-0 right-12 ">Miễn Phí</span>
+                                    ) : (
+                                      <>
+                                        <span className="line-through font-bold text-gray-500 mr-2">${course.gia}</span>
+                                        <span className="text-red-500 px-4 font-bold">${course.giamgia}</span>
+                                        <div className="flex items-center gap-2 transition-transform duration-300 hover:scale-105">
+                                        <div className="flex text-yellow-400">{renderStars(averageRating)}</div>
+                                          <span className="font-medium absolute right-10 bottom-14 py-1">{averageRating.toFixed(1)}</span>
+                                          
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               </div>

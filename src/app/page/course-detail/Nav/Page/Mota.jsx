@@ -5,93 +5,7 @@ import Link from "next/link";
 import { FaStar, FaRegStar, FaCheck, FaBookmark, FaCalendar, FaUsers } from 'react-icons/fa';
 import Image from 'next/image';
 import { KhoaHocYeuThich } from "../../../../../service/YeuThich/YeuThich";
-const styles = `
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
 
-  @keyframes slideIn {
-    from { transform: translateX(-20px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-  }
-
-  .course-card {
-    transition: all 0.3s ease;
-  }
-
-  .course-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
-  }
-
-  .animate-slide-in {
-    animation: slideIn 0.4s ease-out forwards;
-  }
-
-  .objective-item {
-    animation: slideIn 0.4s ease-out forwards;
-    animation-delay: calc(var(--item-index) * 100ms);
-    opacity: 0;
-  }
-
-  .course-image {
-    transition: transform 0.3s ease;
-  }
-
-  .course-card:hover .course-image {
-    transform: scale(1.05);
-  }
-
-  .bookmark-icon {
-    transition: all 0.2s ease;
-  }
-
-  .bookmark-icon:hover {
-    transform: scale(1.2);
-  }
-
-  @keyframes iconColorChange {
-    0% { color: #3B82F6; }
-    33% { color: #10B981; }
-    66% { color: #F59E0B; }
-    100% { color: #3B82F6; }
-  }
-
-  @keyframes iconPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-  }
-
-  .animated-icon {
-    animation: iconColorChange 6s infinite;
-    transition: transform 0.3s ease;
-  }
-
-  .animated-icon:hover {
-    animation: iconPulse 0.5s ease;
-  }
-
-  .star-icon {
-    transition: color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .star-icon:hover {
-    transform: scale(1.2);
-    color: #FBBF24;
-  }
-`;
 
 export default function Mota({ course }) {
   console.log(course);
@@ -169,12 +83,22 @@ export default function Mota({ course }) {
 
   return (
     <>
-      <style>{styles}</style>
       <div className={`course-description ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
         <div className="tab-content mt-12" id="myTabContent">
-          <div className="tab-pane fade show active p-6 bg-white rounded-lg shadow-sm">
-            <h4 className="text-2xl font-bold text-gray-800 mb-6">Về khóa học</h4>
+          <div className="tab-pane fade show active p-6 bg-white rounded-lg shadow-sm ">
+            <div className="flex flex-wrap relative">
+            <h4 className="text-4xl font-bold text-gray-800 mb-6">Mô Tả Về khóa học </h4>
+              <div className="flex items-center space-x-4 absolute top-0 right-0">
+                <Link href={`/page/Cours-Filter`}>
 
+                <button className="rts-btn p-3   btn-primary border-1  border-[#ff6b6b] py-2  hover:bg-[#ff6b6b]  text-[#ff6b6b] font-medium rounded-md  hover:text-[#dd4a4a] ">
+    <span className="mr-2 text-xl">Xem Thêm</span>
+</button>
+                </Link>
+                  </div>
+            </div>
+        
+          
             <div className="description-section space-y-4">
               {descriptionSections.map((section, index) => (
                 <p key={index} className="text-gray-700 leading-relaxed animate-slide-in"
@@ -204,8 +128,8 @@ export default function Mota({ course }) {
 
         <div className="related-courses mt-12">
           <div className="flex justify-between items-center mb-6 px-4 sm:px-0">
-            <h4 className="text-2xl font-bold text-gray-800">
-              Khóa học khác từ {course.thongtingiangvien.ten}
+            <h4 className="text-2xl font-medium text-gray-800">
+              Khóa học khác từ <strong className="text-4xl">{course.thongtingiangvien.ten}</strong>
             </h4>
           </div>
 
@@ -250,11 +174,14 @@ export default function Mota({ course }) {
                     </div>
                   </div>
 
-                  <div className="p-5">
-                    <div className="flex gap-2 mb-5">
-                      <span className="px-3  py-1 text-xl bg-blue-100 text-blue-800 rounded-full">
-                       <strong> {item.chude.ten}</strong>
+                  <div className="relative">
+                    <div className="flex gap-2 ">
+                      <span className="py-4   text-3xl  bg-blue-100  rounded-full">
+                       <strong> {item.ten}</strong>
                       </span>
+                      <span className="py-2 mt-6 text-xl absolute right-0 px-2 text-white rounded-md bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] ">
+    <strong>{item.ten}</strong>
+</span>
                     </div>
 
                     <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
@@ -268,14 +195,15 @@ export default function Mota({ course }) {
                       </span>
                     </div>
 
-                    <div className="flex justify-between items-center mt-4">
+                    <div className="flex justify-between items-center   ">
                       <div className="flex items-center">
-                        {renderStars(averageRating)}
-                        <span className="ml-2 text-gray-600">
+                     
+                        <span className="ml-2 text-xl text-gray-600">
                           {averageRating.toFixed(1)}
                         </span>
+                       {renderStars(averageRating)}
                       </div>
-                      <div className="text-xl font-bold text-green-600">
+                      <div className="text-xl font-bold text-[#ff6b6b]">
                         {item.gia === 0 || item.giamgia === 0 ? 'Miễn phí' : `$${item.giamgia}`}
                       </div>
                     </div>
