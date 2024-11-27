@@ -146,7 +146,7 @@ export default function Login() {
         animate="visible"
         variants={containerVariants}
         style={{
-          background: "linear-gradient(45deg, #4285f4, #34a853)",
+          background: "-webkit-linear-gradient(315deg, #1e3c72 0%, #ff6b6b 100%)",
           minHeight: "100vh",
           padding: "2rem 0",
           overflowY: "scroll"
@@ -175,7 +175,7 @@ export default function Login() {
                   Đăng nhập vào tài khoản của bạn 👋
                 </motion.h4>
                 
-                <div className="social-login mb-4">
+                {/* <div className="social-login mb-4">
                   <motion.button 
                     onClick={() => handleSocialLogin('google')}
                     className="btn btn-outline-secondary me-2"
@@ -194,10 +194,10 @@ export default function Login() {
                   >
                     <Facebook /> Facebook
                   </motion.button>
-                </div>
-                <div className="divider mb-4">
+                </div> */}
+                {/* <div className="divider mb-4 text-xl">
                   <span>Hoặc đăng nhập bằng email</span>
-                </div>
+                </div> */}
 
                 <Formik
                   initialValues={initialValues}
@@ -214,15 +214,16 @@ export default function Login() {
                           type="email"
                           placeholder="Nhập email của bạn"
                           aria-label="Email address"
+                          style={{ fontSize: "15px" }}
                         />
                         <ErrorMessage
                           name="email"
                           component="div"
-                          className="error text-danger"
+                          className="error text-danger my-2 text-xl bg-inherit border-none"
                         />
                       </motion.div>
 
-                      <motion.div className="single-input-wrapper" variants={itemVariants}>
+                      <motion.div className="single-input-wrapper " variants={itemVariants}>
                         <label htmlFor="password">Mật khẩu của bạn</label>
                         <Field
                           id="password"
@@ -230,16 +231,17 @@ export default function Login() {
                           type="password"
                           placeholder="Nhập mật khẩu"
                           aria-label="Password"
+                          style={{ fontSize: "15px" }}
                         />
                         <ErrorMessage
                           name="password"
                           component="div"
-                          className="error text-danger"
+                           className="error text-danger my-2 text-xl bg-inherit border-none"
                         />
                       </motion.div>
 
                       {errorMessage && (
-                        <motion.div className="alert alert-danger" role="alert" variants={itemVariants}>
+                        <motion.div className="alert alert-danger " role="alert" variants={itemVariants}>
                           {errorMessage}
                         </motion.div>
                       )}
@@ -255,19 +257,19 @@ export default function Login() {
                             <label htmlFor="rememberMe">Nhớ tài khoản</label>
                           </div>
                         </div>
-                        <a href="/page/ForgotPassword" className="forgot-password">
+                        <a href="/page/ForgotPassword" className="forgot-password text-lg">
                           Quên mật khẩu?
                         </a>
                       </motion.div>
 
                       <motion.button
                         type="submit"
-                        className="rts-btn btn-primary w-100"
+                        className="rts-btn btn-primary w-100 text-2xl"
                         disabled={isSubmitting || isLoading}
                         variants={itemVariants}
                       >
                         {isLoading ? (
-                          <CircularProgress size={24} color="inherit" />
+                          <CircularProgress size={32} color="inherit" />
                         ) : (
                           'Đăng nhập'
                         )}
@@ -294,7 +296,7 @@ export default function Login() {
                   src="https://frontends.udemycdn.com/components/auth/desktop-illustration-x1.webp"
                   width={500} 
                   height={300}   
-                  className="img-fluid bg-transparent"
+                  className="img-fluid bg-transparent py-36"
                   alt="Student Home"
                   priority
                 />

@@ -31,7 +31,7 @@ const Cart = () => {
       try {
         const parsedData = JSON.parse(userData);
 
-               axios.post('https://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id }, {
+        axios.post('https://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id }, {
           referrerPolicy: 'unsafe-url'
         })
           .then(response => {
@@ -77,7 +77,7 @@ const Cart = () => {
         id_nguoidung: parsedData.id,
       };
 
-           await axios.post('https://huuphuoc.id.vn/api/xoasanphamadd', payload, {
+      await axios.post('https://huuphuoc.id.vn/api/xoasanphamadd', payload, {
         referrerPolicy: 'unsafe-url'
       });
       toast.success("Sản phẩm đã được xóa!");
@@ -134,145 +134,147 @@ const Cart = () => {
 
   return (<>
     <div className="p-4 bg-gradient-to-b from-gray-50 to-white min-h-screen animate-fadeIn">
-    <ToastContainer position="top-right" autoClose={3000} />
-    <Header />
-    <main className="mt-60">
-      <div className="container">
-        <h1 className="display-4 text-center mb-4 font-bold text-indigo-800 animate-bounce-soft">
-          🛒 Giỏ Hàng Của Tôi
-        </h1>
-        
-        <div className="table-responsive shadow-lg p-4 mb-5 bg-white rounded-xl hover:shadow-2xl transition-all duration-500 animate-slideIn">
-          <table className="table table-hover align-middle">
-            <thead className="bg-indigo-100">
-              <tr className="text-indigo-700 ">
-                <th className="py-4 text-xl"></th>
-                <th className="py-4 text-xl">Hình ảnh</th>
-                <th className="py-4 text-xl">Sản phẩm</th>
-                <th className="py-4 text-xl">Giá</th>
-                <th className="py-4 text-xl" >Giảm Giá</th>
-                <th className="py-4 text-xl">Tổng phụ</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cartItems.map((item, index) => (
-                item.khoahocs.map((khoahoc, subIndex) => (
-                  <tr key={`${index}-${subIndex}`} 
+      <ToastContainer position="top-right" autoClose={3000} />
+      <Header />
+      <main className="mt-60 ">
+        <div className="container">
+          <h1 className="display-4 text-center mb-4 font-bold text-pink-700 ">
+            🛒 Giỏ Hàng Của Tôi
+          </h1>
+
+          <div className="table-responsive shadow-lg p-4 mb-5 bg-white rounded-xl hover:shadow-2xl transition-all duration-500 animate-slideIn">
+            <table className="table table-hover align-middle">
+              <thead className="">
+                <tr className="text-black">
+                  <th className="py-4 text-xl"></th>
+                  <th className="py-4 text-xl">Hình ảnh</th>
+                  <th className="py-4 text-xl">Sản phẩm</th>
+                  <th className="py-4 text-xl">Giá</th>
+                  <th className="py-4 text-xl" >Giảm Giá</th>
+                  <th className="py-4 text-xl">Tổng phụ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cartItems.map((item, index) => (
+                  item.khoahocs.map((khoahoc, subIndex) => (
+                    <tr key={`${index}-${subIndex}`}
                       className="hover:bg-gray-50 transition-all duration-300 animate-fadeIn"
-                      style={{ 
-                        fontSize: '1.1em', 
+                      style={{
+                        fontSize: '1.1em',
                         height: '80px',
                         animation: `fadeIn 0.5s ease-out ${(index + subIndex) * 0.1}s`
                       }}>
-                    <td className='text-center'>
-                      <button className="btn w-10 btn-outline-danger btn-sm rounded-circle p-2 hover:scale-125 hover:rotate-12 transition-all duration-300">
-                        <i className="bi bi-trash"></i>
-                      </button>
-                    </td>
-                    <td>
-                      <Image 
-                        width={500} 
-                        height={300} 
-                        src={khoahoc.hinh} 
-                        className="img-fluid rounded-lg shadow-sm hover:scale-110 hover:rotate-2 transition-all duration-300" 
-                        alt={khoahoc.ten} 
-                        style={{ maxWidth: '120px' }} 
-                      />
-                    </td>
-                    <td className="font-semibold  text-gray-800 hover:text-indigo-600 transition-colors duration-300">
-                      <h3 className='text-2xl'>{khoahoc.ten}</h3>
-                    </td>
-                    <td className="text-gray-600 animate-pulse text-2xl">đ{khoahoc.gia}</td>
-                    <td className="text-red-500 animate-bounce-soft text-2xl">-đ{khoahoc.giamgia}</td>
-                    <td className="font-bold text-indigo-600 animate-numberChange text-2xl">đ{khoahoc.giamgia}</td>
-                  </tr>
-                ))
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan="6" className="text-center py-4">
-                  <button
-                    className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold py-3 px-6 rounded-full 
-                             hover:shadow-xl hover:scale-105 hover:from-purple-600 hover:to-indigo-500 
-                             transform active:scale-95 transition-all duration-300"
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    🎫 Chọn Hoặc Nhập Mã Voucher
-                  </button>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-  
-        <div className="row justify-content-end mt-4">
-          <div className="col-md-6 animate-slideInRight">
-            <div className="card shadow-lg rounded-xl border-0 hover:shadow-2xl transition-all duration-500">
-              <div className="card-header bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-t-xl">
-                <h3 className="mb-0 py-3 px-4 text-white text-xl">💰 Tổng Giỏ Hàng</h3>
-              </div>
-              <div className="card-body p-4">
-                <table className="table mb-3">
-                  <tbody>
-                    <tr>
-                      <th className="text-gray-600">Tổng phụ</th>
-                      <td className="text-right text-3xl">đ{totalBeforeDiscount}</td>
+                      <td className='text-center'>
+                        <button className="btn w-14 btn-outline-danger btn-sm rounded-circle p-2 hover:scale-125 hover:rotate-12 transition-all duration-300">
+                          <i onClick={() => xoagiohang(khoahoc.id)} className="bi bi-trash text-2xl"></i>
+                        </button>
+                      </td>
+                      <td>
+                        <Image
+                          width={500}
+                          height={300}
+                          src={khoahoc.hinh}
+                          className="img-fluid rounded-lg shadow-sm hover:scale-110 hover:rotate-2 transition-all duration-300"
+                          alt={khoahoc.ten}
+                          style={{ maxWidth: '120px' }}
+                        />
+                      </td>
+                      <td className="font-semibold  text-gray-800 hover:text-indigo-600 transition-colors duration-300">
+                        <h3 className='text-2xl'>{khoahoc.ten}</h3>
+                      </td>
+                      <td className="text-gray-600  text-2xl ">đ{khoahoc.gia}</td>
+                      <td className="text-gray-600  text-2xl">{khoahoc.giamgia} </td>
+                      <td className="font-bold text-black animate-numberChange text-2xl">đ{khoahoc.giamgia}</td>
                     </tr>
-                    <tr>
-                      <th className="text-gray-600">Giảm giá</th>
-                      <td className="text-right text-3xl text-red-500">-đ{totalDiscount}</td>
-                    </tr>
-                    <tr className="bg-indigo-50 rounded">
-                      <th className="text-indigo-700">Tổng cộng</th>
-                      <td className="text-right"><strong className="text-3xl text-indigo-700 ">đ{totalBeforeDiscount - totalDiscount}</strong></td>
-                    </tr>
-                  </tbody>
-                </table>
-                {parsedData ? (
-                  <div className="flex">
-                    <a href="/page/checkout" 
-                       className="bg-gradient-to-r text-3xl from-green-500 to-emerald-600 text-white font-bold py-4 px-6 rounded-xl text-center w-full hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200">
-                      Tiến hành thanh toán →
-                    </a>
-                  </div>
-                ) : (
-                  <p className="text-center text-red-500 mt-3 font-semibold">⚠️ Vui Lòng Đăng Nhập</p>
-                )}
+                  ))
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="row justify-content-end mt-4">
+            <div className="col-md-6 animate-slideInRight">
+              <div className="card shadow-lg rounded-xl border-0 hover:shadow-2xl transition-all duration-500">
+                <div className="card-header font-medium   text-black rounded-t-xl">
+                  <h3 className="mb-0 py-3 px-4 text-black text-2xl">💰 Tổng Giỏ Hàng</h3>
+                </div>
+                <div className="card-body p-4">
+                  <table className="table mb-3">
+                    <tbody>
+                      <tr>
+                        <th className="text-gray-600 text-2xl">Thành tiền</th>
+                        <td className="text-right text-2xl">{totalBeforeDiscount} VNĐ</td>
+                      </tr>
+                      <tr>
+                        <th className="text-gray-600 text-2xl">Giảm giá</th>
+                        <td className="text-right text-2xl ">-{totalDiscount} VNĐ</td>
+                      </tr>
+                      <div className='relative w-full'>
+
+
+                        <tr className=' '>
+                          <td colSpan="6" className="text-center py-4  ">
+                            <button
+                              className=" bg-[#1e3c72] text-white font-bold py-3 px-6 text-right rounded-md  "
+                              onClick={() => setIsModalOpen(true)}
+                            >
+                              🎫 Chọn Ưu Đãi
+                            </button>
+                          </td>
+                        </tr>
+
+                      </div>
+
+                      <tr className="">
+                        <th className=" text-2xl font-bold">Tổng Tiền</th>
+                        <td className="text-right"><strong className="text-2xl  ">{totalBeforeDiscount - totalDiscount} VNĐ</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  {parsedData ? (
+                    <div className="flex">
+                      <a href="/page/checkout"
+                        className="bg-gradient-to-r text-3xl from-[#1e3c72] to-[#ff6b6b] text-white font-bold py-4 px-6 rounded-xl text-center w-full hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200">
+                        Tiến hành thanh toán →
+                      </a>
+                    </div>
+                  ) : (
+                    <p className="text-center text-red-500 mt-3 font-semibold">⚠️ Vui Lòng Đăng Nhập</p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
-  
-    {/* Enhanced Modal Animation */}
-    {isModalOpen && (
-      <div 
-        className="modal fade show d-block animate-modalFadeIn" 
-        tabIndex="-1" 
-        style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}
-      >
-        <div className="modal-dialog modal-dialog-centered animate-modalSlideIn">
-          <div className="modal-content border-0 shadow-2xl rounded-xl">
-            <div className="modal-header bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-t-xl">
-              <h5 className="modal-title font-bold animate-bounce-soft">🎫 Voucher</h5>
-              <button 
-                type="button" 
-                className="btn-close hover:rotate-90 transition-all duration-300" 
-                onClick={() => setIsModalOpen(false)}
-              />
-            </div>
-            <div className="modal-body p-4">
-              <Voucher handleApplyCoupon={handleApplyCoupon} />
+      </main>
+
+      {/* Enhanced Modal Animation */}
+      {isModalOpen && (
+        <div
+          className="modal fade show d-block animate-modalFadeIn"
+          tabIndex="-1"
+          style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}
+        >
+          <div className="modal-dialog modal-dialog-centered animate-modalSlideIn">
+            <div className="modal-content border-0 shadow-2xl rounded-xl">
+              <div className="modal-header bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] text-white rounded-t-xl">
+                <h5 className="modal-title font-bold ">Mã Giảm Giá</h5>
+                <button
+                  type="button"
+                  className="btn-close hover:rotate-90 transition-all duration-300"
+                  onClick={() => setIsModalOpen(false)}
+                />
+              </div>
+              <div className="modal-body p-4">
+                <Voucher handleApplyCoupon={handleApplyCoupon} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    )}
-  </div>
-  
-  <style>{`
+      )}
+    </div>
+
+    <style>{`
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -366,7 +368,7 @@ const Cart = () => {
   }
 
   /* Checkout button */
-  .bg-gradient-to-r {
+  .bg-gradient-to-r {f
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -536,7 +538,7 @@ const Cart = () => {
   }
   `}</style>
   </>
-   
+
   );
 }
 
@@ -564,163 +566,113 @@ const Voucher = ({ handleApplyCoupon }) => {
     setSelectedVoucherId(voucher.id);
   };
   console.log(vouchers);
-  
+
   return (
     <>
       <div className="container my-4">
-      {/* Coupon input form with enhanced styling */}
-      <form className="mb-4 p-3 bg-light rounded shadow-sm" onSubmit={handleApplyCoupon}>
-        <div className="row g-2 align-items-center">
-          <div className="col-md-8">
-            <input
-              type="text"
-              name="coupon_code"
-              className="form-control form-control-lg border-warning"
-              placeholder="🎫 Nhập mã giảm giá"
-              required
-              value={couponCode}
-              onChange={(e) => setCouponCode(e.target.value)}
-            />
-          </div>
-          <div className="col-md-4">
-            <button type="submit" className="btn btn-warning btn-lg w-100 fw-bold hover-scale">
-              <i className="fas fa-tag me-2"></i>Áp dụng
-            </button>
-          </div>
-        </div>
-        <small className="form-text text-muted mt-2">
-          <i className="fas fa-info-circle me-1"></i>
-          Mỗi khóa học chỉ áp dụng được một mã giảm giá.
-        </small>
-      </form>
-    
-      {/* Voucher list with animations and enhanced styling */}
-      <div className="voucher-list overflow-auto custom-scrollbar" style={{ maxHeight: '600px' }}>
-        {vouchers.map(voucher => {
-          const isSelected = selectedVoucherId === voucher.id;
-          const isUsed = voucher.trangthai === 'Đã sử dụng';
-          const buttonClass = isSelected
-            ? 'btn-warning disabled'
-            : isUsed
-              ? 'btn-secondary'
-              : 'btn-outline-warning';
-          
-          return (
-            <div
-              key={voucher.id}
-              className={`card mb-3 voucher-card hover-lift ${
-                isSelected ? 'border-warning border-2' : 'border-secondary'
-              } shadow-sm rounded`}
-            >
-              <div className="card-body position-relative p-4">
-                {/* Diagonal ribbon for status */}
-                <div className={`ribbon ${isUsed ? 'bg-secondary' : 'bg-warning'}`}>
-                  {isUsed ? 'Đã dùng' : 'Có sẵn'}
-                </div>
-                
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h4 className="card-title fw-bold text-warning mb-0">
-                    {voucher.magiamgia.maso}
-                  </h4>
-                  <span className={`badge ${
-                    voucher.magiamgia.trangthai === 'Đã Duyệt' ? 'bg-success' : 'bg-secondary'
-                  } px-3 py-2`}>
-                    {voucher.magiamgia.trangthai}
-                  </span>
-                </div>
-    
-                <div className="row g-3">
-                  <div className="col-6">
-                    <p className="card-text">
-                      <i className="fas fa-percent text-warning me-2"></i>
-                      <strong>Giảm giá:</strong> {voucher.magiamgia.giamgia}%
-                    </p>
-                  </div>
-                  <div className="col-6">
-                    <p className="card-text">
-                      <i className="fas fa-users text-warning me-2"></i>
-                      <strong>Đã dùng:</strong> {voucher.magiamgia.sudunghientai}
-                    </p>
-                  </div>
-                  <div className="col-6">
-                    <p className="card-text">
-                      <i className="fas fa-calendar-alt text-warning me-2"></i>
-                      <strong>Bắt đầu:</strong> {new Date(voucher.magiamgia.ngaybatdau).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <div className="col-6">
-                    <p className="card-text">
-                      <i className="fas fa-clock text-warning me-2"></i>
-                      <strong>Hết hạn:</strong> {new Date(voucher.magiamgia.ngayketthuc).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-    
-                <button
-                  className={`btn ${buttonClass} btn-lg w-100 mt-3 position-relative overflow-hidden`}
-                  onClick={() => handleSelectVoucher(voucher)}
-                  disabled={isSelected || isUsed}
-                >
-                  <i className={`fas ${isSelected ? 'fa-check' : 'fa-ticket-alt'} me-2`}></i>
-                  {isSelected ? 'Đã chọn' : 'Chọn voucher'}
-                </button>
-              </div>
+        {/* Coupon input form with enhanced styling */}
+        <form className="mb-4 p-3 bg-light rounded shadow-sm" onSubmit={handleApplyCoupon}>
+          <div className="row g-2 align-items-center">
+            <div className="col-md-8 ">
+              <input
+                type="text"
+                name="coupon_code"
+                className="form-control form-control-lg  placeholder:text-xl pt-1"
+                style={{ border: '1px solid gray' , borderRadius: '0.5rem'  }}
+                placeholder="Nhập mã giảm giá"
+                required
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+              />
             </div>
-          );
-        })}
+            <div className="col-md-4">
+              <button type="submit" className="btn rounded-lg font-bold bg-pink-700 text-white btn-lg w-100 fw-bold hover-scale ">
+                <i className="fas fa-tag me-2"></i>Áp dụng
+              </button>
+            </div>
+          </div>
+          <small className="form-text text-muted mt- text-lg">
+            <i className="fas fa-info-circle me-1 "></i>
+            Mỗi khóa học chỉ áp dụng được một mã giảm giá.
+          </small>
+        </form>
+
+        {/* Voucher list with animations and enhanced styling */}
+        <div className="voucher-list overflow-auto custom-scrollbar" style={{ maxHeight: '600px' }}>
+          {vouchers.map(voucher => {
+            const isSelected = selectedVoucherId === voucher.id;
+            const isUsed = voucher.trangthai === 'Đã sử dụng';
+            const buttonClass = isSelected
+              ? 'btn-warning disabled'
+              : isUsed
+                ? 'btn-secondary'
+                : 'btn-outline-warning';
+
+            return (
+              <div
+                key={voucher.id}
+                className={`card mb-3 voucher-card hover-lift ${isSelected ? 'border-warning border-2' : 'border-secondary'
+                  } shadow-sm rounded`}
+              >
+                <div className="card-body position-relative p-4">
+                  {/* Diagonal ribbon for status */}
+                  <div className={` ${isUsed ? 'bg-white' :"bg-white"} text-xl text-sky-950 font-bold`}>
+                    {isUsed ? 'Đã dùng' : 'Có sẵn'}
+                  </div>
+
+                  <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h4 className="card-title fw-bold text-black mb-0 text-2xl py-1">
+                     Mã: {voucher.magiamgia.maso}
+                    </h4>
+                    <span className={`badge ${voucher.magiamgia.trangthai === 'Đã Duyệt' ? 'bg-success' : 'bg-secondary'
+                      } px-3 py-2 text-lg`}>
+                      {voucher.magiamgia.trangthai}
+                    </span>
+                  </div>
+
+                  <div className="row g-3">
+                    <div className="col-6">
+                      <p className="card-text">
+                        <i className="fas fa-percent font-bold me-2"></i>
+                        <strong>Giảm giá:</strong> {voucher.magiamgia.giamgia}%
+                      </p>
+                    </div>
+                    <div className="col-6">
+                      <p className="card-text">
+                        <i className="fas fa-users font-bold me-2"></i>
+                        <strong>Đã dùng:</strong> {voucher.magiamgia.sudunghientai}
+                      </p>
+                    </div>
+                    <div className="col-6">
+                      <p className="card-text">
+                        <i className="fas fa-calendar-alt font-bold me-2"></i>
+                        <strong>Bắt đầu:</strong> {new Date(voucher.magiamgia.ngaybatdau).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <div className="col-6">
+                      <p className="card-text">
+                        <i className="fas fa-clock font-bold me-2"></i>
+                        <strong>Hết hạn:</strong> {new Date(voucher.magiamgia.ngayketthuc).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    className={`btn ${buttonClass} btn-lg bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b]  w-100 mt-3 position-relative overflow-hidden text-white rounded-lg border-1 border-gray-200`}
+                    onClick={() => handleSelectVoucher(voucher)}
+                    disabled={isSelected || isUsed}
+                  >
+                    <i className={`fas ${isSelected ? 'fa-check' : 'fa-ticket-alt'} me-2`}></i>
+                    {isSelected ? 'Đã chọn' : 'Chọn voucher'}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
-    
-    <style jsx>{`
-      .hover-scale:hover {
-        transform: scale(1.02);
-        transition: transform 0.2s ease;
-      }
-    
-      .hover-lift {
-        transition: all 0.3s ease;
-      }
-    
-      .hover-lift:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-      }
-    
-      .ribbon {
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 0.5rem 2rem;
-        transform: rotate(45deg) translateX(3rem) translateY(-1rem);
-        color: white;
-        font-weight: bold;
-        z-index: 1;
-      }
-    
-      .custom-scrollbar {
-        scrollbar-width: thin;
-        scrollbar-color: #ffc107 #f8f9fa;
-      }
-    
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 8px;
-      }
-    
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: #f8f9fa;
-      }
-    
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #ffc107;
-        border-radius: 4px;
-      }
-    
-      .voucher-card {
-        background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-      }
-    `}</style>
     </>
-   
+
   );
 }
 

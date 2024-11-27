@@ -73,7 +73,7 @@ export default function Page() {
         animate="visible"
         variants={containerVariants}
         style={{
-          background: "linear-gradient(45deg, #4285f4, #34a853)",
+          background: "-webkit-linear-gradient(315deg, #1e3c72 0%, #ff6b6b 100%)",
           minHeight: "100vh",
           padding: "2rem 0",
           overflowY: "scroll"
@@ -116,11 +116,12 @@ export default function Page() {
                           type="text"
                           placeholder="Enter Your Name"
                           aria-label="Name"
+                          style={{ fontSize: "15px" }}
                         />
                         <ErrorMessage
                           name="ten"
                           component="div"
-                          className="error text-danger"
+                          className="error text-danger my-2 text-xl bg-inherit border-none"
                         />
                       </motion.div>
 
@@ -132,11 +133,12 @@ export default function Page() {
                           type="email"
                           placeholder="Enter Your Email"
                           aria-label="Email"
+                          style={{ fontSize: "15px" }}
                         />
                         <ErrorMessage
                           name="email"
                           component="div"
-                          className="error text-danger"
+                          className="error text-danger my-2 text-xl bg-inherit border-none"
                         />
                       </motion.div>
 
@@ -148,11 +150,12 @@ export default function Page() {
                           type="text"
                           placeholder="Enter Your Phone Number"
                           aria-label="Phone"
+                          style={{ fontSize: "15px" }}
                         />
                         <ErrorMessage
                           name="dienthoai"
                           component="div"
-                          className="error text-danger"
+                          className="error text-danger my-2 text-xl bg-inherit border-none"
                         />
                       </motion.div>
 
@@ -164,11 +167,12 @@ export default function Page() {
                           type="password"
                           placeholder="Password"
                           aria-label="Password"
+                          style={{ fontSize: "15px" }}
                         />
                         <ErrorMessage
                           name="matkhau"
                           component="div"
-                          className="error text-danger"
+                          className="error text-danger my-2 text-xl bg-inherit border-none"
                         />
                       </motion.div>
 
@@ -180,11 +184,13 @@ export default function Page() {
                           type="password"
                           placeholder="Re Password"
                           aria-label="Confirm Password"
+                          style={{ fontSize: "15px" }}
                         />
                         <ErrorMessage
                           name="repassword"
                           component="div"
-                          className="error text-danger"
+                       className="error text-danger my-2 text-xl bg-inherit border-none"
+                          
                         />
                       </motion.div>
 
@@ -205,7 +211,7 @@ export default function Page() {
 
                       <motion.button
                         type="submit"
-                        className="rts-btn btn-primary w-100"
+                        className="rts-btn btn-primary w-100 text-2xl"
                         disabled={isSubmitting || isLoading}
                         variants={itemVariants}
                       >
@@ -216,9 +222,9 @@ export default function Page() {
                         )}
                       </motion.button>
 
-                      <motion.p className="mt-3 text-center" variants={itemVariants}>
+                      <motion.p className="mt-3 text-center " variants={itemVariants}>
                         Không có tài khoản?{" "}
-                        <a href="/page/login" className="text-primary">
+                        <a href="/page/login" className="text-primary ">
                           Đăng nhập
                         </a>
                       </motion.p>

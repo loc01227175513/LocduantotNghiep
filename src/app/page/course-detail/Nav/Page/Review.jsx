@@ -211,11 +211,11 @@ export default function Review({ course }) {
               className={`px-4 py-2 rounded-full shadow-sm transition-all duration-200
                 ${filterRating === rating 
                   ? 'bg-blue-500 text-white shadow-blue-200' 
-                  : 'bg-gray-50 hover:bg-gray-100'}`}
+                  : 'bg-gray-50 hover:bg-gray-100 text-2xl'}`}
               onClick={() => setFilterRating(rating)}
             >
               {rating === 0 ? (
-                <motion.span>All</motion.span>
+                <motion.span className="text-2xl">All</motion.span>
               ) : (
                 <motion.div className="flex items-center gap-1">
                   {rating}
@@ -236,7 +236,7 @@ export default function Review({ course }) {
             <motion.button
               key={sort}
               whileTap={{ scale: 0.95 }}
-              className={`sort-button px-3 py-1 rounded ${sortBy === sort ? 'active' : 'bg-gray-100'}`}
+              className={`sort-button px-3 py-1 rounded ${sortBy === sort ? 'active' : 'bg-gray-100'} text-2xl`}
               onClick={() => setSortBy(sort)}
             >
               {sort.charAt(0).toUpperCase() + sort.slice(1)}

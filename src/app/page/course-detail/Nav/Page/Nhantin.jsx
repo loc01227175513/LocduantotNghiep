@@ -215,7 +215,8 @@ const handleMessageSubmit = async (e, senderType) => {
                             <input
                                 type="text"
                                 placeholder="Tìm kiếm tin nhắn..."
-                                className="w-full bg-gray-600 text-white px-4 py-2 rounded-lg"
+                                className="w-full bg-gray-600 text-white px-4 py-2 rounded-lg text-xl border border-2 border-white"
+                                style={{fontSize:"14px", borderRadius:"8px"}}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -241,7 +242,7 @@ const handleMessageSubmit = async (e, senderType) => {
                                     <div className="flex items-center space-x-3">
                                         <div className="relative">
                                             <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
-                                                <span className="text-white text-lg font-semibold">
+                                                <span className="text-white text-xl font-semibold">
                                                     {nguoiDung?.ten?.[0]}
                                                 </span>
                                             </div>
@@ -271,12 +272,12 @@ const handleMessageSubmit = async (e, senderType) => {
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
                                 <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
-                                    <span className="text-white text-lg font-semibold">
+                                    <span className="text-white text-xl font-semibold">
                                         {giangVien[0]?.ten?.[0]}
                                     </span>
                                 </div>
                                 <div>
-                                    <h2 className="text-white font-semibold">{giangVien[0]?.ten}</h2>
+                                    <h2 className="text-white font-semibold text-xl">{giangVien[0]?.ten}</h2>
                                     {typingUsers.length > 0 && (
                                         <p className="text-gray-400 text-sm animate-pulse">
                                             Đang nhập...
@@ -335,7 +336,7 @@ const handleMessageSubmit = async (e, senderType) => {
                                                 
                                                 {messageReactions[msg.id]?.length > 0 && (
                                                     <div className="absolute -bottom-2 right-2 bg-gray-700 
-                                                                  rounded-full px-2 py-0.5 text-lg" style={{ color: 'white', fontSize: '15px' }}>
+                                                                  rounded-full px-2 py-0.5 text-xl" style={{ color: 'white', fontSize: '15px' }}>
                                                         {messageReactions[msg.id].join(' ')}
                                                     </div>
                                                 )}
@@ -346,7 +347,7 @@ const handleMessageSubmit = async (e, senderType) => {
                             })
                         ) : (
                             <div className="flex items-center justify-center h-full">
-                                <p className="text-gray-400 text-lg">
+                                <p className="text-gray-400 text-xl">
                                     Chưa có cuộc trò chuyện. Hãy bắt đầu bằng cách gửi tin nhắn mới!
                                 </p>
                             </div>
@@ -370,7 +371,7 @@ const handleMessageSubmit = async (e, senderType) => {
                                 type="submit"
                                 className="bg-blue-600 text-white px-4 py-2 rounded-lg 
                                          hover:bg-blue-700 transform transition-all duration-200 
-                                         focus:ring-2 focus:ring-blue-400"
+                                         focus:ring-2 focus:ring-blue-400 text-2xl"
                             >
                                 Gửi
                             </button>

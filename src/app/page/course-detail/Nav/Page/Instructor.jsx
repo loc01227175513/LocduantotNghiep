@@ -97,9 +97,9 @@ export default function Instructor({ course }) {
   return (
     <>
       <style>{styles}</style>
-      <div className={`instructor-card single-instructor-area-details flex p-6 border rounded-xl shadow-md bg-white  
+      <div className={`instructor-card single-instructor-area-details flex p-6 border rounded-xl shadow-md bg-white 
         ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700`}>
-        <Link href={`/page/Profile-insructor?id=${course.thongtingiangvien.id}`}
+        <Link href={`/page/Profile-insructor?id=${course.thongtingiangvien.id}`} 
           className="w-1/4 overflow-hidden rounded-xl">
           <div className="relative group">
             <Image
@@ -107,87 +107,75 @@ export default function Instructor({ course }) {
               height={300}
               src={course.thongtingiangvien.hinh}
               alt={`Instructor ${course.thongtingiangvien.ten}`}
-              className="w-full h-[250px] rounded-xl instructor-image"
+              className="w-full h-auto rounded-xl instructor-image"
               priority
             />
             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
           </div>
         </Link>
- 
-        <div className="inner-instructor-area ml-6 flex-1 relative">
-         
-         <div className="flex flex-wrap relative ">
-           <h5 className="title text-4xl  font-bold hover:text-blue-600 transition-colors duration-300 my-3">
-             {course.thongtingiangvien.ten}
-           </h5>
-           <span className="text-xl font-semibold absolute bottom-4 right-0 bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] p-2 my-1 text-white ">Follow Me</span>
-         </div>
-         
-         <span className="deg text-gray-600 font-medium text-xl">{course.trinhdo}</span>
 
-         <div className="stats-grid grid grid-cols-3 relative gap-4 mt-4">
-           <div className="stat-item  rounded-lg bg-gray-50 hover:bg-gray-100">
-             <div className="stars-area flex items-center ">
-               <span className=" font-bold text-3xl">{highestRating}</span>
-               {[...Array(5)].map((_, index) => (
-                 <FaStar key={index}
-                   className={`${index < starCount ? "text-yellow-500" : "text-gray-300"} star-icon`}
-                 />
-               ))}
-             </div>
-           </div>
-           <div className="absolute right-0 flex flex-wrap">
-             <div className="stat-item p-3  rounded-lg bg-gray-50 hover:bg-gray-100">
-               <div className="users-area flex items-center">
-                 <FaUsers className="text-[#1e3c72] mr-2 text-2xl" />
-                 <span className="text-gray-700 text-2xl font-semibold student-count">
-                   {HocSinh} Sinh viên
-                 </span>
-               </div>
-             </div>
+        <div className="inner-instructor-area ml-6 flex-1">
+          <h5 className="title text-3xl font-bold hover:text-blue-600 transition-colors duration-300">
+            {course.thongtingiangvien.ten}
+          </h5>
+          <span className="deg text-gray-600 font-medium text-2xl">{course.trinhdo}</span>
 
-             <div className="stat-item pt-3 rounded-lg bg-gray-50 hover:bg-gray-100">
-               <div className="courses-area flex items-center">
-                 <FaVideo className="text-[#ff6b6b] mr-2 text-2xl" />
-                 <span className="text-gray-700 text-2xl font-semibold">
-                   {course.Tongkhoahoc.length} Khóa học
-                 </span>
-               </div>
-             </div>
-           </div>
+          <div className="stats-grid grid grid-cols-3 gap-4 mt-4">
+            <div className="stat-item p-3 rounded-lg bg-gray-50 hover:bg-gray-100">
+              <div className="stars-area flex items-center">
+                <span className="text-yellow-500 font-bold mr-2 text-2xl">{highestRating}</span>
+                {[...Array(5)].map((_, index) => (
+                  <FaStar key={index} 
+                    className={`${index < starCount ? "text-yellow-500 text-2xl" : "text-gray-300 text-2xl"} star-icon`}
+                  />
+                ))}
+              </div>
+            </div>
+            
+            <div className="stat-item p-3 rounded-lg bg-gray-50 hover:bg-gray-100">
+              <div className="users-area flex items-center">
+                <FaUsers className="text-blue-500 mr-2 text-2xl" />
+                <span className="text-gray-700 font-semibold student-count text-2xl">
+                  {HocSinh} Sinh viên
+                </span>
+              </div>
+            </div>
 
-         </div>
-         <div className="relative flex flex-wrap ">
-           <p className="absolute left-0 mt-16 text-2xl text-gray-700 leading-relaxed">
-             <span className="font-bold">Tiểu sử: </span>
-             {course.thongtingiangvien.tieusu}
-           </p>
+            <div className="stat-item p-3 rounded-lg bg-gray-50 hover:bg-gray-100">
+              <div className="courses-area flex items-center">
+                <FaVideo className="text-green-500 mr-2 text-2xl" />
+                <span className="text-gray-700 font-semibold text-2xl">
+                  {course.Tongkhoahoc.length} Khóa học
+                </span>
+              </div>
+            </div>
+          </div>
 
-           <div className="follow-us mt-6 absolute right-0">
+          <p className="disc mt-4 text-gray-700 leading-relaxed text-2xl">
+            {course.thongtingiangvien.tieusu}
+          </p>
 
-             <ul className="social-links flex space-x-4 mt-3">
-               {[
-                 { icon: FaFacebook, color: "blue", label: "Facebook" },
-                 { icon: FaInstagram, color: "pink", label: "Instagram" },
-                 { icon: FaLinkedin, color: "blue", label: "LinkedIn" },
-                 { icon: FaPinterest, color: "red", label: "Pinterest" },
-                 { icon: FaYoutube, color: "red", label: "YouTube" }
-               ].map((social, index) => (
-                 <li key={index}>
-                   <a href="#"
-                     aria-label={social.label}
-                     className={`text-${social.color}-600 hover:text-${social.color}-800 social-icon p-2 inline-block`}>
-                     <social.icon size={24} />
-                   </a>
-                 </li>
-               ))}
-             </ul>
-           </div>
-         </div>
-
-       </div >
-       
-       
+          <div className="follow-us mt-6">
+            <span className="text-2xl font-semibold">Follow Me</span>
+            <ul className="social-links flex space-x-4">
+              {[
+                { icon: FaFacebook, color: "blue", label: "Facebook" },
+                { icon: FaInstagram, color: "pink", label: "Instagram" },
+                { icon: FaLinkedin, color: "blue", label: "LinkedIn" },
+                { icon: FaPinterest, color: "red", label: "Pinterest" },
+                { icon: FaYoutube, color: "red", label: "YouTube" }
+              ].map((social, index) => (
+                <li key={index}>
+                  <a href="#" 
+                    aria-label={social.label}
+                    className={`text-${social.color}-600 hover:text-${social.color}-800 social-icon p-2 inline-block`}>
+                    <social.icon size={24} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </>
   );

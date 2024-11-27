@@ -4,10 +4,11 @@ import { TatCaKhuyenMaiKhoaHoc, NguoiDungMaGiamGia } from '../../../../service/k
 import { ToastContainer, toast } from 'react-toastify';
 import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
+import { calc } from "@chakra-ui/react";
 
 function VoucherCard({ maso, giamgia, gia, hinh, hansudung, onSave, isSaved, isSaving }) {
     return (
-        <div className="flex bg-white rounded-lg overflow-hidden w-full max-w-sm h-auto relative border shadow-sm shadow-[#1e3c72] my-5">
+        <div className="flex  h-[180px] bg-white rounded-lg overflow-hidden w-[190px] max-w-sm relative border shadow-sm shadow-[#1e3c72] m-2" style={{ width: `calc((890px - 45px) / 4)` }}>
             <div className="w-1/3 relative overflow-hidden">
                 <Image
                     width={150}
@@ -50,14 +51,14 @@ function VoucherCard({ maso, giamgia, gia, hinh, hansudung, onSave, isSaved, isS
                         onClick={() => onSave(maso)}
                         disabled={isSaved || isSaving}
                     >
-                        <span className="inline-flex items-center">
+                        <span className="inline-flex items-center text-lg">
                             {isSaving && (
                                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24">
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                 </svg>
                             )}
-                            {isSaved ? "✓ Đã Lưu Thành Công" : isSaving ? "Đang Xử Lý..." : "Lưu Voucher Ngay"}
+                            {isSaved ? "✓ Đã Lưu" : isSaving ? "Đang Xử Lý..." : "Lưu"}
                         </span>
                     </button>
                 </div>
@@ -129,11 +130,11 @@ export default function VoucherShop() {
         <>
             <ToastContainer position="top-right" autoClose={3000} />
             <div className="container flex ">
-                <div className="w-1/4  me-60 bg-white rounded-xl  border-1 ">
-                    <h1 className="text-3xl font-bold text-center mb-6  text-black  ">
+                <div className="w-1/4  me-20 bg-white rounded-xl  border-1 flex-row flex-wrap p-10">
+                    <h1 className="text-3xl font-bold text-center mb-6   text-black  ">
                         Ưu Đãi Đặc Biệt 🎉
                     </h1>
-                    <div className="space-y-5">
+                    <div className="space-y-5 ">
                         <div className="filter-group">
                             <label className="block text-xl font-medium text-gray-700 mb-2">
                                 <span className="flex items-center gap-2">
@@ -216,7 +217,7 @@ export default function VoucherShop() {
                             transition={{ duration: 0.5 }}
                         >
                           <div className="container mx-auto ">
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
+                                <div className="flex flex-row justify-start gap-15 flex-wrap">
                                     {currentVouchers.length > 0 ? (
                                         currentVouchers.map((item) => (
                                             <motion.div

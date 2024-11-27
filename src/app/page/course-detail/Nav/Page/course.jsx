@@ -92,27 +92,19 @@ export default function Course({ course, formattedTotalTime }) {
   return (
     <>
       <style>{styles}</style>
-      <div className="container mt-4 rounded-lg ">
-        <div className="py-4 shadow-lg border  relative border-gray-200 rounded-xl bg-gradient-to-r from-blue-50 to-white ">
+      <div className="container mt-4 max-w-3xl mx-auto">
+        <div className="p-6 shadow-lg border border-gray-200 rounded-xl hover:scale-105 transition-all duration-300">
           <h1 className="text-3xl font-medium mb-3 ">
-            <strong className="text-black">Nội dung khóa học</strong>
+           <strong>Nội dung khóa học</strong> 
           </h1>
           <p className="text-3xl text-gray-600">
-            <span className="badge bg-blue-500 text-white font-medium mr-2 pulse-badge inline-block">
+            <span className="badge bg-pink-700 text-white font-medium mr-2 pulse-badge inline-block">
               {course.baihocs.length} Bài giảng
             </span>
-            <span className="badge bg-[#ff6b6b] text-white font-medium pulse-badge inline-block">
+            <span className="badge bg-blue-800 text-white font-medium pulse-badge inline-block">
               {totalHours} giờ {totalMinutes} phút
             </span>
           </p>
-          <div className="flex flex-wrap absolute right-0 bottom-16 ">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-            </svg>
-
-            <span className=" font-medium text-2xl px-2">Thông tin bài học</span>
-          </div>
-
         </div>
 
         <div className="mt-6">
@@ -121,6 +113,7 @@ export default function Course({ course, formattedTotalTime }) {
               <AccordionItem
                 key={index}
                 border="none"
+                className="text-xl"
                 mb={4}
               >
                 {({ isExpanded }) => (
@@ -131,11 +124,11 @@ export default function Course({ course, formattedTotalTime }) {
                       <div className="flex items-center justify-between w-full">
                         <div className="flex items-center">
                           <div className="flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-500 rounded-full">
-                            <span className="text-2xl">{index + 1}</span>
+                            <span className="text-xl">{index + 1}</span>
                           </div>
                           <div className="ml-4">
-                            <p className="text-2xl font-bold">{baihoc.ten}</p>
-                            <p className="text-2xl text-gray-600 mt-1 flex items-center">
+                            <p className="text-xl font-bold">{baihoc.ten}</p>
+                            <p className="text-xl text-gray-600 mt-1 flex items-center">
                               <FaVideo className="mr-2" />
                               {baihoc.video.length} Bài giảng • {calculateTotalDuration(baihoc.video).totalHours} giờ {calculateTotalDuration(baihoc.video).totalMinutes} phút
                             </p>
@@ -156,8 +149,8 @@ export default function Course({ course, formattedTotalTime }) {
                             className="p-4 rounded-md bg-white shadow-sm flex justify-between items-center hover:bg-blue-50 hover:translate-x-2 transition-all duration-200"
                           >
                             <div className="flex items-center">
-                              <div className="flex items-center justify-center w-6 h-6 bg-blue-100 text-blue-500 rounded-full">
-                                <span className="text-xs">{videoIndex + 1}</span>
+                              <div className="flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-500 rounded-full">
+                                <span className="text-xl">{videoIndex + 1}</span>
                               </div>
                               <p className="ml-4 font-medium">{item.ten}</p>
                             </div>
