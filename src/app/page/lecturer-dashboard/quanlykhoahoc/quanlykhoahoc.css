@@ -5,8 +5,8 @@
 
 .addkhoahoc{
     width: 150px;
-    color: var(--color-primary);
-    border: 1px solid var(--color-primary);
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
     padding: 5px;
     border-radius: 5px;
     text-align: center;
@@ -14,7 +14,7 @@
 }
 .addkhoahoc:hover{
     color: white;
-    background-color: var(--color-primary);
+    background-color: #ff6b6b;
 
 }
 .div-add-khoahoc{
@@ -24,7 +24,7 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 .div-add-khoahoc form button{
-    background-color: var(--color-primary);
+    background-color: #ff6b6b;
     border-radius: 5px;
     margin: 10px;
     color: white;
@@ -34,15 +34,15 @@
     margin: 10px;
 }
 .div-add-khoahoc form button:last-child{
-    background-color: var(--color-primary);
+
     margin: 10px;
     padding: 3px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .search-input{
     border-radius: 20px;
-    font-size: 15px;
-    padding: 0 0 0 30px;
+    font-size: 12px;
+    padding: 0 0 0 25px;
 
 }
 .search-icon{

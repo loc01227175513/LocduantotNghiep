@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
     Disclosure,
@@ -12,6 +13,9 @@ import { motion,AnimatePresence } from 'framer-motion';
 import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
 
 import Axios from 'axios';
+import Link from 'next/link';
+// import { Link } from 'react-feather';
+
 
 export default function Page() {
     const [isYTReady, setIsYTReady] = useState(false);  
@@ -26,6 +30,11 @@ export default function Page() {
     const [videoUrl, setVideoUrl] = useState('');
     const [isVideoEnded, setIsVideoEnded] = useState(false);
     const [watchedVideos, setWatchedVideos] = useState({});
+    const [chitietkhoahoc,setChitietkhoahoc] = useState({})
+    const [videotieptheo,setVideotieptheo] = useState({});
+    const [baihoctieptheo,setBaihoctieptheo] = useState({});
+    const [conbaihoc,setConbaihoc] = useState(true);
+    const [convideo,setConvideo] = useState(true);
 
     const playerRef = useRef(null);
 
@@ -67,9 +76,29 @@ export default function Page() {
                 });
                 const khoahocData = response.data.khoahoc;
                 setKhoahoc(khoahocData);
+                // console.log(khoahocData);
+                
 
                 if (khoahocData.baihocs.length > 0) {
                     const firstVideo = khoahocData.baihocs[0].video[0];
+                    const firstBaifhoc = khoahocData.baihocs[0];
+                    if (firstBaifhoc && firstBaifhoc.video.length > 0) {
+                        const firstVideo = firstBaifhoc.video[0];
+                        const tenbaihoc = firstBaifhoc.ten;
+                        const motavideo = firstVideo.ten;
+                        // console.log(tenbaihoc,motavideo);
+                        
+            
+                        if (tenbaihoc && motavideo) {
+                            setChitietkhoahoc(prevState => ({
+                                ...prevState,
+                                tenbaihoc: tenbaihoc,
+                                motavideo: motavideo
+                            }));
+                            // console.log(chitietkhoahoc.tenbaihoc);
+                            
+                        }
+                    }
                     if (firstVideo) {
                         setVideoUrl(firstVideo.url_link);
                         setCurrentVideoId(firstVideo.id);
@@ -92,6 +121,69 @@ export default function Page() {
         fetchData();
     }, [id]);
 
+    // useEffect(() =>{
+    //     console.log(" bai hoc tiep theo " );
+    //     console.log(baihoctieptheo);
+    //     console.log(conbaihoc);
+        
+    //     console.log("video tiep theo ");
+    //     console.log(videotieptheo);
+    //     console.log(convideo);
+        
+        
+        
+        
+    // },[baihoctieptheo,videotieptheo])
+    useEffect(() => {
+        // console.log(chitietkhoahoc.tenbaihoc);
+        if (khoahoc && Array.isArray(khoahoc.baihocs)) {
+            // console.log(khoahoc.baihocs); 
+        
+            const baiHocIndex = khoahoc.baihocs.findIndex(baiHoc => baiHoc.ten === chitietkhoahoc.tenbaihoc);
+            if (baiHocIndex === -1) {
+                console.error('Không tìm thấy bài học phù hợp');
+                return;
+            }
+            // console.log('Vị trí của bài học:', baiHocIndex);
+        
+            const videoIndex = khoahoc.baihocs[baiHocIndex].video.findIndex(video => video.ten === chitietkhoahoc.motavideo);
+            if (videoIndex === -1) {
+                console.error('Không tìm thấy video phù hợp trong bài học');
+                return;
+            }
+            // console.log('Vị trí video:', videoIndex);
+        
+            const tongbaihoc = khoahoc.baihocs.length;
+            // console.log('Tổng số bài học:', tongbaihoc);
+        
+            const tongVideoTrongBaiHoc = khoahoc.baihocs[baiHocIndex].video.length;
+            // console.log('Tổng số video trong bài học hiện tại:', tongVideoTrongBaiHoc);
+        
+            if (baiHocIndex === tongbaihoc - 1 && videoIndex === tongVideoTrongBaiHoc - 1) {
+                // console.log('Hết toàn bộ khóa học');
+                setConbaihoc(false);
+                setConvideo(false);
+            } else if (videoIndex === tongVideoTrongBaiHoc - 1) {
+                // console.log('Hết video trong bài học, chuyển sang bài học tiếp theo');
+                setConbaihoc(true);
+                setConvideo(false);
+                setBaihoctieptheo(khoahoc.baihocs[baiHocIndex + 1]);
+                setVideotieptheo(khoahoc.baihocs[baiHocIndex + 1].video[0]);
+
+            } else {
+                // console.log('Chuyển sang video tiếp theo trong bài học hiện tại');
+                setConbaihoc(true);
+                setConvideo(true);
+                setVideotieptheo(khoahoc.baihocs[baiHocIndex].video[videoIndex + 1]);
+                setBaihoctieptheo(khoahoc.baihocs[baiHocIndex]);
+
+            }
+        } else {
+            // console.log('Không có bài học trong khoahoc hoặc baihocs không phải là mảng');
+        }
+        
+        
+    }, [chitietkhoahoc]);
     const onPlayerStateChange = useCallback(async (event) => {
         if (typeof window !== 'undefined' && event.data === window.YT.PlayerState.ENDED) {
             setIsVideoEnded(true);
@@ -103,12 +195,12 @@ export default function Page() {
                         id_nguoidung: parsedData.id,
                         id_video: currentVideoId,
                     };
-                    console.log('Request Data:', requestData);
+                    // console.log('Request Data:', requestData);
 
                     const response = await Axios.post('https://huuphuoc.id.vn/api/videodahoc', requestData, {
                         referrerPolicy: 'unsafe-url'
                     });
-                    console.log("Video đã học", response);
+                    // console.log("Video đã học", response);
 
                     setWatchedVideos(prev => ({ ...prev, [currentVideoId]: true }));
                 } catch (error) {
@@ -131,9 +223,9 @@ export default function Page() {
 
     const initializePlayer = useCallback(() => {
         if (isYTReady && videoUrl) {
-            console.log('Initializing YouTube Player with URL:', videoUrl);
+            // console.log('Initializing YouTube Player with URL:', videoUrl);
             const videoId = getYouTubeVideoID(videoUrl);
-            console.log('Extracted Video ID:', videoId);
+            // console.log('Extracted Video ID:', videoId);
             if (videoId) {
                 playerRef.current = new window.YT.Player('player', {
                     events: {
@@ -156,7 +248,7 @@ export default function Page() {
     useEffect(() => {
         const checkVideoWatched = async () => {
             if (!currentVideoId || !khoahoc) {
-                console.log('currentVideoId or khoahoc is not defined');
+                // console.log('currentVideoId or khoahoc is not defined');
                 return;
             }
 
@@ -168,7 +260,7 @@ export default function Page() {
                     const updatedWatchedVideos = { ...watchedVideos };
                     khoahoc.baihocs.forEach((lesson) => {
                         lesson.video.forEach((video) => {
-                            console.log('Checking video:', video.id);
+                            // console.log('Checking video:', video.id);
 
                             const isVideoMatched = response.data.data.some((responseVideo) => {
                                 return responseVideo.id_video === video.id;
@@ -189,7 +281,7 @@ export default function Page() {
         };
 
         checkVideoWatched();
-    }, [currentVideoId, khoahoc, watchedVideos]);
+    }, [currentVideoId, khoahoc]);
 
     const formatDuration = (totalSeconds) => {
         const hours = Math.floor(totalSeconds / 3600);
@@ -198,10 +290,18 @@ export default function Page() {
         return `${hours}:${minutes}:${seconds}`;
     };
 
-    const handleClick = (videoLink, videoId) => {
+    const handleClick = (videoLink, videoId,tenbaihoc,motavideo) => {
         setVideoUrl(videoLink);
         setCurrentVideoId(videoId);
         setIsVideoEnded(false);
+        setChitietkhoahoc(prevState => ({
+            ...prevState,
+            tenbaihoc,
+            motavideo
+        }));
+        // console.log(videoLink, videoId,tenbaihoc,motavideo);
+        
+                
     };
 
     const handleComent = async (comment, rating) => {
@@ -259,7 +359,7 @@ export default function Page() {
         <div className="container mx-auto px-4 py-8 bg-gray-100 min-h-screen mt-60 mb-60">
             <div className="flex flex-col lg:flex-row">
                 {/* //video player */}
-                <VideoPlayer videoUrl={videoUrl} isVideoEnded={isVideoEnded} khoahoc={khoahoc} formatDuration={formatDuration} totalDuration={totalDuration}  handleComent={handleComent}/>
+                <VideoPlayer videoUrl={videoUrl} isVideoEnded={isVideoEnded} khoahoc={khoahoc} formatDuration={formatDuration} totalDuration={totalDuration}  handleComent={handleComent} chitietkhoahoc={chitietkhoahoc} handleClick={handleClick} currentVideoId={currentVideoId} tenbaihoc={chitietkhoahoc.tenbaihoc} motavideo={chitietkhoahoc.motavideo} videotieptheo={videotieptheo} baihoctieptheo={baihoctieptheo} convideo={convideo} conbaihoc={conbaihoc}/>
                 {/* //khoahoc */}
                 <BaiHocDeHoc khoahoc={khoahoc} watchedVideos={watchedVideos} handleClick={handleClick} />
             </div>
@@ -269,13 +369,35 @@ export default function Page() {
 
 
 
-const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDuration ,handleComent }) => {
+const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDuration ,handleComent ,chitietkhoahoc,handleClick,currentVideoId,tenbaihoc,motavideo,videotieptheo,baihoctieptheo,convideo,conbaihoc}) => {
     const [showDescription, setShowDescription] = useState(false);
     const [showComments, setShowComments] = useState(false);
     const [rating, setRating] = useState('');
     const [comment, setComment] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [previewVideo, setPreviewVideo] = useState(null);
 
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const handleVideoHover = (video) => {
+        setPreviewVideo(video);
+    };
+    const handleClickrating = (index) => {
+        if (index) {
+            // console.log(index);
+            
+            setRating(index); 
+        }
+    };
+
+    const previewVariants = {
+        hidden: { opacity: 0, scale: 0.8, y: 20 },
+        visible: { 
+            opacity: 1, 
+            scale: 1, 
+            y: 0,
+            transition: { type: "spring", bounce: 0.4 }
+        }
+    };
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
@@ -338,7 +460,10 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                                 >
                                     <CheckCircleIcon className="h-12 w-12 text-green-600 mx-auto mb-2" />
                                 </motion.div>
-                                <span className="text-xl font-semibold text-green-800">Video đã xem xong!</span>
+                                <span className="text-xl font-semibold text-green-800"><p>
+                                Video đã xem xong!</p>
+                                <i class="bi bi-arrow-clockwise text-6xl hover:cursor-pointer mt-4" onClick={()=>handleClick(videoUrl,currentVideoId,tenbaihoc,motavideo)}>xem lại</i>
+                                </span>
                             </motion.div>
                         </motion.div>
                     )}
@@ -356,22 +481,86 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                         initial={{ x: -20 }}
                         animate={{ x: 0 }}
                         transition={{ delay: 0.3 }}
-                    >
+                    >   
+                        {/* tên bài học */}
                         <motion.h1 
-                            className="text-4xl font-bold text-gray-900 hover:text-indigo-600 transition-colors"
+                            className="text-4xl font-bold text-gray-900 hover:text-pink-700 transition-colors"
                             whileHover={{ scale: 1.02 }}
                         >
-                            {khoahoc.ten}
+                            {khoahoc.ten} <span>-</span> {chitietkhoahoc && chitietkhoahoc.tenbaihoc ? chitietkhoahoc.tenbaihoc : 'Loading...'} <span>:</span> {chitietkhoahoc && chitietkhoahoc.motavideo ? chitietkhoahoc.motavideo : 'Loading...'}
+
+
+
+
+
                         </motion.h1>
-                        <motion.p 
+                       
+                        {/* <motion.p 
                             className="text-2xl font-semibold text-indigo-600"
                             whileHover={{ scale: 1.1 }}
                             transition={{ type: "spring", stiffness: 400 }}
                         >
                             ${khoahoc.gia}
-                        </motion.p>
-                    </motion.div>
+                        </motion.p> */}
 
+                        {!convideo && conbaihoc && (
+                            <motion.div>
+                                {baihoctieptheo &&(
+                                    <div>
+                                        <button onClick={() => handleClick(videotieptheo.url_link,videotieptheo.id,baihoctieptheo.ten,videotieptheo.ten)} className='bg-[#ff6b6b] p-3 text-xl rounded-lg text-white hover:bg-pink-700 '
+                                            
+                                            onMouseEnter={() => handleVideoHover(videotieptheo)}
+                                            onMouseLeave={() => setPreviewVideo(null)}
+                                            >
+
+                                        bài học tiếp theo : {baihoctieptheo.ten}
+                                        </button>
+                                    </div>
+                                )}
+                            </motion.div>
+                        )}
+                        {convideo && conbaihoc && (
+                            <motion.div>
+                                {videotieptheo &&(
+                                    <div>
+                                        <button onClick={() => handleClick(videotieptheo.url_link,videotieptheo.id,baihoctieptheo.ten,videotieptheo.ten)} className='bg-[#ff6b6b] p-3 text-xl rounded-lg text-white hover:bg-pink-700'
+                                            
+                                            
+                                            onMouseEnter={() => handleVideoHover(videotieptheo)}
+                                            onMouseLeave={() => setPreviewVideo(null)}
+                                            >
+                                            video tiếp theo : {videotieptheo.ten} 
+                                        </button>
+                                    </div>
+                                )}
+                            </motion.div>
+                        )}
+                        {!convideo && !conbaihoc &&(
+                            <motion.div>
+                                <div>
+                                    <p className='text-green-400 text-2xl'>Hết <i class="bi bi-check-lg"></i></p>
+                                </div>
+                            </motion.div>
+                        )}
+                    </motion.div>
+                    <AnimatePresence>
+                {previewVideo && (
+                    <motion.div 
+                        className="fixed bottom-4 right-80 w-96 bg-black rounded-lg p-2 z-10"
+                        variants={previewVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                    >
+                        <iframe
+                            src={previewVideo.url_link ? `https://www.youtube.com/embed/${previewVideo.url_link}?enablejsapi=1&autoplay=1&loop=1` : ''}
+                            className="w-full h-full rounded-lg"
+                            allow="autoplay"
+                            title="YouTube Video"
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
                     <motion.section 
                         className="mt-6 space-y-4"
                         variants={{
@@ -399,15 +588,17 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                             onToggle={() => setShowComments(!showComments)}
                             content={
                                 <>
-                                    <CommentList comments={khoahoc.danhgia} />
-                                    <CommentForm
+                                <CommentForm
                                         comment={comment}
                                         rating={rating}
                                         isSubmitting={isSubmitting}
                                         onCommentChange={(e) => setComment(e.target.value)}
                                         onRatingChange={(e) => setRating(e.target.value)}
                                         onSubmit={handleCommentSubmit}
+                                        handleClickrating={handleClickrating}
                                     />
+                                    <CommentList comments={khoahoc.danhgia} />
+                                    
                                 </>
                             }
                         />
@@ -666,7 +857,7 @@ const CommentList = ({ comments }) => {
                     stiffness: 260,
                     damping: 20
                 }}
-                className="text-center py-8 px-4 bg-gray-50 rounded-lg"
+                className="text-center py-8 px-4 bg-gray-50 rounded-lg mt-4"
             >
                 <motion.img 
                     src="/empty-comments.svg" 
@@ -692,7 +883,7 @@ const CommentList = ({ comments }) => {
             variants={container}
             initial="hidden"
             animate="show"
-            className="space-y-6"
+            className="space-y-6 mt-4"
         >
             {comments.map((comment, index) => (
                 <motion.div
@@ -851,6 +1042,7 @@ const AnimatedDisclosure = ({ title, isOpen, onToggle, content }) => (
                             initial={{ y: 10 }}
                             animate={{ y: 0 }}
                             transition={{ duration: 0.4, delay: 0.1 }}
+                            className='text-xl'
                         >
                             {content}
                         </motion.div>
@@ -863,7 +1055,8 @@ const AnimatedDisclosure = ({ title, isOpen, onToggle, content }) => (
 
 
 
-const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingChange, onSubmit }) => (
+const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingChange, onSubmit ,handleClickrating}) => (
+
     <motion.form 
         onSubmit={onSubmit} 
         className="mt-4 space-y-4"
@@ -876,8 +1069,8 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
         >
-            <label htmlFor="comment" className="block text-sm font-medium text-gray-700">
-                Bình luận
+            <label htmlFor="comment" className="block text-xl font-medium text-gray-700">
+                Điền bình luận
             </label>
             <motion.textarea
                 id="comment"
@@ -898,10 +1091,10 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
         >
-            <label htmlFor="rating" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="rating" className="block text-xl font-medium text-gray-700">
                 Đánh giá
             </label>
-            <motion.select
+            {/* <motion.div
                 id="rating"
                 value={rating}
                 onChange={onRatingChange}
@@ -912,11 +1105,30 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
                 required
                 disabled={isSubmitting}
             >
-                <option value="">Chọn đánh giá</option>
+                
                 {[1, 2, 3, 4, 5].map(num => (
-                    <option key={num} value={num}>{num} sao</option>
+                    // <option key={num} value={num}>{num} sao</option>
+                     <i key={num}  value={num} class="bi bi-star text-yellow-400 mr-2"></i>
                 ))}
-            </motion.select>
+            </motion.div> */}
+             <motion.div
+            id="rating"
+            whileFocus={{ scale: 1.01 }}
+            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+                focus:border-indigo-500 focus:ring-indigo-500 p-2 transition-all duration-200
+                hover:border-indigo-300"
+            required
+            disabled={isSubmitting}
+        >
+            {[1, 2, 3, 4, 5].map((num, index) => (
+                <i
+                    key={num}
+                    onClick={() => handleClickrating(num)} 
+                    className={`bi ${rating >= num ? 'bi-star-fill text-yellow-500' : 'bi-star text-gray-400'} mr-2 cursor-pointer`}
+                    style={{ fontSize: '20px' }}
+                ></i>
+            ))}
+        </motion.div>
         </motion.div>
 
         <motion.button
@@ -924,9 +1136,9 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
             disabled={isSubmitting}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className={`w-full inline-flex justify-center items-center px-4 py-2 
-                border border-transparent rounded-md shadow-sm text-sm font-medium text-white 
-                ${isSubmitting ? 'bg-indigo-400' : 'bg-indigo-600 hover:bg-indigo-700'}
+            className={`w-full inline-flex justify-center items-center px-4 py-3 
+                border border-transparent rounded-md shadow-sm text-2xl font-medium text-white 
+                ${isSubmitting ? 'bg-indigo-400' : 'bg-[#ff6b6b] hover:bg-pink-700'}
                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
                 transition-all duration-200`}
         >
@@ -1101,7 +1313,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
                                                                     className="flex items-center p-3 rounded-lg bg-white hover:bg-indigo-50 transition-colors duration-200"
                                                                     onMouseEnter={() => handleVideoHover(video)}
                                                                     onMouseLeave={() => setPreviewVideo(null)}
-                                                                    onClick={() => handleClick(video.url_link, video.id)}
+                                                                    onClick={() => handleClick(video.url_link, video.id,lesson.ten,video.ten)}
                                                                 >
                                                                     <div className={`
                                                                         h-5 w-5 rounded-full flex items-center justify-center
@@ -1124,6 +1336,70 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
                                                                 </div>
                                                             );
                                                         })}
+                                                        {/* <Link href={'/'} className=''> */}
+
+
+{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+
+
+                        <Disclosure >
+                                {({ open }) => (
+                                    <motion.div
+                                        variants={itemVariants}
+                                        className=" rounded-lg bg-white shadow-sm transition-all duration-200 text-xl font-bold"
+                                        whileHover={{ scale: 1.01 }}
+                                    >
+                                        <h3 className="flow-root">
+                                            <Disclosure.Button className="flex w-full justify-between items-center px-6 py-4 text-left text-gray-500 ">
+                                               <div className=''>
+                                               <i class="bi bi-pen-fill mr-2 text-xl"></i> bài quiz 
+                                               </div>
+                                            </Disclosure.Button>
+                                        </h3>
+                                        <AnimatePresence>
+                                            {open && (
+                                                <Disclosure.Panel
+                                                    as={motion.div}
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: "auto", opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    className="px-6 pb-4"
+                                                >
+                                                    <div>
+                                                        <p className='text-xl font-normal text-[#ff6b6b]'>bài quiz số 1</p>
+                                                        <div>
+                                                            <p className='text-xl font-normal text-gray-500 indent-2'> sau bài quiz này bạn sẽ akjshd áh ákjh ákha skhas k áhid kjshd </p>
+                                                            <button className='bg-[#ff6b6b] mt-2 p-2 text-xl text-white font-normal rounded-lg hover:bg-pink-600'>Làm</button>
+                                                        </div>
+                                                    </div>
+                                                </Disclosure.Panel>
+                                            )}
+                                        </AnimatePresence>
+                                    </motion.div>
+                                )}
+                            </Disclosure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+                                                            
+                                                        {/* </Link> */}
                                                     </div>
                                                 </Disclosure.Panel>
                                             )}
@@ -1139,7 +1415,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
             <AnimatePresence>
                 {previewVideo && (
                     <motion.div 
-                        className="fixed bottom-4 right-4 w-64 bg-black rounded-lg p-2 z-10"
+                        className="fixed bottom-4 right-80 w-96 bg-black rounded-lg p-2 z-10"
                         variants={previewVariants}
                         initial="hidden"
                         animate="visible"

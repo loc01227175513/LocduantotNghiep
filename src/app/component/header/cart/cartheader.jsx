@@ -106,9 +106,9 @@ const Cart = ({ onAction }) => {
           <div className='trong cursor-pointer' onClick={onAction}></div>
           <div className='fixed right-0 top-0 h-full w-full max-w-[480px] bg-white/95 backdrop-blur shadow-2xl transform transition-all duration-500 ease-out translate-x-0 animate-[slideIn_0.5s_ease-out]'>
             {/* Header */}
-            <div className='sticky top-0 z-10 flex items-center justify-between p-5 border-b border-orange-200 bg-gradient-to-r from-orange-50/90 to-orange-100/90 backdrop-blur'>
-              <h6 className='text-2xl font-bold text-gray-800 flex items-center gap-3 animate-[float_3s_ease-in-out_infinite] '>
-                <i className='bi bi-cart3 text-orange-500 text-3xl'></i>
+            <div className='sticky top-0 z-10 flex items-center justify-between p-5 border-b border-orange-200 bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] backdrop-blur'>
+              <h6 className='text-2xl font-bold flex items-center gap-3 text-white  '>
+                <i className='bi bi-cart3 text-white text-3xl'></i>
                 Giỏ hàng của tôi
               </h6>
               <button onClick={onAction}
@@ -135,28 +135,28 @@ const Cart = ({ onAction }) => {
                           />
                         </div>
                         <div className='flex-1'>
-                          <h6 className='font-semibold text-gray-900 hover:text-orange-500 transition-colors line-clamp-2'>
+                          <h6 className=' text-2xl text-gray-900  font-bold line-clamp-2'>
                             {khoahoc.ten}
                           </h6>
-                          <div className='inline-flex items-center px-3 py-1 mt-2 text-sm bg-orange-100/80 text-orange-700 rounded-full'>
-                            <i className='bi bi-person-video3 mr-2 text-lg animate-pulse'></i>
+                          <div className='inline-flex items-center px-3 py-1 mt-2 text-xl font-medium text-white bg-[#ff6b6b]  rounded-full'>
+                            <i className='bi bi-person-video3 mr-2 text-lg '></i>
                             {khoahoc.tenGiangVien}
                           </div>
                           <div className='mt-3 flex items-center gap-3'>
-                            <span className='text-gray-400 line-through text-sm'>{khoahoc.gia}đ</span>
-                            <span className='text-lg font-bold text-orange-600 relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:animate-[shine_2s_infinite]'>
+                            <span className='text-gray-400 line-through text-lg'>{khoahoc.gia}đ</span>
+                            <span className='text-lg font-bold text-[#ff6b6b] relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:animate-[shine_2s_infinite]'>
                               {khoahoc.giamgia}đ
                             </span>
                           </div>
                         </div>
-                        <div className='flex items-start space-x-2'>
+                        <div className='flex items-start space-x-2 '>
                           <a href={`/page/course-detail?id=${khoahoc.id}`}
                             className='p-2.5 text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110'>
-                            <i className='bi bi-pencil-square text-xl'></i>
+                            <i className='bi bi-pencil-square text-2xl'></i>
                           </a>
                           <button onClick={() => xoagiohang(khoahoc.id)}
-                            className='p-2.5 text-red-500 hover:bg-red-50 rounded-full transition-all duration-300 hover:scale-110'>
-                            <i className='bi bi-trash3 text-xl'></i>
+                            className='p-2.5 text-[#ff6b6b] hover:bg-red-50 rounded-full transition-all duration-300 hover:scale-110'>
+                            <i className='bi bi-trash3 text-2xl'></i>
                           </button>
                         </div>
                       </div>
@@ -167,22 +167,25 @@ const Cart = ({ onAction }) => {
             </div>
         
             {/* Footer */}
-            <div className='absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-orange-100 p-5 shadow-lg'>
+            <div className='absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t  p-5 shadow-lg'>
               <div className='flex justify-between items-center mb-4'>
-                <span className='text-lg font-bold text-gray-800'>Tổng cộng</span>
-                <span className='text-2xl font-extrabold text-orange-600 animate-pulse'>{totalPrice}đ</span>
+                <span className='text-xl font-bold text-gray-800'>Tổng cộng</span>
+                <span className='text-2xl font-extrabold text-[#ff6b6b] '>{totalPrice}đ</span>
               </div>
               <div className='space-y-3'>
                 {userData ? (
                   <>
-                    <a href="/page/checkout" className='block transform hover:scale-[1.02] transition-all duration-300'>
-                      <button className='w-full py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-orange-200 animate-[pulse_2s_infinite]'>
+                    <a href="/page/checkout" className='block '>
+                      <button className='w-full py-3.5 bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] hover:from-[#1e3c72] hover:to-[#fd8a8a] text-white font-bold rounded-xl text-2xl '>
                         Tiến hành thanh toán
                       </button>
                     </a>
+                   
                     <button onClick={() => openCart()}
-                      className='w-full py-3.5 border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-bold rounded-xl transition-all duration-300'>
+                      className='w-full py-3.5 border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-bold rounded-xl transition-all duration-300 text-2xl'>
+                
                       Xem giỏ hàng
+                     
                     </button>
                   </>
                 ) : (

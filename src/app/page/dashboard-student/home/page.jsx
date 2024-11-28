@@ -55,8 +55,8 @@ export default function Homedashboardstudent() {
           <div className="col-lg-4 col-md-6 col-sm-6 col-12">
             {/* single dashboard-card */}
             <div className="single-dashboard-card">
-              <div className="icon">
-                <i className="fa-light fa-book-open-cover" />
+              <div className="icon w-10" >
+              <i className="fal fa-book-open"  style={{fontSize: "20px"}}/>
               </div>
               <h5 className="title">
                 <span className="counter">{data.length}</span>
@@ -69,7 +69,7 @@ export default function Homedashboardstudent() {
             {/* single dashboard-card */}
             <div className="single-dashboard-card">
               <div className="icon">
-                <i className="fa-regular fa-graduation-cap" />
+                <i className="fa-regular fa-graduation-cap "  style={{fontSize: "20px"}}/>
               </div>
               <h5 className="title">
                 <span className="counter">
@@ -91,7 +91,7 @@ export default function Homedashboardstudent() {
             {/* single dashboard-card */}
             <div className="single-dashboard-card">
               <div className="icon">
-                <i className="fa-light fa-trophy" />
+                <i className="fa-light fa-trophy" style={{fontSize: "20px"}}/>
               </div>
               <h5 className="title">
                 <span className="counter">{khoahocdahoc.length}</span>
@@ -105,7 +105,7 @@ export default function Homedashboardstudent() {
           <div className="col-lg-12">
             {/* in progress course area */}
             <div className="in-progress-course-wrapper title-between-dashboard mb--10">
-              <h5 className="title">Các khóa học của tôi</h5>
+              <h5 className="title text-xl" >Các khóa học của tôi</h5>
               <a href="#" className="more">
                 Xem tất cả
               </a>

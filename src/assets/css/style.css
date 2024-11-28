@@ -26480,7 +26480,7 @@ edit .quantity-edit button {
   border: 1px solid #FCF0D9;
   background: #FFF;
   text-align: center;
-  padding: 47px;
+  padding: 10px;
 }
 @media screen and (max-width: 1200px) {
   .single-dashboard-card {
@@ -26489,8 +26489,8 @@ edit .quantity-edit button {
 }
 .single-dashboard-card .icon {
   background: #F9F8FF;
-  height: 80px;
-  width: 80px;
+  height: 50px;
+  width:50px;
   border-radius: 50%;
   justify-content: center;
   margin: auto;

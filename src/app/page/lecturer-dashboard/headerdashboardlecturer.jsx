@@ -118,7 +118,6 @@ const Headerdashboardstudent2 = ({ page }) => {
           </div>
 
           <div className="dashboard-left-single-wrapper bbnone mt--40">
-            <h4 className="title mb--5">User</h4>
             <Link href="/page/lecturer-dashboard/setting" className="single-item">
               <i className="fa-sharp fa-regular fa-gear" />
               <p>Cài đặt</p>
