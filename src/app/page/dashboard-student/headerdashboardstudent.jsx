@@ -479,7 +479,7 @@ const Headerdashboardstudent2 = ({ page }) => {
 
     
 
-            <Link href="announcement.html"
+            <Link href="/page/dashboard-student/ThongBao"
             className={`single-item ${pagess === 'thongbao' ? 'active' : ''}`}
             onClick={() => click("thongbao")}
             >
