@@ -3,17 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { LayThongBao } from "@/service/ThongBao/ThongBao";
 import { use } from '@/assets/js/plugins/swiper';
 import Link from 'next/link';
+import Img from 'next/image';
 const Page = () => {
   const [activeTab, setActiveTab] = useState('student');
-
-  const renderContent = () => {
-    const [activeTab, setActiveTab] = useState('student');
-    const [ThongBao, setThongBao] = useState([]);
+  const [ThongBao, setThongBao] = useState([]);
     useEffect(() => {
       LayThongBao().then((res) => {
         setThongBao(res);
       });
     }, []);
+  const renderContent = () => {
+  
     console.log(ThongBao, "ssss");
 
     switch (activeTab) {
@@ -32,10 +32,12 @@ const Page = () => {
                 {/* Notification 1 */}
                 <div data-purpose="notification" className="p-4 bg-white rounded shadow">
                   {ThongBao.map((item) => (
-                    <Link href={`/page/course-detail?id=${item.noidung.id}`}>
-                      <div key={item.id} className="flex items-start gap-4 mb-4">
+                    <Link key={item.id} href={`/page/course-detail?id=${item.noidung.id}`}>
+                      <div className="flex items-start gap-4 mb-4">
                         <div className="shrink-0">
-                          <img
+                          <Img
+                            width="64"
+                            height="64"
                             src={item.noidung.hinh}
                             alt=""
                             className="w-16 h-16 rounded-full"
