@@ -183,7 +183,7 @@ export default function Page() {
         }
         
         
-    }, [chitietkhoahoc]);
+    }, [chitietkhoahoc, khoahoc]);
     const onPlayerStateChange = useCallback(async (event) => {
         if (typeof window !== 'undefined' && event.data === window.YT.PlayerState.ENDED) {
             setIsVideoEnded(true);
@@ -281,7 +281,7 @@ export default function Page() {
         };
 
         checkVideoWatched();
-    }, [currentVideoId, khoahoc]);
+    }, [currentVideoId, khoahoc,watchedVideos]);
 
     const formatDuration = (totalSeconds) => {
         const hours = Math.floor(totalSeconds / 3600);

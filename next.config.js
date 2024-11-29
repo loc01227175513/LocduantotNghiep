@@ -36,24 +36,24 @@ const nextConfig = {
       },
     ],
   },
- webpack(config, { dev }) {
-      if (dev) {
-        config.devtool = 'eval-source-map';
-      } else {
-        config.devtool = false;
-      }
-      config.module.rules.push({
-        test: /\.ico$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-          outputPath: 'static/',
-          publicPath: '/_next/static/',
-        },
-      });
-      return config;
-    },
-  
+  webpack(config, { dev }) {
+    if (dev) {
+      config.devtool = 'eval-source-map';
+    } else {
+      config.devtool = false;
+    }
+    config.module.rules.push({
+      test: /\.ico$/,
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+        outputPath: 'static/',
+        publicPath: '/_next/static/',
+      },
+    });
+    return config;
+  },
+  productionBrowserSourceMaps: false,
 };
 
 module.exports = nextConfig;

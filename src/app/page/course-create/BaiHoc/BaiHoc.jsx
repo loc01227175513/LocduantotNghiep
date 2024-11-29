@@ -120,19 +120,19 @@ const NoiDungBaiHoc = ({
                               setIsSubModalOpen(true);
                               setCurrentItemId(item.id);
                             }}
-                            className="px-3 py-1.5  text-lg font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-colors"
+                            className="px-3 py-1.5 text-sm font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-colors"
                           >
                             + Thêm Sub Item
                           </button>
                           <button
                             onClick={() => handleExpandLesson(item.id)}
-                            className="px-3 py-1.5 text-lg font-medium text-white bg-blue-500 rounded-full hover:bg-blue-400 transition-colors"
+                            className="px-3 py-1.5 text-sm font-medium text-white bg-blue-500 rounded-full hover:bg-blue-400 transition-colors"
                           >
                             Mở rộng
                           </button>
                           <button
                             onClick={() => handleRemoveItem(item.id)}
-                            className="px-3 py-1.5 text-lg font-medium text-white bg-red-500 rounded-full hover:bg-red-400 transition-colors"
+                            className="px-3 py-1.5 text-sm font-medium text-white bg-red-500 rounded-full hover:bg-red-400 transition-colors"
                           >
                             Xóa
                           </button>
@@ -169,13 +169,13 @@ const NoiDungBaiHoc = ({
                                             setIsContentModalOpen(true);
                                             setCurrentSubItemId(subItem.id);
                                           }}
-                                          className="px-3 py-1 text-xl text-yellow-600 bg-yellow-100 rounded-full hover:bg-yellow-200 transition-colors"
+                                          className="px-3 py-1 text-sm text-yellow-600 bg-yellow-100 rounded-full hover:bg-yellow-200 transition-colors"
                                         >
                                           Nội Dung
                                         </button>
                                         <button
                                           onClick={() => handleRemoveSubItem(item.id, subItem.id)}
-                                          className="px-3 py-1 text-xl text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
+                                          className="px-3 py-1 text-sm text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
                                         >
                                           Xóa
                                         </button>
@@ -704,7 +704,7 @@ const BaiHoc = () => {
         console.error("Error adding lesson:", error);
       }
     }
-    addLessonToCourse("Example Lesson");
+    // addLessonToCourse("Example Lesson");
   }, [items, newItemName, highestId, addLessonToCourse]);
 
   const handleAddSubItem = useCallback(async (itemId) => {

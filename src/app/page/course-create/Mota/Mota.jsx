@@ -175,7 +175,7 @@ function Mota() {
       {hocSinhInputs.map((input, index) => (
         <div
           key={index}
-          className="relative mb-4 group animate-[slideIn_0.3s_ease-out]"
+          className="relative mb-4 group animate-[slideIn_0.3s_ease-out] border-1 rounded-md text-xl border-sky-500/90 pl-4"
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
@@ -187,7 +187,7 @@ function Mota() {
               focus:border-purple-400 focus:ring-4 
               focus:ring-purple-100/50 
               transition duration-200
-              transform hover:scale-[1.01]"
+              transform hover:scale-[1.01] "
             placeholder="Ví dụ: Đạt được kiến thức cơ bản về lập trình"
             value={input}
             onChange={(e) =>
@@ -265,7 +265,7 @@ function Mota() {
         border border-sky-500
         hover:shadow-lg hover:from-sky-500 hover:to-blue-400
         active:to-green-800
-        flex items-center gap-2"
+        flex items-center gap-2 text-xl"
     >
       <span>Gửi mục tiêu khóa học</span>
       <svg className="w-5 h-5 animate-[bounce_1s_infinite]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
