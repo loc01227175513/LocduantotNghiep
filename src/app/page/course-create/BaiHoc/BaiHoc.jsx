@@ -704,7 +704,6 @@ const BaiHoc = () => {
         console.error("Error adding lesson:", error);
       }
     }
-    // addLessonToCourse("Example Lesson");
   }, [items, newItemName, highestId, addLessonToCourse]);
 
   const handleAddSubItem = useCallback(async (itemId) => {
