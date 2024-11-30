@@ -182,3 +182,35 @@ export const ShowCauHoi = async (BaihocidNe, quizId) => {
     throw new Error('Network error or server is down');
   }
 };
+
+
+export const GuiCauTraLoi = async ({ id_baihoc, noidung }) => {
+  const user = localStorage.getItem("data");
+  const url = "https://huuphuoc.id.vn/api/NguoiDungGuiDapAn";
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id_baihoc,
+        id_nguoidung: JSON.parse(user).id,
+        noidung,
+      }),
+      referrerPolicy: "unsafe-url",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to send answers");
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error during sending answers:", error);
+    throw error;
+  }
+};
+

@@ -6,43 +6,38 @@ import {
     DisclosureButton,
     DisclosurePanel,
 } from '@headlessui/react';
-
-import { PlusIcon, MinusIcon, XIcon } from '@heroicons/react/solid';
-import { ChevronDownIcon, CheckIcon,CheckCircleIcon } from '@heroicons/react/24/outline';
-import { motion,AnimatePresence } from 'framer-motion';
-import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
-
 import Axios from 'axios';
 import Link from 'next/link';
-// import { Link } from 'react-feather';
+import { PlusIcon, MinusIcon, XIcon } from '@heroicons/react/solid';
+import { ChevronDownIcon, CheckIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
+import { ShowTracNghiem ,ShowCauHoi ,GuiCauTraLoi} from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
+
+
+
 
 
 export default function Page() {
-    const [isYTReady, setIsYTReady] = useState(false);  
-    let id = null;
-    if (typeof window !== 'undefined') {
-        const urlParams = new URLSearchParams(window.location.search);
-        id = urlParams.get('id');
-    }
+    const [isYTReady, setIsYTReady] = useState(false);
     const [khoahoc, setKhoahoc] = useState(null);
     const [totalDuration, setTotalDuration] = useState(0);
     const [currentVideoId, setCurrentVideoId] = useState(null);
     const [videoUrl, setVideoUrl] = useState('');
     const [isVideoEnded, setIsVideoEnded] = useState(false);
     const [watchedVideos, setWatchedVideos] = useState({});
-    const [chitietkhoahoc,setChitietkhoahoc] = useState({})
-    const [videotieptheo,setVideotieptheo] = useState({});
-    const [baihoctieptheo,setBaihoctieptheo] = useState({});
-    const [conbaihoc,setConbaihoc] = useState(true);
-    const [convideo,setConvideo] = useState(true);
-
+    const [chitietkhoahoc, setChitietkhoahoc] = useState({});
+    const [videotieptheo, setVideotieptheo] = useState({});
+    const [baihoctieptheo, setBaihoctieptheo] = useState({});
+    const [conbaihoc, setConbaihoc] = useState(true);
+    const [convideo, setConvideo] = useState(true);
+    const [showBaiQuiz, setShowBaiQuiz] = useState(false);
+    const [idBaihoc, setIdBaihoc] = useState(null);
+    const [idTracNghiem, setIdTracNghiem] = useState(null);
     const playerRef = useRef(null);
 
-    let parsedData = null;
-    if (typeof window !== 'undefined' && window.localStorage) {
-        const userData = localStorage.getItem('data');
-        parsedData = JSON.parse(userData);
-    }
+    const id = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('id') : null;
+    const parsedData = typeof window !== 'undefined' && window.localStorage ? JSON.parse(localStorage.getItem('data')) : null;
 
     useEffect(() => {
         const tag = document.createElement('script');
@@ -52,17 +47,14 @@ export default function Page() {
                 setIsYTReady(true);
             };
         };
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, null);
     }, []);
 
     const getYouTubeVideoID = (url) => {
         try {
-            // Check if URL is absolute
             const urlObj = new URL(url);
             return urlObj.searchParams.get('v');
         } catch (e) {
-            // If URL constructor fails, assume url is a video ID
             console.error('Invalid URL:', url, 'Assuming it is a video ID.');
             return url;
         }
@@ -76,30 +68,15 @@ export default function Page() {
                 });
                 const khoahocData = response.data.khoahoc;
                 setKhoahoc(khoahocData);
-                // console.log(khoahocData);
-                
 
                 if (khoahocData.baihocs.length > 0) {
-                    const firstVideo = khoahocData.baihocs[0].video[0];
                     const firstBaifhoc = khoahocData.baihocs[0];
                     if (firstBaifhoc && firstBaifhoc.video.length > 0) {
                         const firstVideo = firstBaifhoc.video[0];
-                        const tenbaihoc = firstBaifhoc.ten;
-                        const motavideo = firstVideo.ten;
-                        // console.log(tenbaihoc,motavideo);
-                        
-            
-                        if (tenbaihoc && motavideo) {
-                            setChitietkhoahoc(prevState => ({
-                                ...prevState,
-                                tenbaihoc: tenbaihoc,
-                                motavideo: motavideo
-                            }));
-                            // console.log(chitietkhoahoc.tenbaihoc);
-                            
-                        }
-                    }
-                    if (firstVideo) {
+                        setChitietkhoahoc({
+                            tenbaihoc: firstBaifhoc.ten,
+                            motavideo: firstVideo.ten
+                        });
                         setVideoUrl(firstVideo.url_link);
                         setCurrentVideoId(firstVideo.id);
                     }
@@ -118,72 +95,45 @@ export default function Page() {
             }
         };
 
-        fetchData();
+        if (id) {
+            fetchData();
+        }
     }, [id]);
 
-    // useEffect(() =>{
-    //     console.log(" bai hoc tiep theo " );
-    //     console.log(baihoctieptheo);
-    //     console.log(conbaihoc);
-        
-    //     console.log("video tiep theo ");
-    //     console.log(videotieptheo);
-    //     console.log(convideo);
-        
-        
-        
-        
-    // },[baihoctieptheo,videotieptheo])
     useEffect(() => {
-        // console.log(chitietkhoahoc.tenbaihoc);
         if (khoahoc && Array.isArray(khoahoc.baihocs)) {
-            // console.log(khoahoc.baihocs); 
-        
             const baiHocIndex = khoahoc.baihocs.findIndex(baiHoc => baiHoc.ten === chitietkhoahoc.tenbaihoc);
             if (baiHocIndex === -1) {
                 console.error('Không tìm thấy bài học phù hợp');
                 return;
             }
-            // console.log('Vị trí của bài học:', baiHocIndex);
-        
+
             const videoIndex = khoahoc.baihocs[baiHocIndex].video.findIndex(video => video.ten === chitietkhoahoc.motavideo);
             if (videoIndex === -1) {
                 console.error('Không tìm thấy video phù hợp trong bài học');
                 return;
             }
-            // console.log('Vị trí video:', videoIndex);
-        
+
             const tongbaihoc = khoahoc.baihocs.length;
-            // console.log('Tổng số bài học:', tongbaihoc);
-        
             const tongVideoTrongBaiHoc = khoahoc.baihocs[baiHocIndex].video.length;
-            // console.log('Tổng số video trong bài học hiện tại:', tongVideoTrongBaiHoc);
-        
+
             if (baiHocIndex === tongbaihoc - 1 && videoIndex === tongVideoTrongBaiHoc - 1) {
-                // console.log('Hết toàn bộ khóa học');
                 setConbaihoc(false);
                 setConvideo(false);
             } else if (videoIndex === tongVideoTrongBaiHoc - 1) {
-                // console.log('Hết video trong bài học, chuyển sang bài học tiếp theo');
                 setConbaihoc(true);
                 setConvideo(false);
                 setBaihoctieptheo(khoahoc.baihocs[baiHocIndex + 1]);
                 setVideotieptheo(khoahoc.baihocs[baiHocIndex + 1].video[0]);
-
             } else {
-                // console.log('Chuyển sang video tiếp theo trong bài học hiện tại');
                 setConbaihoc(true);
                 setConvideo(true);
                 setVideotieptheo(khoahoc.baihocs[baiHocIndex].video[videoIndex + 1]);
                 setBaihoctieptheo(khoahoc.baihocs[baiHocIndex]);
-
             }
-        } else {
-            // console.log('Không có bài học trong khoahoc hoặc baihocs không phải là mảng');
         }
-        
-        
     }, [chitietkhoahoc, khoahoc]);
+
     const onPlayerStateChange = useCallback(async (event) => {
         if (typeof window !== 'undefined' && event.data === window.YT.PlayerState.ENDED) {
             setIsVideoEnded(true);
@@ -195,25 +145,14 @@ export default function Page() {
                         id_nguoidung: parsedData.id,
                         id_video: currentVideoId,
                     };
-                    // console.log('Request Data:', requestData);
 
-                    const response = await Axios.post('https://huuphuoc.id.vn/api/videodahoc', requestData, {
+                    await Axios.post('https://huuphuoc.id.vn/api/videodahoc', requestData, {
                         referrerPolicy: 'unsafe-url'
                     });
-                    // console.log("Video đã học", response);
 
                     setWatchedVideos(prev => ({ ...prev, [currentVideoId]: true }));
                 } catch (error) {
-                    if (error.response) {
-                        console.error('Error response:', error.response.data);
-                        console.error('Error status:', error.response.status);
-                        console.error('Error headers:', error.response.headers);
-                    } else if (error.request) {
-                        console.error('Error request:', error.request);
-                    } else {
-                        console.error('Error message:', error.message);
-                    }
-                    console.error('Error config:', error.config);
+                    console.error('Error tracking video watch status:', error);
                 }
             } else {
                 console.error('Missing parsedData or currentVideoId');
@@ -223,9 +162,7 @@ export default function Page() {
 
     const initializePlayer = useCallback(() => {
         if (isYTReady && videoUrl) {
-            // console.log('Initializing YouTube Player with URL:', videoUrl);
             const videoId = getYouTubeVideoID(videoUrl);
-            // console.log('Extracted Video ID:', videoId);
             if (videoId) {
                 playerRef.current = new window.YT.Player('player', {
                     events: {
@@ -248,7 +185,6 @@ export default function Page() {
     useEffect(() => {
         const checkVideoWatched = async () => {
             if (!currentVideoId || !khoahoc) {
-                // console.log('currentVideoId or khoahoc is not defined');
                 return;
             }
 
@@ -260,8 +196,6 @@ export default function Page() {
                     const updatedWatchedVideos = { ...watchedVideos };
                     khoahoc.baihocs.forEach((lesson) => {
                         lesson.video.forEach((video) => {
-                            // console.log('Checking video:', video.id);
-
                             const isVideoMatched = response.data.data.some((responseVideo) => {
                                 return responseVideo.id_video === video.id;
                             });
@@ -281,7 +215,7 @@ export default function Page() {
         };
 
         checkVideoWatched();
-    }, [currentVideoId, khoahoc,watchedVideos]);
+    }, [currentVideoId, khoahoc]);
 
     const formatDuration = (totalSeconds) => {
         const hours = Math.floor(totalSeconds / 3600);
@@ -290,18 +224,14 @@ export default function Page() {
         return `${hours}:${minutes}:${seconds}`;
     };
 
-    const handleClick = (videoLink, videoId,tenbaihoc,motavideo) => {
+    const handleClick = (videoLink, videoId, tenbaihoc, motavideo) => {
         setVideoUrl(videoLink);
         setCurrentVideoId(videoId);
         setIsVideoEnded(false);
-        setChitietkhoahoc(prevState => ({
-            ...prevState,
+        setChitietkhoahoc({
             tenbaihoc,
             motavideo
-        }));
-        // console.log(videoLink, videoId,tenbaihoc,motavideo);
-        
-                
+        });
     };
 
     const handleComent = async (comment, rating) => {
@@ -343,7 +273,6 @@ export default function Page() {
         await ThemKhoaHocDaHoc();
     };
 
-    // Sửa lại cách tính tổng số video
     const tongbaiHoc = khoahoc
         ? khoahoc.baihocs.reduce((acc, baihoc) => acc + baihoc.video.length, 0)
         : 'No data';
@@ -358,10 +287,35 @@ export default function Page() {
     return (
         <div className="container mx-auto px-4 py-8 bg-gray-100 min-h-screen mt-60 mb-60">
             <div className="flex flex-col lg:flex-row">
-                {/* //video player */}
-                <VideoPlayer videoUrl={videoUrl} isVideoEnded={isVideoEnded} khoahoc={khoahoc} formatDuration={formatDuration} totalDuration={totalDuration}  handleComent={handleComent} chitietkhoahoc={chitietkhoahoc} handleClick={handleClick} currentVideoId={currentVideoId} tenbaihoc={chitietkhoahoc.tenbaihoc} motavideo={chitietkhoahoc.motavideo} videotieptheo={videotieptheo} baihoctieptheo={baihoctieptheo} convideo={convideo} conbaihoc={conbaihoc}/>
-                {/* //khoahoc */}
-                <BaiHocDeHoc khoahoc={khoahoc} watchedVideos={watchedVideos} handleClick={handleClick} />
+                {showBaiQuiz === false ? (
+                    <VideoPlayer
+                        videoUrl={videoUrl}
+                        isVideoEnded={isVideoEnded}
+                        khoahoc={khoahoc}
+                        formatDuration={formatDuration}
+                        totalDuration={totalDuration}
+                        handleComent={handleComent}
+                        chitietkhoahoc={chitietkhoahoc}
+                        handleClick={handleClick}
+                        currentVideoId={currentVideoId}
+                        tenbaihoc={chitietkhoahoc.tenbaihoc}
+                        motavideo={chitietkhoahoc.motavideo}
+                        videotieptheo={videotieptheo}
+                        baihoctieptheo={baihoctieptheo}
+                        convideo={convideo}
+                        conbaihoc={conbaihoc}
+                    />
+                ) : (
+                    <ShowTracNghiemComponent idBaihoc={idBaihoc} idTracNghiem={idTracNghiem} />
+                )}
+                <BaiHocDeHoc
+                    khoahoc={khoahoc}
+                    watchedVideos={watchedVideos}
+                    handleClick={handleClick}
+                    setShowBaiQuiz={setShowBaiQuiz}
+                    setIdBaihoc={setIdBaihoc}
+                    setIdTracNghiem={setIdTracNghiem}
+                />
             </div>
         </div>
     );
@@ -369,7 +323,7 @@ export default function Page() {
 
 
 
-const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDuration ,handleComent ,chitietkhoahoc,handleClick,currentVideoId,tenbaihoc,motavideo,videotieptheo,baihoctieptheo,convideo,conbaihoc}) => {
+const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDuration, handleComent, chitietkhoahoc, handleClick, currentVideoId, tenbaihoc, motavideo, videotieptheo, baihoctieptheo, convideo, conbaihoc }) => {
     const [showDescription, setShowDescription] = useState(false);
     const [showComments, setShowComments] = useState(false);
     const [rating, setRating] = useState('');
@@ -384,16 +338,16 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
     const handleClickrating = (index) => {
         if (index) {
             // console.log(index);
-            
-            setRating(index); 
+
+            setRating(index);
         }
     };
 
     const previewVariants = {
         hidden: { opacity: 0, scale: 0.8, y: 20 },
-        visible: { 
-            opacity: 1, 
-            scale: 1, 
+        visible: {
+            opacity: 1,
+            scale: 1,
             y: 0,
             transition: { type: "spring", bounce: 0.4 }
         }
@@ -414,13 +368,13 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
     };
 
     return (
-        <motion.div 
+        <motion.div
             className="flex-grow lg:pr-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
         >
-            <motion.div 
+            <motion.div
                 className="relative pb-[56.25%] group"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -434,25 +388,25 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                 />
                 <AnimatePresence>
                     {isVideoEnded && (
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.8 }}
                             transition={{ type: "spring", stiffness: 200, damping: 20 }}
                             className="absolute inset-0 flex items-center justify-center bg-green-200 bg-opacity-75 rounded-lg backdrop-blur-sm"
                         >
-                            <motion.div 
+                            <motion.div
                                 className="text-center"
                                 initial={{ y: 20 }}
                                 animate={{ y: 0 }}
                                 transition={{ delay: 0.2 }}
                             >
                                 <motion.div
-                                    animate={{ 
+                                    animate={{
                                         scale: [1, 1.2, 1],
                                         rotate: [0, 360]
                                     }}
-                                    transition={{ 
+                                    transition={{
                                         duration: 1.5,
                                         ease: "easeInOut",
                                         times: [0, 0.5, 1]
@@ -461,8 +415,8 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                                     <CheckCircleIcon className="h-12 w-12 text-green-600 mx-auto mb-2" />
                                 </motion.div>
                                 <span className="text-xl font-semibold text-green-800"><p>
-                                Video đã xem xong!</p>
-                                <i class="bi bi-arrow-clockwise text-6xl hover:cursor-pointer mt-4" onClick={()=>handleClick(videoUrl,currentVideoId,tenbaihoc,motavideo)}>xem lại</i>
+                                    Video đã xem xong!</p>
+                                    <i class="bi bi-arrow-clockwise text-6xl hover:cursor-pointer mt-4" onClick={() => handleClick(videoUrl, currentVideoId, tenbaihoc, motavideo)}>xem lại</i>
                                 </span>
                             </motion.div>
                         </motion.div>
@@ -476,14 +430,14 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, type: "spring" }}
                 >
-                    <motion.div 
+                    <motion.div
                         className="mt-6 flex items-center justify-between border-b border-gray-300 pb-4"
                         initial={{ x: -20 }}
                         animate={{ x: 0 }}
                         transition={{ delay: 0.3 }}
-                    >   
+                    >
                         {/* tên bài học */}
-                        <motion.h1 
+                        <motion.h1
                             className="text-4xl font-bold text-gray-900 hover:text-pink-700 transition-colors"
                             whileHover={{ scale: 1.02 }}
                         >
@@ -494,7 +448,7 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
 
 
                         </motion.h1>
-                       
+
                         {/* <motion.p 
                             className="text-2xl font-semibold text-indigo-600"
                             whileHover={{ scale: 1.1 }}
@@ -505,15 +459,15 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
 
                         {!convideo && conbaihoc && (
                             <motion.div>
-                                {baihoctieptheo &&(
+                                {baihoctieptheo && (
                                     <div>
-                                        <button onClick={() => handleClick(videotieptheo.url_link,videotieptheo.id,baihoctieptheo.ten,videotieptheo.ten)} className='bg-[#ff6b6b] p-3 text-xl rounded-lg text-white hover:bg-pink-700 '
-                                            
+                                        <button onClick={() => handleClick(videotieptheo.url_link, videotieptheo.id, baihoctieptheo.ten, videotieptheo.ten)} className='bg-[#ff6b6b] p-3 text-xl rounded-lg text-white hover:bg-pink-700 '
+
                                             onMouseEnter={() => handleVideoHover(videotieptheo)}
                                             onMouseLeave={() => setPreviewVideo(null)}
-                                            >
+                                        >
 
-                                        bài học tiếp theo : {baihoctieptheo.ten}
+                                            bài học tiếp theo : {baihoctieptheo.ten}
                                         </button>
                                     </div>
                                 )}
@@ -521,21 +475,21 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                         )}
                         {convideo && conbaihoc && (
                             <motion.div>
-                                {videotieptheo &&(
+                                {videotieptheo && (
                                     <div>
-                                        <button onClick={() => handleClick(videotieptheo.url_link,videotieptheo.id,baihoctieptheo.ten,videotieptheo.ten)} className='bg-[#ff6b6b] p-3 text-xl rounded-lg text-white hover:bg-pink-700'
-                                            
-                                            
+                                        <button onClick={() => handleClick(videotieptheo.url_link, videotieptheo.id, baihoctieptheo.ten, videotieptheo.ten)} className='bg-[#ff6b6b] p-3 text-xl rounded-lg text-white hover:bg-pink-700'
+
+
                                             onMouseEnter={() => handleVideoHover(videotieptheo)}
                                             onMouseLeave={() => setPreviewVideo(null)}
-                                            >
-                                            video tiếp theo : {videotieptheo.ten} 
+                                        >
+                                            video tiếp theo : {videotieptheo.ten}
                                         </button>
                                     </div>
                                 )}
                             </motion.div>
                         )}
-                        {!convideo && !conbaihoc &&(
+                        {!convideo && !conbaihoc && (
                             <motion.div>
                                 <div>
                                     <p className='text-green-400 text-2xl'>Hết <i class="bi bi-check-lg"></i></p>
@@ -544,24 +498,24 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                         )}
                     </motion.div>
                     <AnimatePresence>
-                {previewVideo && (
-                    <motion.div 
-                        className="fixed bottom-4 right-80 w-96 bg-black rounded-lg p-2 z-10"
-                        variants={previewVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="hidden"
-                    >
-                        <iframe
-                            src={previewVideo.url_link ? `https://www.youtube.com/embed/${previewVideo.url_link}?enablejsapi=1&autoplay=1&loop=1` : ''}
-                            className="w-full h-full rounded-lg"
-                            allow="autoplay"
-                            title="YouTube Video"
-                        />
-                    </motion.div>
-                )}
-            </AnimatePresence>
-                    <motion.section 
+                        {previewVideo && (
+                            <motion.div
+                                className="fixed bottom-4 right-80 w-96 bg-black rounded-lg p-2 z-10"
+                                variants={previewVariants}
+                                initial="hidden"
+                                animate="visible"
+                                exit="hidden"
+                            >
+                                <iframe
+                                    src={previewVideo.url_link ? `https://www.youtube.com/embed/${previewVideo.url_link}?enablejsapi=1&autoplay=1&loop=1` : ''}
+                                    className="w-full h-full rounded-lg"
+                                    allow="autoplay"
+                                    title="YouTube Video"
+                                />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                    <motion.section
                         className="mt-6 space-y-4"
                         variants={{
                             hidden: { opacity: 0 },
@@ -575,7 +529,7 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                         initial="hidden"
                         animate="show"
                     >
-                        <AnimatedDisclosure 
+                        <AnimatedDisclosure
                             title="Mô tả khóa học"
                             isOpen={showDescription}
                             onToggle={() => setShowDescription(!showDescription)}
@@ -588,7 +542,7 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                             onToggle={() => setShowComments(!showComments)}
                             content={
                                 <>
-                                <CommentForm
+                                    <CommentForm
                                         comment={comment}
                                         rating={rating}
                                         isSubmitting={isSubmitting}
@@ -598,12 +552,12 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                                         handleClickrating={handleClickrating}
                                     />
                                     <CommentList comments={khoahoc.danhgia} />
-                                    
+
                                 </>
                             }
                         />
 
-                        <CourseInfo 
+                        <CourseInfo
                             instructor={khoahoc.giangvien}
                             category={khoahoc.theloai}
                             subCategory={khoahoc.theloaicon}
@@ -632,8 +586,8 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
 
     const item = {
         hidden: { opacity: 0, x: -20 },
-        show: { 
-            opacity: 1, 
+        show: {
+            opacity: 1,
             x: 0,
             transition: {
                 type: "spring",
@@ -659,7 +613,7 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
         {
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
             ),
@@ -669,7 +623,7 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
         {
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                         d="M19 9l-7 7-7-7" />
                 </svg>
             ),
@@ -679,7 +633,7 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
         {
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                         d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                 </svg>
             ),
@@ -689,7 +643,7 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
         {
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             ),
@@ -699,13 +653,13 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
     ];
 
     return (
-        <motion.div 
+        <motion.div
             initial="hidden"
             animate="show"
             variants={container}
             className="bg-white rounded-lg shadow-sm p-6 hover:shadow-lg transition-shadow duration-300"
         >
-            <motion.h3 
+            <motion.h3
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="text-2xl font-semibold text-gray-800 mb-4"
@@ -714,10 +668,10 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
             </motion.h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {infoItems.map((item, index) => (
-                    <motion.div 
+                    <motion.div
                         key={index}
                         variants={item}
-                        whileHover={{ 
+                        whileHover={{
                             scale: 1.02,
                             backgroundColor: "rgba(249, 250, 251, 0.9)",
                         }}
@@ -725,7 +679,7 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
                             backdrop-blur-sm transition-all duration-200
                             hover:shadow-md cursor-pointer"
                     >
-                        <motion.div 
+                        <motion.div
                             className="flex-shrink-0 text-indigo-500"
                             whileHover="hover"
                         >
@@ -736,13 +690,13 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: index * 0.1 }}
                         >
-                            <motion.p 
+                            <motion.p
                                 className="text-2xl text-gray-500"
                                 whileHover={{ scale: 1.02 }}
                             >
                                 {item.label}
                             </motion.p>
-                            <motion.p 
+                            <motion.p
                                 className="font-medium  text-gray-800"
                                 whileHover={{ scale: 1.02 }}
                             >
@@ -780,13 +734,13 @@ const StarRating = ({ rating }) => (
             >
                 <svg
                     className={`h-6 w-6 transform transition-all duration-200
-                        ${index < rating 
-                            ? 'drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]' 
+                        ${index < rating
+                            ? 'drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]'
                             : 'fill-gray-300 group-hover:fill-gray-400'}`}
                     viewBox="0 0 20 20"
                     style={{
-                        fill: index < rating 
-                            ? 'url(#starGradient)' 
+                        fill: index < rating
+                            ? 'url(#starGradient)'
                             : 'currentColor'
                     }}
                 >
@@ -805,7 +759,7 @@ const StarRating = ({ rating }) => (
                 </span>
             </motion.div>
         ))}
-        <motion.div 
+        <motion.div
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             className="ml-2 text-sm font-medium text-gray-600"
@@ -828,14 +782,14 @@ const CommentList = ({ comments }) => {
     };
 
     const item = {
-        hidden: { 
-            opacity: 0, 
+        hidden: {
+            opacity: 0,
             y: 50,
             scale: 0.8,
             rotate: -2
         },
-        show: { 
-            opacity: 1, 
+        show: {
+            opacity: 1,
             y: 0,
             scale: 1,
             rotate: 0,
@@ -849,7 +803,7 @@ const CommentList = ({ comments }) => {
 
     if (!comments || comments.length === 0) {
         return (
-            <motion.div 
+            <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
@@ -859,11 +813,11 @@ const CommentList = ({ comments }) => {
                 }}
                 className="text-center py-8 px-4 bg-gray-50 rounded-lg mt-4"
             >
-                <motion.img 
-                    src="/empty-comments.svg" 
+                <motion.img
+                    src="/empty-comments.svg"
                     alt="No comments"
                     className="w-24 h-24 mx-auto mb-4 opacity-50"
-                    animate={{ 
+                    animate={{
                         scale: [1, 1.1, 1],
                         rotate: [0, 5, -5, 0]
                     }}
@@ -879,7 +833,7 @@ const CommentList = ({ comments }) => {
     }
 
     return (
-        <motion.div 
+        <motion.div
             variants={container}
             initial="hidden"
             animate="show"
@@ -889,7 +843,7 @@ const CommentList = ({ comments }) => {
                 <motion.div
                     key={comment.id || index}
                     variants={item}
-                    whileHover={{ 
+                    whileHover={{
                         scale: 1.02,
                         rotate: 0,
                         transition: {
@@ -900,13 +854,13 @@ const CommentList = ({ comments }) => {
                     whileTap={{ scale: 0.98 }}
                     className="bg-white rounded-xl shadow-sm p-6 hover:shadow-xl transition-all duration-300 border border-gray-100"
                 >
-                    <motion.div 
+                    <motion.div
                         className="flex items-center justify-between mb-4"
                         initial={{ x: -20 }}
                         animate={{ x: 0 }}
                     >
                         <div className="flex items-center space-x-3">
-                            <motion.div 
+                            <motion.div
                                 className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-inner"
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
@@ -922,7 +876,7 @@ const CommentList = ({ comments }) => {
                         </div>
                         <StarRating rating={comment.rating} />
                     </motion.div>
-                    <motion.p 
+                    <motion.p
                         className="text-gray-700 leading-relaxed"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -930,13 +884,13 @@ const CommentList = ({ comments }) => {
                     >
                         {comment.comment}
                     </motion.p>
-                    <motion.div 
+                    <motion.div
                         className="mt-4 flex items-center space-x-4 text-sm"
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.3 }}
                     >
-                        <motion.button 
+                        <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="flex items-center space-x-2 text-gray-500 hover:text-indigo-600 transition-colors"
@@ -946,7 +900,7 @@ const CommentList = ({ comments }) => {
                             </svg>
                             <span>Hữu ích</span>
                         </motion.button>
-                        <motion.button 
+                        <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="flex items-center space-x-2 text-gray-500 hover:text-indigo-600 transition-colors"
@@ -975,7 +929,7 @@ const formatTimeAgo = (date) => {
         phút: 60,
         giây: 1
     };
-    
+
     for (let [unit, secondsInUnit] of Object.entries(intervals)) {
         const interval = Math.floor(seconds / secondsInUnit);
         if (interval > 0) {
@@ -999,11 +953,11 @@ const AnimatedDisclosure = ({ title, isOpen, onToggle, content }) => (
                 {title}
             </motion.span>
             <motion.div
-                animate={{ 
+                animate={{
                     rotate: isOpen ? 180 : 0,
                     scale: isOpen ? 1.1 : 1,
                 }}
-                transition={{ 
+                transition={{
                     type: "spring",
                     stiffness: 300,
                     damping: 20
@@ -1015,22 +969,22 @@ const AnimatedDisclosure = ({ title, isOpen, onToggle, content }) => (
         <AnimatePresence>
             {isOpen && (
                 <motion.div
-                    initial={{ 
+                    initial={{
                         height: 0,
                         opacity: 0,
                         scale: 0.95
                     }}
-                    animate={{ 
+                    animate={{
                         height: "auto",
                         opacity: 1,
                         scale: 1
                     }}
-                    exit={{ 
+                    exit={{
                         height: 0,
                         opacity: 0,
                         scale: 0.95
                     }}
-                    transition={{ 
+                    transition={{
                         duration: 0.4,
                         ease: [0.4, 0, 0.2, 1],
                         opacity: { duration: 0.25 }
@@ -1055,10 +1009,10 @@ const AnimatedDisclosure = ({ title, isOpen, onToggle, content }) => (
 
 
 
-const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingChange, onSubmit ,handleClickrating}) => (
+const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingChange, onSubmit, handleClickrating }) => (
 
-    <motion.form 
-        onSubmit={onSubmit} 
+    <motion.form
+        onSubmit={onSubmit}
         className="mt-4 space-y-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -1111,24 +1065,24 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
                      <i key={num}  value={num} class="bi bi-star text-yellow-400 mr-2"></i>
                 ))}
             </motion.div> */}
-             <motion.div
-            id="rating"
-            whileFocus={{ scale: 1.01 }}
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
+            <motion.div
+                id="rating"
+                whileFocus={{ scale: 1.01 }}
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
                 focus:border-indigo-500 focus:ring-indigo-500 p-2 transition-all duration-200
                 hover:border-indigo-300"
-            required
-            disabled={isSubmitting}
-        >
-            {[1, 2, 3, 4, 5].map((num, index) => (
-                <i
-                    key={num}
-                    onClick={() => handleClickrating(num)} 
-                    className={`bi ${rating >= num ? 'bi-star-fill text-yellow-500' : 'bi-star text-gray-400'} mr-2 cursor-pointer`}
-                    style={{ fontSize: '20px' }}
-                ></i>
-            ))}
-        </motion.div>
+                required
+                disabled={isSubmitting}
+            >
+                {[1, 2, 3, 4, 5].map((num, index) => (
+                    <i
+                        key={num}
+                        onClick={() => handleClickrating(num)}
+                        className={`bi ${rating >= num ? 'bi-star-fill text-yellow-500' : 'bi-star text-gray-400'} mr-2 cursor-pointer`}
+                        style={{ fontSize: '20px' }}
+                    ></i>
+                ))}
+            </motion.div>
         </motion.div>
 
         <motion.button
@@ -1151,9 +1105,9 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
                         className="flex items-center"
                     >
                         <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                            <path className="opacity-75" fill="currentColor" 
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                         </svg>
                         <span>Đang gửi...</span>
                     </motion.div>
@@ -1170,7 +1124,6 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
         </motion.button>
     </motion.form>
 );
-    
 
 
 
@@ -1188,10 +1141,28 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
 
 
 
-const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
+
+const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setIdTracNghiem }) => {
     const [selectedVideos, setSelectedVideos] = useState([]);
     const [isMiniplayer, setIsMiniplayer] = useState(false);
     const [previewVideo, setPreviewVideo] = useState(null);
+    const [baiTracNghiems, setBaiTracNghiems] = useState({});
+
+    
+    const handleClick = async (IDbaihoc) => {
+        try {
+            const response = await ShowTracNghiem({
+                id_baihoc: IDbaihoc
+            });
+            setBaiTracNghiems(prev => ({
+                ...prev,
+                [IDbaihoc]: response
+            }));
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    // console.log('baiTracNghiems', baiTracNghiems);
 
     const getTotalProgress = (lessons) => {
         const totalVideos = lessons?.reduce((sum, lesson) => sum + lesson.video.length, 0) || 0;
@@ -1223,8 +1194,8 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
     // Animation variants
     const containerVariants = {
         hidden: { opacity: 0, y: 20 },
-        visible: { 
-            opacity: 1, 
+        visible: {
+            opacity: 1,
             y: 0,
             transition: { staggerChildren: 0.1 }
         }
@@ -1237,23 +1208,23 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
 
     const previewVariants = {
         hidden: { opacity: 0, scale: 0.8, y: 20 },
-        visible: { 
-            opacity: 1, 
-            scale: 1, 
+        visible: {
+            opacity: 1,
+            scale: 1,
             y: 0,
             transition: { type: "spring", bounce: 0.4 }
         }
     };
 
     return (
-        <motion.div 
+        <motion.div
             className="w-full lg:w-1/3 mt-8 lg:mt-0"
             initial="hidden"
             animate="visible"
             variants={containerVariants}
         >
             <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <motion.div 
+                <motion.div
                     className="space-y-6 bg-white p-6 rounded-xl shadow-lg"
                     whileHover={{ boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}
                     transition={{ duration: 0.3 }}
@@ -1261,7 +1232,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
                     <div className="flex justify-between items-center">
                         <h2 className="text-2xl font-bold text-gray-900">Con đường học tập của tôi</h2>
                         <div className="text-xl font-medium text-gray-500">
-                           Tiến triển: {getTotalProgress(khoahoc?.baihocs)}%
+                            Tiến triển: {getTotalProgress(khoahoc?.baihocs)}%
                         </div>
                     </div>
 
@@ -1275,7 +1246,10 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
                                         whileHover={{ scale: 1.01 }}
                                     >
                                         <h3 className="flow-root">
-                                            <Disclosure.Button className="flex w-full justify-between items-center px-6 py-4 text-left">
+                                            <Disclosure.Button
+                                                className="flex w-full justify-between items-center px-6 py-4 text-left"
+                                                onClick={() => handleClick(lesson.id)}
+                                            >
                                                 <div className="flex items-center gap-3">
                                                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 font-semibold">
                                                         {index + 1}
@@ -1313,13 +1287,9 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
                                                                     className="flex items-center p-3 rounded-lg bg-white hover:bg-indigo-50 transition-colors duration-200"
                                                                     onMouseEnter={() => handleVideoHover(video)}
                                                                     onMouseLeave={() => setPreviewVideo(null)}
-                                                                    onClick={() => handleClick(video.url_link, video.id,lesson.ten,video.ten)}
+                                                                    onClick={() => setSelectedVideos([video])} // Adjust as needed
                                                                 >
-                                                                    <div className={`
-                                                                        h-5 w-5 rounded-full flex items-center justify-center
-                                                                        ${isWatched ? 'bg-green-500' : 'bg-gray-200'}
-                                                                        transition-colors duration-200
-                                                                    `}>
+                                                                    <div className={`h-5 w-5 rounded-full flex items-center justify-center ${isWatched ? 'bg-green-500' : 'bg-gray-200'} transition-colors duration-200`}>
                                                                         {isWatched && <CheckIcon className="h-3 w-3 text-white" />}
                                                                     </div>
                                                                     <div className="ml-3 flex-1">
@@ -1336,70 +1306,58 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
                                                                 </div>
                                                             );
                                                         })}
-                                                        {/* <Link href={'/'} className=''> */}
 
-
-{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-
-
-                        <Disclosure >
-                                {({ open }) => (
-                                    <motion.div
-                                        variants={itemVariants}
-                                        className=" rounded-lg bg-white shadow-sm transition-all duration-200 text-xl font-bold"
-                                        whileHover={{ scale: 1.01 }}
-                                    >
-                                        <h3 className="flow-root">
-                                            <Disclosure.Button className="flex w-full justify-between items-center px-6 py-4 text-left text-gray-500 ">
-                                               <div className=''>
-                                               <i class="bi bi-pen-fill mr-2 text-xl"></i> bài quiz 
-                                               </div>
-                                            </Disclosure.Button>
-                                        </h3>
-                                        <AnimatePresence>
-                                            {open && (
-                                                <Disclosure.Panel
-                                                    as={motion.div}
-                                                    initial={{ height: 0, opacity: 0 }}
-                                                    animate={{ height: "auto", opacity: 1 }}
-                                                    exit={{ height: 0, opacity: 0 }}
-                                                    className="px-6 pb-4"
-                                                >
-                                                    <div>
-                                                        <p className='text-xl font-normal text-[#ff6b6b]'>bài quiz số 1</p>
-                                                        <div>
-                                                            <p className='text-xl font-normal text-gray-500 indent-2'> sau bài quiz này bạn sẽ akjshd áh ákjh ákha skhas k áhid kjshd </p>
-                                                            <button className='bg-[#ff6b6b] mt-2 p-2 text-xl text-white font-normal rounded-lg hover:bg-pink-600'>Làm</button>
-                                                        </div>
-                                                    </div>
-                                                </Disclosure.Panel>
-                                            )}
-                                        </AnimatePresence>
-                                    </motion.div>
-                                )}
-                            </Disclosure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-                                                            
-                                                        {/* </Link> */}
+                                                        {lesson.id in baiTracNghiems && baiTracNghiems[lesson.id].map((baiTracNghiem, index) => (
+                                                            <Disclosure key={index}>
+                                                                {({ open }) => (
+                                                                    <motion.div
+                                                                        variants={itemVariants}
+                                                                        className="rounded-lg bg-white shadow-sm transition-all duration-200 text-xl font-bold"
+                                                                        whileHover={{ scale: 1.01 }}
+                                                                    >
+                                                                        <h3 className="flow-root">
+                                                                            <Disclosure.Button className="flex w-full justify-between items-center px-6 py-4 text-left text-gray-500">
+                                                                                <div className='flex items-center'>
+                                                                                    <i className="bi bi-pen-fill mr-2 text-xl"></i> bài quiz
+                                                                                </div>
+                                                                            </Disclosure.Button>
+                                                                        </h3>
+                                                                        <AnimatePresence>
+                                                                            {open && (
+                                                                                <Disclosure.Panel
+                                                                                    as={motion.div}
+                                                                                    initial={{ height: 0, opacity: 0 }}
+                                                                                    animate={{ height: "auto", opacity: 1 }}
+                                                                                    exit={{ height: 0, opacity: 0 }}
+                                                                                    className="px-6 pb-4"
+                                                                                >
+                                                                                    {baiTracNghiem.noidung.map((baiTracNghiem1, idx) => (
+                                                                                        <div key={idx}>
+                                                                                            <p className='text-xl font-normal text-[#ff6b6b]'>{baiTracNghiem1.tieu_de}</p>
+                                                                                            <div>
+                                                                                                <p className='text-xl font-normal text-gray-500 indent-2'>
+                                                                                                    {baiTracNghiem1.noidung}
+                                                                                                </p>
+                                                                                                <button
+                                                                                                    onClick={() => {
+                                                                                                        setShowBaiQuiz(true);
+                                                                                                        setIdBaihoc(baiTracNghiem.id_baihoc);
+                                                                                                        setIdTracNghiem(baiTracNghiem1.id_baitracnghiem);
+                                                                                                    }}
+                                                                                                    className='bg-[#ff6b6b] mt-2 p-2 text-xl text-white font-normal rounded-lg hover:bg-pink-600'
+                                                                                                >
+                                                                                                    Làm
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    ))}
+                                                                                </Disclosure.Panel>
+                                                                            )}
+                                                                        </AnimatePresence>
+                                                                    </motion.div>
+                                                                )}
+                                                            </Disclosure>
+                                                        ))}
                                                     </div>
                                                 </Disclosure.Panel>
                                             )}
@@ -1414,7 +1372,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
 
             <AnimatePresence>
                 {previewVideo && (
-                    <motion.div 
+                    <motion.div
                         className="fixed bottom-4 right-80 w-96 bg-black rounded-lg p-2 z-10"
                         variants={previewVariants}
                         initial="hidden"
@@ -1433,7 +1391,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
 
             <AnimatePresence>
                 {isMiniplayer && (
-                    <motion.div 
+                    <motion.div
                         className="fixed bottom-4 right-4 w-72 h-40 bg-black rounded-lg shadow-lg"
                         initial={{ opacity: 0, scale: 0.8, y: 50 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -1459,3 +1417,241 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick }) => {
         </motion.div>
     );
 };
+
+
+
+
+
+
+
+
+
+const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
+    const [cauhois, setCauhois] = useState([]);
+    const [selectedAnswers, setSelectedAnswers] = useState({});
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [checkedAnswers, setCheckedAnswers] = useState({});
+    const [feedback, setFeedback] = useState("");
+    const [notification, setNotification] = useState("");  // State để lưu thông báo
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        if (!idBaihoc || !idTracNghiem) {
+          console.warn("idBaihoc or idTracNghiem is null or undefined");
+          return;
+        }
+        try {
+          const url = "https://huuphuoc.id.vn/api/ShowCauHoi";
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id_baihoc: idBaihoc, id_baitracnghiem: idTracNghiem }),
+          });
+          const data = await response.json();
+  
+          const parsedQuestions = [];
+          data.questions.forEach((q) => {
+            q.cau_hoi.forEach((questionText, index) => {
+              parsedQuestions.push({
+                question: questionText,
+                answers: q.cau_traloi[index].map((ans) => ({
+                  text: ans.text,
+                  isCorrect: ans.is_correct === 1,
+                })),
+              });
+            });
+          });
+  
+          setCauhois(parsedQuestions);
+  
+          // Reset lại các trạng thái khi câu hỏi thay đổi
+          setSelectedAnswers({});
+          setIsSubmitted(false);
+          setCurrentQuestionIndex(0);
+          setCheckedAnswers({});
+          setFeedback("");
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    }, [idBaihoc, idTracNghiem]);  // Khi idBaihoc hoặc idTracNghiem thay đổi, câu hỏi sẽ được tải lại từ đầu
+  
+    const handleAnswerSelect = (questionIndex, answerIndex) => {
+      setSelectedAnswers((prev) => ({
+        ...prev,
+        [questionIndex]: answerIndex,
+      }));
+    };
+  
+    const handleCheckAnswer = async () => {
+      const question = cauhois[currentQuestionIndex];
+      const selectedAnswerIndex = selectedAnswers[currentQuestionIndex];
+  
+      if (selectedAnswerIndex === undefined) {
+        setNotification("Vui lòng chọn câu trả lời!"); // Thông báo lỗi
+        return;
+      }
+  
+      if (checkedAnswers[currentQuestionIndex]) {
+        setNotification("Bạn đã kiểm tra câu hỏi này!"); // Thông báo đã kiểm tra
+        return;
+      }
+  
+      const isCorrect = question.answers[selectedAnswerIndex].isCorrect;
+      setFeedback(isCorrect ? "Đúng rồi!" : "Sai rồi! Thử lại nhé.");
+  
+      setCheckedAnswers((prev) => ({
+        ...prev,
+        [currentQuestionIndex]: { isChecked: true, feedback, isCorrect },
+      }));
+  
+      try {
+        const payload = {
+          id_baihoc: idBaihoc,
+          noidung: [
+            {
+              id_baitracnghiem: idTracNghiem,
+              thutumang: currentQuestionIndex + 1,
+              stt: selectedAnswerIndex + 1,
+            },
+          ],
+        };
+  
+        const response = await GuiCauTraLoi(payload);
+  
+        if (!response.ok) {
+          throw new Error("Gửi dữ liệu thất bại!");
+        }
+  
+        setNotification(isCorrect ? "Đúng rồi!" : "Sai rồi! Thử lại nhé."); // Hiển thị thông báo
+      } catch (error) {
+        console.error("Lỗi khi gửi kết quả:", error);
+        setNotification("Có lỗi xảy ra khi gửi kết quả, vui lòng thử lại!"); // Thông báo lỗi khi gửi
+      }
+    };
+  
+    const handleNextQuestion = () => {
+      setFeedback("");
+      setCurrentQuestionIndex((prev) => prev + 1);
+    };
+  
+    const handleSubmit = () => {
+      if (isSubmitted) {
+        setNotification("Bạn đã nộp bài, không thể nộp lại!"); // Thông báo đã nộp bài
+        return;
+      }
+  
+      const results = cauhois.map((question, index) => ({
+        question: question.question,
+        selectedAnswer: selectedAnswers[index],
+        isCorrect: question.answers[selectedAnswers[index]]?.isCorrect || false,
+      }));
+  
+      console.log("Nộp bài:", results);
+      setIsSubmitted(true);
+      setNotification("Kết quả đã được nộp!"); // Thông báo nộp bài
+    };
+  
+    return (
+      <div className="flex-grow lg:pr-8">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">Bài Trắc Nghiệm</h2>
+        <div className="space-y-8">
+          {cauhois[currentQuestionIndex] && (
+            <form className="quiz-question shadow-md p-6 rounded-lg border border-gray-200 bg-white">
+              <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                Câu hỏi {currentQuestionIndex + 1}: {cauhois[currentQuestionIndex].question}
+              </h3>
+              <ul role="group" className="space-y-4">
+                {cauhois[currentQuestionIndex].answers.map((answer, answerIndex) => (
+                  <li key={answerIndex} className="quiz-answer">
+                    <label className="flex items-center space-x-3 cursor-pointer">
+                      <input
+                        type="radio"
+                        name={`answer-${currentQuestionIndex}`}
+                        checked={selectedAnswers[currentQuestionIndex] === answerIndex}
+                        onChange={() => handleAnswerSelect(currentQuestionIndex, answerIndex)}
+                        className="hidden"
+                      />
+                      <span
+                        className={`w-5 h-5 border rounded-full flex justify-center items-center ${
+                          selectedAnswers[currentQuestionIndex] === answerIndex
+                            ? "border-primary"
+                            : "border-gray-300"
+                        }`}
+                      >
+                        {selectedAnswers[currentQuestionIndex] === answerIndex && (
+                          <span className="w-2.5 h-2.5 bg-primary rounded-full"></span>
+                        )}
+                      </span>
+                      <span className="text-gray-600">{answer.text}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </form>
+          )}
+        </div>
+  
+        {/* Thông báo ngoài màn hình */}
+        {notification && (
+          <div className="fixed top-0 left-0 right-0 bg-yellow-500 text-white p-4 text-center">
+            {notification}
+          </div>
+        )}
+  
+        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-md p-4 flex justify-between items-center">
+          <div className="w-full flex justify-center">
+            {feedback && <p className="text-lg text-gray-800">{feedback}</p>}
+          </div>
+          {!checkedAnswers[currentQuestionIndex] && (
+            <button
+              type="button"
+              className="px-4 py-2 bg-primary w-40 text-white rounded-md hover:bg-primary-dark"
+              onClick={handleCheckAnswer}
+            >
+              Kiểm tra đáp án
+            </button>
+          )}
+          {checkedAnswers[currentQuestionIndex] && currentQuestionIndex < cauhois.length - 1 && (
+            <button
+              type="button"
+              className="px-4 py-2 bg-primary w-40 text-white rounded-md hover:bg-primary-dark"
+              onClick={handleNextQuestion}
+            >
+              Tiếp tục
+            </button>
+          )}
+          {currentQuestionIndex === cauhois.length - 1 && checkedAnswers[currentQuestionIndex] && (
+            <button
+              type="button"
+              className="px-4 py-2 w-40 bg-primary text-white rounded-md hover:bg-primary-dark"
+              onClick={handleSubmit}
+            >
+              Xem kết quả
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  };
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
