@@ -3,7 +3,343 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import Axios from "axios";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Sortable from 'sortablejs';
+import { TaoBaiTracNghiem, ShowTracNghiem, TaoCauHoi, XoaCauHoi, XoaPhanTracNghiem, ShowCauHoi } from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem"
 
+
+
+
+
+
+
+const renderQuizItems = (quizItems, subItemsLength) => {
+  const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
+  const [questions, setQuestions] = useState([{ title: '', answers: [{ text: '', is_correct: 0 }] }]);
+  const [BaihocidNe, setBaihocidNe] = useState(null);
+  const [currentQuizId, setCurrentQuizId] = useState(null);
+  const [quizQuestions, setQuizQuestions] = useState({});
+  const [showQuestionsModal, setShowQuestionsModal] = useState(false);
+  const [currentQuestions, setCurrentQuestions] = useState([]);
+
+  const handleAddQuestion = async () => {
+    const validQuestions = questions.filter(q => q.title.trim() && q.answers.some(a => a.text.trim()));
+    const hasCorrectAnswer = questions.some(q => q.answers.some(a => a.is_correct === 1));
+
+    if (!hasCorrectAnswer) {
+      alert('Please select at least one correct answer.');
+      return;
+    }
+
+    if (validQuestions.length > 0) {
+      try {
+        for (const question of validQuestions) {
+          await TaoCauHoi({
+            id_baihoc: BaihocidNe,
+            id_baitracnghiem: currentQuizId,
+            cau_hoi: question.title,
+            cau_traloi: question.answers,
+          });
+        }
+        setIsQuestionModalOpen(false);
+        setQuestions([{ title: '', answers: [{ text: '', is_correct: 0 }] }]);
+      } catch (error) {
+        console.error('Error adding question:', error);
+      }
+    } else {
+      console.warn('Title or answer is empty');
+    }
+  };
+
+  const openModal = (baihocId, quizId) => {
+    setBaihocidNe(baihocId);
+    setCurrentQuizId(quizId);
+    setIsQuestionModalOpen(true);
+  };
+
+  const handleQuestionChange = (index, field, value) => {
+    const newQuestions = [...questions];
+    newQuestions[index][field] = value;
+    setQuestions(newQuestions);
+  };
+
+  const handleAnswerChange = (qIndex, aIndex, field, value) => {
+    const newQuestions = [...questions];
+    newQuestions[qIndex].answers[aIndex][field] = value;
+    setQuestions(newQuestions);
+  };
+
+  const handleAddMoreFields = () => {
+    setQuestions([...questions, { title: '', answers: [{ text: '', is_correct: 0 }] }]);
+  };
+
+  const handleRemoveField = (index) => {
+    const newQuestions = [...questions];
+    newQuestions.splice(index, 1);
+    setQuestions(newQuestions);
+  };
+
+  const handleAddAnswer = (qIndex) => {
+    const newQuestions = [...questions];
+    newQuestions[qIndex].answers.push({ text: '', is_correct: 0 });
+    setQuestions(newQuestions);
+  };
+
+  const handleRemoveAnswer = (qIndex, aIndex) => {
+    const newQuestions = [...questions];
+    newQuestions[qIndex].answers.splice(aIndex, 1);
+    setQuestions(newQuestions);
+  };
+
+  const handleCorrectAnswer = (qIndex, aIndex) => {
+    const newQuestions = [...questions];
+    newQuestions[qIndex].answers = newQuestions[qIndex].answers.map((a, index) => ({
+      ...a,
+      is_correct: index === aIndex ? 1 : 0
+    }));
+    setQuestions(newQuestions);
+  };
+
+  const handleDeleteQuizItem = async (id_baihoc, id_baitracnghiem) => {
+    try {
+      await XoaPhanTracNghiem({
+        id_baihoc: id_baihoc,
+        id_baitracnghiem: id_baitracnghiem,
+      });
+      window.location.reload(); // Reload the page after successful deletion
+    } catch (error) {
+      console.error('Error deleting quiz item:', error);
+    }
+  };
+
+  const toggleShowQuestions = async (quizId, BaihocidNe) => {
+    if (!BaihocidNe) {
+      console.error('BaihocidNe is null');
+      return;
+    }
+
+    if (quizQuestions[quizId]) {
+      setQuizQuestions(prev => ({ ...prev, [quizId]: null }));
+      setShowQuestionsModal(false);
+    } else {
+      try {
+        const questions = await ShowCauHoi(BaihocidNe, quizId);
+        const additionalInfo = { BaihocidNe, quizId }; // Add any additional information here
+        setQuizQuestions(prev => ({ ...prev, [quizId]: questions }));
+        setCurrentQuestions({ questions: questions.questions, ...additionalInfo });
+        setShowQuestionsModal(true);
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+      }
+    }
+  };
+  console.log(currentQuestions, "currentQuestions");
+
+  const handleDeleteQuestion = async (BaihocidNe, quizId, hoiIndex) => {
+    console.log(hoiIndex, BaihocidNe, quizId, "hoiIndex, BaihocidNe, quizId");
+
+    try {
+      await XoaCauHoi({ BaihocidNe, quizId, hoiIndex });
+      window.location.reload(); // Reload the page after successful deletion
+    } catch (error) {
+      console.error('Error deleting question:', error);
+    }
+  };
+
+  return (
+    <>
+      {quizItems.map((quiz, quizIndex) => (
+        <Draggable
+          key={`quiz-${quiz.id}`}
+          draggableId={`quiz-${quiz.id}`}
+          index={quizIndex + subItemsLength}
+        >
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              data-id={quiz.id}
+            >
+              {quiz.noidung && quiz.noidung.map((item, itemIndex) => (
+                <div
+                  key={item.id}
+                  className="flex items-center mt-2 justify-between p-3 bg-gray-50 border border-gray-200 rounded-lg hover:shadow-sm transition-all duration-200"
+                >
+                  <span className="text-gray-700 font-medium">
+                    {itemIndex + 1}. Quiz: {item.tieu_de}
+                  </span>
+                  <div className="flex space-x-2">
+                    <button
+                      className="px-3 py-1 text-sm text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
+                      onClick={() => handleDeleteQuizItem(quiz.id_baihoc, item.id_baitracnghiem)}
+                    >
+                      Xóa
+                    </button>
+                    <button
+                      className="px-3 py-1 text-sm text-blue-600 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors"
+                      onClick={() => openModal(quiz.id_baihoc, item.id_baitracnghiem)}
+                    >
+                      Thêm câu hỏi
+                    </button>
+                    <button
+                      className="px-3 py-1 text-sm text-green-600 bg-green-100 rounded-full hover:bg-green-200 transition-colors"
+                      onClick={() => toggleShowQuestions(item.id_baitracnghiem, quiz.id_baihoc)}
+                    >
+                      {quizQuestions[item.id_baitracnghiem] ? 'Ẩn câu hỏi' : 'Hiện câu hỏi'}
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {quizQuestions[quiz.id] && (
+                <div className="mt-2">
+                  {quizQuestions[quiz.id].questions.map((question, qIndex) => (
+                    <div key={qIndex} className="p-2 border border-gray-300 rounded mb-2 bg-gray-100">
+                      <div className="font-medium text-gray-800">{qIndex + 1}. {question.cau_hoi}</div>
+                      <div className="text-gray-600">
+                        {question.cau_traloi.map((answer, aIndex) => (
+                          <div key={aIndex} className="ml-4">
+                            {aIndex + 1}. {answer.text} {answer.is_correct === 1 ? '(Đúng)' : ''}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </Draggable>
+      ))}
+      {isQuestionModalOpen && (
+        <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
+          <div className="p-5 bg-white rounded-lg relative">
+            <button
+              onClick={() => setIsQuestionModalOpen(false)}
+              className="absolute top-2 right-2 p-2 text-gray-500 hover:text-gray-700"
+            >
+              &times;
+            </button>
+            <h2 className="mb-4 text-xl text-black">Nhập câu hỏi trắc nghiệm mới</h2>
+            {questions.map((question, qIndex) => (
+              <div key={qIndex} className="mb-6">
+                <div className="font-medium text-gray-700 mb-2">Câu hỏi số {qIndex + 1}</div>
+                <input
+                  type="text"
+                  value={question.title}
+                  onChange={(e) => handleQuestionChange(qIndex, 'title', e.target.value)}
+                  className="w-full p-2 border border-black"
+                  placeholder={`Nhập câu hỏi số ${qIndex + 1}`}
+                />
+                {question.answers.map((answer, aIndex) => (
+                  <div key={aIndex} className="mt-2">
+                    <input
+                      type="text"
+                      value={answer.text}
+                      onChange={(e) => handleAnswerChange(qIndex, aIndex, 'text', e.target.value)}
+                      className="w-full p-2 border border-black"
+                      placeholder={`Nhập câu trả lời số ${aIndex + 1}`}
+                    />
+                    <button
+                      onClick={() => handleRemoveAnswer(qIndex, aIndex)}
+                      className="px-4 py-1 mt-2 text-white bg-red-500 rounded-lg"
+                    >
+                      Xóa câu trả lời
+                    </button>
+                    <button
+                      onClick={() => handleCorrectAnswer(qIndex, aIndex)}
+                      className={`px-4 py-1 mt-2 ml-2 rounded-lg ${answer.is_correct === 1 ? 'bg-green-500 text-white' : 'bg-gray-200 text-black'}`}
+                    >
+                      {answer.is_correct === 1 ? 'Đáp án đúng' : 'Chọn đáp án đúng'}
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={() => handleAddAnswer(qIndex)}
+                  className="px-4 py-2 mt-4 text-white bg-green-500 rounded-lg"
+                >
+                  + Thêm câu trả lời
+                </button>
+                {qIndex < questions.length - 1 && (
+                  <div className="border-b border-gray-300 mt-4"></div>
+                )}
+              </div>
+            ))}
+            <button
+              onClick={() => handleAddMoreFields()}
+              className="px-4 py-2 mt-4 text-white bg-green-500 rounded-lg"
+            >
+              + Thêm câu hỏi
+            </button>
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={() => setIsQuestionModalOpen(false)}
+                className="p-2 mr-2 bg-gray-300 rounded"
+              >
+                Hủy
+              </button>
+              <button
+                onClick={handleAddQuestion}
+                className="p-2 text-white bg-blue-500 rounded"
+              >
+                Thêm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showQuestionsModal && (
+        <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
+          <div className="p-5 bg-white rounded-lg relative w-[80%] h-[80%]">
+            <button
+              onClick={() => setShowQuestionsModal(false)}
+              className="absolute top-2 right-2  w-20 h-20  text-gray-500 hover:text-gray-700 border border-gray-500 rounded-full "
+              style={{ fontSize: '2rem' }}
+            >
+              &times;
+            </button>
+            <h2 className="mb-4 text-xl text-black">Danh sách câu hỏi</h2>
+            <div className="overflow-y-auto h-full">
+              {currentQuestions.questions.map((question, qIndex) => (
+                <div key={qIndex} className="p-2 border border-gray-300 rounded mb-4 bg-gray-100">
+                  {Array.isArray(question.cau_hoi) && question.cau_hoi.map((hoi, hoiIndex) => (
+
+                    <div key={hoiIndex} className="mb-4">
+                      {/* {console.log(hoiIndex,"hoi")} */}
+                      <div className="flex justify-between items-center font-medium text-gray-800 mb-2 text-2xl">
+                        {qIndex + 1}.{hoiIndex + 1} {hoi}
+                        <button
+                          onClick={() => handleDeleteQuestion(currentQuestions.BaihocidNe, currentQuestions.quizId, hoiIndex)}
+                          className="px-3 py-1 text-sm w-20 text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
+                        >
+                          Xóa
+                        </button>
+                      </div>
+                      <div className="text-gray-600 ml-4">
+                        {Array.isArray(question.cau_traloi) && question.cau_traloi[hoiIndex] && question.cau_traloi[hoiIndex].map((answer, aIndex) => (
+                          <div key={answer.stt} className="ml-2 text-xl">
+                            {aIndex + 1}. {answer.text} {answer.is_correct === 1 ? '(Đúng)' : ''}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+
+
+
+
+
+
+
+//tao noi dung bai hoc
 const NoiDungBaiHoc = ({
   items,
   setItems,
@@ -34,8 +370,11 @@ const NoiDungBaiHoc = ({
   handleMoveSubItem,
   updateSubItemOrder,
   updateSubItemParent,
+  setExpandedLessons,
+  setQuestionData,
+  questionData,
+  expandedLessons, // Receive expandedLessons as a prop
 }) => {
-
   const onDragEnd = (result) => {
     const { source, destination, type } = result;
 
@@ -84,124 +423,152 @@ const NoiDungBaiHoc = ({
     }
   };
 
+  const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
+  const [newQuestionTitle, setNewQuestionTitle] = useState('');
+  const [newQuestionDescription, setNewQuestionDescription] = useState('');
+
+  const handleAddQuestion = useCallback(async (itemId) => {
+    if (newQuestionTitle && newQuestionDescription && newQuestionTitle.trim() && newQuestionDescription.trim()) {
+      try {
+        await TaoBaiTracNghiem({
+          id_baihoc: itemId,
+          tieu_de: newQuestionTitle,
+          mo_ta: newQuestionDescription,
+        });
+        window.location.reload(); // Reload the page after successful addition
+      } catch (error) {
+        window.location.reload();
+      }
+    } else {
+      window.location.reload();
+    }
+  }, [newQuestionTitle, newQuestionDescription]);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-    <Droppable droppableId="lessons" type="lesson">
-      {(provided) => (
-        <div
-          id="hs-nested-sortable"
-          className="p-8 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-sm"
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-        >
-          {items.length === 0 ? (
-            <div className="p-4 text-gray-500 text-center border-2 border-dashed border-gray-200 rounded-lg">
-              No lessons available. Click &quot;Thêm Phần&quot; to add your first lesson.
-            </div>
-          ) : (
-            items.map((item, index) => (
-              item && item.name && (
-                <Draggable key={`lesson-${item.id}`} draggableId={`lesson-${item.id}`} index={index}>
-                  {(provided) => (
-                    <div
-                      className="mb-6 bg-white rounded-lg shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg"
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                    >
-                      <div
-                        className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-blue-700"
-                        {...provided.dragHandleProps}
-                      >
-                        <span className="font-semibold text-white text-2xl">{item.name}</span>
-                        <div className="flex space-x-3">
-                          <button
-                            onClick={() => {
-                              setIsSubModalOpen(true);
-                              setCurrentItemId(item.id);
-                            }}
-                            className="px-3 py-1.5 text-sm font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-colors"
-                          >
-                            + Thêm Sub Item
-                          </button>
-                          <button
-                            onClick={() => handleExpandLesson(item.id)}
-                            className="px-3 py-1.5 text-sm font-medium text-white bg-blue-500 rounded-full hover:bg-blue-400 transition-colors"
-                          >
-                            Mở rộng
-                          </button>
-                          <button
-                            onClick={() => handleRemoveItem(item.id)}
-                            className="px-3 py-1.5 text-sm font-medium text-white bg-red-500 rounded-full hover:bg-red-400 transition-colors"
-                          >
-                            Xóa
-                          </button>
-                        </div>
-                      </div>
-
-                      <Droppable droppableId={`${item.id}`} type="subItem">
-                        {(provided) => (
-                          <div
-                            className="p-4 space-y-3"
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                            data-parent-id={item.id}
-                          >
-                            {item.subItems.map((subItem, subIndex) => (
-                              subItem && subItem.name && (
-                                <Draggable
-                                  key={`subItem-${subItem.id}`}
-                                  draggableId={`subItem-${subItem.id}`}
-                                  index={subIndex}
-                                >
-                                  {(provided) => (
-                                    <div
-                                      className="flex items-center justify-between p-3 bg-gray-50 border border-gray-200 rounded-lg hover:shadow-sm transition-all duration-200"
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      data-id={subItem.id}
-                                    >
-                                      <span className="text-gray-700 font-medium">{subItem.name}</span>
-                                      <div className="flex space-x-2">
-                                        <button
-                                          onClick={() => {
-                                            setIsContentModalOpen(true);
-                                            setCurrentSubItemId(subItem.id);
-                                          }}
-                                          className="px-3 py-1 text-sm text-yellow-600 bg-yellow-100 rounded-full hover:bg-yellow-200 transition-colors"
-                                        >
-                                          Nội Dung
-                                        </button>
-                                        <button
-                                          onClick={() => handleRemoveSubItem(item.id, subItem.id)}
-                                          className="px-3 py-1 text-sm text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
-                                        >
-                                          Xóa
-                                        </button>
-                                      </div>
-                                    </div>
-                                  )}
-                                </Draggable>
-                              )
-                            ))}
-                            {provided.placeholder}
-                          </div>
-                        )}
-                      </Droppable>
-                    </div>
-                  )}
-                </Draggable>
-              )
-            ))
-          )}
-          {provided.placeholder}
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="px-6 py-3 mt-6 text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full font-medium hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-sm hover:shadow focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+      <Droppable droppableId="lessons" type="lesson">
+        {(provided) => (
+          <div
+            id="hs-nested-sortable"
+            className="p-8 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-sm"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
           >
-            + Thêm Phần Mới
-          </button>
+            {items.length === 0 ? (
+              <div className="p-4 text-gray-500 text-center border-2 border-dashed border-gray-200 rounded-lg">
+                No lessons available. Click "Thêm Phần" to add your first lesson.
+              </div>
+            ) : (
+              items.map((item, index) => (
+                item && item.name && (
+                  <Draggable key={`lesson-${item.id}`} draggableId={`lesson-${item.id}`} index={index}>
+                    {(provided) => (
+                      <div
+                        className="mb-6 bg-white rounded-lg shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                      >
+                        <div
+                          className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-blue-700"
+                          {...provided.dragHandleProps}
+                        >
+                          <span className="font-semibold text-white text-2xl">{item.name}</span>
+                          <div className="flex space-x-3">
+                            <button
+                              onClick={() => {
+                                setIsSubModalOpen(true);
+                                setCurrentItemId(item.id);
+                              }}
+                              className="px-3 py-1.5 text-sm font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-colors"
+                            >
+                              + Thêm Sub Item
+                            </button>
+                            <button
+                              onClick={() => handleExpandLesson(item.id)}
+                              className="px-3 py-1.5 text-sm font-medium text-white bg-blue-500 rounded-full hover:bg-blue-400 transition-colors"
+                            >
+                              Mở rộng
+                            </button>
+                            <button
+                              onClick={() => handleRemoveItem(item.id)}
+                              className="px-3 py-1.5 text-sm font-medium text-white bg-red-500 rounded-full hover:bg-red-400 transition-colors"
+                            >
+                              Xóa
+                            </button>
+                            <button
+                              onClick={() => {
+                                setIsQuestionModalOpen(true);
+                                setCurrentItemId(item.id);
+                              }}
+                              className="px-3 py-1.5 text-sm font-medium text-green-600 bg-white rounded-full hover:bg-green-50 transition-colors"
+                            >
+                              + Thêm trắc nghiệm
+                            </button>
+                          </div>
+                        </div>
+
+                        {expandedLessons[item.id] && (
+                          <Droppable droppableId={`${item.id}`} type="subItem">
+                            {(provided) => (
+                              <div
+                                className="p-4 space-y-3"
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                data-parent-id={item.id}
+                              >
+                                {item.subItems.map((subItem, subIndex) => (
+                                  subItem && subItem.name && (
+                                    <Draggable key={`subItem-${subItem.id}`} draggableId={`subItem-${subItem.id}`} index={subIndex}>
+                                      {(provided) => (
+                                        <div
+                                          className="flex items-center justify-between p-3 bg-gray-50 border border-gray-200 rounded-lg hover:shadow-sm transition-all duration-200"
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          data-id={subItem.id}
+                                        >
+                                          <span className="text-gray-700 font-medium">{subItem.name}</span>
+                                          <div className="flex space-x-2">
+                                            <button
+                                              onClick={() => {
+                                                setIsContentModalOpen(true);
+                                                setCurrentSubItemId(subItem.id);
+                                              }}
+                                              className="px-3 py-1 text-sm text-yellow-600 bg-yellow-100 rounded-full hover:bg-yellow-200 transition-colors"
+                                            >
+                                              Nội Dung
+                                            </button>
+                                            <button
+                                              onClick={() => handleRemoveSubItem(item.id, subItem.id)}
+                                              className="px-3 py-1 text-sm text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
+                                            >
+                                              Xóa
+                                            </button>
+                                          </div>
+                                        </div>
+                                      )}
+                                    </Draggable>
+                                  )
+                                ))}
+                                {provided.placeholder}
+                                {renderQuizItems(questionData[item.id], item.subItems.length)}
+                              </div>
+                            )}
+                          </Droppable>
+                        )}
+                      </div>
+                    )}
+                  </Draggable>
+                )
+              ))
+            )}
+            {provided.placeholder}
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="px-6 py-3 mt-6 text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full font-medium hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-sm hover:shadow focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+            >
+              + Thêm Phần Mới
+            </button>
             {isModalOpen && (
               <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
                 <div className="p-5 bg-white rounded-lg">
@@ -301,6 +668,44 @@ const NoiDungBaiHoc = ({
                 </div>
               </div>
             )}
+
+            {isQuestionModalOpen && (
+              <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
+                <div className="p-5 bg-white rounded-lg">
+                  <h2 className="mb-4 text-xl text-black">Nhập câu hỏi trắc nghiệm mới</h2>
+                  <input
+                    type="text"
+                    value={newQuestionTitle}
+                    onChange={(e) => setNewQuestionTitle(e.target.value)}
+                    className="w-full p-2 bg-red-500 border text-xl "
+                    placeholder="Tiêu đề"
+                  />
+
+                  <textarea
+                    value={newQuestionDescription}
+                    onChange={(e) => setNewQuestionDescription(e.target.value)}
+                    className="w-full p-2 mt-2  border text-xl "
+                    placeholder="Mô tả"
+                  />
+
+
+                  <div className="flex justify-end mt-4">
+                    <button
+                      onClick={() => setIsQuestionModalOpen(false)}
+                      className="p-2 mr-2 bg-gray-300 rounded"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      onClick={() => handleAddQuestion(currentItemId)}
+                      className="p-2 text-white bg-blue-500 rounded"
+                    >
+                      Thêm
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </Droppable>
@@ -309,7 +714,7 @@ const NoiDungBaiHoc = ({
 };
 
 
-
+//Xu ly du lieu bai hoc
 const BaiHoc = () => {
   const [id, setId] = useState(null);
   const [items, setItems] = useState([]);
@@ -324,9 +729,10 @@ const BaiHoc = () => {
   const [expandedLessonId, setExpandedLessonId] = useState(null);
   const [duration, setDuration] = useState(null);
   const [highestId, setHighestId] = useState(0);
-  const videoRef = useRef(null);
-  const playerRef = useRef(null);
+  const [questionData, setQuestionData] = useState({});
+  const [expandedLessons, setExpandedLessons] = useState({});
 
+  //lay id khoa hoc
   useEffect(() => {
     if (typeof window !== "undefined") {
       const currentUrl = window.location.href;
@@ -336,7 +742,7 @@ const BaiHoc = () => {
       console.log("id:", idFromUrl);
     }
   }, []);
-
+  //lay danh sach bai hoc
   useEffect(() => {
     const fetchLessons = async () => {
       if (id) {
@@ -367,7 +773,7 @@ const BaiHoc = () => {
 
     fetchLessons();
   }, [id]);
-
+  //cap nhat thu tu bai hoc
   const updateLessonOrder = useCallback(async (reorderedItems) => {
     try {
       const lessons = reorderedItems
@@ -395,7 +801,7 @@ const BaiHoc = () => {
       }
     }
   }, [id]);
-
+  //cap nhat thu tu sub item
   const updateSubItemOrder = useCallback(async (parentId, container) => {
     try {
       const subItems = items.find(item => item.id.toString() === parentId.toString()).subItems;
@@ -426,7 +832,7 @@ const BaiHoc = () => {
       }
     }
   }, [items]);
-
+  //cap nhat sub item sau khi di chuyen
   const updateSubItemParent = useCallback(async (subItemId, newParentId) => {
     try {
       console.log("Starting updateSubItemParent");
@@ -503,7 +909,7 @@ const BaiHoc = () => {
       });
     });
   };
-
+  //di chuyen sub item
   const moveSubItem = useCallback(async (subItemId, sourceParentId, targetParentId, container) => {
     try {
       await Axios.post(
@@ -549,7 +955,7 @@ const BaiHoc = () => {
       console.error("Error moving sub item:", error);
     }
   }, [updateSubItemOrder]);
-
+  //drag and drop
   useEffect(() => {
     const sortables = document.querySelectorAll(".nested-sortable");
     const sortableInstances = [];
@@ -607,7 +1013,7 @@ const BaiHoc = () => {
       sortableInstances.forEach((instance) => instance.destroy());
     };
   }, [items, updateLessonOrder, updateSubItemOrder, moveSubItem]);
-
+  //xoa sub item
   const handleRemoveSubItem = useCallback(async (itemId, subItemId) => {
     try {
       const response = await Axios.post(
@@ -615,7 +1021,7 @@ const BaiHoc = () => {
         { id_video: subItemId },
         { referrerPolicy: 'unsafe-url' }
       );
-  
+
       if (response.status === 200) {
         setItems((prevItems) =>
           prevItems.map((item) => {
@@ -636,7 +1042,7 @@ const BaiHoc = () => {
       console.error("Error deleting sub-item:", error);
     }
   }, [setItems]);
-
+  //xoa bai hoc
   const handleRemoveItem = useCallback(async (itemId) => {
     if (!itemId) return;
 
@@ -666,6 +1072,7 @@ const BaiHoc = () => {
       console.error("Error deleting lesson:", error);
     }
   }, [items]);
+  //them bai hoc
   const addLessonToCourse = useCallback(async (lessonName) => {
     if (id) {
       try {
@@ -684,6 +1091,7 @@ const BaiHoc = () => {
       }
     }
   }, [id]);
+
   const handleAddItem = useCallback(async () => {
     if (newItemName.trim()) {
       try {
@@ -719,7 +1127,7 @@ const BaiHoc = () => {
             referrerPolicy: 'unsafe-url'
           }
         );
-  
+
         const newSubItem = response.data.data;
         setItems(
           items.map((item) => {
@@ -743,6 +1151,8 @@ const BaiHoc = () => {
     }
   }, [items, newSubItemName]);
 
+
+  //show sub item
   const fetchSubItems = useCallback(async (id_baihoc) => {
     try {
       const response = await Axios.post(
@@ -776,11 +1186,27 @@ const BaiHoc = () => {
     }
   }, [items]);
 
-  const handleExpandLesson = useCallback((itemId) => {
+
+  const handleExpandLesson = useCallback(async (itemId) => {
+    const data = await ShowTracNghiem({ id_baihoc: itemId });
+    setQuestionData((prevData) => ({
+      ...prevData,
+      [itemId]: data,
+    }));
+    setExpandedLessons((prevExpandedLessons) => ({
+      ...prevExpandedLessons,
+      [itemId]: true,
+    }));
     setExpandedLessonId(itemId);
     fetchSubItems(itemId);
   }, [fetchSubItems]);
 
+
+
+
+
+
+  //Thêm video vào sub item
   const handleAddContent = useCallback(async (subItemId) => {
     if (newContentUrl.trim()) {
       const videoId = extractVideoId(newContentUrl);
@@ -861,6 +1287,8 @@ const BaiHoc = () => {
     return `${hours}:${minutes}:${remainingSeconds}`;
   };
 
+
+
   return (
     <NoiDungBaiHoc
       items={items}
@@ -892,6 +1320,10 @@ const BaiHoc = () => {
       handleMoveSubItem={handleMoveSubItem}
       updateSubItemOrder={updateSubItemOrder}
       updateSubItemParent={updateSubItemParent}
+      setExpandedLessons={setExpandedLessons}
+      setQuestionData={setQuestionData}
+      questionData={questionData}
+      expandedLessons={expandedLessons} // Pass expandedLessons as a prop
     />
   );
 };
