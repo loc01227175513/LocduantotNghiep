@@ -12,8 +12,8 @@ import { PlusIcon, MinusIcon, XIcon } from '@heroicons/react/solid';
 import { ChevronDownIcon, CheckIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
-import { ShowTracNghiem ,ShowCauHoi ,GuiCauTraLoi} from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
-
+import { ShowTracNghiem ,ShowCauHoi ,GuiCauTraLoi,HoanThanhTracNghiem} from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
+import KetQuaTracNghiem from './ketquatracnghiem';
 
 
 
@@ -1426,14 +1426,15 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setI
 
 
 
+
 const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
     const [cauhois, setCauhois] = useState([]);
     const [selectedAnswers, setSelectedAnswers] = useState({});
-    const [isSubmitted, setIsSubmitted] = useState(false);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [checkedAnswers, setCheckedAnswers] = useState({});
     const [feedback, setFeedback] = useState("");
-    const [notification, setNotification] = useState("");  // State để lưu thông báo
+    const [notification, setNotification] = useState("");
+    const [showKetQua, setShowKetQua] = useState(false);
   
     useEffect(() => {
       const fetchData = async () => {
@@ -1466,11 +1467,7 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
           });
   
           setCauhois(parsedQuestions);
-  
-          // Reset lại các trạng thái khi câu hỏi thay đổi
           setSelectedAnswers({});
-          setIsSubmitted(false);
-          setCurrentQuestionIndex(0);
           setCheckedAnswers({});
           setFeedback("");
         } catch (error) {
@@ -1478,7 +1475,7 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
         }
       };
       fetchData();
-    }, [idBaihoc, idTracNghiem]);  // Khi idBaihoc hoặc idTracNghiem thay đổi, câu hỏi sẽ được tải lại từ đầu
+    }, [idBaihoc, idTracNghiem]);
   
     const handleAnswerSelect = (questionIndex, answerIndex) => {
       setSelectedAnswers((prev) => ({
@@ -1492,12 +1489,12 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
       const selectedAnswerIndex = selectedAnswers[currentQuestionIndex];
   
       if (selectedAnswerIndex === undefined) {
-        setNotification("Vui lòng chọn câu trả lời!"); // Thông báo lỗi
+        setNotification("Vui lòng chọn câu trả lời!");
         return;
       }
   
       if (checkedAnswers[currentQuestionIndex]) {
-        setNotification("Bạn đã kiểm tra câu hỏi này!"); // Thông báo đã kiểm tra
+        setNotification("Bạn đã kiểm tra câu hỏi này!");
         return;
       }
   
@@ -1506,31 +1503,38 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
   
       setCheckedAnswers((prev) => ({
         ...prev,
-        [currentQuestionIndex]: { isChecked: true, feedback, isCorrect },
+        [currentQuestionIndex]: { isChecked: true, isCorrect },
       }));
   
+      // Prepare noidung object
+      const noidung = [{
+        id_baitracnghiem: idTracNghiem,
+        stt: selectedAnswerIndex + 1, // Assuming stt is 1-based index
+        thutumang: currentQuestionIndex + 1, // Assuming thutumang is 1-based index
+      }];
+  
       try {
-        const payload = {
-          id_baihoc: idBaihoc,
-          noidung: [
-            {
-              id_baitracnghiem: idTracNghiem,
-              thutumang: currentQuestionIndex + 1,
-              stt: selectedAnswerIndex + 1,
-            },
-          ],
-        };
-  
-        const response = await GuiCauTraLoi(payload);
-  
-        if (!response.ok) {
-          throw new Error("Gửi dữ liệu thất bại!");
-        }
-  
-        setNotification(isCorrect ? "Đúng rồi!" : "Sai rồi! Thử lại nhé."); // Hiển thị thông báo
+        await GuiCauTraLoi({ id_baihoc: idBaihoc, noidung });
+        setNotification(isCorrect ? "Đã gửi đáp án đúng." : "Đã gửi đáp án sai.");
       } catch (error) {
-        console.error("Lỗi khi gửi kết quả:", error);
-        setNotification("Có lỗi xảy ra khi gửi kết quả, vui lòng thử lại!"); // Thông báo lỗi khi gửi
+        console.error("Lỗi khi gửi đáp án:", error);
+        setNotification("Có lỗi xảy ra khi gửi đáp án.");
+      }
+  
+      // Nếu đã trả lời đúng câu hỏi cuối cùng
+      if (
+        currentQuestionIndex === cauhois.length - 1 &&
+        Object.values({ ...checkedAnswers, [currentQuestionIndex]: { isChecked: true, isCorrect } }).every(
+          (answer) => answer.isCorrect
+        )
+      ) {
+        try {
+          await HoanThanhTracNghiem({ id_baihoc: idBaihoc });
+          setNotification("Chúc mừng! Bạn đã hoàn thành bài trắc nghiệm.");
+        } catch (error) {
+          console.error("Lỗi khi gửi trạng thái hoàn thành:", error);
+          setNotification("Có lỗi xảy ra khi gửi trạng thái hoàn thành.");
+        }
       }
     };
   
@@ -1540,21 +1544,12 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
     };
   
     const handleSubmit = () => {
-      if (isSubmitted) {
-        setNotification("Bạn đã nộp bài, không thể nộp lại!"); // Thông báo đã nộp bài
-        return;
-      }
-  
-      const results = cauhois.map((question, index) => ({
-        question: question.question,
-        selectedAnswer: selectedAnswers[index],
-        isCorrect: question.answers[selectedAnswers[index]]?.isCorrect || false,
-      }));
-  
-      console.log("Nộp bài:", results);
-      setIsSubmitted(true);
-      setNotification("Kết quả đã được nộp!"); // Thông báo nộp bài
+      setShowKetQua(true);
     };
+  
+    if (showKetQua) {
+      return <KetQuaTracNghiem idBaihoc={idBaihoc} idTracNghiem={idTracNghiem} />;
+    }
   
     return (
       <div className="flex-grow lg:pr-8">
@@ -1596,7 +1591,6 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
           )}
         </div>
   
-        {/* Thông báo ngoài màn hình */}
         {notification && (
           <div className="fixed top-0 left-0 right-0 bg-yellow-500 text-white p-4 text-center">
             {notification}
@@ -1638,8 +1632,10 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
       </div>
     );
   };
+
   
-  
+
+  export { ShowTracNghiemComponent };
   
 
 

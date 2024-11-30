@@ -214,3 +214,61 @@ export const GuiCauTraLoi = async ({ id_baihoc, noidung }) => {
   }
 };
 
+export const showAllTracNghiemNguoiDung = async ({ id_baihoc }) => {
+  const user = localStorage.getItem("data");
+  const url = 'https://huuphuoc.id.vn/api/showAllTracNghiemNguoiDung';
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id_baihoc :id_baihoc,
+        id_nguoidung: JSON.parse(user).id,
+      }),
+      referrerPolicy: 'unsafe-url',
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to complete quiz');
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error('Error during completion:', error);
+    throw error;
+  }
+}
+export const HoanThanhTracNghiem = async ({ id_baihoc }) => {
+  const user = localStorage.getItem("data");
+  const url = 'https://huuphuoc.id.vn/api/GuiTrangThaiBaiTracNghiem';
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        trangthai :"Active",
+        id_baihoc :id_baihoc,
+        id_nguoidung: JSON.parse(user).id,
+      }),
+      referrerPolicy: 'unsafe-url',
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to complete quiz');
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error('Error during completion:', error);
+    throw error;
+  }
+}
+
