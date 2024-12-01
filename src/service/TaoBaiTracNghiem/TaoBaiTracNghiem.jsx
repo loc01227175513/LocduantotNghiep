@@ -271,4 +271,45 @@ export const HoanThanhTracNghiem = async ({ id_baihoc }) => {
     throw error;
   }
 }
+export const showTrangThaiHoanThanh = async ({ id_baihoc }) => {
+  const userData = localStorage.getItem("data");
+
+  if (!userData) {
+    throw new Error("User not authenticated.");
+  }
+
+  let user;
+  try {
+    user = JSON.parse(userData);
+  } catch (error) {
+    console.error("Invalid user data in localStorage:", error);
+    throw new Error("Invalid user data.");
+  }
+
+  const url = 'https://huuphuoc.id.vn/api/showTrangThaiHoanThanh';
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        trangthai: "Active",
+        id_baihoc: id_baihoc,
+        id_nguoidung: user.id,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to complete quiz');
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error('Error during completion:', error);
+    throw error;
+  }
+};
 

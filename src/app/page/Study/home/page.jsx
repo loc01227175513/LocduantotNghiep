@@ -12,7 +12,7 @@ import { PlusIcon, MinusIcon, XIcon } from '@heroicons/react/solid';
 import { ChevronDownIcon, CheckIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
-import { ShowTracNghiem ,ShowCauHoi ,GuiCauTraLoi,HoanThanhTracNghiem} from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
+import { ShowTracNghiem ,ShowCauHoi ,GuiCauTraLoi} from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
 import KetQuaTracNghiem from './ketquatracnghiem';
 
 
@@ -1432,10 +1432,12 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [checkedAnswers, setCheckedAnswers] = useState({});
+
     const [feedback, setFeedback] = useState("");
     const [notification, setNotification] = useState("");
     const [showKetQua, setShowKetQua] = useState(false);
   
+        
     useEffect(() => {
       const fetchData = async () => {
         if (!idBaihoc || !idTracNghiem) {
@@ -1476,7 +1478,10 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
       };
       fetchData();
     }, [idBaihoc, idTracNghiem]);
-  
+
+
+
+
     const handleAnswerSelect = (questionIndex, answerIndex) => {
       setSelectedAnswers((prev) => ({
         ...prev,
@@ -1521,21 +1526,8 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
         setNotification("Có lỗi xảy ra khi gửi đáp án.");
       }
   
-      // Nếu đã trả lời đúng câu hỏi cuối cùng
-      if (
-        currentQuestionIndex === cauhois.length - 1 &&
-        Object.values({ ...checkedAnswers, [currentQuestionIndex]: { isChecked: true, isCorrect } }).every(
-          (answer) => answer.isCorrect
-        )
-      ) {
-        try {
-          await HoanThanhTracNghiem({ id_baihoc: idBaihoc });
-          setNotification("Chúc mừng! Bạn đã hoàn thành bài trắc nghiệm.");
-        } catch (error) {
-          console.error("Lỗi khi gửi trạng thái hoàn thành:", error);
-          setNotification("Có lỗi xảy ra khi gửi trạng thái hoàn thành.");
-        }
-      }
+
+      
     };
   
     const handleNextQuestion = () => {
