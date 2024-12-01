@@ -12,7 +12,7 @@ import { PlusIcon, MinusIcon, XIcon } from '@heroicons/react/solid';
 import { ChevronDownIcon, CheckIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
-import { ShowTracNghiem ,ShowCauHoi ,GuiCauTraLoi,checkQuizCompletion} from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
+import { ShowTracNghiem, ShowCauHoi, GuiCauTraLoi, checkQuizCompletion } from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
 import KetQuaTracNghiem from './ketquatracnghiem';
 
 
@@ -215,7 +215,7 @@ export default function Page() {
         };
 
         checkVideoWatched();
-    }, [currentVideoId, khoahoc,watchedVideos]);
+    }, [currentVideoId, khoahoc]);
 
     const formatDuration = (totalSeconds) => {
         const hours = Math.floor(totalSeconds / 3600);
@@ -497,7 +497,7 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                             </motion.div>
                         )}
                     </motion.div>
-                    <AnimatePresence>
+                    {/* <AnimatePresence>
                         {previewVideo && (
                             <motion.div
                                 className="fixed bottom-4 right-80 w-96 bg-black rounded-lg p-2 z-10"
@@ -514,7 +514,7 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                                 />
                             </motion.div>
                         )}
-                    </AnimatePresence>
+                    </AnimatePresence> */}
                     <motion.section
                         className="mt-6 space-y-4"
                         variants={{
@@ -1445,199 +1445,198 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
     const [feedback, setFeedback] = useState("");
     const [notification, setNotification] = useState("");
     const [showKetQua, setShowKetQua] = useState(false);
-  
-        
+
+
     useEffect(() => {
-      const fetchData = async () => {
-        if (!idBaihoc || !idTracNghiem) {
-          console.warn("idBaihoc or idTracNghiem is null or undefined");
-          return;
-        }
-        try {
-          const url = "https://huuphuoc.id.vn/api/ShowCauHoi";
-          const response = await fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id_baihoc: idBaihoc, id_baitracnghiem: idTracNghiem }),
-          });
-          const data = await response.json();
-  
-          const parsedQuestions = [];
-          data.questions.forEach((q) => {
-            q.cau_hoi.forEach((questionText, index) => {
-              parsedQuestions.push({
-                question: questionText,
-                answers: q.cau_traloi[index].map((ans) => ({
-                  text: ans.text,
-                  isCorrect: ans.is_correct === 1,
-                })),
-              });
-            });
-          });
-  
-          setCauhois(parsedQuestions);
-          setSelectedAnswers({});
-          setCheckedAnswers({});
-          setFeedback("");
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-      fetchData();
+        const fetchData = async () => {
+            if (!idBaihoc || !idTracNghiem) {
+                console.warn("idBaihoc or idTracNghiem is null or undefined");
+                return;
+            }
+            try {
+                const url = "https://huuphuoc.id.vn/api/ShowCauHoi";
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ id_baihoc: idBaihoc, id_baitracnghiem: idTracNghiem }),
+                });
+                const data = await response.json();
+
+                const parsedQuestions = [];
+                data.questions.forEach((q) => {
+                    q.cau_hoi.forEach((questionText, index) => {
+                        parsedQuestions.push({
+                            question: questionText,
+                            answers: q.cau_traloi[index].map((ans) => ({
+                                text: ans.text,
+                                isCorrect: ans.is_correct === 1,
+                            })),
+                        });
+                    });
+                });
+
+                setCauhois(parsedQuestions);
+                setSelectedAnswers({});
+                setCheckedAnswers({});
+                setFeedback("");
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
     }, [idBaihoc, idTracNghiem]);
 
 
 
 
     const handleAnswerSelect = (questionIndex, answerIndex) => {
-      setSelectedAnswers((prev) => ({
-        ...prev,
-        [questionIndex]: answerIndex,
-      }));
+        setSelectedAnswers((prev) => ({
+            ...prev,
+            [questionIndex]: answerIndex,
+        }));
     };
-  
+
     const handleCheckAnswer = async () => {
-      const question = cauhois[currentQuestionIndex];
-      const selectedAnswerIndex = selectedAnswers[currentQuestionIndex];
-  
-      if (selectedAnswerIndex === undefined) {
-        setNotification("Vui lòng chọn câu trả lời!");
-        return;
-      }
-  
-      if (checkedAnswers[currentQuestionIndex]) {
-        setNotification("Bạn đã kiểm tra câu hỏi này!");
-        return;
-      }
-  
-      const isCorrect = question.answers[selectedAnswerIndex].isCorrect;
-      setFeedback(isCorrect ? "Đúng rồi!" : "Sai rồi! Thử lại nhé.");
-  
-      setCheckedAnswers((prev) => ({
-        ...prev,
-        [currentQuestionIndex]: { isChecked: true, isCorrect },
-      }));
-  
-      // Prepare noidung object
-      const noidung = [{
-        id_baitracnghiem: idTracNghiem,
-        stt: selectedAnswerIndex + 1, // Assuming stt is 1-based index
-        thutumang: currentQuestionIndex + 1, // Assuming thutumang is 1-based index
-      }];
-  
-      try {
-        await GuiCauTraLoi({ id_baihoc: idBaihoc, noidung });
-        setNotification(isCorrect ? "Đã gửi đáp án đúng." : "Đã gửi đáp án sai.");
-      } catch (error) {
-        console.error("Lỗi khi gửi đáp án:", error);
-        setNotification("Có lỗi xảy ra khi gửi đáp án.");
-      }
-  
+        const question = cauhois[currentQuestionIndex];
+        const selectedAnswerIndex = selectedAnswers[currentQuestionIndex];
 
-      
+        if (selectedAnswerIndex === undefined) {
+            setNotification("Vui lòng chọn câu trả lời!");
+            return;
+        }
+
+        if (checkedAnswers[currentQuestionIndex]) {
+            setNotification("Bạn đã kiểm tra câu hỏi này!");
+            return;
+        }
+
+        const isCorrect = question.answers[selectedAnswerIndex].isCorrect;
+        setFeedback(isCorrect ? "Đúng rồi!" : "Sai rồi! Thử lại nhé.");
+
+        setCheckedAnswers((prev) => ({
+            ...prev,
+            [currentQuestionIndex]: { isChecked: true, isCorrect },
+        }));
+
+        // Prepare noidung object
+        const noidung = [{
+            id_baitracnghiem: idTracNghiem,
+            stt: selectedAnswerIndex + 1, // Assuming stt is 1-based index
+            thutumang: currentQuestionIndex + 1, // Assuming thutumang is 1-based index
+        }];
+
+        try {
+            await GuiCauTraLoi({ id_baihoc: idBaihoc, noidung });
+            setNotification(isCorrect ? "Đã gửi đáp án đúng." : "Đã gửi đáp án sai.");
+        } catch (error) {
+            console.error("Lỗi khi gửi đáp án:", error);
+            setNotification("Có lỗi xảy ra khi gửi đáp án.");
+        }
+
+
+
     };
-  
+
     const handleNextQuestion = () => {
-      setFeedback("");
-      setCurrentQuestionIndex((prev) => prev + 1);
+        setFeedback("");
+        setCurrentQuestionIndex((prev) => prev + 1);
     };
-  
+
     const handleSubmit = () => {
-      setShowKetQua(true);
+        setShowKetQua(true);
     };
-  
+
     if (showKetQua) {
-      return <KetQuaTracNghiem idBaihoc={idBaihoc} idTracNghiem={idTracNghiem} />;
+        return <KetQuaTracNghiem idBaihoc={idBaihoc} idTracNghiem={idTracNghiem} />;
     }
-  
+
     return (
-      <div className="flex-grow lg:pr-8">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Bài Trắc Nghiệm</h2>
-        <div className="space-y-8">
-          {cauhois[currentQuestionIndex] && (
-            <form className="quiz-question shadow-md p-6 rounded-lg border border-gray-200 bg-white">
-              <h3 className="text-lg font-semibold text-gray-700 mb-4">
-                Câu hỏi {currentQuestionIndex + 1}: {cauhois[currentQuestionIndex].question}
-              </h3>
-              <ul role="group" className="space-y-4">
-                {cauhois[currentQuestionIndex].answers.map((answer, answerIndex) => (
-                  <li key={answerIndex} className="quiz-answer">
-                    <label className="flex items-center space-x-3 cursor-pointer">
-                      <input
-                        type="radio"
-                        name={`answer-${currentQuestionIndex}`}
-                        checked={selectedAnswers[currentQuestionIndex] === answerIndex}
-                        onChange={() => handleAnswerSelect(currentQuestionIndex, answerIndex)}
-                        className="hidden"
-                      />
-                      <span
-                        className={`w-5 h-5 border rounded-full flex justify-center items-center ${
-                          selectedAnswers[currentQuestionIndex] === answerIndex
-                            ? "border-primary"
-                            : "border-gray-300"
-                        }`}
-                      >
-                        {selectedAnswers[currentQuestionIndex] === answerIndex && (
-                          <span className="w-2.5 h-2.5 bg-primary rounded-full"></span>
-                        )}
-                      </span>
-                      <span className="text-gray-600">{answer.text}</span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </form>
-          )}
+        <div className="flex-grow lg:pr-8">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800">Bài Trắc Nghiệm</h2>
+            <div className="space-y-8">
+                {cauhois[currentQuestionIndex] && (
+                    <form className="quiz-question shadow-md p-6 rounded-lg border border-gray-200 bg-white">
+                        <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                            Câu hỏi {currentQuestionIndex + 1}: {cauhois[currentQuestionIndex].question}
+                        </h3>
+                        <ul role="group" className="space-y-4">
+                            {cauhois[currentQuestionIndex].answers.map((answer, answerIndex) => (
+                                <li key={answerIndex} className="quiz-answer">
+                                    <label className="flex items-center space-x-3 cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            name={`answer-${currentQuestionIndex}`}
+                                            checked={selectedAnswers[currentQuestionIndex] === answerIndex}
+                                            onChange={() => handleAnswerSelect(currentQuestionIndex, answerIndex)}
+                                            className="hidden"
+                                        />
+                                        <span
+                                            className={`w-5 h-5 border rounded-full flex justify-center items-center ${selectedAnswers[currentQuestionIndex] === answerIndex
+                                                ? "border-primary"
+                                                : "border-gray-300"
+                                                }`}
+                                        >
+                                            {selectedAnswers[currentQuestionIndex] === answerIndex && (
+                                                <span className="w-2.5 h-2.5 bg-primary rounded-full"></span>
+                                            )}
+                                        </span>
+                                        <span className="text-gray-600">{answer.text}</span>
+                                    </label>
+                                </li>
+                            ))}
+                        </ul>
+                    </form>
+                )}
+            </div>
+
+            {notification && (
+                <div className="fixed top-0 left-0 right-0 bg-yellow-500 text-white p-4 text-center">
+                    {notification}
+                </div>
+            )}
+
+            <div className="fixed bottom-0 left-0 right-0 bg-white shadow-md p-4 flex justify-between items-center">
+                <div className="w-full flex justify-center">
+                    {feedback && <p className="text-lg text-gray-800">{feedback}</p>}
+                </div>
+                {!checkedAnswers[currentQuestionIndex] && (
+                    <button
+                        type="button"
+                        className="px-4 py-2 bg-primary w-40 text-white rounded-md hover:bg-primary-dark"
+                        onClick={handleCheckAnswer}
+                    >
+                        Kiểm tra đáp án
+                    </button>
+                )}
+                {checkedAnswers[currentQuestionIndex] && currentQuestionIndex < cauhois.length - 1 && (
+                    <button
+                        type="button"
+                        className="px-4 py-2 bg-primary w-40 text-white rounded-md hover:bg-primary-dark"
+                        onClick={handleNextQuestion}
+                    >
+                        Tiếp tục
+                    </button>
+                )}
+                {currentQuestionIndex === cauhois.length - 1 && checkedAnswers[currentQuestionIndex] && (
+                    <button
+                        type="button"
+                        className="px-4 py-2 w-40 bg-primary text-white rounded-md hover:bg-primary-dark"
+                        onClick={handleSubmit}
+                    >
+                        Xem kết quả
+                    </button>
+                )}
+            </div>
         </div>
-  
-        {notification && (
-          <div className="fixed top-0 left-0 right-0 bg-yellow-500 text-white p-4 text-center">
-            {notification}
-          </div>
-        )}
-  
-        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-md p-4 flex justify-between items-center">
-          <div className="w-full flex justify-center">
-            {feedback && <p className="text-lg text-gray-800">{feedback}</p>}
-          </div>
-          {!checkedAnswers[currentQuestionIndex] && (
-            <button
-              type="button"
-              className="px-4 py-2 bg-primary w-40 text-white rounded-md hover:bg-primary-dark"
-              onClick={handleCheckAnswer}
-            >
-              Kiểm tra đáp án
-            </button>
-          )}
-          {checkedAnswers[currentQuestionIndex] && currentQuestionIndex < cauhois.length - 1 && (
-            <button
-              type="button"
-              className="px-4 py-2 bg-primary w-40 text-white rounded-md hover:bg-primary-dark"
-              onClick={handleNextQuestion}
-            >
-              Tiếp tục
-            </button>
-          )}
-          {currentQuestionIndex === cauhois.length - 1 && checkedAnswers[currentQuestionIndex] && (
-            <button
-              type="button"
-              className="px-4 py-2 w-40 bg-primary text-white rounded-md hover:bg-primary-dark"
-              onClick={handleSubmit}
-            >
-              Xem kết quả
-            </button>
-          )}
-        </div>
-      </div>
     );
-  };
+};
 
-  
 
-  export { ShowTracNghiemComponent };
-  
+
+export { ShowTracNghiemComponent };
+
 
 
 
