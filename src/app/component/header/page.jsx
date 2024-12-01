@@ -12,6 +12,7 @@ import { Categoryheader } from "../category/category.component";
 import { LayThongBao } from "@/service/ThongBao/ThongBao";
 import Link from "next/link";
 import { use } from "@/assets/js/plugins/swiper";
+
 const DropdownMenu = () => {
   const [langOpen, setLangOpen] = useState(false);
   const [currencyOpen, setCurrencyOpen] = useState(false);

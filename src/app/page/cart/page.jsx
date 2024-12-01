@@ -6,6 +6,7 @@ import { TatCaKhuyenMaiKhoaHoc, showAllNguoiDungMaGiamGia } from '../../../servi
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image';
+
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalBeforeDiscount, setTotalBeforeDiscount] = useState(0);
@@ -55,7 +56,7 @@ const Cart = () => {
         beforeDiscount += khoahoc.giamgia;
         const coupon = appliedCoupons.find(c => c.id_khoahoc === khoahoc.id);
         if (coupon) {
-          discount += (khoahoc.giamgia * coupon.giamgia) / 100;
+          discount += coupon.giamgia;
         }
       });
     });
@@ -63,6 +64,7 @@ const Cart = () => {
     setTotalBeforeDiscount(beforeDiscount);
     setTotalDiscount(discount);
   }, [cartItems, appliedCoupons]);
+
 
   const xoagiohang = async (id) => {
     try {
@@ -131,7 +133,7 @@ const Cart = () => {
 
   const NguoiDung = typeof window !== 'undefined' ? localStorage.getItem('data') : null;
   const parsedData = NguoiDung ? JSON.parse(NguoiDung) : null;
-
+  let sum = 0;
   return (
     <div className='container mt-80'>
       <ToastContainer position="top-right" autoClose={3000} />
@@ -142,7 +144,6 @@ const Cart = () => {
         </h1>
         <div className="container flex flex-col md:flex-row justify-between items-start ">
           {/* Giỏ Hàng Của Tôi */}
-        
           <div className="w-full md:w-2/2 ">
             <div
               className="table-responsive shadow-lg p-4 mb-5 bg-white rounded-xl hover:shadow-2xl transition-all duration-500 animate-slideIn"
@@ -161,44 +162,50 @@ const Cart = () => {
                 </thead>
                 <tbody>
                   {cartItems.map((item, index) =>
-                    item.khoahocs.map((khoahoc, subIndex) => (
-                      <tr
-                        key={`${index}-${subIndex}`}
-                        className="hover:bg-gray-50 transition-all duration-300 animate-fadeIn"
-                        style={{
-                          fontSize: '1.1em',
-                          height: '80px',
-                          animation: `fadeIn 0.5s ease-out ${(index + subIndex) * 0.1}s`,
-                        }}
-                      >
-                        <td className="text-center">
-                          <button className="btn w-14 btn-outline-danger btn-sm rounded-circle p-2 hover:scale-125 hover:rotate-12 transition-all duration-300">
-                            <i
-                              onClick={() => xoagiohang(khoahoc.id)}
-                              className="bi bi-trash text-2xl"
-                            ></i>
-                          </button>
-                        </td>
-                        <td>
-                          <Image
-                            width={500}
-                            height={300}
-                            src={khoahoc.hinh}
-                            className="img-fluid rounded-lg shadow-sm hover:scale-110 hover:rotate-2 transition-all duration-300"
-                            alt={khoahoc.ten}
-                            style={{ maxWidth: '120px' }}
-                          />
-                        </td>
-                        <td className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
-                          <h3 className="text-2xl">{khoahoc.ten}</h3>
-                        </td>
-                        <td className="text-gray-600 text-2xl">đ{khoahoc.gia}</td>
-                        <td className="text-gray-600 text-2xl">{khoahoc.giamgia}</td>
-                        <td className="font-bold text-black animate-numberChange text-2xl">
-                          đ{khoahoc.giamgia}
-                        </td>
-                      </tr>
-                    ))
+                    item.khoahocs.map((khoahoc, subIndex) => {
+                      const coupon = appliedCoupons.find(c => c.id_khoahoc === khoahoc.id);
+                      const discountAmount = coupon ? (khoahoc.giamgia * coupon.giamgia) / 100 : 0;
+                      const finalPrice = khoahoc.giamgia - discountAmount;
+
+                      return (
+                        <tr
+                          key={`${index}-${subIndex}`}
+                          className="hover:bg-gray-50 transition-all duration-300 animate-fadeIn"
+                          style={{
+                            fontSize: '1.1em',
+                            height: '80px',
+                            animation: `fadeIn 0.5s ease-out ${(index + subIndex) * 0.1}s`,
+                          }}
+                        >
+                          <td className="text-center">
+                            <button className="btn w-14 btn-outline-danger btn-sm rounded-circle p-2 hover:scale-125 hover:rotate-12 transition-all duration-300">
+                              <i
+                                onClick={() => xoagiohang(khoahoc.id)}
+                                className="bi bi-trash text-2xl"
+                              ></i>
+                            </button>
+                          </td>
+                          <td>
+                            <Image
+                              width={500}
+                              height={300}
+                              src={khoahoc.hinh}
+                              className="img-fluid rounded-lg shadow-sm hover:scale-110 hover:rotate-2 transition-all duration-300"
+                              alt={khoahoc.ten}
+                              style={{ maxWidth: '120px' }}
+                            />
+                          </td>
+                          <td className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
+                            <h3 className="text-2xl">{khoahoc.ten}</h3>
+                          </td>
+                          <td className="text-gray-600 text-2xl">đ{khoahoc.gia}</td>
+                          <td className="text-gray-600 text-2xl">{khoahoc.giamgia}</td>
+                          <td className="font-bold text-black animate-numberChange text-2xl">
+                            đ{finalPrice}
+                          </td>
+                        </tr>
+                      );
+                    })
                   )}
                 </tbody>
               </table>
@@ -222,7 +229,7 @@ const Cart = () => {
                     </tr>
                     <tr>
                       <th className="text-gray-600 text-2xl">Giảm giá</th>
-                      <td className="text-right text-2xl">-{totalDiscount} VNĐ</td>
+                      <td className="text-right text-2xl">-{totalDiscount}%</td>
                     </tr>
                     <tr>
                       <td colSpan="2" className="text-center py-4">
@@ -234,11 +241,21 @@ const Cart = () => {
                         </button>
                       </td>
                     </tr>
+
+                    {cartItems.map((item, index) =>
+                      item.khoahocs.map((khoahoc, subIndex) => {
+                        const coupon = appliedCoupons.find(c => c.id_khoahoc === khoahoc.id);
+                        const discountAmount = coupon ? (khoahoc.giamgia * coupon.giamgia) / 100 : 0;
+                        const finalPrice = khoahoc.giamgia - discountAmount;
+                        sum += finalPrice;
+                        return null; // Return null since we are not rendering anything here
+                      })
+                    )}
                     <tr>
                       <th className="text-2xl font-bold">Tổng Tiền</th>
                       <td className="text-right">
                         <strong className="text-2xl">
-                          {totalBeforeDiscount - totalDiscount} VNĐ
+                          {sum} VNĐ
                         </strong>
                       </td>
                     </tr>
@@ -289,7 +306,6 @@ const Cart = () => {
         </div>
       )}
     </div>
-
   );
 }
 
@@ -428,7 +444,6 @@ const Voucher = ({ handleApplyCoupon }) => {
         </div>
       </div>
     </>
-
   );
 }
 
