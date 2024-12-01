@@ -103,6 +103,15 @@ const Headerdashboardstudent2 = ({ page }) => {
               <i className="fa-light fa-book" />
               <p>Quản lý khóa học</p>
             </Link>
+            <Link 
+              href={"/page/lecturer-dashboard/NhanTinGiangVien"} 
+              className={`single-item ${pagess === 'NhanTinGiangVien' ? 'active' : ''}`}
+              onClick={() => click("quanlykhoahoc")}
+
+            >
+              <i className="fa-light fa-book" />
+              <p>Nhắn tin giảng viên</p>
+            </Link>
 
     
 

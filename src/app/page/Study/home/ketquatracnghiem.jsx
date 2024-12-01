@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {
     showAllTracNghiemNguoiDung,
     ShowCauHoi,
@@ -40,8 +40,6 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
         fetchData();
     }, [idBaihoc, idTracNghiem]);
 
-
-
     useEffect(() => {
         const fetchCheckToanBocauhoi = async () => {
             try {
@@ -56,22 +54,11 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
         fetchCheckToanBocauhoi();
     }, [idBaihoc]);
 
-
-    //   console.log(dapAnNguoiDung, "dapAnNguoiDung");
-    //   console.log(checkToanBocauhoi, "checkToanBocauhoi");
-
     useEffect(() => {
         if (checkToanBocauhoi.length > 0 && dapAnNguoiDung.length > 0) {
-            // Flatten checkToanBocauhoi if it's a nested array
             const flatCheckToanBocauhoi = checkToanBocauhoi.flat();
-            console.log(flatCheckToanBocauhoi, "flatCheckToanBocauhoi");
-
             const flatDapAnNguoiDung = dapAnNguoiDung.flat();
 
-            console.log(flatCheckToanBocauhoi, "flatCheckToanBocauhoi");
-            console.log(flatDapAnNguoiDung, "flatDapAnNguoiDung");
-
-            // Ensure there is at least one item after flattening
             if (flatCheckToanBocauhoi.length === 0) {
                 console.log("Không có dữ liệu trong checkToanBocauhoi");
                 return;
@@ -81,7 +68,6 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
 
             const CheckIdBaiTracNghiem = flatDapAnNguoiDung.every((item) => {
                 if (item.id_baitracnghiem !== undefined && item.id_baitracnghiem !== null) {
-                    // console.log(item.id_baitracnghiem, "item.id_baitracnghiem");
                     return allIdBaiTracNghiem.includes(item.id_baitracnghiem);
                 } else {
                     console.error("Undefined or null id_baitracnghiem for item:", item);
@@ -89,34 +75,19 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
                 }
             }) && allIdBaiTracNghiem.every(id => flatDapAnNguoiDung.some(item => item.id_baitracnghiem === id));
 
-            console.log(CheckIdBaiTracNghiem, "CheckIdBaiTracNghiem");
-
             if (CheckIdBaiTracNghiem) {
-
                 const TongSoDapAnDung = [];
-            
-                // Iterate through each baiTracNghiem to collect all correct answers
                 flatCheckToanBocauhoi.forEach((baiTracNghiem) => {
-                    console.log(baiTracNghiem, "baiTracNghiem");
-            
                     const correctAnswers = baiTracNghiem.cau_traloi
                         .flat()
                         .filter((item) => item.is_correct === 1 || item.is_correct === true)
                         .map((item) => item.stt);
-                    
-                    // Accumulate all correct answers into TongSoDapAnDung
                     TongSoDapAnDung.push(...correctAnswers);
                 });
-            
+
                 const sodapanDung = TongSoDapAnDung.length;
-                console.log(TongSoDapAnDung, "TongSoDapAnDung");
-            
-                // Collect user's correct answers
-                const SocaudapandungUser = flatDapAnNguoiDung
-                    .map((item) => item.stt);
-                console.log(SocaudapandungUser, "Dapan");
-            
-                // Function to compare two arrays regardless of order
+                const SocaudapandungUser = flatDapAnNguoiDung.map((item) => item.stt);
+
                 function arraysEqual(a, b) {
                     if (a.length !== b.length) return false;
                     const sortedA = [...a].sort();
@@ -126,26 +97,59 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
                     }
                     return true;
                 }
-            
-                // Compare the correct answers with user's answers
+
                 const check = arraysEqual(TongSoDapAnDung, SocaudapandungUser);
-                console.log(check ? "Answers match." : "Answers do not match.");
-            
                 if (check) {
-                    // Send result or trigger next action when answers are correct
                     HoanThanhTracNghiem({ id_baihoc: idBaihoc });
                     console.log("Bài trắc nghiệm đã hoàn thành đúng.");
                 } else {
                     console.log("Chưa hoàn thành trắc nghiệm.");
                 }
-            
             } else {
                 console.log("ID bài trắc nghiệm không khớp.");
             }
         }
     }, [checkToanBocauhoi, dapAnNguoiDung, idBaihoc]);
 
+    const questionResults = useMemo(() => {
+        if (!quizDetails || !Array.isArray(quizDetails.questions)) return [];
 
+        const { questions } = quizDetails;
+        const userAnswers = userResults
+            .reduce((acc, result) => acc.concat(result.noidung), [])
+            .filter((result) => result.id_baitracnghiem === idTracNghiem);
+
+        const allQuestions = questions.flatMap((questionObj) => {
+            if (!Array.isArray(questionObj.cau_hoi) || !Array.isArray(questionObj.cau_traloi)) {
+                return [];
+            }
+            return questionObj.cau_hoi.map((cauHoi, idx) => ({
+                cau_hoi: cauHoi,
+                cau_traloi: questionObj.cau_traloi[idx] || [],
+            }));
+        });
+
+        return allQuestions.map((questionObj, index) => {
+            const thutumang = index + 1;
+            const userAnswerEntry = userAnswers.find(
+                (answer) => answer.thutumang === thutumang
+            );
+            const userAnswer = userAnswerEntry?.stt;
+
+            const correctAnswerObj = questionObj.cau_traloi.find(
+                (answer) => answer.is_correct === 1
+            );
+            const correctAnswer = correctAnswerObj?.stt;
+
+            return {
+                question: questionObj.cau_hoi,
+                userAnswer,
+                correctAnswer,
+                isCorrect: userAnswer === correctAnswer,
+                answers: questionObj.cau_traloi,
+            };
+        });
+    }, [quizDetails, userResults, idTracNghiem]);
 
     if (loading) {
         return <p className="text-center text-xl">Đang tải kết quả...</p>;
@@ -171,58 +175,6 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
         );
     }
 
-    const { questions } = quizDetails;
-
-    if (!Array.isArray(questions) || questions.length === 0) {
-        console.error("Không có câu hỏi trong bài trắc nghiệm:", {
-            quizDetails,
-            idTracNghiem,
-        });
-        return (
-            <div className="text-center text-xl text-red-600">
-                Không có câu hỏi trong bài trắc nghiệm.
-            </div>
-        );
-    }
-
-    const userAnswers = userResults
-        .reduce((acc, result) => acc.concat(result.noidung), [])
-        .filter((result) => result.id_baitracnghiem === idTracNghiem);
-
-    const allQuestions = questions.flatMap((questionObj) => {
-        if (
-            !Array.isArray(questionObj.cau_hoi) ||
-            !Array.isArray(questionObj.cau_traloi)
-        ) {
-            return [];
-        }
-        return questionObj.cau_hoi.map((cauHoi, idx) => ({
-            cau_hoi: cauHoi,
-            cau_traloi: questionObj.cau_traloi[idx] || [],
-        }));
-    });
-
-    const questionResults = allQuestions.map((questionObj, index) => {
-        const thutumang = index + 1;
-        const userAnswerEntry = userAnswers.find(
-            (answer) => answer.thutumang === thutumang
-        );
-        const userAnswer = userAnswerEntry?.stt;
-
-        const correctAnswerObj = questionObj.cau_traloi.find(
-            (answer) => answer.is_correct === 1
-        );
-        const correctAnswer = correctAnswerObj?.stt;
-
-        return {
-            question: questionObj.cau_hoi,
-            userAnswer,
-            correctAnswer,
-            isCorrect: userAnswer === correctAnswer,
-            answers: questionObj.cau_traloi,
-        };
-    });
-
     if (showTracNghiem) {
         return (
             <ShowTracNghiemComponent
@@ -235,7 +187,6 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
     return (
         <div className="flex-grow lg:pr-8">
             <div className="bg-gray-100 min-h-screen flex flex-col items-center p-6">
-                {/* Header Section */}
                 <header className="bg-red-100 text-red-800 p-4 rounded-lg shadow-md w-full mb-6">
                     <h1 className="text-xl font-bold">Kết quả bài trắc nghiệm</h1>
                     {quizDetails.tieu_de && (
@@ -254,7 +205,6 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
                     </p>
                 </header>
 
-                {/* Content Section */}
                 <div className="bg-white shadow-md rounded-lg p-6 w-full">
                     <section>
                         {questionResults.map((result, index) => (
@@ -288,7 +238,6 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
                     </section>
                 </div>
 
-                {/* Footer Section */}
                 <footer className="flex justify-between items-center w-full mt-6">
                     <button
                         onClick={() => window.location.reload()}

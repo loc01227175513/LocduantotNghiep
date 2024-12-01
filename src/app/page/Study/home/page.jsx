@@ -15,9 +15,6 @@ import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
 import { ShowTracNghiem, ShowCauHoi, GuiCauTraLoi, checkQuizCompletion } from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
 import KetQuaTracNghiem from './ketquatracnghiem';
 
-
-
-
 export default function Page() {
     const [isYTReady, setIsYTReady] = useState(false);
     const [khoahoc, setKhoahoc] = useState(null);
@@ -321,8 +318,6 @@ export default function Page() {
     );
 }
 
-
-
 const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDuration, handleComent, chitietkhoahoc, handleClick, currentVideoId, tenbaihoc, motavideo, videotieptheo, baihoctieptheo, convideo, conbaihoc }) => {
     const [showDescription, setShowDescription] = useState(false);
     const [showComments, setShowComments] = useState(false);
@@ -330,15 +325,12 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
     const [comment, setComment] = useState('');
     const [previewVideo, setPreviewVideo] = useState(null);
 
-
     const [isSubmitting, setIsSubmitting] = useState(false);
     const handleVideoHover = (video) => {
         setPreviewVideo(video);
     };
     const handleClickrating = (index) => {
         if (index) {
-            // console.log(index);
-
             setRating(index);
         }
     };
@@ -436,37 +428,21 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                         animate={{ x: 0 }}
                         transition={{ delay: 0.3 }}
                     >
-                        {/* tên bài học */}
                         <motion.h1
                             className="text-4xl font-bold text-gray-900 hover:text-pink-700 transition-colors"
                             whileHover={{ scale: 1.02 }}
                         >
                             {khoahoc.ten} <span>-</span> {chitietkhoahoc && chitietkhoahoc.tenbaihoc ? chitietkhoahoc.tenbaihoc : 'Loading...'} <span>:</span> {chitietkhoahoc && chitietkhoahoc.motavideo ? chitietkhoahoc.motavideo : 'Loading...'}
-
-
-
-
-
                         </motion.h1>
-
-                        {/* <motion.p 
-                            className="text-2xl font-semibold text-indigo-600"
-                            whileHover={{ scale: 1.1 }}
-                            transition={{ type: "spring", stiffness: 400 }}
-                        >
-                            ${khoahoc.gia}
-                        </motion.p> */}
 
                         {!convideo && conbaihoc && (
                             <motion.div>
                                 {baihoctieptheo && (
                                     <div>
                                         <button onClick={() => handleClick(videotieptheo.url_link, videotieptheo.id, baihoctieptheo.ten, videotieptheo.ten)} className='bg-[#ff6b6b] p-3 text-xl rounded-lg text-white hover:bg-pink-700 '
-
                                             onMouseEnter={() => handleVideoHover(videotieptheo)}
                                             onMouseLeave={() => setPreviewVideo(null)}
                                         >
-
                                             bài học tiếp theo : {baihoctieptheo.ten}
                                         </button>
                                     </div>
@@ -478,8 +454,6 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                                 {videotieptheo && (
                                     <div>
                                         <button onClick={() => handleClick(videotieptheo.url_link, videotieptheo.id, baihoctieptheo.ten, videotieptheo.ten)} className='bg-[#ff6b6b] p-3 text-xl rounded-lg text-white hover:bg-pink-700'
-
-
                                             onMouseEnter={() => handleVideoHover(videotieptheo)}
                                             onMouseLeave={() => setPreviewVideo(null)}
                                         >
@@ -552,7 +526,6 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                                         handleClickrating={handleClickrating}
                                     />
                                     <CommentList comments={khoahoc.danhgia} />
-
                                 </>
                             }
                         />
@@ -569,8 +542,6 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
         </motion.div>
     );
 };
-
-
 
 const CourseInfo = ({ instructor, category, subCategory, duration }) => {
     const container = {
@@ -709,14 +680,6 @@ const CourseInfo = ({ instructor, category, subCategory, duration }) => {
         </motion.div>
     );
 };
-
-
-
-
-
-
-
-
 
 const StarRating = ({ rating }) => (
     <div className="flex items-center space-x-1 group">
@@ -1007,10 +970,7 @@ const AnimatedDisclosure = ({ title, isOpen, onToggle, content }) => (
     </div>
 );
 
-
-
 const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingChange, onSubmit, handleClickrating }) => (
-
     <motion.form
         onSubmit={onSubmit}
         className="mt-4 space-y-4"
@@ -1048,23 +1008,6 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
             <label htmlFor="rating" className="block text-xl font-medium text-gray-700">
                 Đánh giá
             </label>
-            {/* <motion.div
-                id="rating"
-                value={rating}
-                onChange={onRatingChange}
-                whileFocus={{ scale: 1.01 }}
-                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
-                    focus:border-indigo-500 focus:ring-indigo-500 p-2 transition-all duration-200
-                    hover:border-indigo-300"
-                required
-                disabled={isSubmitting}
-            >
-                
-                {[1, 2, 3, 4, 5].map(num => (
-                    // <option key={num} value={num}>{num} sao</option>
-                     <i key={num}  value={num} class="bi bi-star text-yellow-400 mr-2"></i>
-                ))}
-            </motion.div> */}
             <motion.div
                 id="rating"
                 whileFocus={{ scale: 1.01 }}
@@ -1125,31 +1068,18 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
     </motion.form>
 );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setIdTracNghiem }) => {
+const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick, setShowBaiQuiz, setIdBaihoc, setIdTracNghiem }) => {
     const [selectedVideos, setSelectedVideos] = useState([]);
     const [isMiniplayer, setIsMiniplayer] = useState(false);
     const [previewVideo, setPreviewVideo] = useState(null);
     const [baiTracNghiems, setBaiTracNghiems] = useState({});
     const [quizStatus, setQuizStatus] = useState({}); // New state to store quiz status
 
-    const handleClick = async (IDbaihoc) => {
+    const handleClickVideo = (videoLink, videoId, tenbaihoc, motavideo) => {
+        handleClick(videoLink, videoId, tenbaihoc, motavideo);
+    };
+
+    const handleClickQuiz = async (IDbaihoc) => {
         try {
             const response = await ShowTracNghiem({
                 id_baihoc: IDbaihoc
@@ -1254,7 +1184,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setI
                                         <h3 className="flow-root">
                                             <Disclosure.Button
                                                 className="flex w-full justify-between items-center px-6 py-4 text-left"
-                                                onClick={() => handleClick(lesson.id)}
+                                                onClick={() => handleClickQuiz(lesson.id)}
                                             >
                                                 <div className="flex items-center gap-3">
                                                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 font-semibold">
@@ -1293,7 +1223,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setI
                                                                     className="flex items-center p-3 rounded-lg bg-white hover:bg-indigo-50 transition-colors duration-200"
                                                                     onMouseEnter={() => handleVideoHover(video)}
                                                                     onMouseLeave={() => setPreviewVideo(null)}
-                                                                    onClick={() => setSelectedVideos([video])}
+                                                                    onClick={() => handleClickVideo(video.url_link, video.id, lesson.ten, video.ten)}
                                                                 >
                                                                     <div className={`h-5 w-5 rounded-full flex items-center justify-center ${isWatched ? 'bg-green-500' : 'bg-gray-200'} transition-colors duration-200`}>
                                                                         {isWatched && <CheckIcon className="h-3 w-3 text-white" />}
@@ -1428,14 +1358,6 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setI
     );
 };
 
-
-
-
-
-
-
-
-
 const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
     const [cauhois, setCauhois] = useState([]);
     const [selectedAnswers, setSelectedAnswers] = useState({});
@@ -1445,7 +1367,6 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
     const [feedback, setFeedback] = useState("");
     const [notification, setNotification] = useState("");
     const [showKetQua, setShowKetQua] = useState(false);
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -1487,9 +1408,6 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
         };
         fetchData();
     }, [idBaihoc, idTracNghiem]);
-
-
-
 
     const handleAnswerSelect = (questionIndex, answerIndex) => {
         setSelectedAnswers((prev) => ({
@@ -1534,9 +1452,6 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
             console.error("Lỗi khi gửi đáp án:", error);
             setNotification("Có lỗi xảy ra khi gửi đáp án.");
         }
-
-
-
     };
 
     const handleNextQuestion = () => {
@@ -1633,21 +1548,4 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
     );
 };
 
-
-
 export { ShowTracNghiemComponent };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

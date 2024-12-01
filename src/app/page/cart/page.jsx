@@ -137,12 +137,13 @@ const Cart = () => {
       <ToastContainer position="top-right" autoClose={3000} />
       <Header />
       <main className="">
-        <h1 className="display-4 text-left mb-8 font-bold text-black">
+        <h1 className="display-4 text-center my-20 font-bold text-black  ">
           🛒 Giỏ Hàng Của Tôi
         </h1>
-        <div className="container flex flex-col md:flex-row justify-between items-start">
+        <div className="container flex flex-col md:flex-row justify-between items-start ">
           {/* Giỏ Hàng Của Tôi */}
-          <div className="w-full md:w-2/3">
+        
+          <div className="w-full md:w-2/2 ">
             <div
               className="table-responsive shadow-lg p-4 mb-5 bg-white rounded-xl hover:shadow-2xl transition-all duration-500 animate-slideIn"
               style={{ maxWidth: '100%' }}
@@ -205,7 +206,7 @@ const Cart = () => {
           </div>
 
           {/* Tổng Giỏ Hàng */}
-          <div className="w-full md:w-1/3 md:ml-4">
+          <div className="w-full md:w-1/3 pl-10 md:ml-4">
             <div className="card shadow-lg rounded-xl border-0 hover:shadow-2xl transition-all duration-500">
               <div className="card-header font-medium text-black rounded-t-xl">
                 <h3 className="mb-0 py-3 px-4 text-black text-2xl">
@@ -247,7 +248,7 @@ const Cart = () => {
                   <div className="flex">
                     <a
                       href="/page/checkout"
-                      className="bg-gradient-to-r text-3xl from-[#1e3c72] to-[#ff6b6b] text-white font-bold py-4 px-6 rounded-xl text-center w-full hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
+                      className="bg-gradient-to-r text-2xl from-[#1e3c72] to-[#ff6b6b] text-white font-bold py-4 px-6 rounded-xl text-center w-full hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
                     >
                       Tiến hành thanh toán →
                     </a>
