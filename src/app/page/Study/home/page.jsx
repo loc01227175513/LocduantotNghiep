@@ -12,7 +12,7 @@ import { PlusIcon, MinusIcon, XIcon } from '@heroicons/react/solid';
 import { ChevronDownIcon, CheckIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
-import { ShowTracNghiem ,ShowCauHoi ,GuiCauTraLoi} from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
+import { ShowTracNghiem ,ShowCauHoi ,GuiCauTraLoi,checkQuizCompletion} from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
 import KetQuaTracNghiem from './ketquatracnghiem';
 
 
@@ -215,7 +215,7 @@ export default function Page() {
         };
 
         checkVideoWatched();
-    }, [currentVideoId, khoahoc]);
+    }, [currentVideoId, khoahoc,watchedVideos]);
 
     const formatDuration = (totalSeconds) => {
         const hours = Math.floor(totalSeconds / 3600);
@@ -1147,8 +1147,8 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setI
     const [isMiniplayer, setIsMiniplayer] = useState(false);
     const [previewVideo, setPreviewVideo] = useState(null);
     const [baiTracNghiems, setBaiTracNghiems] = useState({});
+    const [quizStatus, setQuizStatus] = useState({}); // New state to store quiz status
 
-    
     const handleClick = async (IDbaihoc) => {
         try {
             const response = await ShowTracNghiem({
@@ -1158,11 +1158,17 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setI
                 ...prev,
                 [IDbaihoc]: response
             }));
+
+            // Call checkQuizCompletion and store the status
+            const statusResponse = await checkQuizCompletion({ id_baihoc: IDbaihoc });
+            setQuizStatus(prev => ({
+                ...prev,
+                [IDbaihoc]: statusResponse.trangthai
+            }));
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
-    // console.log('baiTracNghiems', baiTracNghiems);
 
     const getTotalProgress = (lessons) => {
         const totalVideos = lessons?.reduce((sum, lesson) => sum + lesson.video.length, 0) || 0;
@@ -1287,7 +1293,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setI
                                                                     className="flex items-center p-3 rounded-lg bg-white hover:bg-indigo-50 transition-colors duration-200"
                                                                     onMouseEnter={() => handleVideoHover(video)}
                                                                     onMouseLeave={() => setPreviewVideo(null)}
-                                                                    onClick={() => setSelectedVideos([video])} // Adjust as needed
+                                                                    onClick={() => setSelectedVideos([video])}
                                                                 >
                                                                     <div className={`h-5 w-5 rounded-full flex items-center justify-center ${isWatched ? 'bg-green-500' : 'bg-gray-200'} transition-colors duration-200`}>
                                                                         {isWatched && <CheckIcon className="h-3 w-3 text-white" />}
@@ -1319,6 +1325,10 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setI
                                                                             <Disclosure.Button className="flex w-full justify-between items-center px-6 py-4 text-left text-gray-500">
                                                                                 <div className='flex items-center'>
                                                                                     <i className="bi bi-pen-fill mr-2 text-xl"></i> bài quiz
+                                                                                    {/* Show checkmark if quiz is active */}
+                                                                                    {quizStatus[lesson.id] === 'Active' && (
+                                                                                        <CheckIcon className="h-5 w-5 text-green-500 ml-2" />
+                                                                                    )}
                                                                                 </div>
                                                                             </Disclosure.Button>
                                                                         </h3>
@@ -1417,7 +1427,6 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, setShowBaiQuiz, setIdBaihoc, setI
         </motion.div>
     );
 };
-
 
 
 

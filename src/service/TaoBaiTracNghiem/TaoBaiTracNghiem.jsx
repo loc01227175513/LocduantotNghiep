@@ -270,46 +270,54 @@ export const HoanThanhTracNghiem = async ({ id_baihoc }) => {
     console.error('Error during completion:', error);
     throw error;
   }
-}
-export const showTrangThaiHoanThanh = async ({ id_baihoc }) => {
+};
+
+export const checkQuizCompletion = async ({ id_baihoc }) => {
+  const url = 'https://huuphuoc.id.vn/api/showTrangThaiHoangThanh';
   const userData = localStorage.getItem("data");
 
   if (!userData) {
-    throw new Error("User not authenticated.");
+      throw new Error('User not authenticated.');
   }
 
   let user;
   try {
-    user = JSON.parse(userData);
-  } catch (error) {
-    console.error("Invalid user data in localStorage:", error);
-    throw new Error("Invalid user data.");
+      user = JSON.parse(userData);
+  } catch (parseError) {
+      console.error('Error parsing user data:', parseError);
+      throw new Error('Invalid user data.');
   }
 
-  const url = 'https://huuphuoc.id.vn/api/showTrangThaiHoanThanh';
+  if (!id_baihoc) {
+      throw new Error('id_baihoc is required.');
+  }
 
   try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        trangthai: "Active",
-        id_baihoc: id_baihoc,
-        id_nguoidung: user.id,
-      }),
-    });
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              id_baihoc: id_baihoc,
+              id_nguoidung: user.id,
+          }),
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to complete quiz');
-    }
+      if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to complete quiz');
+      }
 
-    return response.json();
+      const data = await response.json();
+
+      if (!data.trangthai) {
+          throw new Error('Invalid response from server.');
+      }
+
+      return data;
   } catch (error) {
-    console.error('Error during completion:', error);
-    throw error;
+      console.error('Error during quiz completion check:', error);
+      throw error;
   }
-};
-
+}
