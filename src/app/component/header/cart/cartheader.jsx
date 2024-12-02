@@ -106,9 +106,9 @@ const Cart = ({ onAction }) => {
                                                 {khoahoc.tenGiangVien}
                                             </div>
                                             <div className='mt-3 flex items-center gap-3'>
-                                                <span className='text-gray-400 line-through text-lg'>{khoahoc.gia}đ</span>
+                                                <span className='text-gray-400 line-through text-lg'>{khoahoc.gia.toLocaleString()}đ</span>
                                                 <span className='text-lg font-bold text-[#ff6b6b] relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:animate-[shine_2s_infinite]'>
-                                                    {khoahoc.giamgia}đ
+                                                    {khoahoc.giamgia.toLocaleString()}đ
                                                 </span>
                                             </div>
                                         </div>
@@ -133,7 +133,7 @@ const Cart = ({ onAction }) => {
                 <div className='absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t  p-5 shadow-lg'>
                     <div className='flex justify-between items-center mb-4'>
                         <span className='text-xl font-bold text-gray-800'>Tổng cộng</span>
-                        <span className='text-2xl font-extrabold text-[#ff6b6b] '>{totalPrice}đ</span>
+                        <span className='text-2xl font-extrabold text-[#ff6b6b] '>{totalPrice.toLocaleString()}đ</span>
                     </div>
                     <div className='space-y-3'>
                         {userData ? (

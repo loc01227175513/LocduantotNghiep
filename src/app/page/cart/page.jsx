@@ -198,10 +198,10 @@ const Cart = () => {
                           <td className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
                             <h3 className="text-2xl">{khoahoc.ten}</h3>
                           </td>
-                          <td className="text-gray-600 text-2xl">đ{khoahoc.gia}</td>
-                          <td className="text-gray-600 text-2xl">{khoahoc.giamgia}</td>
+                          <td className="text-gray-600 text-2xl">đ{khoahoc.gia.toLocaleString()}</td>
+                          <td className="text-gray-600 text-2xl">{khoahoc.giamgia.toLocaleString()}</td>
                           <td className="font-bold text-black animate-numberChange text-2xl">
-                            đ{finalPrice}
+                            đ{finalPrice.toLocaleString()}
                           </td>
                         </tr>
                       );
@@ -225,7 +225,7 @@ const Cart = () => {
                   <tbody>
                     <tr>
                       <th className="text-gray-600 text-2xl">Thành tiền</th>
-                      <td className="text-right text-2xl">{totalBeforeDiscount} VNĐ</td>
+                      <td className="text-right text-2xl">{totalBeforeDiscount.toLocaleString()} VNĐ</td>
                     </tr>
                     <tr>
                       <th className="text-gray-600 text-2xl">Giảm giá</th>
@@ -255,7 +255,7 @@ const Cart = () => {
                       <th className="text-2xl font-bold">Tổng Tiền</th>
                       <td className="text-right">
                         <strong className="text-2xl">
-                          {sum} VNĐ
+                          {sum.toLocaleString()} VNĐ
                         </strong>
                       </td>
                     </tr>

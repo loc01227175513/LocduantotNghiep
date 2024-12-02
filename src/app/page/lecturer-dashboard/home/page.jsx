@@ -1,55 +1,54 @@
-  "use client"
+"use client";
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Stack,
+  FormControlLabel,
+  Checkbox,
+  CircularProgress,
+  Skeleton,
+  Select,
+  MenuItem,
+  Button,
+  Typography
+} from '@mui/material';
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  Cell
+} from 'recharts';
+import Link from 'next/link';
+import Image from 'next/image';
+import {
+  Dashboard,
+  GiangvienKhoaHoc,
+  GiangvienKhoaHocDaMua
+} from "../../../../service/Dashboard-lecture/Dashboard-lecture.jsx";
+import CountUp from 'react-countup';
+import { motion } from 'framer-motion';
+import {
+  BookOpenIcon,
+  AcademicCapIcon,
+  TrophyIcon,
+  BookmarkIcon,
+  UserIcon,
+  CurrencyDollarIcon,
+  UserGroupIcon,
+  ClockIcon,
+  BanknotesIcon
+} from '@heroicons/react/24/outline';
+import { StarIcon } from '@heroicons/react/24/solid';
+import { Area } from 'recharts';
 
-  import React, { useState, useEffect } from 'react';
-  import {
-    Box,
-    Stack,
-    FormControlLabel,
-    Checkbox,
-    CircularProgress,
-    Skeleton,
-    Select,
-    MenuItem,
-    Button,
-    Typography
-  } from '@mui/material';
-  import {
-    LineChart,
-    Line,
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    ResponsiveContainer,
-    Cell
-  } from 'recharts';
-  import Link from 'next/link';
-  import Image from 'next/image';
-  import {
-    Dashboard,
-    GiangvienKhoaHoc,
-    GiangvienKhoaHocDaMua
-  } from "../../../../service/Dashboard-lecture/Dashboard-lecture.jsx";
-  import CountUp from 'react-countup';
-  import { motion } from 'framer-motion';
-  import {
-    BookOpenIcon,
-    AcademicCapIcon,
-    TrophyIcon,
-    BookmarkIcon,
-    UserIcon,
-    CurrencyDollarIcon,
-    UserGroupIcon,
-    ClockIcon,
-    BanknotesIcon
-  } from '@heroicons/react/24/outline';
-  import { StarIcon } from '@heroicons/react/24/solid';
-  import { Area } from 'recharts';
-
-  const KhoaHocDangKyCss = `
+const KhoaHocDangKyCss = `
   .single-dashboard-card {
     background: linear-gradient(145deg, #ffffff, #f5f7fa);
     border-radius: 16px;
@@ -222,575 +221,565 @@
     stroke-width: 1.5;
     color: currentColor; /* Will inherit gradient colors */
   }
-  `;
+`;
 
+export default function Homedashboardlecturer() {
+  const [data, setData] = useState([]);
+  const [khoahoc, setKhoahoc] = useState([]);
+  const [doanhthu, setDoanhthu] = useState({});
+  const [khoahocdamua, setKhoahocdamua] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const dashboardRes = await Dashboard();
+        localStorage.setItem('lecturerId', JSON.stringify(dashboardRes.data));
+        setData(dashboardRes.data);
 
-  export default function Homedashboardlecturer() {
-    const [data, setData] = useState([]);
-    const [khoahoc, setKhoahoc] = useState([]);
-    const [doanhthu, setDoanhthu] = useState({});
-    const [khoahocdamua, setKhoahocdamua] = useState([]);
-    const [isDataLoaded, setIsDataLoaded] = useState(false);
+        const khoahocRes = await GiangvienKhoaHoc();
+        setKhoahoc(khoahocRes.data);
+        console.log(khoahocRes.data);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const dashboardRes = await Dashboard();
-          localStorage.setItem('lecturerId', JSON.stringify(dashboardRes.data));
-          setData(dashboardRes.data);
+        const khoahocdamuaRes = await GiangvienKhoaHocDaMua();
+        setKhoahocdamua(khoahocdamuaRes.data);
 
-          const khoahocRes = await GiangvienKhoaHoc();
-          setKhoahoc(khoahocRes.data);
-          console.log(khoahocRes.data);
-
-
-          const khoahocdamuaRes = await GiangvienKhoaHocDaMua();
-          setKhoahocdamua(khoahocdamuaRes.data);
-
-          setIsDataLoaded(true);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-
-      fetchData();
-    }, []);
-
-    useEffect(() => {
-      const storedData = localStorage.getItem('lecturerId');
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ id_giangvien: parsedData.giangvien }),
-          referrerPolicy: 'unsafe-url',
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            setDoanhthu(data.data);
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
+        setIsDataLoaded(true);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-    }, []);
-
-    useEffect(() => {
-      if (isDataLoaded) {
-        // console.log(data.giangvien);
-        // console.log("khoahoc", khoahoc);
-        // console.log(khoahocdamua);
-        // console.log(doanhthu, "doanhthu");
-      }
-    }, [isDataLoaded, data, khoahoc, khoahocdamua, doanhthu]);
-
-    // console.log(doanhthu, "doanhthu");
-    const khoahocbanchay = khoahoc.reduce((max, current) => {
-      return (current.ThanhToan.length > max.ThanhToan.length) ? current : max;
-    }, { khoahoc: '', ThanhToan: [] });
-
-    console.log(khoahocbanchay);
-    const khoahocMaxSotien = khoahoc.reduce((max, current) => {
-      // Tính tổng số tiền cho khóa học hiện tại
-      const totalSotienCurrent = current.ThanhToan.reduce((sum, item) => sum + item.tong, 0);
-
-      // Tính tổng số tiền cho khóa học có nhiều tiền nhất cho đến hiện tại
-      const totalSotienMax = max.ThanhToan.reduce((sum, item) => sum + item.tong, 0);
-
-      // So sánh tổng số tiền, chọn khóa học có tổng số tiền cao hơn
-      return totalSotienCurrent > totalSotienMax ? current : max;
-    }, { khoahoc: '', ThanhToan: [] });
-
-
-    const khoahocdadangky = khoahoc.length;
-    const khoahocdahoanthanh = khoahoc.filter((item) => item.trangthai === "Progress").length;
-    const khoahoctamdung = khoahoc.filter((item) => item.trangthai === "Notyet").length;
-    const khoahocdanghoc = khoahocdamua.length;
-    const tongdoanhthu = doanhthu.tongdoanhthu || 0;
-    const sodukhadung = doanhthu.sodukhadung || 0;
-    const activeCoursesCount = khoahoc.filter(course => course.trangthai === "active").length;
-    const TongSoHS = khoahoc.reduce((total, course) => {
-      return total + (course.ThanhToan ? course.ThanhToan.length : 0);
-    }, 0);
-    const cardData = [
-      { icon: BookOpenIcon, value: khoahocdadangky, label: "Khóa học đã đăng ký" },
-      { icon: AcademicCapIcon, value: khoahocdanghoc, label: "Khóa học đang học" },
-      { icon: TrophyIcon, value: khoahocdahoanthanh, label: "Khóa học đã hoàn thành" },
-      { icon: BookmarkIcon, value: khoahocdadangky, label: "Tổng khóa học của tôi" },
-      { icon: UserIcon, value: TongSoHS, label: "Tổng số học sinh" },
-      { icon: CurrencyDollarIcon, value: sodukhadung, label: "Số dư khả dụng" },
-      { icon: UserGroupIcon, value: activeCoursesCount, label: "Tổng khóa học đang phát hành" },
-      { icon: ClockIcon, value: khoahoctamdung, label: "Tổng khóa học tạm dừng" },
-      { icon: BanknotesIcon, value: tongdoanhthu, label: "Tổng thu nhập" },
-    ];
-    console.log(khoahoc, "khoahoc");
-
-    const validImageSrc = (src) => {
-      if (typeof src === 'string' && (src.startsWith('/') || src.startsWith('http://') || src.startsWith('https://'))) {
-        return src;
-      }
-      return '/default-course.jpg';
     };
 
-    return (
-      <div className="overflow-y-scroll col-lg-9 ịadkljas"  >
-        <div className="right-sidebar-dashboard">
-          <style jsx>{KhoaHocDangKyCss}</style>
+    fetchData();
+  }, []);
 
-          <div className="row g-5">
-            {cardData.map((card, index) => (
-              <motion.div
-                key={index}
-                className="col-lg-4 col-md-6 col-sm-6 col-12"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="single-dashboard-card">
-                  <motion.div
-                    className="icon"
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{
-                      duration: 0.5,
-                      type: "spring",
-                      stiffness: 100
-                    }}
-                  >
-                    {React.createElement(card.icon, {
-                      className: "h-8 w-8",
-                      "aria-hidden": "true"
-                    })}
-                  </motion.div>
-                  <h5 className="title">
-                    <CountUp
-                      end={card.value}
-                      duration={2}
-                      separator=","
-                      className="counter"
-                    />
-                  </h5>
-                  <p>{card.label}</p>
-                </div>
-              </motion.div>
-            ))}
-            <div className='flex justify-center'>
-              <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê khóa học</p>
-            </div>
-            <div className='flex'>
-              <CustomChart />
-              <div className='flex-grow rounded-lg'>
-                <div className="ml-4 h-full flex flex-col gap-4">
-                  <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
-                    <p className='my-2 text-xl font-semibold'>Khóa học bán chạy nhất</p>
-                    <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocbanchay.ten}</p>
-                    <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocbanchay.ThanhToan.length}</p>
-                    <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
-                  </div>
+  useEffect(() => {
+    const storedData = localStorage.getItem('lecturerId');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_giangvien: parsedData.giangvien }),
+        referrerPolicy: 'unsafe-url',
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setDoanhthu(data.data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+  }, []);
 
-                  <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
-                    <p className='text-xl my-2 font-semibold'>Khóa học có doanh thu cao nhất</p>
-                    <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocMaxSotien.ten}</p>
-                    <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toFixed(2)}</p>
-                    <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
-                  </div>
+  useEffect(() => {
+    if (isDataLoaded) {
+      // console.log(data.giangvien);
+      // console.log("khoahoc", khoahoc);
+      // console.log(khoahocdamua);
+      // console.log(doanhthu, "doanhthu");
+    }
+  }, [isDataLoaded, data, khoahoc, khoahocdamua, doanhthu]);
+
+  // console.log(doanhthu, "doanhthu");
+  const khoahocbanchay = khoahoc.reduce((max, current) => {
+    return (current.ThanhToan.length > max.ThanhToan.length) ? current : max;
+  }, { khoahoc: '', ThanhToan: [] });
+
+  console.log(khoahocbanchay);
+  const khoahocMaxSotien = khoahoc.reduce((max, current) => {
+    // Tính tổng số tiền cho khóa học hiện tại
+    const totalSotienCurrent = current.ThanhToan.reduce((sum, item) => sum + item.tong, 0);
+
+    // Tính tổng số tiền cho khóa học có nhiều tiền nhất cho đến hiện tại
+    const totalSotienMax = max.ThanhToan.reduce((sum, item) => sum + item.tong, 0);
+
+    // So sánh tổng số tiền, chọn khóa học có tổng số tiền cao hơn
+    return totalSotienCurrent > totalSotienMax ? current : max;
+  }, { khoahoc: '', ThanhToan: [] });
+
+  const khoahocdadangky = khoahoc.length;
+  const khoahocdahoanthanh = khoahoc.filter((item) => item.trangthai === "Progress").length;
+  const khoahoctamdung = khoahoc.filter((item) => item.trangthai === "Notyet").length;
+  const khoahocdanghoc = khoahocdamua.length;
+  const tongdoanhthu = doanhthu.tongdoanhthu || 0;
+  const sodukhadung = doanhthu.sodukhadung || 0;
+  const activeCoursesCount = khoahoc.filter(course => course.trangthai === "active").length;
+  const TongSoHS = khoahoc.reduce((total, course) => {
+    return total + (course.ThanhToan ? course.ThanhToan.length : 0);
+  }, 0);
+  const cardData = [
+    { icon: BookOpenIcon, value: khoahocdadangky, label: "Khóa học đã đăng ký" },
+    { icon: AcademicCapIcon, value: khoahocdanghoc, label: "Khóa học đang học" },
+    { icon: TrophyIcon, value: khoahocdahoanthanh, label: "Khóa học đã hoàn thành" },
+    { icon: BookmarkIcon, value: khoahocdadangky, label: "Tổng khóa học của tôi" },
+    { icon: UserIcon, value: TongSoHS, label: "Tổng số học sinh" },
+    { icon: CurrencyDollarIcon, value: sodukhadung, label: "Số dư khả dụng" },
+    { icon: UserGroupIcon, value: activeCoursesCount, label: "Tổng khóa học đang phát hành" },
+    { icon: ClockIcon, value: khoahoctamdung, label: "Tổng khóa học tạm dừng" },
+    { icon: BanknotesIcon, value: tongdoanhthu, label: "Tổng thu nhập" },
+  ];
+  console.log(khoahoc, "khoahoc");
+
+  const validImageSrc = (src) => {
+    if (typeof src === 'string' && (src.startsWith('/') || src.startsWith('http://') || src.startsWith('https://'))) {
+      return src;
+    }
+    return '/default-course.jpg';
+  };
+
+  return (
+    <div className="overflow-y-scroll col-lg-9 ịadkljas"  >
+      <div className="right-sidebar-dashboard">
+        <style jsx>{KhoaHocDangKyCss}</style>
+
+        <div className="row g-5">
+          {cardData.map((card, index) => (
+            <motion.div
+              key={index}
+              className="col-lg-4 col-md-6 col-sm-6 col-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="single-dashboard-card">
+                <motion.div
+                  className="icon"
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{
+                    duration: 0.5,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                >
+                  {React.createElement(card.icon, {
+                    className: "h-8 w-8",
+                    "aria-hidden": "true"
+                  })}
+                </motion.div>
+                <h5 className="title">
+                  <CountUp
+                    end={card.value}
+                    duration={2}
+                    separator=","
+                    className="counter"
+                  />
+                </h5>
+                <p>{card.label}</p>
+              </div>
+            </motion.div>
+          ))}
+          <div className='flex justify-center'>
+            <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê khóa học</p>
+          </div>
+          <div className='flex'>
+            <CustomChart />
+            <div className='flex-grow rounded-lg'>
+              <div className="ml-4 h-full flex flex-col gap-4">
+                <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
+                  <p className='my-2 text-xl font-semibold'>Khóa học bán chạy nhất</p>
+                  <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocbanchay.ten}</p>
+                  <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocbanchay.ThanhToan.length}</p>
+                  <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
                 </div>
-              </div>
-            </div>
-            <div className="container mt-5">
-              <div className=' flex justify-center'>
-                <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê doanh thu</p>
-              </div>
-              <div className='mt-10'>
-                <DoanhThuChart />
+
+                <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
+                  <p className='text-xl my-2 font-semibold'>Khóa học có doanh thu cao nhất</p>
+                  <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocMaxSotien.ten}</p>
+                  <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toFixed(2)}</p>
+                  <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
+                </div>
               </div>
             </div>
           </div>
+          <div className="container mt-5">
+            <div className=' flex justify-center'>
+              <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê doanh thu</p>
+            </div>
+            <div className='mt-10'>
+              <DoanhThuChart />
+            </div>
+          </div>
+        </div>
 
-
-          <div className=" mt-5">
-            <div className="row">
-              <div className="col-12">
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  <h5 className="mb-0 font-bold text-3xl">Các khóa học của tôi</h5>
-                  <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-[#ff6b6b] text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl">
-                    Xem tất cả
-                  </Link>
-                </div>
-                <div className="overflow-x-auto" style={{ maxWidth: '100%' }}>
-                  <div className="flex flex-nowrap px-4" style={{ minWidth: 'min-content' }}>
-                    {khoahoc.map((item) => (
-                      <div className="flex-none px-2 mb-4" style={{ width: '331.797px' }} key={item.id}>
-                        <Link href={`/page/course-detail?id=${item.id}`}>
-                          <div className="card h-[244.344px] hover:shadow-lg hover:cursor-pointer transition-all duration-300 flex flex-col overflow-hidden border rounded-xl">
-                            <Image
-                              width={332}
-                              height={146}
-                              src={validImageSrc(item.hinh)}
-                              className="w-full h-[146px] object-cover"
-                              alt={item.ten || 'Course Image'}
-                            />
-                            <div className="flex-1 p-6 flex flex-col justify-between gap-4">
-                              <div className="space-y-4">
-                                <div className="flex justify-between items-start gap-3">
-                                  <h6 className="card-title font-medium text-xl line-clamp-2 leading-tight max-w-[70%]">
-                                    {item.ten}
-                                  </h6>
-                                  <span
-                                    className={`badge ${item.trangthai === 'Hoàn thành' ? 'text-green-500' : item.trangthai === 'notyet' ? 'text-red-500' : 'text-[#ff6b6b]'
-                                      } text-lg px-4 py-1.5 rounded-full whitespace-nowrap`}
-                                  >
-                                    {item.trangthai}
-                                  </span>
-                                </div>
+        <div className=" mt-5">
+          <div className="row">
+            <div className="col-12">
+              <div className="d-flex justify-content-between align-items-center mb-4">
+                <h5 className="mb-0 font-bold text-3xl">Các khóa học của tôi</h5>
+                <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-[#ff6b6b] text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl">
+                  Xem tất cả
+                </Link>
+              </div>
+              <div className="overflow-x-auto" style={{ maxWidth: '100%' }}>
+                <div className="flex flex-nowrap px-4" style={{ minWidth: 'min-content' }}>
+                  {khoahoc.map((item) => (
+                    <div className="flex-none px-2 mb-4" style={{ width: '331.797px' }} key={item.id}>
+                      <Link href={`/page/course-detail?id=${item.id}`}>
+                        <div className="card h-[244.344px] hover:shadow-lg hover:cursor-pointer transition-all duration-300 flex flex-col overflow-hidden border rounded-xl">
+                          <Image
+                            width={332}
+                            height={146}
+                            src={validImageSrc(item.hinh)}
+                            className="w-full h-[146px] object-cover"
+                            alt={item.ten || 'Course Image'}
+                          />
+                          <div className="flex-1 p-6 flex flex-col justify-between gap-4">
+                            <div className="space-y-4">
+                              <div className="flex justify-between items-start gap-3">
+                                <h6 className="card-title font-medium text-xl line-clamp-2 leading-tight max-w-[70%]">
+                                  {item.ten}
+                                </h6>
+                                <span
+                                  className={`badge ${item.trangthai === 'Hoàn thành' ? 'text-green-500' : item.trangthai === 'notyet' ? 'text-red-500' : 'text-[#ff6b6b]'
+                                    } text-lg px-4 py-1.5 rounded-full whitespace-nowrap`}
+                                >
+                                  {item.trangthai}
+                                </span>
                               </div>
+                            </div>
 
-                              {Array.isArray(item.giangVien) ? (
-                                item.giangVien.map((gianVien, index) => (
-                                  <div key={index}>
-                                    <Image
-                                      width={32}
-                                      height={32}
-                                      className="rounded-full border border-gray-200 object-cover"
-                                      src={validImageSrc(gianVien.hinh)}
-                                      alt={gianVien.ten || 'Giảng viên'}
-                                    />
-                                    <span className="text-sm text-gray-600 line-clamp-1">
-                                      {gianVien.ten || 'Tên giảng viên'}
-                                    </span>
-                                  </div>
-                                ))
-                              ) : (
-                                <div>
+                            {Array.isArray(item.giangVien) ? (
+                              item.giangVien.map((gianVien, index) => (
+                                <div key={index}>
                                   <Image
                                     width={32}
                                     height={32}
                                     className="rounded-full border border-gray-200 object-cover"
-                                    src={validImageSrc(item.giangVien.hinh)}
-                                    alt={item.giangVien.ten || 'Giảng viên'}
+                                    src={validImageSrc(gianVien.hinh)}
+                                    alt={gianVien.ten || 'Giảng viên'}
                                   />
-                                 
+                                  <span className="text-sm text-gray-600 line-clamp-1">
+                                    {gianVien.ten || 'Tên giảng viên'}
+                                  </span>
                                 </div>
-                              )}
+                              ))
+                            ) : (
+                              <div>
+                                <Image
+                                  width={32}
+                                  height={32}
+                                  className="rounded-full border border-gray-200 object-cover"
+                                  src={validImageSrc(item.giangVien.hinh)}
+                                  alt={item.giangVien.ten || 'Giảng viên'}
+                                />
+                              </div>
+                            )}
 
-                            </div>
                           </div>
-                        </Link>
-                      </div>
-                    ))}
-                  </div>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+const DoanhThuChart = () => {
+  const [doanhthu, setDoanhthu] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [metric, setMetric] = useState('tongdoanhthu');
+
+  const fetchDoanhThu = async () => {
+    setLoading(true);
+    setError(null);
+    const storedData = localStorage.getItem('lecturerId');
+
+    if (!storedData) {
+      setError('No lecturer data found.');
+      setLoading(false);
+      return;
+    }
+
+    const data = JSON.parse(storedData);
+
+    try {
+      const response = await fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_giangvien: data.giangvien }),
+        referrerPolicy: 'unsafe-url',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+
+      if (Array.isArray(result.data)) {
+        setDoanhthu(result.data);
+      } else if (typeof result.data === 'object' && result.data !== null) {
+        setDoanhthu([result.data]);
+      } else {
+        throw new Error('Unexpected data format received from API.');
+      }
+
+    } catch (error) {
+      console.error('Error fetching doanh thu:', error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDoanhThu();
+  }, []);
+
+  const handleReload = () => {
+    fetchDoanhThu();
+  };
+
+  const chartData = doanhthu.map(item => ({
+    date: new Date(item.created_at).toLocaleDateString(),
+    tongdoanhthu: parseFloat(item.tongdoanhthu),
+    sodukhadung: parseFloat(item.sodukhadung),
+  }));
+
+  const totalRevenue = chartData.reduce((acc, item) => acc + item.tongdoanhthu, 0);
+  const averageRevenue = chartData.length ? (totalRevenue / chartData.length).toFixed(2) : 0;
+  const maxRevenue = chartData.length ? Math.max(...chartData.map(i => i.tongdoanhthu)) : 0;
+  const minRevenue = chartData.length ? Math.min(...chartData.map(i => i.tongdoanhthu)) : 0;
+
+  if (loading) {
+    return (
+      <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#1a202c', borderRadius: '8px' }}>
+        <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
+          Thống Kê Doanh Thu theo Thời Gian
+        </Typography>
+        <Typography sx={{ color: '#ffffff' }}>Loading...</Typography>
+      </Box>
     );
   }
 
-
-
-  const DoanhThuChart = () => {
-    const [doanhthu, setDoanhthu] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [metric, setMetric] = useState('tongdoanhthu');
-
-    const fetchDoanhThu = async () => {
-      setLoading(true);
-      setError(null);
-      const storedData = localStorage.getItem('lecturerId');
-
-      if (!storedData) {
-        setError('No lecturer data found.');
-        setLoading(false);
-        return;
-      }
-
-      const data = JSON.parse(storedData);
-
-      try {
-        const response = await fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ id_giangvien: data.giangvien }),
-          referrerPolicy: 'unsafe-url',
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log(result);
-
-
-        if (Array.isArray(result.data)) {
-          setDoanhthu(result.data);
-        } else if (typeof result.data === 'object' && result.data !== null) {
-          setDoanhthu([result.data]);
-        } else {
-          throw new Error('Unexpected data format received from API.');
-        }
-
-      } catch (error) {
-        console.error('Error fetching doanh thu:', error);
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    useEffect(() => {
-      fetchDoanhThu();
-    }, []);
-
-    const handleReload = () => {
-      fetchDoanhThu();
-    };
-
-    const chartData = doanhthu.map(item => ({
-      date: new Date(item.created_at).toLocaleDateString(),
-      tongdoanhthu: parseFloat(item.tongdoanhthu),
-      sodukhadung: parseFloat(item.sodukhadung),
-    }));
-
-    const totalRevenue = chartData.reduce((acc, item) => acc + item.tongdoanhthu, 0);
-    const averageRevenue = chartData.length ? (totalRevenue / chartData.length).toFixed(2) : 0;
-    const maxRevenue = chartData.length ? Math.max(...chartData.map(i => i.tongdoanhthu)) : 0;
-    const minRevenue = chartData.length ? Math.min(...chartData.map(i => i.tongdoanhthu)) : 0;
-
-    if (loading) {
-      return (
-        <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#1a202c', borderRadius: '8px' }}>
-          <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
-            Thống Kê Doanh Thu theo Thời Gian
-          </Typography>
-          <Typography sx={{ color: '#ffffff' }}>Loading...</Typography>
-        </Box>
-      );
-    }
-
-    if (error) {
-      return (
-        <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#1a202c', borderRadius: '8px' }}>
-          <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
-            Thống Kê Doanh Thu theo Thời Gian
-          </Typography>
-          <Typography color="error">{error}</Typography>
-          <button onClick={handleReload} className="mt-4 px-4 py-2 bg-[#ff6b6b] text-white rounded">
-            Reload Data
-          </button>
-        </Box>
-      );
-    }
-
-    if (chartData.length === 0) {
-      return (
-        <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#1a202c', borderRadius: '8px' }}>
-          <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
-            Thống Kê Doanh Thu theo Thời Gian
-          </Typography>
-          <Typography sx={{ color: '#ffffff' }}>No data available.</Typography>
-          <button onClick={handleReload} className="mt-4 px-4 py-2  bg-[#ff6b6b] text-white rounded">
-            Reload Data
-          </button>
-        </Box>
-      );
-    }
-
-    const handleMetricChange = (event) => {
-      setMetric(event.target.value);
-    };
-
+  if (error) {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+      <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#1a202c', borderRadius: '8px' }}>
+        <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
+          Thống Kê Doanh Thu theo Thời Gian
+        </Typography>
+        <Typography color="error">{error}</Typography>
+        <button onClick={handleReload} className="mt-4 px-4 py-2 bg-[#ff6b6b] text-white rounded">
+          Reload Data
+        </button>
+      </Box>
+    );
+  }
+
+  if (chartData.length === 0) {
+    return (
+      <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#1a202c', borderRadius: '8px' }}>
+        <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
+          Thống Kê Doanh Thu theo Thời Gian
+        </Typography>
+        <Typography sx={{ color: '#ffffff' }}>No data available.</Typography>
+        <button onClick={handleReload} className="mt-4 px-4 py-2  bg-[#ff6b6b] text-white rounded">
+          Reload Data
+        </button>
+      </Box>
+    );
+  }
+
+  const handleMetricChange = (event) => {
+    setMetric(event.target.value);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Box
+        sx={{
+          width: '100%',
+          padding: '20px',
+          backgroundColor: '#f3f4f6',
+          borderRadius: '8px',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            transform: 'translateY(-5px)',
+            boxShadow: '0 8px 30px rgba(0,0,0,0.7)',
+          }
+        }}
       >
-        <Box
-          sx={{
-            width: '100%',
-            padding: '20px',
-            backgroundColor: '#f3f4f6',
-            borderRadius: '8px',
-
-            transition: 'all 0.3s ease',
-            '&:hover': {
-              transform: 'translateY(-5px)',
-              boxShadow: '0 8px 30px rgba(0,0,0,0.7)',
-            }
-          }}
+        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-[#ff6b6b] text-white rounded">
+          Reload Data
+        </button>
+        <motion.div
+          initial={{ x: -20 }}
+          animate={{ x: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-[#ff6b6b] text-white rounded">
-            Reload Data
-          </button>
-          <motion.div
-            initial={{ x: -20 }}
-            animate={{ x: 0 }}
-            transition={{ duration: 0.5 }}
+          <Typography
+            variant="h6"
+            gutterBottom
+            sx={{
+              background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontWeight: 'bold',
+              color: '#000000'
+            }}
           >
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{
-                background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                fontWeight: 'bold',
-                color: '#000000'
-              }}
-            >
-              Thống Kê Doanh Thu theo Thời Gian
-            </Typography>
-          </motion.div>
+            Thống Kê Doanh Thu theo Thời Gian
+          </Typography>
+        </motion.div>
 
-          <Box sx={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
-            <Box>
-              <Typography variant="subtitle1" sx={{ color: '#000000' }}>Tổng Doanh Thu</Typography>
-              <Typography variant="h6" sx={{ color: '#000000' }}>{totalRevenue.toLocaleString()} VND</Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle1" sx={{ color: '#000000' }}>Doanh Thu Trung Bình</Typography>
-              <Typography variant="h6" sx={{ color: '#000000' }}>{averageRevenue} VND</Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle1" sx={{ color: '#000000' }}>Doanh Thu Tối Đa</Typography>
-              <Typography variant="h6" sx={{ color: '#000000' }}>{maxRevenue.toLocaleString()} VND</Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle1" sx={{ color: '#000000' }}>Doanh Thu Tối Thiểu</Typography>
-              <Typography variant="h6" sx={{ color: '#000000' }}>{minRevenue.toLocaleString()} VND</Typography>
-            </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
+          <Box>
+            <Typography variant="subtitle1" sx={{ color: '#000000' }}>Tổng Doanh Thu</Typography>
+            <Typography variant="h6" sx={{ color: '#000000' }}>{totalRevenue.toLocaleString()} VND</Typography>
           </Box>
-
-          <Box sx={{ marginBottom: '20px', display: 'flex', justifyContent: 'flex-end' }}>
-            <Select
-              value={metric}
-              onChange={handleMetricChange}
-              displayEmpty
-              sx={{
-                width: '200px',
-                backgroundColor: '#2d3748',
-                color: '#000000',
-                '& .MuiSelect-icon': { color: '#ffffff' },
-                '& .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
-                '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
-              }}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    backgroundColor: '#2d3748',
-                    color: '#ffffff',
-                  },
-                },
-              }}
-            >
-              <MenuItem value="tongdoanhthu">Tổng Doanh Thu</MenuItem>
-              <MenuItem value="sodukhadung">Số Dư Khả Dụng</MenuItem>
-            </Select>
+          <Box>
+            <Typography variant="subtitle1" sx={{ color: '#000000' }}>Doanh Thu Trung Bình</Typography>
+            <Typography variant="h6" sx={{ color: '#000000' }}>{averageRevenue} VND</Typography>
           </Box>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart
-              data={chartData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-            >
-              <defs>
-                <linearGradient id="colorTongDoanhThu" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#ffffff" stopOpacity={1} />
-                  <stop offset="95%" stopColor="#ffffff" stopOpacity={0.1} />
-                </linearGradient>
-                <linearGradient id="colorSoDuKhaDung" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#ffffff" stopOpacity={1} />
-                  <stop offset="95%" stopColor="#ffffff" stopOpacity={0.1} />
-                </linearGradient>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                  <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-
-              <CartesianGrid
-                strokeDasharray="5 5"
-                stroke="#ffffff22"
-                className="animate-pulse"
-              />
-
-              <XAxis
-                dataKey="date"
-                stroke="#000000"
-                tick={{ fill: '#000000', fontSize: 12 }}
-                tickLine={{ stroke: '#000000' }}
-              />
-
-              <YAxis
-                stroke="#000000"
-                tick={{ fill: '#000000', fontSize: 12 }}
-                tickLine={{ stroke: '#000000' }}
-              />
-
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                  borderRadius: '12px',
-                  padding: '12px',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-                  backdropFilter: 'blur(8px)'
-                }}
-                labelStyle={{ color: '#000000', fontWeight: 'bold', marginBottom: '8px' }}
-                itemStyle={{ color: '#000000', padding: '4px 0' }}
-                formatter={(value) => `${value.toLocaleString()} VND`}
-                animationDuration={200}
-              />
-
-              <Legend
-                wrapperStyle={{
-                  color: '#000000',
-                  padding: '20px',
-                  fontWeight: 'bold'
-                }}
-              />
-
-              <Line
-                type="monotone"
-                dataKey={metric}
-                stroke={metric === 'tongdoanhthu' ? 'url(#colorTongDoanhThu)' : 'url(#colorSoDuKhaDung)'}
-                strokeWidth={4}
-                dot={{
-                  stroke: '#000000',
-                  strokeWidth: 2,
-                  r: 4,
-                  fill: '#000000'
-                }}
-                activeDot={{
-                  r: 8,
-                  strokeWidth: 0,
-                  fill: '#000000',
-                  filter: 'url(#glow)'
-                }}
-                name={metric === 'tongdoanhthu' ? 'Tổng Doanh Thu' : 'Số Dư Khả Dụng'}
-                animationDuration={2000}
-                animationEasing="ease-out"
-                filter="url(#glow)"
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <Box>
+            <Typography variant="subtitle1" sx={{ color: '#000000' }}>Doanh Thu Tối Đa</Typography>
+            <Typography variant="h6" sx={{ color: '#000000' }}>{maxRevenue.toLocaleString()} VND</Typography>
+          </Box>
+          <Box>
+            <Typography variant="subtitle1" sx={{ color: '#000000' }}>Doanh Thu Tối Thiểu</Typography>
+            <Typography variant="h6" sx={{ color: '#000000' }}>{minRevenue.toLocaleString()} VND</Typography>
+          </Box>
         </Box>
-        <style jsx>{`
+
+        <Box sx={{ marginBottom: '20px', display: 'flex', justifyContent: 'flex-end' }}>
+          <Select
+            value={metric}
+            onChange={handleMetricChange}
+            displayEmpty
+            sx={{
+              width: '200px',
+              backgroundColor: '#2d3748',
+              color: '#000000',
+              '& .MuiSelect-icon': { color: '#ffffff' },
+              '& .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
+              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
+            }}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  backgroundColor: '#2d3748',
+                  color: '#ffffff',
+                },
+              },
+            }}
+          >
+            <MenuItem value="tongdoanhthu">Tổng Doanh Thu</MenuItem>
+            <MenuItem value="sodukhadung">Số Dư Khả Dụng</MenuItem>
+          </Select>
+        </Box>
+
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart
+            data={chartData}
+            margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+          >
+            <defs>
+              <linearGradient id="colorTongDoanhThu" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#ffffff" stopOpacity={1} />
+                <stop offset="95%" stopColor="#ffffff" stopOpacity={0.1} />
+              </linearGradient>
+              <linearGradient id="colorSoDuKhaDung" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#ffffff" stopOpacity={1} />
+                <stop offset="95%" stopColor="#ffffff" stopOpacity={0.1} />
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+                <feMerge>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <CartesianGrid
+              strokeDasharray="5 5"
+              stroke="#ffffff22"
+              className="animate-pulse"
+            />
+
+            <XAxis
+              dataKey="date"
+              stroke="#000000"
+              tick={{ fill: '#000000', fontSize: 12 }}
+              tickLine={{ stroke: '#000000' }}
+            />
+
+            <YAxis
+              stroke="#000000"
+              tick={{ fill: '#000000', fontSize: 12 }}
+              tickLine={{ stroke: '#000000' }}
+            />
+
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '12px',
+                padding: '12px',
+                border: '1px solid rgba(255,255,255,0.1)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                backdropFilter: 'blur(8px)'
+              }}
+              labelStyle={{ color: '#000000', fontWeight: 'bold', marginBottom: '8px' }}
+              itemStyle={{ color: '#000000', padding: '4px 0' }}
+              formatter={(value) => `${value.toLocaleString()} VND`}
+              animationDuration={200}
+            />
+
+            <Legend
+              wrapperStyle={{
+                color: '#000000',
+                padding: '20px',
+                fontWeight: 'bold'
+              }}
+            />
+
+            <Line
+              type="monotone"
+              dataKey={metric}
+              stroke={metric === 'tongdoanhthu' ? 'url(#colorTongDoanhThu)' : 'url(#colorSoDuKhaDung)'}
+              strokeWidth={4}
+              dot={{
+                stroke: '#000000',
+                strokeWidth: 2,
+                r: 4,
+                fill: '#000000'
+              }}
+              activeDot={{
+                r: 8,
+                strokeWidth: 0,
+                fill: '#000000',
+                filter: 'url(#glow)'
+              }}
+              name={metric === 'tongdoanhthu' ? 'Tổng Doanh Thu' : 'Số Dư Khả Dụng'}
+              animationDuration={2000}
+              animationEasing="ease-out"
+              filter="url(#glow)"
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </Box>
+      <style jsx>{`
         @keyframes pulse {
           0% { opacity: 0.6; }
           50% { opacity: 1; }
@@ -801,260 +790,258 @@
           animation: pulse 2s infinite;
         }
       `}</style>
-      </motion.div>
-    );
+    </motion.div>
+  );
+};
+
+const CustomChart = () => {
+  const [khoahoc, setKhoahoc] = useState([]);
+  const [showLatest, setShowLatest] = useState(false);
+  const [filter, setFilter] = useState('all');
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const khoahocRes = await GiangvienKhoaHoc();
+      setKhoahoc(khoahocRes.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    setIsLoading(false);
   };
 
-  const CustomChart = () => {
-    const [khoahoc, setKhoahoc] = useState([]);
-    const [showLatest, setShowLatest] = useState(false);
-    const [filter, setFilter] = useState('all');
-    const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const khoahocRes = await GiangvienKhoaHoc();
-        setKhoahoc(khoahocRes.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-      setIsLoading(false);
-    };
+  const handleReload = () => {
+    fetchData();
+  };
 
-    useEffect(() => {
-      fetchData();
-    }, []);
+  const latestTimestamp = khoahoc.length
+    ? Math.max(...khoahoc.map(item => new Date(item.created_at).getTime()))
+    : null;
 
-    const handleReload = () => {
-      fetchData();
-    };
+  const filteredData = showLatest
+    ? khoahoc.filter(item => new Date(item.created_at).getTime() === latestTimestamp)
+    : khoahoc;
 
-    const latestTimestamp = khoahoc.length
-      ? Math.max(...khoahoc.map(item => new Date(item.created_at).getTime()))
-      : null;
-
-    const filteredData = showLatest
-      ? khoahoc.filter(item => new Date(item.created_at).getTime() === latestTimestamp)
-      : khoahoc;
-
-    const applyFilter = (data) => {
-      switch (filter) {
-        case 'discount':
-          return data.filter(item => item.giamgia > 0);
-        case 'priceAbove100':
-          return data.filter(item => Number(item.gia) > 100);
-        default:
-          return data;
-      }
-    };
-
-    const chartData = applyFilter(filteredData).map((item) => ({
-      id: item.id,
-      ten: item.ten,
-      gia: Number(item.gia || 0),
-      giamgia: Number(item.giamgia || 0),
-      giaGoc: Number(item.gia || 0) * (1 + Number(item.giamgia || 0) / 100),
-      date: new Date(item.created_at).toLocaleDateString(),
-      latest: new Date(item.created_at).getTime() === latestTimestamp,
-    }));
-
-    // Summary Statistics
-    const totalCourses = chartData.length;
-    const averagePrice = chartData.length ? (chartData.reduce((acc, item) => acc + item.gia, 0) / chartData.length).toFixed(2) : 0;
-    const totalDiscount = chartData.reduce((acc, item) => acc + item.giamgia, 0);
-
-    if (isLoading) {
-      return (
-        <Box sx={{ width: '70%' }} className="p-4 bg-gray-800 rounded-lg animate-pulse">
-          <div className="h-[400px] bg-gray-700 rounded-lg" />
-        </Box>
-      );
+  const applyFilter = (data) => {
+    switch (filter) {
+      case 'discount':
+        return data.filter(item => item.giamgia > 0);
+      case 'priceAbove100':
+        return data.filter(item => Number(item.gia) > 100);
+      default:
+        return data;
     }
+  };
+
+  const chartData = applyFilter(filteredData).map((item) => ({
+    id: item.id,
+    ten: item.ten,
+    gia: Number(item.gia || 0),
+    giamgia: Number(item.giamgia || 0),
+    giaGoc: Number(item.gia || 0) * (1 + Number(item.giamgia || 0) / 100),
+    date: new Date(item.created_at).toLocaleDateString(),
+    latest: new Date(item.created_at).getTime() === latestTimestamp,
+  }));
+
+  // Summary Statistics
+  const totalCourses = chartData.length;
+  const averagePrice = chartData.length ? (chartData.reduce((acc, item) => acc + item.gia, 0) / chartData.length).toFixed(2) : 0;
+  const totalDiscount = chartData.reduce((acc, item) => acc + item.giamgia, 0);
+
+  if (isLoading) {
     return (
-      <Box
-        sx={{ width: '70%' }}
-        className="p-4 bg-gray-100 backdrop-blur rounded-lg h-[400px] transform transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] duration-500"
-      >
-        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-[#ff6b6b] text-white rounded">
-          Reload Data
-        </button>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 100, damping: 10 }}
-          className="relative"
-        >
-          <Typography
-            variant="h6"
-            gutterBottom
-            className="stock-ticker-text relative z-10"
-            sx={{ color: 'black' }}
-          >
-            Thống Kê Khóa Học
-            <span className="absolute -z-10 blur-[40px] inset-0 bg-indigo-500/30 animate-pulse-slow" />
-          </Typography>
-        </motion.div>
-
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-            <defs>
-              <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#4f46e5" stopOpacity={0.3}>
-                  <animate
-                    attributeName="stop-color"
-                    values="#4f46e5;#22c55e;#4f46e5"
-                    dur="5s"
-                    repeatCount="indefinite"
-                  />
-                </stop>
-                <stop offset="100%" stopColor="#4f46e5" stopOpacity={0.05} />
-              </linearGradient>
-
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-
-              <filter id="neon-glow">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-
-              <marker
-                id="arrowUp"
-                viewBox="0 0 10 10"
-                refX="5"
-                refY="5"
-                markerWidth="6"
-                markerHeight="6"
-                orient="auto"
-                className="animate-pulse"
-              >
-                <path d="M 0 7 L 5 2 L 10 7" fill="none" stroke="#22c55e" strokeWidth="2" />
-              </marker>
-            </defs>
-
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="#374151"
-              className="animate-fade-in-out"
-            />
-
-            <XAxis
-              dataKey="name"
-              stroke="#000000" // Changed from #ffffff to black
-              className="animate-slide"
-            />
-
-
-            <YAxis
-              stroke="#000000" // Changed from #ffffff to black
-              className="animate-number-scroll"
-            />
-
-            <Area
-              type="monotone"
-              dataKey="gia"
-              stroke="none"
-              fill="url(#areaGradient)"
-              className="animate-enhanced-wave"
-            />
-
-            <Line
-              type="monotone"
-              dataKey="gia"
-              stroke="#4f46e5"
-              strokeWidth={3}
-              filter="url(#neon-glow)"
-              dot={(props) => {
-                const isUp = props.value > (chartData[props.index - 1]?.gia ?? props.value);
-                return (
-                  <svg
-                    x={props.cx - 8}
-                    y={props.cy - 8}
-                    width="16"
-                    height="16"
-                    className={`trend-icon ${isUp ? 'trend-up' : 'trend-down'} `}
-                  >
-                    <circle
-                      cx="8"
-                      cy="8"
-                      r="6"
-                      fill={isUp ? '#22c55e' : '#ef4444'}
-
-                      className="animate-pulse-slow"
-                    />
-                    <path
-                      d={isUp ? "M0 10L6 4L12 10" : "M0 4L6 10L12 4"}
-                      stroke="#000000" // Changed from #fff to black
-                      strokeWidth="2"
-                      fill="none"
-                    />
-                  </svg>
-                );
-              }}
-              activeDot={{
-                r: 10,
-                fill: '#4f46e5',
-                className: "active-dot"
-              }}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: 'rgba(255, 255, 255, 0.9)', // Lighter background
-                border: '1px solid #4f46e5',
-                borderRadius: '8px',
-                color: '#000000', // Changed to black
-              }} path
-              className="animate-tooltip"
-            />
-          </LineChart>
-        </ResponsiveContainer>
-
-        <style jsx>{`
-          .stock-ticker-text {
-            text-shadow: 0 0 15px rgba(79, 70, 229, 0.8);
-            animation: tickerGlow 3s ease-in-out infinite;
-          }
-      
-          .animate-enhanced-wave {
-            animation: enhancedWave 4s ease-in-out infinite;
-          }
-      
-          @keyframes enhancedWave {
-            0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
-            50% { transform: translateY(-10px) scale(1.05); opacity: 0.9; }
-          }
-      
-          .active-dot {
-            filter: url(#neon-glow);
-            animation: activeDotPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-          }
-      
-          @keyframes activeDotPulse {
-            0% { transform: scale(1); filter: brightness(1); }
-            50% { transform: scale(1.5); filter: brightness(1.5); }
-            100% { transform: scale(1); filter: brightness(1); }
-          }
-      
-          .animate-tooltip {
-            animation: fadeInTooltip 1.5s ease-in-out infinite;
-          }
-      
-          @keyframes fadeInTooltip {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-          }
-      
-          /* Existing and enhanced animations remain unchanged */
-        `}</style>
+      <Box sx={{ width: '70%' }} className="p-4 bg-gray-800 rounded-lg animate-pulse">
+        <div className="h-[400px] bg-gray-700 rounded-lg" />
       </Box>
     );
-  };
+  }
+  return (
+    <Box
+      sx={{ width: '70%' }}
+      className="p-4 bg-gray-100 backdrop-blur rounded-lg h-[400px] transform transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] duration-500"
+    >
+      <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-[#ff6b6b] text-white rounded">
+        Reload Data
+      </button>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 10 }}
+        className="relative"
+      >
+        <Typography
+          variant="h6"
+          gutterBottom
+          className="stock-ticker-text relative z-10"
+          sx={{ color: 'black' }}
+        >
+          Thống Kê Khóa Học
+          <span className="absolute -z-10 blur-[40px] inset-0 bg-indigo-500/30 animate-pulse-slow" />
+        </Typography>
+      </motion.div>
+
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+          <defs>
+            <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#4f46e5" stopOpacity={0.3}>
+                <animate
+                  attributeName="stop-color"
+                  values="#4f46e5;#22c55e;#4f46e5"
+                  dur="5s"
+                  repeatCount="indefinite"
+                />
+              </stop>
+              <stop offset="100%" stopColor="#4f46e5" stopOpacity={0.05} />
+            </linearGradient>
+
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            <filter id="neon-glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            <marker
+              id="arrowUp"
+              viewBox="0 0 10 10"
+              refX="5"
+              refY="5"
+              markerWidth="6"
+              markerHeight="6"
+              orient="auto"
+              className="animate-pulse"
+            >
+              <path d="M 0 7 L 5 2 L 10 7" fill="none" stroke="#22c55e" strokeWidth="2" />
+            </marker>
+          </defs>
+
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="#374151"
+            className="animate-fade-in-out"
+          />
+
+          <XAxis
+            dataKey="name"
+            stroke="#000000" // Changed from #ffffff to black
+            className="animate-slide"
+          />
+
+          <YAxis
+            stroke="#000000" // Changed from #ffffff to black
+            className="animate-number-scroll"
+          />
+
+          <Area
+            type="monotone"
+            dataKey="gia"
+            stroke="none"
+            fill="url(#areaGradient)"
+            className="animate-enhanced-wave"
+          />
+
+          <Line
+            type="monotone"
+            dataKey="gia"
+            stroke="#4f46e5"
+            strokeWidth={3}
+            filter="url(#neon-glow)"
+            dot={(props) => {
+              const isUp = props.value > (chartData[props.index - 1]?.gia ?? props.value);
+              return (
+                <svg
+                  x={props.cx - 8}
+                  y={props.cy - 8}
+                  width="16"
+                  height="16"
+                  className={`trend-icon ${isUp ? 'trend-up' : 'trend-down'} `}
+                >
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="6"
+                    fill={isUp ? '#22c55e' : '#ef4444'}
+                    className="animate-pulse-slow"
+                  />
+                  <path
+                    d={isUp ? "M0 10L6 4L12 10" : "M0 4L6 10L12 4"}
+                    stroke="#000000" // Changed from #fff to black
+                    strokeWidth="2"
+                    fill="none"
+                  />
+                </svg>
+              );
+            }}
+            activeDot={{
+              r: 10,
+              fill: '#4f46e5',
+              className: "active-dot"
+            }}
+          />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: 'rgba(255, 255, 255, 0.9)', // Lighter background
+              border: '1px solid #4f46e5',
+              borderRadius: '8px',
+              color: '#000000', // Changed to black
+            }} path
+            className="animate-tooltip"
+          />
+        </LineChart>
+      </ResponsiveContainer>
+
+      <style jsx>{`
+        .stock-ticker-text {
+          text-shadow: 0 0 15px rgba(79, 70, 229, 0.8);
+          animation: tickerGlow 3s ease-in-out infinite;
+        }
+    
+        .animate-enhanced-wave {
+          animation: enhancedWave 4s ease-in-out infinite;
+        }
+    
+        @keyframes enhancedWave {
+          0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+          50% { transform: translateY(-10px) scale(1.05); opacity: 0.9; }
+        }
+    
+        .active-dot {
+          filter: url(#neon-glow);
+          animation: activeDotPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+    
+        @keyframes activeDotPulse {
+          0% { transform: scale(1); filter: brightness(1); }
+          50% { transform: scale(1.5); filter: brightness(1.5); }
+          100% { transform: scale(1); filter: brightness(1); }
+        }
+    
+        .animate-tooltip {
+          animation: fadeInTooltip 1.5s ease-in-out infinite;
+        }
+    
+        @keyframes fadeInTooltip {
+          0%, 100% { opacity: 0.8; }
+          50% { opacity: 1; }
+        }
+    
+        /* Existing and enhanced animations remain unchanged */
+      `}</style>
+    </Box>
+  );
+};

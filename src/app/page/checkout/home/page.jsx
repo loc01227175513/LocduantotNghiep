@@ -306,7 +306,7 @@ const Page = () => {
       <div className="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen py-8">
         <div className="mx-auto">
           {/* Animated Header */}
-          <h1 className="text-4xl font-semibold mb-8 text-center animate-fade-in relative">
+          <h1 className="text-5xl font-semibold mb-8 text-center animate-fade-in relative">
             <span className="absolute -inset-1 blur-2xl bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 opacity-30"></span>
             <span className="relative text-pink-700">Thanh Toán</span>
           </h1>
@@ -314,30 +314,32 @@ const Page = () => {
           {cartItems.length === 0 ? (
             <div className="text-center py-16 animate-fade-in-up">
               <div className="mb-4">
-                <span className="material-icons text-4xl text-gray-400">
-                  shopping_cart
+                <span className="material-icons text-5xl text-gray-400">
+                  Mua sắm_Cart
                 </span>
               </div>
-              <p className="text-xl text-gray-600 mb-4">
+              <p className="text-2xl text-gray-600 mb-4">
                 Giỏ hàng của bạn đang trống
               </p>
               <Link
                 href="/"
-                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
               >
-                <span className="material-icons mr-2">explore</span>
-                Khám phá khóa học
+                <span className="material-icons mr-2 text-2xl">
+                  Khám phá khóa học
+                </span>
+                <span className="text-2xl">Khám phá khóa học</span>
               </Link>
             </div>
           ) : (
             <div className="flex flex-col lg:flex-row gap-10 justify-center">
               {/* Cart Items Section */}
-              <div className="w-full lg:w-1/4 space-y-4">
-                <div className="bg-white rounded-xl shadow-lg p-4 hover:shadow-2xl transition-shadow duration-300">
-                  <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600">
+              <div className="w-full lg:w-1/2 space-y-6">
+                <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
+                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600">
                     Các khóa học trong giỏ hàng
                   </h2>
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {cartItems.map((item) =>
                       item.khoahocs.map((khoahoc) => {
                         const coupon = MaArray.find(c => c.id_khoahoc === khoahoc.id);
@@ -347,7 +349,7 @@ const Page = () => {
                         return (
                           <div
                             key={khoahoc.id}
-                            className="flex items-center p-4 rounded-xl hover:bg-gray-50 transition-all duration-300 border border-gray-100 hover:border-purple-200 hover:shadow-lg transform hover:scale-[1.02]"
+                            className="flex items-center p-6 rounded-xl hover:bg-gray-50 transition-all duration-300 border border-gray-100 hover:border-purple-200 hover:shadow-lg transform hover:scale-[1.02]"
                           >
                             <div className="relative group">
                               <Image
@@ -355,29 +357,29 @@ const Page = () => {
                                 height={150}
                                 src={khoahoc.hinh}
                                 alt={khoahoc.ten}
-                                className="w-24 h-18 object-cover rounded-xl shadow-md group-hover:shadow-xl transition-all duration-300"
+                                className="w-32 h-24 object-cover rounded-xl shadow-md group-hover:shadow-xl transition-all duration-300"
                               />
-                              <div className="absolute -top-2 -right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg">
+                              <div className="absolute -top-2 -right-2 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-bold shadow-lg">
                                 -{discountPercentage}%
                               </div>
                             </div>
-                            <div className="flex-grow ml-4">
-                              <h3 className="text-xl font-bold text-gray-800 mb-2 hover:text-purple-600 transition-colors">
+                            <div className="flex-grow ml-6">
+                              <h3 className="text-2xl font-bold text-gray-800 mb-2 hover:text-purple-600 transition-colors">
                                 {khoahoc.ten}
                               </h3>
-                              <p className="text-gray-600 flex items-center mb-2 text-sm">
+                              <p className="text-gray-600 flex items-center mb-2 text-base">
                                 <span className="material-icons mr-1 text-base">
                                   Giảng viên:
                                 </span>
                                 {khoahoc.tenGiangVien}
                               </p>
                               <div className="flex items-center">
-                                <p className="text-xl font-bold text-pink-700">
-                                  {discountedPrice}
+                                <p className="text-2xl font-bold text-pink-700">
+                                  {discountedPrice.toLocaleString()}
                                   <span className="text-lg">VNĐ</span>
                                 </p>
-                                <p className="text-gray-500 line-through ml-2 text-xl">
-                                  {khoahoc.gia}
+                                <p className="text-gray-500 line-through ml-2 text-2xl">
+                                  {khoahoc.gia.toLocaleString()}
                                   <span className="text-lg">VNĐ</span>{" "}
                                 </p>
                               </div>
@@ -389,25 +391,25 @@ const Page = () => {
                   </div>
                 </div>
                 {/* Order Summary */}
-                <div className="bg-gradient-to-br from-purple-100 to-blue-50 rounded-xl shadow-lg p-4 border border-purple-200">
-                  <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600">
+                <div className="bg-gradient-to-br from-purple-100 to-blue-50 rounded-xl shadow-lg p-6 border border-purple-200">
+                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600">
                     Tóm Tắt Đơn Hàng
                   </h2>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center pb-2">
-                      <span className="text-gray-600 text-xl">Tổng cộng:</span>
-                      <span className="text-xl font-bold text-gray-800">
-                        {totalPrice.toFixed(2)}<span className="text-lg">VNĐ</span>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center pb-4">
+                      <span className="text-gray-600 text-2xl">Tổng cộng:</span>
+                      <span className="text-2xl font-bold text-gray-800">
+                        {totalPrice.toLocaleString()}<span className="text-lg">VNĐ</span>
                       </span>
                     </div>
-                    <div className="flex justify-between items-center pb-2">
-                      <span className="text-gray-600 text-xl">Giảm giá:</span>
-                      <span className="text-xl font-bold text-red-500">
+                    <div className="flex justify-between items-center pb-4">
+                      <span className="text-gray-600 text-2xl">Giảm giá:</span>
+                      <span className="text-2xl font-bold text-red-500">
                         -{discount}%
                       </span>
                     </div>
-                    <div className="flex justify-between items-center pt-2 border-t border-purple-200">
-                      <span className="text-gray-800 font-medium text-xl">
+                    <div className="flex justify-between items-center pt-4 border-t border-purple-200">
+                      <span className="text-gray-800 font-medium text-2xl">
                         Thành tiền:
                       </span>
                       {cartItems.map((item) =>
@@ -419,8 +421,8 @@ const Page = () => {
                           return null; // Return null since we are not rendering anything here
                         })
                       )}
-                      <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
-                        {sum}
+                      <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
+                        {sum.toLocaleString()}
                         <span className="text-lg">VNĐ</span>
                       </span>
                     </div>
@@ -429,51 +431,59 @@ const Page = () => {
               </div>
 
               {/* Phương thức Section */}
-              <div className="w-full lg:w-1/4 space-y-4">
+              <div className="w-full lg:w-1/4 space-y-6">
                 {/* Payment Form */}
-                <div className="bg-white rounded-xl shadow-lg p-4 hover:shadow-2xl transition-shadow duration-300 border border-purple-100">
-                  <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600">
+                <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300 border border-purple-100">
+                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600">
                     Phương thức - thông tin
                   </h2>
                   {errorMessage && (
-                    <div className="mb-4 p-2 bg-red-50 border-l-4 border-red-500 text-red-700 rounded">
+                    <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded">
                       {errorMessage}
                     </div>
                   )}
                   {validationMessage && (
-                    <div className="mb-4 p-2 bg-green-50 border-l-4 border-green-500 text-green-700 rounded">
+                    <div className="mb-6 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded">
                       {validationMessage}
                     </div>
                   )}
-                  <form onSubmit={handleFormSubmit} className="space-y-4">
-                    <div className="mb-4">
-                      <label className="font-medium text-gray-700 text-xl pb-2">
+                  <form onSubmit={handleFormSubmit} className="space-y-6">
+                    <div className="mb-6">
+                      <label className="font-medium text-gray-700 text-2xl pb-2">
                         Chọn phương thức
                       </label>
-
-                      <div className="flex items-center mb-2 p-2">
-                        <label htmlFor="vehicle1">
-                          <span className="text-xl" style={{ fontSize: "12px" }} onClick={handleCheckOutStriper}>Thanh toán Striper</span>
-                        </label>
+                                         <div className="flex items-center mb-4 p-3">
+                        <button
+                          className="text-blue-600 hover:text-blue-700 font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center border border-blue-600"
+                          onClick={handleCheckOutStriper}
+                        >
+                          <svg className="w-10 h-10 mr-3" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              fill="#6772e5"
+                              d="M18 0C8.06 0 0 8.06 0 18s8.06 18 18 18 18-8.06 18-18S27.94 0 18 0zm-.86 27.1c-3.7 0-6-1.92-6-5.5 0-4.42 3.94-5.47 7.62-5.62V14.2h-1.32c-3.47 0-5.88 1.26-5.88 3.52v.32h2.06v-.2c0-1.5 1.24-2.22 3.04-2.22h2.66v2.6h-2.36c-2.5 0-2.86 1.14-2.86 2.04v.74c0 .9.34 2.04 2.86 2.04h1.1c2.7 0 3.9-1.4 3.9-3.02 0-3.02-3.04-3.34-6.16-3.34-.9 0-1.66.02-2.32.18v-5.66h8.32v2.6h-6.24v1.94c.64-.2 1.36-.26 2.04-.26 2.88 0 4.86 1.12 4.86 3.32 0 2.72-2.42 3.68-4.46 3.68h-2.2zm0-7.02h.02v.02h-.02v-.02z"
+                            />
+                          </svg>
+                          <span className="text-2xl">Thanh toán Stripe</span>
+                        </button>
                       </div>
 
-                      <div className="flex items-center mb-2 p-2">
+                      <div className="flex items-center mb-4 p-3">
                         <input
                           type="radio"
                           id="check"
                           name="check"
                           value="ATM"
                           checked
-                          className="mr-2 text-xl" style={{ fontSize: "12px" }}
+                          className="mr-3 text-2xl"
                         />
                         <label htmlFor="vehicle3">
-                          <span className="text-xl" style={{ fontSize: "12px" }}>Thanh toán ATM</span>
+                          <span className="text-2xl">Thanh toán ATM</span>
                         </label>
                       </div>
                     </div>
 
-                    <div className="mb-4">
-                      <label className="font-medium text-gray-700 text-xl pb-2">
+                    <div className="mb-6">
+                      <label className="font-medium text-gray-700 text-2xl pb-2">
                         Tên trên thẻ
                       </label>
                       <input
@@ -482,13 +492,12 @@ const Page = () => {
                         value={paymentDetails.nameOnCard}
                         onChange={handlePaymentInputChange}
                         onBlur={validateCardDetails}
-                        className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        style={{ fontSize: "12px" }}
+                        className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
                         required
                       />
                     </div>
-                    <div className="mb-4">
-                      <label className="font-medium text-gray-700 text-xl pb-2">
+                    <div className="mb-6">
+                      <label className="font-medium text-gray-700 text-2xl pb-2">
                         Mã số thẻ
                       </label>
                       <input
@@ -497,14 +506,13 @@ const Page = () => {
                         value={paymentDetails.cardNumber}
                         onChange={handlePaymentInputChange}
                         onBlur={validateCardDetails}
-                        className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        style={{ fontSize: "12px" }}
+                        className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
                         required
                       />
                     </div>
-                    <div className="flex mb-4">
-                      <div className="w-1/2 pr-2">
-                        <label className="font-medium text-gray-700 text-xl pb-2">
+                    <div className="flex mb-6">
+                      <div className="w-1/2 pr-3">
+                        <label className="font-medium text-gray-700 text-2xl pb-2">
                           Ngày cấp
                         </label>
                         <input
@@ -513,14 +521,13 @@ const Page = () => {
                           value={paymentDetails.expiryDate}
                           onChange={handlePaymentInputChange}
                           onBlur={validateCardDetails}
-                          className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
                           placeholder="MM/YY"
-                          style={{ fontSize: "12px" }}
                           required
                         />
                       </div>
-                      <div className="w-1/2 pl-2">
-                        <label className="font-medium text-gray-700 text-xl pb-2">
+                      <div className="w-1/2 pl-3">
+                        <label className="font-medium text-gray-700 text-2xl pb-2">
                           CVC/CVV
                         </label>
                         <input
@@ -529,29 +536,24 @@ const Page = () => {
                           value={paymentDetails.cvc}
                           onChange={handlePaymentInputChange}
                           onBlur={validateCardDetails}
-                          className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                          style={{ fontSize: "12px" }}
+                          className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
                           required
                         />
                       </div>
                     </div>
-                    <button
+                       <button
                       type="submit"
-                      className="w-full text-xl font-bold mb-4 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white py-2 rounded-lg font-bold text-lg hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
-                      style={{ fontSize: "12px" }}
+                      className="w-full text-2xl font-bold  mb-6 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white py-4 rounded-lg  hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
                     >
-                      Thanh Toán
-                      {(totalPrice - (totalPrice * discount) / 100).toFixed(
-                        2
-                      )}<span className="text-lg">VNĐ</span>
+                      Thanh Toán  
+                        <span className="pl-1"> { (totalPrice - (totalPrice * discount) / 100).toLocaleString()}</span><span className="text-lg">VNĐ</span>
                     </button>
                     <Link href={`/`}>
-                      <p className="text-center mt-3 text-gray-500">Quay lại</p>
+                      <p className="text-center mt-3 text-gray-500 text-2xl">Quay lại</p>
                     </Link>
                   </form>
                 </div>
               </div>
-              {/* Payment Section */}
             </div>
           )}
         </div>
