@@ -370,7 +370,7 @@ const Khoahocdathanhtoan = () => {
 const Khoahocdahoanthanh = () => {
   const [khoahocdahoc, setKhoahocdahoc] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
@@ -418,6 +418,7 @@ const Khoahocdahoanthanh = () => {
                     chude={item.khoahoc.chude}
                     giangvien={item.khoahoc.giangVien?.ten || "Không rõ"}
                     baihocs={item.khoahoc.baihoc?.length || 0}
+                    tieptuchoc={tieptuchoc}
                     PhanTram={
                       item.khoahoc.gia
                         ? Math.round(
@@ -425,7 +426,7 @@ const Khoahocdahoanthanh = () => {
                         )
                         : 0
                     }
-                    tieptuchoc={tieptuchoc}
+                   
                   />
                 </>
               )
