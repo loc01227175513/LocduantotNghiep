@@ -1,22 +1,20 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Grid, List } from './course';
 import { Allcoursesss } from '../../../../service/course/course.service';
 
 export default function Page() {
   const searchKeyword = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('search') : '';
+  const IdTheLoai = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('id') : '';
 
   const [view, setView] = useState('grid');
   const [courses, setCourses] = useState([]);
-  const [filteredCourses, setFilteredCourses] = useState([]);
 
   // Filter states
   const [searchTerm, setSearchTerm] = useState(searchKeyword || '');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
   const [selectedPrices, setSelectedPrices] = useState([]);
-
-  const IdTheLoai = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('id') : '';
 
   // Sort state
   const [sortBy, setSortBy] = useState('');
@@ -25,14 +23,13 @@ export default function Page() {
     Allcoursesss()
       .then((data) => {
         setCourses(data.data);
-        setFilteredCourses(data.data);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
   }, []);
 
-  useEffect(() => {
+  const filteredCourses = useMemo(() => {
     let filtered = courses;
 
     // Filter by IdTheLoai
@@ -98,16 +95,8 @@ export default function Page() {
       });
     }
 
-    setFilteredCourses(filtered);
-  }, [
-    courses,
-    searchTerm,
-    selectedCategories,
-    selectedAuthors,
-    selectedPrices,
-    sortBy,
-    IdTheLoai,
-  ]);
+    return filtered;
+  }, [courses, searchTerm, selectedCategories, selectedAuthors, selectedPrices, sortBy, IdTheLoai]);
 
   const averageRating = (danhgia) => {
     if (!danhgia || danhgia.length === 0) return 0;
@@ -142,182 +131,188 @@ export default function Page() {
   };
 
   return (
-    <div>
-      <div className="rts-course-default-area rts-section-gap">
-        <div className="container">
-          <div className="row g-5">
-            <div className="col-lg-3">
-              {/* course-filter-area start */}
-              <div className="rts-course-filter-area">
-                {/* Search Filter */}
-                <div className="single-filter-left-wrapper">
-                  <h6 className="title">
-                    <i className="fas fa-search" /> Tìm kiếm
-                  </h6>
-                  <div className="search-filter filter-body">
-                    <div className="input-wrapper">
-                      <input
-                        type="text"
-                        placeholder="Khóa học tìm kiếm..."
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                      />
-                      <i className="fa-light fa-magnifying-glass" />
-                    </div>
+    <div className="rts-course-default-area rts-section-gap">
+      <div className="container">
+        <div className="row g-5">
+          <div className="col-lg-3">
+            {/* course-filter-area start */}
+            <div className="rts-course-filter-area">
+              {/* Search Filter */}
+              <div className="single-filter-left-wrapper">
+                <h6 className="title">
+                  <i className="fas fa-search" /> Tìm kiếm
+                </h6>
+                <div className="search-filter filter-body">
+                  <div className="input-wrapper">
+                    <input
+                      type="text"
+                      placeholder="Khóa học tìm kiếm..."
+                      value={searchTerm}
+                      onChange={handleSearchChange}
+                      className="text-xl"
+                    />
+                    <i className="fa-light fa-magnifying-glass" />
                   </div>
                 </div>
-                {/* Category Filter */}
-                <div className="single-filter-left-wrapper">
-                  <h6 className="title">
-                    <i className="fas fa-layer-group " /> Loại
-                  </h6>
-                  <div className="checkbox-filter filter-body">
-                    <div className="checkbox-wrapper">
-                      {Array.from(new Set(courses.map((course) => course.chude))).map(
-                        (category, index) => (
-                          <div className="single-checkbox-filter" key={index}>
-                            <div className="check-box">
-                              <input
-                                type="checkbox"
-                                id={`category-${index}`}
-                                value={category}
-                                checked={selectedCategories.includes(category)}
-                                onChange={handleCheckboxChange(setSelectedCategories)}
-                              />
-                              <label htmlFor={`category-${index}`}>{category}</label>
-                              <br />
-                            </div>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </div>
-                {/* Author Filter */}
-                <div className="single-filter-left-wrapper">
-                  <h6 className="title">
-                    <i className="fas fa-chalkboard-teacher" /> Tác giả
-                  </h6>
-                  <div className="checkbox-filter filter-body">
-                    <div className="checkbox-wrapper ">
-                      {Array.from(new Set(courses.map((course) => course.giangvien))).map(
-                        (author, index) => (
-                          <div className="single-checkbox-filter" key={index}>
-                            <div className="check-box ">
-                              <input
-                                type="checkbox"
-                                id={`author-${index}`}
-                                value={author}
-                                checked={selectedAuthors.includes(author)}
-                                onChange={handleCheckboxChange(setSelectedAuthors)}
-                              />
-                              <label htmlFor={`author-${index}`}>{author}</label>
-                              <br />
-                            </div>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </div>
-                {/* Price Filter */}
-                <div className="single-filter-left-wrapper">
-                  <h6 className="title">
-                    <i className="fas fa-tags" /> Giá
-                  </h6>
-                  <div className="checkbox-filter filter-body last">
-                    <div className="checkbox-wrapper">
-                      {['Miễn phí', 'Trả'].map((price, index) => (
+              </div>
+              {/* Category Filter */}
+              <div className="single-filter-left-wrapper">
+                <h6 className="title">
+                  <i className="fas fa-layer-group " /> Loại
+                </h6>
+                <div className="checkbox-filter filter-body">
+                  <div className="checkbox-wrapper">
+                    {Array.from(new Set(courses.map((course) => course.chude))).map(
+                      (category, index) => (
                         <div className="single-checkbox-filter" key={index}>
                           <div className="check-box">
                             <input
                               type="checkbox"
-                              id={`price-${index}`}
-                              value={price}
-                              checked={selectedPrices.includes(price)}
-                              onChange={handleCheckboxChange(setSelectedPrices)}
+                              id={`category-${index}`}
+                              value={category}
+                              checked={selectedCategories.includes(category)}
+                              onChange={handleCheckboxChange(setSelectedCategories)}
                             />
-                            <label htmlFor={`price-${index}`}>{price}</label>
+                            <label htmlFor={`category-${index}`} className="text-xl">
+                              {category}
+                            </label>
                             <br />
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      )
+                    )}
                   </div>
                 </div>
-                {/* Clear All Filters */}
-                <button
-                  className="rts-btn btn-border"
-                  onClick={() => {
-                    setSearchTerm('');
-                    setSelectedCategories([]);
-                    setSelectedAuthors([]);
-                    setSelectedPrices([]);
-                    setSortBy('');
-                  }}
-                >
-                   Xóa tất cả các bộ lọc
-                </button>
               </div>
-              {/* course-filter-area end */}
+              {/* Author Filter */}
+              <div className="single-filter-left-wrapper">
+                <h6 className="title">
+                  <i className="fas fa-chalkboard-teacher" /> Tác giả
+                </h6>
+                <div className="checkbox-filter filter-body">
+                  <div className="checkbox-wrapper ">
+                    {Array.from(new Set(courses.map((course) => course.giangvien))).map(
+                      (author, index) => (
+                        <div className="single-checkbox-filter" key={index}>
+                          <div className="check-box ">
+                            <input
+                              type="checkbox"
+                              id={`author-${index}`}
+                              value={author}
+                              checked={selectedAuthors.includes(author)}
+                              onChange={handleCheckboxChange(setSelectedAuthors)}
+                            />
+                            <label htmlFor={`author-${index}`} className="text-xl">
+                              {author}
+                            </label>
+                            <br />
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+              {/* Price Filter */}
+              <div className="single-filter-left-wrapper">
+                <h6 className="title">
+                  <i className="fas fa-tags" /> Giá
+                </h6>
+                <div className="checkbox-filter filter-body last">
+                  <div className="checkbox-wrapper">
+                    {['Miễn phí', 'Trả'].map((price, index) => (
+                      <div className="single-checkbox-filter" key={index}>
+                        <div className="check-box">
+                          <input
+                            type="checkbox"
+                            id={`price-${index}`}
+                            value={price}
+                            checked={selectedPrices.includes(price)}
+                            onChange={handleCheckboxChange(setSelectedPrices)}
+                          />
+                          <label htmlFor={`price-${index}`} className="text-xl">
+                            {price}
+                          </label>
+                          <br />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {/* Clear All Filters */}
+              <button
+                className="rts-btn btn-border"
+                onClick={() => {
+                  setSearchTerm('');
+                  setSelectedCategories([]);
+                  setSelectedAuthors([]);
+                  setSelectedPrices([]);
+                  setSortBy('');
+                }}
+              >
+                Xóa tất cả các bộ lọc
+              </button>
             </div>
-            <div className="col-lg-9">
-              {/* filter top-area  */}
-              <div className="filter-small-top-full">
-                <div className="left-filter text-2xl">
-                  <span>Sắp xếp theo</span>
-                  <select
-                    className="nice-select text-xl  text-left"
-                    name="sort"
-                    value={sortBy}
-                    onChange={handleSortChange}
-                  >
-                    <option value="">Mặc định</option>
-                    <option value="Popularity">Sự phổ biến</option>
-                    <option value="Price">Giá</option>
-                    <option value="Stars">Sao</option>
-                    <option value="Newest">Mới nhất</option>
-                    <option value="Oldest">Lâu đời nhất</option>
-                  </select>
-                </div>
-                <div className="right-filter">
-                  <span>
-                    Hiển thị {filteredCourses.length} của {courses.length} kết quả
-                  </span>
-                  <ul className="nav nav-tabs" id="myTab" role="tablist">
-                    <li className="nav-item" role="presentation">
-                      <button
-                        onClick={() => setView('grid')}
-                        className={`nav-link ${view === 'grid' ? 'active' : ''}`}
-                        id="home-tab"
-                        type="button"
-                        role="tab"
-                      >
-                        <i className="fa-light fa-grid-2" />
-                        <span className='mx-2'>Lưới</span>
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        onClick={() => setView('list')}
-                        className={`nav-link ${view === 'list' ? 'active' : ''}`}
-                        id="profile-tab"
-                        type="button"
-                        role="tab"
-                      >
-                        <i className="fa-light fa-list" />
-                        <span className='mx-2'>Danh sách</span>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
+            {/* course-filter-area end */}
+          </div>
+          <div className="col-lg-9">
+            {/* filter top-area  */}
+            <div className="filter-small-top-full">
+              <div className="left-filter text-2xl">
+                <span>Sắp xếp theo</span>
+                <select
+                  className="nice-select text-xl text-left"
+                  name="sort"
+                  value={sortBy}
+                  onChange={handleSortChange}
+                >
+                  <option value="">Mặc định</option>
+                  <option value="Popularity">Sự phổ biến</option>
+                  <option value="Price">Giá</option>
+                  <option value="Stars">Sao</option>
+                  <option value="Newest">Mới nhất</option>
+                  <option value="Oldest">Lâu đời nhất</option>
+                </select>
               </div>
+              <div className="right-filter">
+                <span>
+                  Hiển thị {filteredCourses.length} của {courses.length} kết quả
+                </span>
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                  <li className="nav-item" role="presentation">
+                    <button
+                      onClick={() => setView('grid')}
+                      className={`nav-link ${view === 'grid' ? 'active' : ''}`}
+                      id="home-tab"
+                      type="button"
+                      role="tab"
+                    >
+                      <i className="fa-light fa-grid-2" />
+                      <span className='mx-2'>Lưới</span>
+                    </button>
+                  </li>
+                  <li className="nav-item" role="presentation">
+                    <button
+                      onClick={() => setView('list')}
+                      className={`nav-link ${view === 'list' ? 'active' : ''}`}
+                      id="profile-tab"
+                      type="button"
+                      role="tab"
+                    >
+                      <i className="fa-light fa-list" />
+                      <span className='mx-2'>Danh sách</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-20">
               {renderContent()}
             </div>
           </div>
         </div>
       </div>
-      
     </div>
   );
 }

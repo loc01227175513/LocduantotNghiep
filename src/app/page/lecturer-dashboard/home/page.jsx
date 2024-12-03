@@ -397,7 +397,7 @@ export default function Homedashboardlecturer() {
               </div>
             </div>
           </div>
-          <div className="container mt-5">
+          <div className=" mt-5">
             <div className=' flex justify-center'>
               <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê doanh thu</p>
             </div>
@@ -668,18 +668,18 @@ const DoanhThuChart = () => {
             displayEmpty
             sx={{
               width: '200px',
-              backgroundColor: '#2d3748',
-              color: '#000000',
-              '& .MuiSelect-icon': { color: '#ffffff' },
-              '& .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
-              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
+              backgroundColor: '#ff6b6b', // Màu cam
+              color: '#ffffff', // Màu trắng
+              '& .MuiSelect-icon': { color: '#ffffff' }, // Màu trắng cho icon
+              '& .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' }, // Màu cam cho border
+              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' }, // Màu cam cho border khi hover
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' }, // Màu cam cho border khi focused
             }}
             MenuProps={{
               PaperProps: {
                 sx: {
-                  backgroundColor: '#2d3748',
-                  color: '#ffffff',
+                  backgroundColor: '#ff6b6b', // Màu cam cho dropdown
+                  color: '#ffffff', // Màu trắng cho chữ trong dropdown
                 },
               },
             }}

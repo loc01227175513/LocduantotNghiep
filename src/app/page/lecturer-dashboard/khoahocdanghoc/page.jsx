@@ -54,7 +54,7 @@ export default function Khoahoccuatoi() {
           ))}
         </ul>
 
-        <div className="tab-content mt--30" id="myTabContent">
+        <div className="tab-content" id="myTabContent">
           <AnimatePresence mode="wait">
             <motion.div
               key={page}
@@ -80,127 +80,7 @@ export default function Khoahoccuatoi() {
         </div>
       </div>
 
-      <style jsx>{`
-        .custom-tabs .nav-link {
-          transition: all 0.3s ease;
-          border-radius: 8px;
-          margin: 0 5px;
-        }
-        .loading-spinner {
-          border: 3px solid #f3f3f3;
-          border-top: 3px solid #3498db;border-radius: 50%;
-          width: 40px;
-          height: 40px;
-          animation: spin 1s linear infinite;
-          margin: 20px auto;
-        }
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-          .exrolled-course-wrapper-dashed {
-    background: linear-gradient(135deg, #ffffff, #f5f7fa);
-    border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  }
 
-  .title {
-    background: linear-gradient(45deg, #2c3e50, #3498db);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-    font-weight: 700;
-  }
-
-  .custom-tabs {
-    border-bottom: none;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  .custom-tabs .nav-link {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 12px;
-    padding: 12px 24px;
-    border: none;
-    background: rgba(255, 255, 255, 0.8);
-    color: #666;
-    font-weight: 500;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .custom-tabs .nav-link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, #4facfe, #00f2fe);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -1;
-  }
-
-  .custom-tabs .nav-link:hover::before {
-    opacity: 0.1;
-  }
-
-  .custom-tabs .nav-link.active {
-    background: linear-gradient(45deg, #4facfe, #00f2fe);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(79,172,254,0.4);
-  }
-
-  .loading-spinner {
-    border: 3px solid #f0f0f0;
-    border-top: 3px solid #4facfe;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 0.8s cubic-bezier(0.27, 0.16, 0.12, 1) infinite;
-    margin: 30px auto;
-    filter: drop-shadow(0 2px 4px rgba(79,172,254,0.2));
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(180deg) scale(1.1); }
-    100% { transform: rotate(360deg) scale(1); }
-  }
-
-  .tab-content {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: inset 0 2px 10px rgba(0,0,0,0.03);
-    backdrop-filter: blur(10px);
-  }
-
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .loader {
-    animation: fadeSlideUp 0.5s ease forwards;
-    text-align: center;
-    color: #4facfe;
-    font-weight: 500;
-  }
-      `}</style>
     </div>
   );
 }
@@ -225,13 +105,13 @@ const Khoahocdanghoc = () => {
   const DanhGiaTrungBinh = khoahocdanghoc1.map((item) => {
     if (item.danhgia?.length > 0) {
       const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia), 0);
-      return (total / item.danhgia.length).toFixed(1);
+      return (total / item.danhgia.length);
     }
     return 0;
   });
 
   return (
-    <div className="courses-masonry">
+    <div className="courses-masonry my-20">
       {isLoading ? (
         <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-14708">
           {[1, 2, 3].map((n) => (
@@ -239,7 +119,7 @@ const Khoahocdanghoc = () => {
           ))}
         </div>
       ) : (
-        <div className="flex gap-10 w-full overflow-x-scroll">
+        <div className="flex gap-10 w-full overflow-x-scroll ">
           {khoahocdanghoc1.map((item, index) => (
             <Product
               key={index}
@@ -285,15 +165,15 @@ const Khoahocdathanhtoan = () => {
   const averageRatings = coursesInProgress.map((item) => {
     if (item.danhgia?.length > 0) {
       const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia), 0);
-      return (total / item.danhgia.length).toFixed(1);
+      return (total / item.danhgia.length);
     }
     return 0;
   });
-  console.log(coursesInProgress,"coursesInProgress");
-  
+  console.log(coursesInProgress, "coursesInProgress");
+
 
   return (
-    <div className="courses-masonry">
+    <div className="courses-masonry my-20">
       {isLoading ? (
         <div className="loading-skeleton grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[1, 2, 3].map((n) => (
@@ -347,13 +227,13 @@ const Khoahocdahoanthanh = () => {
   const averageRatings = coursesInProgress.map((item) => {
     if (item.danhgia?.length > 0) {
       const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia), 0);
-      return (total / item.danhgia.length).toFixed(1);
+      return (total / item.danhgia.length);
     }
     return 0;
   });
 
   return (
-    <div className="courses-masonry">
+    <div className="courses-masonry my-20">
       {isLoading ? (
         <div className="loading-skeleton grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[1, 2, 3].map((n) => (

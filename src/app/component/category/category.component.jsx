@@ -8,8 +8,6 @@ import Image from 'next/image';
 const NextCategory = () => {
   const [categories, setCategories] = useState([]);
   const [page, setPage] = useState(1);
-  const [buttonNext, setButtonNext] = useState(true);
-  const [buttonPrev, setButtonPrev] = useState(false);
   const [itemsPerPage, setItemsPerPage] = useState(6);
 
   useEffect(() => {
@@ -56,22 +54,12 @@ const NextCategory = () => {
   const nexts = () => {
     if (page < totalPages) {
       setPage(page + 1);
-      setButtonPrev(true);
-    }
-
-    if (page + 1 >= totalPages) {
-      setButtonNext(false);
     }
   };
 
   const prevs = () => {
     if (page > 1) {
       setPage(page - 1);
-      setButtonNext(true);
-    }
-
-    if (page - 1 === 1) {
-      setButtonPrev(false);
     }
   };
 
@@ -93,12 +81,12 @@ const NextCategory = () => {
     return (
       <div className="flex justify-center gap-2 mt-8">
         <button
-          className={`w-10 h-10 rounded-full border ${buttonPrev
-            ? 'bg-gradient-to-r from-blue-800 to-blue-400 text-white'
+          className={`w-10 h-10 rounded-full border ${page > 1
+            ? 'bg-pink-700 text-white'
             : 'bg-gray-200 text-gray-500 cursor-not-allowed'
             }`}
           onClick={prevs}
-          disabled={!buttonPrev}
+          disabled={page === 1}
         >
           <i className="bi bi-arrow-left text-lg"></i>
         </button>
@@ -119,7 +107,7 @@ const NextCategory = () => {
           <button
             key={p}
             className={`w-10 h-10 border rounded-full flex items-center justify-center text-lg ${p === page
-              ? 'bg-gradient-to-r from-blue-800 to-blue-400 text-white'
+              ? 'bg-pink-700 text-white'
               : 'bg-gray-100 text-gray-800'
               }`}
             onClick={() => setPage(p)}
@@ -141,12 +129,12 @@ const NextCategory = () => {
         )}
 
         <button
-          className={`w-10 h-10 rounded-full border ${buttonNext
-            ? 'bg-gradient-to-r from-blue-800 to-blue-400 text-white'
+          className={`w-10 h-10 rounded-full border ${page < totalPages
+            ? 'bg-pink-700 text-white'
             : 'bg-gray-200 text-gray-500 cursor-not-allowed'
             }`}
           onClick={nexts}
-          disabled={!buttonNext}
+          disabled={page === totalPages}
         >
           <i className="bi bi-arrow-right text-lg"></i>
         </button>
@@ -155,19 +143,19 @@ const NextCategory = () => {
   };
 
   return (
-    <div className=" bg-gradient-to-br from-gray-50 to-white py-12">
+    <div className="bg-gradient-to-br from-gray-50 to-white py-12">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="inline-block mb-4">
-            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/10 mb-4 mx-auto">
-              <i className="bi bi-grid-3x3-gap text-blue-800 text-2xl animate-pulse"></i>
+            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-pink-200 mb-4 mx-auto">
+              <i className="bi bi-grid-3x3-gap text-gray-600 text-2xl"></i>
             </div>
           </div>
-          <h2 className="text-4xl font-medium mb-4 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 bg-clip-text text-transparent">
-           <strong>Khám phá hơn 2000 khóa học trực tuyến miễn phí</strong> 
+          <h2 className="text-4xl font-medium mb-4 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 bg-clip-text text-transparent">
+            <strong>Khám phá hơn 2000 khóa học trực tuyến miễn phí</strong>
           </h2>
-          <p className="text-2xl max-w-2xl mx-auto text-blue-800">
-            Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn 
+          <p className="text-2xl max-w-2xl mx-auto text-gray-600">
+            Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn
           </p>
         </div>
 
@@ -177,28 +165,28 @@ const NextCategory = () => {
               key={index}
               className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
-            <Link href={`/page/Cours-Filter?id=${item.id}`}>
-  <div className="relative">
-    <div className="aspect-w-16 aspect-h-9 overflow-hidden">
-      <Image
-        width={500}
-        height={180}
-        src={item.image}
-        alt=""
-        className="w-full h-45 object-cover transform group-hover:scale-110 transition-transform duration-300"
-      />
-    </div>
-    <div className="p-6 text-center">
-      <h6 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
-        {item.name}
-      </h6>
-      <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
-        <i className="bi bi-collection text-blue-800 text-2xl"></i>
-        <span className="text-2xl">130+ khóa học</span>
-      </p>
-    </div>
-  </div>
-</Link>
+              <Link href={`/page/Cours-Filter?id=${item.id}`}>
+                <div className="relative">
+                  <div className="aspect-w-16 aspect-h-9 overflow-hidden">
+                    <Image
+                      width={500}
+                      height={180}
+                      src={item.image}
+                      alt=""
+                      className="w-full h-45 object-cover transform group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-6 text-center">
+                    <h6 className="text-2xl text-gray-800 mb-2 group-hover:text-pink-700 transition-colors">
+                      {item.name}
+                    </h6>
+                    <p className="text-sm flex items-center justify-center gap-2">
+                      <i className="bi bi-collection text-2xl"></i>
+                      <span className="text-2xl" style={{ fontWeight: '400' }}>130+ khóa học</span>
+                    </p>
+                  </div>
+                </div>
+              </Link>
             </div>
           ))}
         </div>
@@ -215,7 +203,6 @@ const NextCategory = () => {
 
 
 const Category = ({ onCategoryChange }) => {
-  const cate = Categorydata();
   const [KhoaHoc, setKhoaHoc] = useState([]);
   const [activeCategory, setActiveCategory] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
@@ -242,39 +229,37 @@ const Category = ({ onCategoryChange }) => {
   };
 
   return (
-      <div className="flex flex-wrap gap-3 p-4 relative">
-      {/* Enhanced Dropdown Button */}
+    <div className="flex justify-center items-center gap-3 p-4 relative">
       <div className="relative">
-      <button
-  className={`px-6 py-3 rounded-xl text-xl font-semibold transition-all duration-300 
-    flex items-center gap-2 border border-gray-200
-    ${activeCategory === ''
-      ? 'bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 text-white border-transparent shadow-xl shadow-blue-500/30 hover:shadow-blue-500/40'
-      : 'bg-white text-gray-700 border-white hover:border-blue-400 hover:text-blue-600'}`} // Đổi border-gray-200 thành border-white
-  onClick={() => setShowDropdown(!showDropdown)}
->
-  <span className="text-xl">Tất cả thể loại</span>
-  <svg 
-    className={`w-5 h-5 transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} 
-    fill="none" 
-    viewBox="0 0 24 24" 
-    stroke="currentColor"
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-  </svg>
-</button>
-    
-        {/* Enhanced Dropdown Menu */}
+        <button
+          className={`px-6 py-3 rounded-xl text-xl transition-all duration-300 
+          flex items-center gap-2 border border-gray-200
+          ${activeCategory === ''
+              ? 'bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white border-transparent shadow-xl shadow-white-200 hover:from-pink-700 hover:to-pink-700'
+              : 'bg-white text-gray-700 border-white hover:from-pink-700 hover:to-pink-700'}`}
+          onClick={() => setShowDropdown(!showDropdown)}
+        >
+          <span className="text-xl" style={{ fontWeight: '400' }}>Tất cả thể loại</span>
+          <svg
+            className={`w-5 h-5 transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
         {showDropdown && (
           <div className="absolute mt-3 w-56 bg-white rounded-xl border border-gray-100 shadow-xl 
               backdrop-blur-sm backdrop-filter z-50 transform transition-all duration-300 animate-fadeIn">
-            <ul className="py-2">
+            <ul className="py-2 overflow-y-auto" style={{ height: "350px" }}>
               <li>
                 <button
                   className={`w-full text-left px-6 py-3 text-xl transition-all duration-200
-                    ${activeCategory === '' 
-                      ? 'bg-gradient-to-r from-blue-50 to-transparent text-blue-700 font-semibold'
-                      : 'text-gray-700 hover:bg-blue-50'}`}
+                  ${activeCategory === ''
+                      ? 'bg-pink-200 text-pink-700 font-semibold'
+                      : 'text-gray-700 hover:bg-pink-200'}`}
                   onClick={() => handleCategoryChange('')}
                 >
                   Tất cả
@@ -284,9 +269,9 @@ const Category = ({ onCategoryChange }) => {
                 <li key={index}>
                   <button
                     className={`w-full text-left px-6 py-3 text-xl transition-all duration-200
-                      ${activeCategory === theloai 
-                        ? 'bg-gradient-to-r from-blue-50 to-transparent text-blue-700 font-semibold'
-                        : 'text-gray-700 hover:bg-blue-50'}`}
+                    ${activeCategory === theloai
+                        ? 'bg-pink-200 text-pink-700 font-semibold'
+                        : 'text-gray-700 hover:bg-pink-200'}`}
                     onClick={() => handleCategoryChange(theloai)}
                   >
                     {theloai}
@@ -333,10 +318,10 @@ const Categoryheader = () => {
               <Link href={`/page/Cours-Filter?id=${item.id}`} className="menu-item cv">
                 <div className="text ">
                   <div className="imgtl">
-                    <Image width={500} height={300} src={item.hinh} alt=""/>
+                    <Image width={500} height={300} src={item.hinh} alt="" />
                   </div>
-                  <p className="font-medium text-md text-black text-center pt-1 pb-1"><strong>{item.ten}</strong></p>
-                  <p className="course-count text-center">130+ Khóa học</p>
+                  <p className="font-medium text-2xl text-black text-center pt-1 pb-1">{item.ten}</p>
+                  <p className="text-center text-2xl" style={{ fontWeight: '400' }}>130+ Khóa học</p>
                 </div>
               </Link>
             </li>
@@ -350,8 +335,8 @@ const Categoryheader = () => {
                   <div className="imgtl">
                     <Image width={500} height={300} src={item.hinh} alt="" className="" />
                   </div>
-                  <p className="font-medium text-md text-black text-center pt-1 pb-1"><strong>{item.ten}</strong></p>
-                  <p className="course-count text-center">130+ Khóa học</p>
+                  <p className="font-medium text-2xl text-black text-center pt-1 pb-1">{item.ten}</p>
+                  <p className=" text-center text-2xl" style={{ fontWeight: '400' }}>130+ Khóa học</p>
                 </div>
               </Link>
             </li>
@@ -359,83 +344,64 @@ const Categoryheader = () => {
         </ul>
       </li>
       <style jsx>{`
-  .category-sub-menu {
-    padding: 1rem; /* Reduced from 2rem */
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    border-radius: 12px;
-  }
+        .category-sub-menu {
+          padding: 1rem;
+          border-radius: 12px;
+        }
 
-  .category-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Reduced from 300px */
-    gap: 1rem; /* Reduced from 2rem */
-    padding: 0.5rem; /* Reduced from 1rem */
-  }
+        .category-list {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1rem;
+          padding: 0.5rem;
+        }
 
-  .category-item {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+        .category-item {
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-  .menu-item.cv {
-    background: w
-    overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 0.75rem; /* Reduced from 1rem */
-  }
+        .menu-item.cv {
+          overflow: hidden;
+          border-radius: 8px;
+          margin-bottom: 0.75rem;
+        }
 
-  .menu-item.cv img {
-    width: 100%;
-    height: auto;
-    transition: transform 0.6s ease;
-  }
-hite;
-    padding: 1rem; /* Reduced from 1.5rem */
-    border-radius: 12px;
-    transition: all 0.4s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  }
+        .menu-item.cv img {
+          width: 100%;
+          height: auto;
+          transition: transform 0.6s ease;
+        }
 
-  .menu-item.cv:hover {
-    transform: translateY(-6px) scale(1.01); /* Slightly reduced transformation */
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.08); /* Adjusted shadow */
-  }
+        .menu-item.cv:hover {
+          transform: translateY(-6px) scale(1.01);
+          box-shadow: 0 15px 25px rgba(0, 0, 0, 0.08);
+        }
 
-  .image-wrapper {
-  .menu-item.cv:hover img {
-    transform: scale(1.05); /* Reduced scale for smaller zoom effect */
-  }
+        .menu-item.cv:hover img {
+          transform: scale(1.05);
+        }
 
-  .menu-item.cv h4 {
-    font-size: 1.1rem; /* Reduced from 1.25rem */
-    font-weight: 700;
-    color: #2d3748;
-    margin: 0.75rem 0; /* Reduced from 1rem */
-    transition: color 0.3s ease;
-  }
+        .menu-item.cv h4 {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #2d3748;
+          margin: 0.75rem 0;
+          transition: color 0.3s ease;
+        }
 
-  .course-count {
-    color: #718096;
-    font-size: 0.85rem; /* Reduced from 0.9rem */
-    font-weight: 500;
-    background: #edf2f7;
-    padding: 0.4rem 0.8rem; /* Reduced padding */
-    border-radius: 15px; /* Slightly reduced border-radius */
-    display: inline-block;
-  }
+        .menu-item.cv:hover h4 {
+          color: #4299e1;
+        }
 
-  .menu-item.cv:hover h4 {
-    color: #4299e1;
-  }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(15px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); } /* Reduced translateY */
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .category-item {
-    animation: fadeIn 0.5s ease-out forwards; /* Slightly faster animation */
-  }
-`}</style>
+        .category-item {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+      `}</style>
     </ul>
   );
 };

@@ -9,12 +9,13 @@ import Link from "next/link";
 import { Box, Button, ButtonGroup } from "@chakra-ui/react";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import Image from "next/image";
+import CardProduct from "../CardProductHome/CardProduct";
 
 const OutstandingCourse = () => {
   const [KhoaHoc, setKhoaHoc] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 5;
 
   useEffect(() => {
     fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
@@ -37,15 +38,14 @@ const OutstandingCourse = () => {
 
   const trungbinhDangKy =
     KhoaHoc.length > 0
-      ? KhoaHoc.map((item) => item.dangky).reduce((a, b) => a + b, 0) /
-        KhoaHoc.length
+      ? KhoaHoc.reduce((acc, item) => acc + item.dangky, 0) / KhoaHoc.length
       : 0;
 
   const filteredCourses = selectedCategory
     ? KhoaHoc.filter(
-        (item) =>
-          item.theloai === selectedCategory && item.dangky > trungbinhDangKy
-      )
+      (item) =>
+        item.theloai === selectedCategory && item.dangky > trungbinhDangKy
+    )
     : KhoaHoc.filter((item) => item.dangky > trungbinhDangKy);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -78,17 +78,9 @@ const OutstandingCourse = () => {
     for (let i = 1; i <= 5; i++) {
       stars.push(
         i <= filledStars ? (
-          <FaStar
-            key={i}
-            className="text-yellow-400 w-5 h-5"
-            aria-label="Filled Star"
-          />
+          <FaStar key={i} className="text-yellow-400 w-5 h-5" aria-label="Filled Star" />
         ) : (
-          <FaRegStar
-            key={i}
-            className="text-gray-300 w-5 h-5"
-            aria-label="Empty Star"
-          />
+          <FaRegStar key={i} className="text-gray-300 w-5 h-5" aria-label="Empty Star" />
         )
       );
     }
@@ -102,25 +94,24 @@ const OutstandingCourse = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
                       <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
                     </div>
-                    <span className="font-bold text-white-500 tracking-wide uppercase text-lg">
+                    <span className="text-white-500 uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
                   <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    <strong> Khám phá các khóa học nổi bật</strong>
+                    <strong>Khám phá các khóa học nổi bật</strong>
                     <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
-                      Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và
-                      nâng cao
+                      Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao
                     </p>
                   </h2>
                 </div>
-                <div className="mt-6">
+                <div>
                   <Category onCategoryChange={handleCategoryChange} />
                 </div>
               </div>
@@ -133,252 +124,44 @@ const OutstandingCourse = () => {
                   // Calculate averageRating per course
                   const averageRating =
                     item.danhgia && item.danhgia.length > 0
-                      ? item.danhgia.reduce(
-                          (acc, rating) => acc + parseInt(rating.danhgia, 10),
-                          0
-                        ) / item.danhgia.length
+                      ? item.danhgia.reduce((acc, rating) => acc + parseInt(rating.danhgia, 10), 0) /
+                      item.danhgia.length
                       : 0;
 
                   return (
-                    <div
-                      className="transition flash element-item creative"
-                      data-category="transition"
-                      key={item.id} // Use a unique key, preferably item.id
-                    >
-                      <div className="rts-single-course">
-                        <a
-                          href={`/page/course-detail?id=${item.id}`}
-                          className="thumbnail relative"
-                        >
-                          <Image
-                            width={500}
-                            height={300}
-                            src={item.hinh}
-                            alt="course"
-                            style={{ height: "170px" }}
-                          />
-                          {/* Free course badge */}
-                          {(item.gia === 0 || item.giamgia === 0) && (
-                            <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
-                              Miễn Phí
-                            </div>
-                          )}
-                          {/* Discount badge - only show if course has discount but isn't free */}
-                          {item.giamgia < item.gia && item.giamgia !== 0 && (
-                            <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
-                              -{Math.round((1 - item.giamgia / item.gia) * 100)}
-                              % OFF
-                            </div>
-                          )}
-                        </a>
-                        <div
-                          className="save-icon"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal-login"
-                          onClick={() => handleYeuThich(item.id)}
-                        >
-                          <i className="fa-sharp fa-light fa-bookmark text-lg" />
-                        </div>
-                        <div className="course-card">
-                          <a
-                            href={`/page/course-detail?id=${item.id}`}
-                            className="title-link"
-                          >
-                            <p className="title">{item.ten}</p>
-                          </a>
-                          <div className="teacher">
-                            <i class="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
-                            <span className="text-xl text-gray-800">
-                              {item.chude}
-                            </span>
-                          </div>
-
-                          <p className="teacher">
-                            <i className="fas fa-user-tie mr-2 text-gray-800 text-2xl"></i>
-                            <span className="text-xl text-gray-800">
-                              {item.giangvien}
-                            </span>
-                          </p>
-                          <div className="flex space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-                            <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
-                              <i className="fa-light fa-calendar-lines-pen text-blue-500 text-xl" />
-                              <div className="flex flex-col">
-                                <span className="text-2xl font-bold">
-                                  {item.baihocs}
-                                  <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">
-                                    Lessons
-                                  </span>
-                                </span>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center space-x-2 p-2 rounded-full">
-                              <i className="fa-light fa-user-group text-green-500 text-xl" />
-                              <div className="flex flex-col">
-                                <span className="text-2xl font-bold">
-                                  {item.dangky}
-                                  <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">
-                                    Students
-                                  </span>
-                                </span>
-                              </div>
-                            </div>
-
-                            <div className="rating-area text-yellow-500 text-2xl">
-                              <svg
-                                stroke="currentColor"
-                                fill="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 576 512"
-                                class="text-yellow-400 w-5 h-5"
-                                aria-label="Filled Star"
-                                height="1em"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-                              </svg>
-                              <span className="rating-number ml-2">
-                                {averageRating.toFixed(1)}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="rating-and-price">
-                            <div className="price-area">
-                              {item.gia === 0 || item.giamgia === 0 ? (
-                                <div className="free-badge">
-                                  <p className="text-3xl">Miễn Phí</p>
-                                </div>
-                              ) : (
-                                <div className="price-wrapper">
-                                  <div className="sale-price">
-                                    <p className="text-3xl font-bold">
-                                      {item.giamgia}
-                                      <span className="text-2xl">VNĐ</span>
-                                    </p>
-                                  </div>
-                                  <div className="original-price">
-                                    <p className=" text-3xl">
-                                      {item.gia}
-                                      <span className="text-2xl">VNĐ</span>
-                                    </p>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-
-                          <style jsx>{`
-                            .course-card {
-                              padding: 1.5rem;
-                              transition: all 0.3s ease;
-                              border-radius: 12px;
-                              background: white;
-                              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-                            }
-
-                            .course-card:hover {
-                              transform: translateY(-4px);
-                              box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-                            }
-
-                            .title-link {
-                              display: block;
-                            }
-
-                            .title {
-                              font-size: 1.1rem;
-                              font-weight: 600;
-                              color: #2d3748;
-                              transition: color 0.2s ease;
-                            }
-
-                            .title:hover {
-                              color: #4299e1;
-                            }
-
-                            .rating-area {
-                              display: flex;
-                              align-items: center;
-                              background: #f7fafc;
-                              padding: 0.5rem;
-                              border-radius: 8px;
-                            }
-
-                            .rating-number {
-                              font-weight: 600;
-                              color: #2d3748;
-                              margin-right: 0.5rem;
-                            }
-
-                            .stars {
-                              display: flex;
-                              color: #ecc94b;
-                            }
-
-                             .free-badge {
-                              background: -webkit-linear-gradient(
-                                315deg,
-                                #1e3c72 0%,
-                                #ff6b6b 100%
-                              );
-                              color: white;
-                              padding: 5px 20px;
-                              border-radius: 20px;
-                              font-weight: 500;
-                              animation: pulse 2s infinite;
-                            }
-
-                            .price-wrapper {
-                              display: flex;
-                              align-items: center;
-                              gap: 0.75rem;
-                            }
-
-                            .original-price {
-                              color: #a0aec0;
-                              text-decoration: line-through;
-                              font-size: 0.9rem;
-                            }
-
-                            .sale-price {
-                              color: #e53e3e;
-                              font-weight: 600;
-                              font-size: 1.1rem;
-                            }
-
-                            @keyframes pulse {
-                              0% {
-                                box-shadow: 0 0 0 0 rgba(11, 197, 234, 0.4);
-                              }
-                              70% {
-                                box-shadow: 0 0 0 10px rgba(11, 197, 234, 0);
-                              }
-                              100% {
-                                box-shadow: 0 0 0 0 rgba(11, 197, 234, 0);
-                              }
-                            }
-                          `}</style>
-                        </div>
-                      </div>
-                    </div>
+                    <CardProduct
+                      key={item.id}
+                      id={item.id}
+                      hinh={item.hinh}
+                      ten={item.ten}
+                      chude={item.chude}
+                      giangvien={item.giangvien}
+                      baihocs={item.baihocs}
+                      dangky={item.dangky}
+                      gia={item.gia}
+                      giamgia={item.giamgia}
+                      averageRating={averageRating}
+                      handleYeuThich={handleYeuThich}
+                      renderStars={renderStars}
+                    />
                   );
                 })}
               </div>
             </div>
-
-            <Box display="flex" justifyContent="center" mt="4">
+            <Box display="flex" justifyContent="center">
               <ButtonGroup spacing="2">
                 {[...Array(totalPages).keys()].map((page) => (
                   <Button
                     key={page}
-                    className={`btn ${
-                      page + 1 === currentPage ? "btn-primary" : "btn-secondary"
-                    } mt-5 m-1`}
-                    borderColor={
-                      page + 1 === currentPage ? "teal.500" : "gray.500"
-                    }
-                    borderWidth="1px"
+                    className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"}`}
+                    style={{
+                      outline: "none",
+                      border: "none",
+                      backgroundColor: page + 1 === currentPage ? "#C71585" : "",
+                      color: page + 1 === currentPage ? "#FFFFFF" : "",
+                      borderColor: page + 1 === currentPage ? "teal.500" : "gray.500",
+                      borderWidth: "1px",
+                    }}
                     onClick={() => handlePageChange(page + 1)}
                   >
                     {page + 1}
@@ -392,6 +175,8 @@ const OutstandingCourse = () => {
     </div>
   );
 };
+
+export default OutstandingCourse;
 
 const CourseNew = () => {
   const [KhoaHoc, setKhoaHoc] = useState([]);
@@ -423,16 +208,16 @@ const CourseNew = () => {
 
   const filteredCourses = selectedCategory
     ? KhoaHoc.filter(
-        (item) =>
-          item.theloai === selectedCategory &&
-          new Date(item.created_at) >= tenDaysAgo &&
-          new Date(item.created_at) < new Date()
-      )
+      (item) =>
+        item.theloai === selectedCategory &&
+        new Date(item.created_at) >= tenDaysAgo &&
+        new Date(item.created_at) < new Date()
+    )
     : KhoaHoc.filter(
-        (item) =>
-          new Date(item.created_at) >= tenDaysAgo &&
-          new Date(item.created_at) < new Date()
-      );
+      (item) =>
+        new Date(item.created_at) >= tenDaysAgo &&
+        new Date(item.created_at) < new Date()
+    );
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedCourses = filteredCourses.slice(
@@ -491,10 +276,10 @@ const CourseNew = () => {
               <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
                       <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
                     </div>
-                    <span className="font-bold text-white-500 tracking-wide uppercase text-lg">
+                    <span className="text-white-500 uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
@@ -506,7 +291,7 @@ const CourseNew = () => {
                     cao
                   </p>
                 </div>
-                <div className="mt-6">
+                <div>
                   <Category onCategoryChange={handleCategoryChange} />
                 </div>
               </div>
@@ -515,257 +300,55 @@ const CourseNew = () => {
 
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal chialaiflex"> 
+              <div className="filter mt--30 portfolio-feed personal chialaiflex">
                 {paginatedCourses.map((item) => {
                   // Calculate averageRating per course
                   const averageRating =
                     item.danhgia && item.danhgia.length > 0
                       ? item.danhgia.reduce(
-                          (acc, rating) => acc + parseInt(rating.danhgia, 10),
-                          0
-                        ) / item.danhgia.length
+                        (acc, rating) => acc + parseInt(rating.danhgia, 10),
+                        0
+                      ) / item.danhgia.length
                       : 0;
 
                   return (
-                    <div
-                      className="transition flash element-item creative"
-                      data-category="transition"
-                      key={item.id} // Use a unique key, preferably item.id
-                    >
-                      <div className="rts-single-course">
-                        <a
-                          href={`/page/course-detail?id=${item.id}`}
-                          className="thumbnail relative"
-                        >
-                          <Image
-                            width={500}
-                            height={300}
-                            src={item.hinh}
-                            alt="course"
-                            style={{ height: "170px" }}
-                          />
-                          {/* Free course badge */}
-                          {(item.gia === 0 || item.giamgia === 0) && (
-                            <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
-                              Miễn Phí
-                            </div>
-                          )}
-                          {/* Discount badge - only show if course has discount but isn't free */}
-                          {item.giamgia < item.gia && item.giamgia !== 0 && (
-                            <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
-                              -{Math.round((1 - item.giamgia / item.gia) * 100)}
-                              % OFF
-                            </div>
-                          )}
-                        </a>
-                        <div
-                          className="save-icon"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal-login"
-                          onClick={() => handleYeuThich(item.id)}
-                        >
-                          <i className="fa-sharp fa-light fa-bookmark text-lg" />
-                        </div>
-                        <div className="course-card">
-                          <a
-                            href={`/page/course-detail?id=${item.id}`}
-                            className="title-link"
-                          >
-                            <p className="title">{item.ten}</p>
-                          </a>
-                          <div className="teacher">
-                            <i class="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
-                            <span className="text-xl text-gray-800">
-                              {item.chude}
-                            </span>
-                          </div>
-
-                          <p className="teacher">
-                            <i className="fas fa-user-tie mr-2 text-gray-800 text-2xl"></i>
-                            <span className="text-xl text-gray-800">
-                              {item.giangvien}
-                            </span>
-                          </p>
-                          <div className="flex space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-                            <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
-                              <i className="fa-light fa-calendar-lines-pen text-blue-500 text-xl" />
-                              <div className="flex flex-col">
-                                <span className="text-2xl font-bold">
-                                  {item.baihocs}
-                                  <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">
-                                    Lessons
-                                  </span>
-                                </span>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center space-x-2 p-2 rounded-full">
-                              <i className="fa-light fa-user-group text-green-500 text-xl" />
-                              <div className="flex flex-col">
-                                <span className="text-2xl font-bold">
-                                  {item.dangky}
-                                  <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">
-                                    Students
-                                  </span>
-                                </span>
-                              </div>
-                            </div>
-
-                            <div className="rating-area text-yellow-500 text-2xl">
-                              <svg
-                                stroke="currentColor"
-                                fill="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 576 512"
-                                class="text-yellow-400 w-5 h-5"
-                                aria-label="Filled Star"
-                                height="1em"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-                              </svg>
-                              <span className="rating-number ml-2">
-                                {averageRating.toFixed(1)}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="rating-and-price">
-                            <div className="price-area">
-                              {item.gia === 0 || item.giamgia === 0 ? (
-                                <div className="free-badge">
-                                  <p className="text-3xl">Miễn Phí</p>
-                                </div>
-                              ) : (
-                                <div className="price-wrapper">
-                                  <div className="sale-price">
-                                    <p className="text-3xl font-bold">
-                                      {item.giamgia}
-                                      <span className="text-2xl">VNĐ</span>
-                                    </p>
-                                  </div>
-                                  <div className="original-price">
-                                    <p className=" text-3xl">
-                                      {item.gia}
-                                      <span className="text-2xl">VNĐ</span>
-                                    </p>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-
-                          <style jsx>{`
-                            .course-card {
-                              padding: 1.5rem;
-                              transition: all 0.3s ease;
-                              border-radius: 12px;
-                              background: white;
-                              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-                            }
-
-                            .course-card:hover {
-                              transform: translateY(-4px);
-                              box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-                            }
-
-                            .title-link {
-                              display: block;
-                            }
-
-                            .title {
-                              font-size: 1.1rem;
-                              font-weight: 600;
-                              color: #2d3748;
-                              transition: color 0.2s ease;
-                            }
-
-                            .title:hover {
-                              color: #4299e1;
-                            }
-
-                            .rating-area {
-                              display: flex;
-                              align-items: center;
-                              background: #f7fafc;
-                              padding: 0.5rem;
-                              border-radius: 8px;
-                            }
-
-                            .rating-number {
-                              font-weight: 600;
-                              color: #2d3748;
-                              margin-right: 0.5rem;
-                            }
-
-                            .stars {
-                              display: flex;
-                              color: #ecc94b;
-                            }
-
-                             .free-badge {
-                              background: -webkit-linear-gradient(
-                                315deg,
-                                #1e3c72 0%,
-                                #ff6b6b 100%
-                              );
-                              color: white;
-                              padding: 5px 20px;
-                              border-radius: 20px;
-                              font-weight: 500;
-                              animation: pulse 2s infinite;
-                            }
-
-                            .price-wrapper {
-                              display: flex;
-                              align-items: center;
-                              gap: 0.75rem;
-                            }
-
-                            .original-price {
-                              color: #a0aec0;
-                              text-decoration: line-through;
-                              font-size: 0.9rem;
-                            }
-
-                            .sale-price {
-                              color: #e53e3e;
-                              font-weight: 600;
-                              font-size: 1.1rem;
-                            }
-
-                            @keyframes pulse {
-                              0% {
-                                box-shadow: 0 0 0 0 rgba(11, 197, 234, 0.4);
-                              }
-                              70% {
-                                box-shadow: 0 0 0 10px rgba(11, 197, 234, 0);
-                              }
-                              100% {
-                                box-shadow: 0 0 0 0 rgba(11, 197, 234, 0);
-                              }
-                            }
-                          `}</style>
-                        </div>
-                      </div>
-                    </div>
+                    <CardProduct
+                      key={item.id}
+                      id={item.id}
+                      hinh={item.hinh}
+                      ten={item.ten}
+                      chude={item.chude}
+                      giangvien={item.giangvien}
+                      baihocs={item.baihocs}
+                      dangky={item.dangky}
+                      gia={item.gia}
+                      giamgia={item.giamgia}
+                      averageRating={averageRating}
+                      handleYeuThich={handleYeuThich}
+                      renderStars={renderStars}
+                    />
                   );
                 })}
               </div>
             </div>
 
-            <Box display="flex" justifyContent="center" mt="4">
+            <Box display="flex" justifyContent="center">
               <ButtonGroup spacing="2">
                 {[...Array(totalPages).keys()].map((page) => (
                   <Button
                     key={page}
-                    className={`btn ${
-                      page + 1 === currentPage ? "btn-primary" : "btn-secondary"
-                    } m-1`}
-                    borderColor={
-                      page + 1 === currentPage ? "teal.500" : "gray.500"
-                    }
-                    borderWidth="1px"
+                    className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"
+                      }`}
+                    style={{
+                      outline: "none",
+                      border: "none",
+                      backgroundColor:
+                        page + 1 === currentPage ? "#C71585" : "", // Màu hồng-700
+                      color: page + 1 === currentPage ? "#FFFFFF" : "", // Màu trắng
+                      borderColor:
+                        page + 1 === currentPage ? "teal.500" : "gray.500",
+                      borderWidth: "1px",
+                    }}
                     onClick={() => handlePageChange(page + 1)}
                   >
                     {page + 1}
@@ -784,7 +367,7 @@ const Courseseal = () => {
   const [KhoaHoc, setKhoaHoc] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 5; // Updated from 4 to 5
 
   useEffect(() => {
     fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
@@ -816,9 +399,11 @@ const Courseseal = () => {
     : KhoaHoc.filter((item) => item.giamgia < item.gia);
 
   const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
   const displayedCourses = filteredCourses.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    startIndex,
+    startIndex + itemsPerPage
   );
 
   const handleYeuThich = async (id) => {
@@ -860,17 +445,17 @@ const Courseseal = () => {
   return (
     <div>
       <ToastContainer />
-      <div className="p-0 course-area-start rts-section-gap mt-60">
+      <div className="course-area-start rts-section-gap">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
               <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
                       <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
                     </div>
-                    <span className="font-bold text-white-500 tracking-wide uppercase text-lg">
+                    <span className="text-white-500 uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
@@ -882,7 +467,7 @@ const Courseseal = () => {
                     cao
                   </p>
                 </div>
-                <div className="mt-6">
+                <div>
                   <Category onCategoryChange={handleCategoryChange} />
                 </div>
               </div>
@@ -891,7 +476,8 @@ const Courseseal = () => {
 
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal chialaiflex">
+              {/* Updated Grid Layout */}
+              <div className="filter mt--30 portfolio-feed grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {displayedCourses.map((item) => {
                   // Calculate averageRating per course
                   const averageRating =
@@ -903,228 +489,21 @@ const Courseseal = () => {
                       : 0;
 
                   return (
-                    <div
-                    className="transition flash element-item creative"
-                    data-category="transition"
-                    key={item.id} // Use a unique key, preferably item.id
-                  >
-                    <div className="rts-single-course">
-                      <a
-                        href={`/page/course-detail?id=${item.id}`}
-                        className="thumbnail relative"
-                      >
-                        <Image
-                          width={500}
-                          height={300}
-                          src={item.hinh}
-                          alt="course"
-                          style={{ height: "170px" }}
-                        />
-                        {/* Free course badge */}
-                        {(item.gia === 0 || item.giamgia === 0) && (
-                          <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
-                            Miễn Phí
-                          </div>
-                        )}
-                        {/* Discount badge - only show if course has discount but isn't free */}
-                        {item.giamgia < item.gia && item.giamgia !== 0 && (
-                          <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
-                            -{Math.round((1 - item.giamgia / item.gia) * 100)}
-                            % OFF
-                          </div>
-                        )}
-                      </a>
-                      <div
-                        className="save-icon"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal-login"
-                        onClick={() => handleYeuThich(item.id)}
-                      >
-                        <i className="fa-sharp fa-light fa-bookmark text-lg" />
-                      </div>
-                      <div className="course-card">
-                        <a
-                          href={`/page/course-detail?id=${item.id}`}
-                          className="title-link"
-                        >
-                          <p className="title">{item.ten}</p>
-                        </a>
-                        <div className="teacher">
-                          <i class="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
-                          <span className="text-xl text-gray-800">
-                            {item.chude}
-                          </span>
-                        </div>
-
-                        <p className="teacher">
-                          <i className="fas fa-user-tie mr-2 text-gray-800 text-2xl"></i>
-                          <span className="text-xl text-gray-800">
-                            {item.giangvien}
-                          </span>
-                        </p>
-                        <div className="flex space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-                          <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
-                            <i className="fa-light fa-calendar-lines-pen text-blue-500 text-xl" />
-                            <div className="flex flex-col">
-                              <span className="text-2xl font-bold">
-                                {item.baihocs}
-                                <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">
-                                  Lessons
-                                </span>
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center space-x-2 p-2 rounded-full">
-                            <i className="fa-light fa-user-group text-green-500 text-xl" />
-                            <div className="flex flex-col">
-                              <span className="text-2xl font-bold">
-                                {item.dangky}
-                                <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">
-                                  Students
-                                </span>
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="rating-area text-yellow-500 text-2xl">
-                            <svg
-                              stroke="currentColor"
-                              fill="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 576 512"
-                              class="text-yellow-400 w-5 h-5"
-                              aria-label="Filled Star"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-                            </svg>
-                            <span className="rating-number ml-2">
-                              {averageRating.toFixed(1)}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="rating-and-price">
-                          <div className="price-area">
-                            {item.gia === 0 || item.giamgia === 0 ? (
-                              <div className="free-badge">
-                                <p className="text-3xl">Miễn Phí</p>
-                              </div>
-                            ) : (
-                              <div className="price-wrapper">
-                                <div className="sale-price">
-                                  <p className="text-3xl font-bold">
-                                    {item.giamgia}
-                                    <span className="text-2xl">VNĐ</span>
-                                  </p>
-                                </div>
-                                <div className="original-price">
-                                  <p className=" text-3xl">
-                                    {item.gia}
-                                    <span className="text-2xl">VNĐ</span>
-                                  </p>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        <style jsx>{`
-                          .course-card {
-                            padding: 1.5rem;
-                            transition: all 0.3s ease;
-                            border-radius: 12px;
-                            background: white;
-                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-                          }
-
-                          .course-card:hover {
-                            transform: translateY(-4px);
-                            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-                          }
-
-                          .title-link {
-                            display: block;
-                          }
-
-                          .title {
-                            font-size: 1.1rem;
-                            font-weight: 600;
-                            color: #2d3748;
-                            transition: color 0.2s ease;
-                          }
-
-                          .title:hover {
-                            color: #4299e1;
-                          }
-
-                          .rating-area {
-                            display: flex;
-                            align-items: center;
-                            background: #f7fafc;
-                            padding: 0.5rem;
-                            border-radius: 8px;
-                          }
-
-                          .rating-number {
-                            font-weight: 600;
-                            color: #2d3748;
-                            margin-right: 0.5rem;
-                          }
-
-                          .stars {
-                            display: flex;
-                            color: #ecc94b;
-                          }
-
-                           .free-badge {
-                            background: -webkit-linear-gradient(
-                              315deg,
-                              #1e3c72 0%,
-                              #ff6b6b 100%
-                            );
-                            color: white;
-                            padding: 5px 20px;
-                            border-radius: 20px;
-                            font-weight: 500;
-                            animation: pulse 2s infinite;
-                          }
-
-                          .price-wrapper {
-                            display: flex;
-                            align-items: center;
-                            gap: 0.75rem;
-                          }
-
-                          .original-price {
-                            color: #a0aec0;
-                            text-decoration: line-through;
-                            font-size: 0.9rem;
-                          }
-
-                          .sale-price {
-                            color: #e53e3e;
-                            font-weight: 600;
-                            font-size: 1.1rem;
-                          }
-
-                          @keyframes pulse {
-                            0% {
-                              box-shadow: 0 0 0 0 rgba(11, 197, 234, 0.4);
-                            }
-                            70% {
-                              box-shadow: 0 0 0 10px rgba(11, 197, 234, 0);
-                            }
-                            100% {
-                              box-shadow: 0 0 0 0 rgba(11, 197, 234, 0);
-                            }
-                          }
-                        `}</style>
-                      </div>
-                    </div>
-                  </div>
+                    <CardProduct
+                      key={item.id}
+                      id={item.id}
+                      hinh={item.hinh}
+                      ten={item.ten}
+                      chude={item.chude}
+                      giangvien={item.giangvien}
+                      baihocs={item.baihocs}
+                      dangky={item.dangky}
+                      gia={item.gia}
+                      giamgia={item.giamgia}
+                      averageRating={averageRating}
+                      handleYeuThich={handleYeuThich}
+                      renderStars={renderStars}
+                    />
                   );
                 })}
               </div>
@@ -1132,18 +511,23 @@ const Courseseal = () => {
           </div>
 
           {/* Pagination Buttons */}
-          <Box display="flex" justifyContent="center" mt="4">
+          <Box display="flex" justifyContent="center" className="mt-8">
             <ButtonGroup spacing="2">
               {[...Array(totalPages).keys()].map((page) => (
                 <Button
                   key={page}
                   className={`btn ${
                     page + 1 === currentPage ? "btn-primary" : "btn-secondary"
-                  } mt-5 m-1`}
-                  borderColor={
-                    page + 1 === currentPage ? "teal.500" : "gray.500"
-                  }
-                  borderWidth="1px"
+                  }`}
+                  style={{
+                    outline: "none",
+                    border: "none",
+                    backgroundColor:
+                      page + 1 === currentPage ? "#C71585" : "", // Màu hồng-700
+                    color: page + 1 === currentPage ? "#FFFFFF" : "", // Màu trắng
+                    borderColor: page + 1 === currentPage ? "teal.500" : "gray.500",
+                    borderWidth: "1px",
+                  }}
                   onClick={() => handlePageChange(page + 1)}
                 >
                   {page + 1}
@@ -1161,7 +545,7 @@ const Coursefree = () => {
   const [KhoaHoc, setKhoaHoc] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 5; // Updated from 4 to 5
 
   useEffect(() => {
     fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
@@ -1237,29 +621,29 @@ const Coursefree = () => {
   return (
     <div>
       <ToastContainer />
-      <div className="p-0 course-area-start rts-section-gap mt-60">
+      <div className="course-area-start rts-section-gap">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
               <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
                       <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
                     </div>
-                    <span className="font-bold text-white-500 tracking-wide uppercase text-lg">
+                    <span className="text-white-500 uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
                   <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     <strong> Khám phá các khóa học miễn phí</strong>
-                  <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
-                    Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng
-                    cao
-                  </p>
+                    <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                      Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và
+                      nâng cao
+                    </p>
                   </h2>
                 </div>
-                <div className="mt-6">
+                <div>
                   <Category onCategoryChange={handleCategoryChange} />
                 </div>
               </div>
@@ -1268,7 +652,7 @@ const Coursefree = () => {
 
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal chialaiflex">
+              <div className="filter mt--30 portfolio-feed grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {displayedCourses.map((item) => {
                   // Calculate averageRating per course
                   const averageRating =
@@ -1280,228 +664,21 @@ const Coursefree = () => {
                       : 0;
 
                   return (
-                    <div
-                    className="transition flash element-item creative"
-                    data-category="transition"
-                    key={item.id} // Use a unique key, preferably item.id
-                  >
-                    <div className="rts-single-course">
-                      <a
-                        href={`/page/course-detail?id=${item.id}`}
-                        className="thumbnail relative"
-                      >
-                        <Image
-                          width={500}
-                          height={300}
-                          src={item.hinh}
-                          alt="course"
-                          style={{ height: "170px" }}
-                        />
-                        {/* Free course badge */}
-                        {(item.gia === 0 || item.giamgia === 0) && (
-                          <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
-                            Miễn Phí
-                          </div>
-                        )}
-                        {/* Discount badge - only show if course has discount but isn't free */}
-                        {item.giamgia < item.gia && item.giamgia !== 0 && (
-                          <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
-                            -{Math.round((1 - item.giamgia / item.gia) * 100)}
-                            % OFF
-                          </div>
-                        )}
-                      </a>
-                      <div
-                        className="save-icon"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal-login"
-                        onClick={() => handleYeuThich(item.id)}
-                      >
-                        <i className="fa-sharp fa-light fa-bookmark text-lg" />
-                      </div>
-                      <div className="course-card">
-                        <a
-                          href={`/page/course-detail?id=${item.id}`}
-                          className="title-link"
-                        >
-                          <p className="title">{item.ten}</p>
-                        </a>
-                        <div className="teacher">
-                          <i class="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
-                          <span className="text-xl text-gray-800">
-                            {item.chude}
-                          </span>
-                        </div>
-
-                        <p className="teacher">
-                          <i className="fas fa-user-tie mr-2 text-gray-800 text-2xl"></i>
-                          <span className="text-xl text-gray-800">
-                            {item.giangvien}
-                          </span>
-                        </p>
-                        <div className="flex space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-                          <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
-                            <i className="fa-light fa-calendar-lines-pen text-blue-500 text-xl" />
-                            <div className="flex flex-col">
-                              <span className="text-2xl font-bold">
-                                {item.baihocs}
-                                <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">
-                                  Lessons
-                                </span>
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center space-x-2 p-2 rounded-full">
-                            <i className="fa-light fa-user-group text-green-500 text-xl" />
-                            <div className="flex flex-col">
-                              <span className="text-2xl font-bold">
-                                {item.dangky}
-                                <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">
-                                  Students
-                                </span>
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="rating-area text-yellow-500 text-2xl">
-                            <svg
-                              stroke="currentColor"
-                              fill="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 576 512"
-                              class="text-yellow-400 w-5 h-5"
-                              aria-label="Filled Star"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-                            </svg>
-                            <span className="rating-number ml-2">
-                              {averageRating.toFixed(1)}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="rating-and-price">
-                          <div className="price-area">
-                            {item.gia === 0 || item.giamgia === 0 ? (
-                              <div className="free-badge">
-                                <p className="text-3xl">Miễn Phí</p>
-                              </div>
-                            ) : (
-                              <div className="price-wrapper">
-                                <div className="sale-price">
-                                  <p className="text-3xl font-bold">
-                                    {item.giamgia}
-                                    <span className="text-2xl">VNĐ</span>
-                                  </p>
-                                </div>
-                                <div className="original-price">
-                                  <p className=" text-3xl">
-                                    {item.gia}
-                                    <span className="text-2xl">VNĐ</span>
-                                  </p>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        <style jsx>{`
-                          .course-card {
-                            padding: 1.5rem;
-                            transition: all 0.3s ease;
-                            border-radius: 12px;
-                            background: white;
-                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-                          }
-
-                          .course-card:hover {
-                            transform: translateY(-4px);
-                            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-                          }
-
-                          .title-link {
-                            display: block;
-                          }
-
-                          .title {
-                            font-size: 1.1rem;
-                            font-weight: 600;
-                            color: #2d3748;
-                            transition: color 0.2s ease;
-                          }
-
-                          .title:hover {
-                            color: #4299e1;
-                          }
-
-                          .rating-area {
-                            display: flex;
-                            align-items: center;
-                            background: #f7fafc;
-                            padding: 0.5rem;
-                            border-radius: 8px;
-                          }
-
-                          .rating-number {
-                            font-weight: 600;
-                            color: #2d3748;
-                            margin-right: 0.5rem;
-                          }
-
-                          .stars {
-                            display: flex;
-                            color: #ecc94b;
-                          }
-
-                           .free-badge {
-                            background: -webkit-linear-gradient(
-                              315deg,
-                              #1e3c72 0%,
-                              #ff6b6b 100%
-                            );
-                            color: white;
-                            padding: 5px 20px;
-                            border-radius: 20px;
-                            font-weight: 500;
-                            animation: pulse 2s infinite;
-                          }
-
-                          .price-wrapper {
-                            display: flex;
-                            align-items: center;
-                            gap: 0.75rem;
-                          }
-
-                          .original-price {
-                            color: #a0aec0;
-                            text-decoration: line-through;
-                            font-size: 0.9rem;
-                          }
-
-                          .sale-price {
-                            color: #e53e3e;
-                            font-weight: 600;
-                            font-size: 1.1rem;
-                          }
-
-                          @keyframes pulse {
-                            0% {
-                              box-shadow: 0 0 0 0 rgba(11, 197, 234, 0.4);
-                            }
-                            70% {
-                              box-shadow: 0 0 0 10px rgba(11, 197, 234, 0);
-                            }
-                            100% {
-                              box-shadow: 0 0 0 0 rgba(11, 197, 234, 0);
-                            }
-                          }
-                        `}</style>
-                      </div>
-                    </div>
-                  </div>
+                    <CardProduct
+                      key={item.id}
+                      id={item.id}
+                      hinh={item.hinh}
+                      ten={item.ten}
+                      chude={item.chude}
+                      giangvien={item.giangvien}
+                      baihocs={item.baihocs}
+                      dangky={item.dangky}
+                      gia={item.gia}
+                      giamgia={item.giamgia}
+                      averageRating={averageRating}
+                      handleYeuThich={handleYeuThich}
+                      renderStars={renderStars}
+                    />
                   );
                 })}
               </div>
@@ -1509,18 +686,24 @@ const Coursefree = () => {
           </div>
 
           {/* Pagination Buttons */}
-          <Box display="flex" justifyContent="center" mt="4">
+          <Box display="flex" justifyContent="center">
             <ButtonGroup spacing="2">
               {[...Array(totalPages).keys()].map((page) => (
                 <Button
                   key={page}
                   className={`btn ${
                     page + 1 === currentPage ? "btn-primary" : "btn-secondary"
-                  } m-1`}
-                  borderColor={
-                    page + 1 === currentPage ? "teal.500" : "gray.500"
-                  }
-                  borderWidth="1px"
+                  }`}
+                  style={{
+                    outline: "none",
+                    border: "none",
+                    backgroundColor:
+                      page + 1 === currentPage ? "#C71585" : "", // Màu hồng-700
+                    color: page + 1 === currentPage ? "#FFFFFF" : "", // Màu trắng
+                    borderColor:
+                      page + 1 === currentPage ? "teal.500" : "gray.500",
+                    borderWidth: "1px",
+                  }}
                   onClick={() => handlePageChange(page + 1)}
                 >
                   {page + 1}

@@ -56,15 +56,15 @@ const Banner = () => {
     >
       <div className="flex flex-col justify-center w-full"> {/* Adjusted to take full height */}
         <div className="flex items-center space-x-3 animate-bounce-slow">
-          <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/10 backdrop-blur-sm">
-            <i className="bi bi-lightbulb text-gray-700 text-2xl"></i>
+          <div className="flex items-center justify-center w-12 h-12 rounded-full bg-pink-200 backdrop-blur-sm">
+            <i className="bi bi-lightbulb text-gray-600 text-2xl"></i>
           </div>
           <span className="text-gray-600 font-medium text-xl">
             Cổng vào Học tập suốt đời
           </span>
         </div>
 
-        <p className="text-6xl font-extrabold leading-tight bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 bg-clip-text text-transparent animate-gradient">
+        <p className="text-6xl font-extrabold leading-tight bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 bg-clip-text text-transparent animate-gradient">
           {banner.tieude}
         </p>
         <span className="block text-blue-800 font-bold text-5xl">
@@ -78,8 +78,8 @@ const Banner = () => {
         <div className="flex flex-wrap items-center gap-6">
           <div className="flex items-center space-x-4">
             <div className="flex -space-x-4">
-              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/10">
-                <i className="bi bi-mortarboard text-blue-800 text-2xl"></i>
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-pink-200">
+                <i className="bi bi-mortarboard text-gray-600 text-2xl"></i>
               </div>
             </div>
             <div className="space-y-1">
@@ -89,8 +89,8 @@ const Banner = () => {
           </div>
           <div className="flex items-center space-x-4">
             <div className="flex -space-x-4">
-              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/10">
-                <i className="bi bi-backpack4 text-blue-800 text-2xl"></i>
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-pink-200">
+                <i className="bi bi-backpack4 text-gray-600 text-2xl"></i>
               </div>
             </div>
             <div className="space-y-1">
@@ -100,8 +100,8 @@ const Banner = () => {
           </div>
           <div className="flex items-center space-x-4">
             <div className="flex -space-x-4">
-              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/10">
-                <i className="bi bi-buildings-fill text-blue-800 text-2xl"></i>
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-pink-200">
+                <i className="bi bi-buildings-fill text-gray-600 text-2xl"></i>
               </div>
             </div>
             <div className="space-y-1">
@@ -113,10 +113,10 @@ const Banner = () => {
         <div className="flex justify-start mt-5">
           <a
             href="/page/Cours-Filter"
-            className="w-[220px] mr-5 group px-4 py-4 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center space-x-2" // Ensures a 20px margin on the right
+            className="w-[220px] flex justify-center mr-5 group px-4 py-4 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white rounded-full font-semibold hover:from-pink-700 hover:to-pink-700 transition-all duration-300 flex items-center space-x-2" // Ensures a 20px margin on the right
           >
-            <span className="text-2xl">Xem tất cả khóa học</span>
-            <i className="fa-regular fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            <span className="text-2xl" style={{fontWeight:"normal"}}>Xem tất cả khóa học</span>
+            <i className="fa-regular fa-arrow-right group-hover:translate-x-1 transition-transform mt-1"></i>
           </a>
         </div>
       </div>
@@ -128,11 +128,11 @@ const Banner = () => {
       <div className="relative animate-float">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl transform -rotate-6"></div>
         <Image
-          width={1000}
-          height={1000}
+          width={800}
+          height={800}
           src={filteredData[0].hinh}
           alt="banner"
-          className="relative rounded-2xl shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
+          className="relative rounded-2xl shadow-2xl hover:shadow-pink-500 transition-all duration-300"
         />
       </div>
     )}

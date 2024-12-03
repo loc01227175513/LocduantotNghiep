@@ -6,7 +6,7 @@ export default function page() {
     return (
         <>
             <Header />
-            <div className='mt-20'>
+            <div className='mt-60'>
                 <Page />
             </div>
 

@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
+import Counter from "./Counter";
 
 import { Commenthome } from "../comment/comment";
 import {
@@ -21,7 +22,7 @@ import "aos/dist/aos.css";
 export default function Homecomponent() {
   useEffect(() => {
     AOS.init({
-      duration: 1500,
+      duration: 800,
       once: false, // Animation will repeat on scroll
       mirror: true, // Elements will animate out while scrolling past them
       easing: "ease-in-out",
@@ -50,23 +51,25 @@ export default function Homecomponent() {
             data-aos="zoom-in"
           >
             <div className="container">
-              <div className="row align-items-center">
+              <div className="row align-items-start">
                 <div className="col-lg-6">
                   <div className="why-choose-us-area-image pb--50">
                     <Image
-                      width={500}
-                      height={300}
+                      width={300} // Thay đổi width thành 300
+                      height={200}
                       className="one"
                       src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218768/02_atsgze.jpg"
                       alt="why-choose"
+                      style={{ height: "500px", width: "270px" }}
                     />
                     <div className="border-img">
                       <Image
-                        width={500}
-                        height={300}
+                        width={400}
+                        height={200}
                         className="two ml--20"
                         src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218908/03_grf0on.jpg"
                         alt="why-choose"
+                        style={{ height: "400px", width: "400px" }}
                       />
                     </div>
                     <div className="circle-animation">
@@ -77,8 +80,8 @@ export default function Homecomponent() {
                         <svg
                           className="uni-circle-text-path uk-text-secondary uni-animation-spin"
                           viewBox="0 0 100 100"
-                          width={200}
-                          height={200}
+                          width={150}
+                          height={150}
                         >
                           <defs>
                             <path
@@ -86,7 +89,7 @@ export default function Homecomponent() {
                               d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
                             ></path>
                           </defs>
-                          <text fontSize="11.2">
+                          <text fontSize="10">
                             <textPath xlinkHref="#circle">
                               Nạp kiến thức - tương lai nghìn đô
                             </textPath>
@@ -97,17 +100,17 @@ export default function Homecomponent() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6 pl--90 pl_md--15 mt_md--50 pl_sm--15 pt_sm--50">
+                <div className="col-lg-6 pl--45 pl_md--15 mt_md--50 pl_sm--15 pt_sm--50">
                   <div className="title-area-left-style mb-5">
                     <div className="pre-title d-flex align-items-center mb-3">
-                      <i className="mr-2 bi bi-lightbulb text-white animate-pulse text-xl"></i>
+                      <i className="mr-2 bi bi-lightbulb text-white animate-pulse text-xl" style={{ marginRight: "-5px" }}></i>
                       <span className="text-white font-weight-bold text-xl">
                         Tại sao chọn chúng tôi
                       </span>
                     </div>
-                    <h2 className="title text-white display-4 mb-4">
+                    <h2 className="title text-white display-4 mb-4 text-5xl">
                       Techstudent - Con đường dẫn đến{" "}
-                      <span className="text-white-500 font-medium">
+                      <span className="text-white-500 font-medium text-5xl">
                         sự xuất sắc
                       </span>
                     </h2>
@@ -163,33 +166,34 @@ export default function Homecomponent() {
                             src={`https://res.cloudinary.com/dnjakwi6l/image/upload/v1728219100/${item.img}`}
                             alt={item.title}
                             className="hover-scale"
+                            style={{ width: '45px', height: '45px' }}
                           />
                         </div>
-                        <h4 className="text-white mt-3 mb-2 text-2xl">
+                        <h4 className="text-white mt-3 mb-2 text-2xl text-center">
                           <strong>{item.title}</strong>
                         </h4>
-                        <p className="text-light  text-2xl">{item.desc}</p>
+                        <p className="text-light text-xl text-center">{item.desc}</p>
                       </div>
                     ))}
                   </div>
                   <div className="flex flex-row gap-10">
                     <a
                       href="/page/Cours-Filter"
-                      className="rts-btn btn-primary mt-5 hover-effect border-white bg-blue-800"
+                      className="rts-btn hover-effect border-white bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 border border-white"
                     >
-                      <span className="text-white text-xl">
+                      <span className="text-white text-xl" style={{ fontWeight: '400' }}>
                         Xem tất cả các khóa học
                       </span>
-                      <i className="fas fa-arrow-right ml-2 text-xl"></i>
+                      <i className="fas fa-arrow-right ml-2 text-xl text-white"></i>
                     </a>
                     <a
                       href="#khoahocmoi"
-                      className="rts-btn btn-primary mt-5 hover-effect border-white bg-blue-800"
+                      className="rts-btn hover-effect border-white  border border-white"
                     >
-                      <span className="text-white text-xl">
+                      <span className="text-white text-xl" style={{ fontWeight: '400' }}>
                         Xem các khóa học mới
                       </span>
-                      <i className="fas fa-arrow-right ml-2 text-xl"></i>
+                      <i className="fas fa-arrow-right ml-2 text-xl text-white"></i>
                     </a>
                   </div>
                 </div>
@@ -217,54 +221,42 @@ export default function Homecomponent() {
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="fun-facts-wrapper d-flex flex-wrap justify-content-around">
-                      <div
-                        className="fact-item text-center wow fadeInUp"
-                        data-wow-delay="0.2s"
-                      >
+                      <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.2s">
                         <div className="icon-wrapper mb-3">
                           <i className="fas fa-user-graduate fa-3x text-primary"></i>
                         </div>
                         <h2 className="counter-value mb-2">
-                          <span className="counter">65,972</span>+
+                          <Counter target={872} />+
                         </h2>
                         <p className="text-xl">Tổng Học Viên Đăng Ký</p>
                       </div>
 
-                      <div
-                        className="fact-item text-center wow fadeInUp"
-                        data-wow-delay="0.4s"
-                      >
+                      <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.4s">
                         <div className="icon-wrapper mb-3">
-                          <i className="fas fa-graduation-cap fa-3x text-success"></i>
+                          <i className="fas fa-graduation-cap fa-2x text-success"></i>
                         </div>
                         <h2 className="counter-value mb-2">
-                          <span className="counter">5,321</span>+
+                          <Counter target={221} />+
                         </h2>
                         <p className="text-xl">Học Viên Tốt Nghiệp</p>
                       </div>
 
-                      <div
-                        className="fact-item text-center wow fadeInUp"
-                        data-wow-delay="0.6s"
-                      >
+                      <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.6s">
                         <div className="icon-wrapper mb-3">
-                          <i className="fas fa-users fa-3x text-info"></i>
+                          <i className="fas fa-users fa-2x text-info"></i>
                         </div>
                         <h2 className="counter-value mb-2">
-                          <span className="counter">44,239</span>+
+                          <Counter target={639} />+
                         </h2>
                         <p className="text-xl">Học Viên Đang Học</p>
                       </div>
 
-                      <div
-                        className="fact-item text-center wow fadeInUp"
-                        data-wow-delay="0.8s"
-                      >
+                      <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.8s">
                         <div className="icon-wrapper mb-3">
-                          <i className="fas fa-star fa-3x text-warning"></i>
+                          <i className="fas fa-star fa-2x text-warning"></i>
                         </div>
                         <h2 className="counter-value mb-2">
-                          <span className="counter">75,992</span>+
+                          <Counter target={792} />+
                         </h2>
                         <p className="text-xl">Đánh Giá Tích Cực</p>
                       </div>
@@ -345,7 +337,7 @@ export default function Homecomponent() {
         <br />
         <br />
         <br />
-        <div data-aos="zoom-in" className="m-8 ">
+        <div data-aos="zoom-in" className="m-10">
           <HorizontalScrollImages />
         </div>
         <br />
@@ -394,14 +386,14 @@ export default function Homecomponent() {
           }
 
           .icon-wrapper {
-            height: 80px;
-            width: 80px;
+            height: 70px;
+            width: 70px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-        
+            background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
           }
 
@@ -444,7 +436,7 @@ export default function Homecomponent() {
           }
 
           .animate-pulse {
-            animation: pulse 2s infinite;
+            animation: pulse 1s infinite;
           }
 
           .hover-effect {

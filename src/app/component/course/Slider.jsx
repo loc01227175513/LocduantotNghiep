@@ -4,7 +4,7 @@ import { keyframes } from '@emotion/react';
 
 const scroll = keyframes`
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-100%); }
 `;
 
 const images = [
@@ -23,7 +23,7 @@ export default function HorizontalScrollImages() {
       align="center"
       minH="10vh"
       overflow="hidden"
-      w="1250px"
+      w="full" // Set to full width of the container
       mx="auto"
       position="relative"
       bg="gray.50"
@@ -48,44 +48,44 @@ export default function HorizontalScrollImages() {
         zIndex: 2,
       }}
     >
-    <Flex
-  animation={`${scroll} 10s linear infinite`} // Reduced from 30s to 15s
-  minW="200%"
-  align="center"
-  _hover={{
-    animationPlayState: 'paused'
-  }}
->
-  {[...images, ...images].map((src, index) => (
-    <Box
-      key={index}
-      mx={4}
-      boxShadow="lg"
-      borderRadius="xl"
-      p={3}
-      bg="white"
-      transition="all 0.3s ease"
-      _hover={{
-        transform: 'scale(1.05)',
-        boxShadow: '2xl',
-      }}
-    >
-      <Image
-        src={src}
-        alt={`icon-${index}`}
-        boxSize="8rem"
-        border="1px"
-        borderColor="gray.100"
-        borderRadius="lg"
-        p={2}
-        transition="all 0.3s ease"
+      <Flex
+        animation={`${scroll} 20s linear infinite`} // Increased duration for slower scrolling
+        minW="full"
+        align="center"
         _hover={{
-          borderColor: 'blue.200',
+          animationPlayState: 'paused'
         }}
-      />
-    </Box>
-  ))}
-</Flex>
+      >
+        {[...images, ...images].map((src, index) => (
+          <Box
+            key={index}
+            mx={4}
+            boxShadow="lg"
+            borderRadius="xl"
+            p={3}
+            bg="white"
+            transition="all 0.3s ease"
+            _hover={{
+              transform: 'scale(1.05)',
+              boxShadow: '2xl',
+            }}
+          >
+            <Image
+              src={src}
+              alt={`icon-${index}`}
+              boxSize="8rem"
+              border="1px"
+              borderColor="gray.100"
+              borderRadius="lg"
+              p={2}
+              transition="all 0.3s ease"
+              _hover={{
+                borderColor: 'blue.200',
+              }}
+            />
+          </Box>
+        ))}
+      </Flex>
     </Flex>
   );
 }
