@@ -12,7 +12,6 @@ import { Categoryheader } from "../category/category.component";
 import { LayThongBao } from "@/service/ThongBao/ThongBao";
 import Link from "next/link";
 import { use } from "@/assets/js/plugins/swiper";
-
 const DropdownMenu = () => {
   const [langOpen, setLangOpen] = useState(false);
   const [currencyOpen, setCurrencyOpen] = useState(false);
@@ -345,29 +344,29 @@ export default function Header() {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="header-one-wrapper">
+              <div className="header-one-wrapper relative">
 
-                <div className="left-side-header flex justify-between items-center w-full">
-                  <Link href="/" className="logo-area">
+                <div className="left-side-header flex items-center justify-between w-full px-4 py-2 lg:py-4">
+                  <Link href="/" className="logo-area flex-shrink-0">
                     <div className="logo-wrapper">
                       <Image
-                        width={500}
-                        height={300}
+                        width={200} // Reduced from 500
+                        height={120} // Reduced from 300
                         src="https://res.cloudinary.com/dn7s1su66/image/upload/v1732710859/yz6rhca3inwl1nregayf.jpg"
-                        className="w-72 logo-image"
+                        className="w-48 md:w-72 logo-image" // Responsive width
                         alt="logo"
+                        priority // Add priority loading
                       />
                     </div>
                   </Link>
-                </div>
-                <div className="">
-                  <div className="lg:hidden flex">
+                  <div className="lg:hidden absolute right-0">
                     <button
                       onClick={toggleMobileMenu}
-                      className="text-gray-700 focus:outline-none hover:text-blue-600"
+                      className="p-2 rounded-md transition-colors duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
                     >
                       <svg
-                        className="w-6 h-6"
+                        className="w-6 h-6 text-gray-700 hover:text-blue-600"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -392,373 +391,53 @@ export default function Header() {
                   </div>
                 </div>
 
-                {isMobileMenuOpen && (
-                  <div className="lg:hidden">
-                    <nav className="space-y-4 mt-3 ">
-                      <div>
-                        <button
-                          onClick={openSearch}
-                          className="w-full text-left ml-7 text-white  bg-orange-500 hover:bg-gray-300 hover:text-blue-600 transition-colors rounded px-4 py-2"
-                        >
-                          Tìm kiếm
-                        </button>
-                      </div>
 
-                      <ul>
-                        <li className="group relative py-6">
-                          <Link
-                            className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors"
-                            href="/"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            <i className="fas fa-home text-xl" />
-                            <span className="font-medium">Trang chủ</span>
-                          </Link>
-                        </li>
 
-                        <li className="group relative py-6">
-                          <Link
-                            className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors"
-                            href="#"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            <i className="fas fa-info-circle text-xl" />
-                            <span className="font-medium">Về chúng tôi</span>
-                          </Link>
-                        </li>
-
-                        <li className="group relative py-6">
-                          <button
-                            className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors w-full"
-                            onClick={() => setIsCoursesMenuOpen(!isCoursesMenuOpen)}
-                            aria-haspopup="true"
-                            aria-expanded={isCoursesMenuOpen}
-                          >
-                            <i className="fas fa-graduation-cap text-xl" />
-                            <span className="font-medium">Khóa học</span>
-                          </button>
-
-                          {isCoursesMenuOpen && (
-                            <div className="fixed top-0 right-0 h-full  bg-white w-screen shadow-xl z-50 transform transition-transform duration-300 ease-in-out">
-                              <button
-                                onClick={() => setIsCoursesMenuOpen(false)}
-                                className="absolute top-4 left-4 text-gray-600 hover:text-red-600"
-                              >
-                                &times;
-                              </button>
-                              <div className="max-w-7xl mx-auto px-4 mt-12 bg-white ">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-                                  <div className="space-y-3 p-4 hover:bg-gray-50 rounded-xl transition-colors">
-                                    <h3 className="text-base text-gray-800 border-b-2 pb-1">
-                                      Khóa học
-                                    </h3>
-                                    <ul className="space-y-3">
-                                      <li>
-                                        <Link
-                                          href="/page/Cours-Filter"
-                                          className="text-sm text-gray-600 hover:text-blue-600 flex items-center group"
-                                          onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                          <i className="fas fa-list mr-2 text-blue-500 group-hover:scale-110 transition-transform" />
-                                          <span className="group-hover:translate-x-1 transition-transform">
-                                            Khóa học thể loại
-                                          </span>
-                                        </Link>
-                                      </li>
-                                      <li>
-                                        <Link
-                                          href="/page/courseLoTrinh"
-                                          className="text-sm text-gray-600 hover:text-blue-600 flex items-center group"
-                                          onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                          <i className="fas fa-road mr-2 text-blue-500 group-hover:scale-110 transition-transform" />
-                                          <span className="group-hover:translate-x-1 transition-transform">
-                                            Lộ trình khóa học
-                                          </span>
-                                        </Link>
-                                      </li>
-                                    </ul>
-                                  </div>
-
-                                  <div className="space-y-3 p-4 hover:bg-gray-50 rounded-xl transition-colors">
-                                    <h3 className="text-base text-gray-800 border-b-2 pb-1">
-                                      Khác
-                                    </h3>
-                                    <ul className="space-y-3">
-                                      <li>
-                                        <Link
-                                          href="/page/AllGiangVien"
-                                          className="text-sm text-gray-600 hover:text-blue-600 flex items-center group"
-                                          onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                          <i className="fas fa-chalkboard-teacher mr-2 text-green-500 group-hover:scale-110 transition-transform" />
-                                          <span className="group-hover:translate-x-1 transition-transform">
-                                            Giảng Viên Nổi Bật
-                                          </span>
-                                        </Link>
-                                      </li>
-                                      <li>
-                                        <Link
-                                          href="/page/NhanTin"
-                                          className="text-sm text-gray-600 hover:text-blue-600 flex items-center group"
-                                          onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                          <i className="fas fa-comments mr-2 text-green-500 group-hover:scale-110 transition-transform" />
-                                          <span className="group-hover:translate-x-1 transition-transform">
-                                            Nhắn tin Với Giảng Viên
-                                          </span>
-                                        </Link>
-                                      </li>
-                                    </ul>
-                                  </div>
-
-                                  <div className="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                                    <Link
-                                      href="/page/KhuyenMai"
-                                      className="block text-center space-y-3"
-                                      onClick={() => setIsMobileMenuOpen(false)}
-                                    >
-                                      <div className="w-12 h-12 mx-auto bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center transform hover:rotate-12 transition-transform">
-                                        <i className="fas fa-gift text-lg text-white" />
-                                      </div>
-                                      <p className="font-bold text-base bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                                        Nhận Khuyến Mãi
-                                      </p>
-                                      <span className="text-sm text-gray-600">
-                                        Khám phá ưu đãi đặc biệt
-                                      </span>
-                                    </Link>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </li>
-
-                        <li className="group relative py-6">
-                          <button
-                            className="flex items-center space-x-2 text-gray-700 hover:text-pink-700 transition-colors w-full"
-                            onClick={() => setIsDashboardMenuOpen(!isDashboardMenuOpen)}
-                            aria-haspopup="true"
-                            aria-expanded={isDashboardMenuOpen}
-                          >
-                            <i className="fas fa-columns text-2xl" />
-                            <span className="font-medium">Trang tính</span>
-                          </button>
-
-                          {isDashboardMenuOpen && (
-                            <>
-                              <div
-                                className="fixed inset-0 bg-black bg-opacity-50 z-40"
-                                onClick={() => setIsDashboardMenuOpen(false)}
-                              ></div>
-
-                              <div
-                                className={`fixed top-0 right-0 h-full w-screen bg-white shadow-xl z-50 transform ${isDashboardMenuOpen
-                                  ? "translate-x-0"
-                                  : "translate-x-full"
-                                  } transition-transform duration-300 ease-in-out`}
-                              >
-                                <button
-                                  onClick={() => setIsDashboardMenuOpen(false)}
-                                  className="absolute top-4 left-4 text-gray-600 hover:text-red-600 text-2xl"
-                                >
-                                  &times;
-                                </button>
-                                <div className="max-w-7xl mx-auto px-4 mt-16">
-                                  <ul className="space-y-4">
-                                    <li>
-                                      <Link
-                                        href="/page/dashboard-student"
-                                        className="block px-6 py-2 hover:bg-blue-50 transition-colors"
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                      >
-                                        <div className="flex items-center space-x-3">
-                                          <i className="fas fa-user-graduate text-blue-500" />
-                                          <span>Học Viên</span>
-                                        </div>
-                                      </Link>
-                                    </li>
-                                    <li>
-                                      {data && data.vaitro !== 0 ? (
-                                        <Link
-                                          href="/page/lecturer-dashboard"
-                                          className="block px-6 py-2 hover:bg-blue-50 transition-colors"
-                                          onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                          <div className="flex items-center">
-                                            <i className="fas fa-chalkboard-teacher text-blue-500" />
-                                            <span>Giảng Viên</span>
-                                          </div>
-                                        </Link>
-                                      ) : (
-                                        <Link
-                                          href="/page/become-instructor"
-                                          className="block px-6 py-2 hover:bg-blue-50 transition-colors"
-                                          onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                          <div className="flex items-center space-x-3">
-                                            <i className="fas fa-user-plus text-blue-500" />
-                                            <span>Giảng viên</span>
-                                          </div>
-                                        </Link>
-                                      )}
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </>
-                          )}
-                        </li>
-                      </ul>
-                      <div className="flex items-center ml-7 space-x-4">
-                        <div className="relative group">
-                          <Link
-                            href="/page/dashboard-student/YeuThich"
-                            className="block transition-transform hover:scale-110"
-                          >
-                            <i className="fas fa-heart text-2xl"></i>
-                            <div className="absolute -top-2 -right-2 bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                              0
-                            </div>
-                          </Link>
-                          <div className="absolute hidden group-hover:block w-48 p-3 bg-white rounded-lg shadow-lg mt-2">
-                            <p className="text-sm font-medium text-gray-700 hover:text-pink-700">
-                              Danh sách yêu thích
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="relative group">
-                          <div
-                            className="cursor-pointer transition-transform hover:scale-110"
-                            onClick={toggleModal}
-                          >
-                            <i className="fas fa-bell text-2xl text-yellow-500"></i>
-                            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                              {thongBao.length}
-                            </div>
-                          </div>
-
-                          {isMobileMenuOpen && (
-                            <div className="absolute hidden group-hover:block w-80 p-4 bg-white rounded-lg shadow-lg mt-2 right-0 z-50">
-                              <h3 className="font-bold text-gray-800 mb-3 pb-2 border-b">
-                                Thông Báo Mới
-                              </h3>
-                              <div className="max-h-64 overflow-y-auto">
-                                {thongBao.slice(0, 3).map((notification, index) => (
-                                  <div
-                                    key={index}
-                                    className="flex items-start gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors"
-                                  >
-                                    <Image
-                                      width={40}
-                                      height={40}
-                                      src={notification.noidung.hinh}
-                                      alt="Notification"
-                                      className="w-10 h-10 rounded-lg object-cover"
-                                    />
-                                    <div>
-                                      <p className="font-medium text-gray-800">
-                                        {notification.noidung.ten}
-                                      </p>
-                                      <p className="text-sm text-gray-500">
-                                        Từ: {notification.giangvien.ten}
-                                      </p>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="relative group">
-                          <div
-                            className="cursor-pointer transition-transform hover:scale-110"
-                            onClick={openCartHandler}
-                          >
-                            <i className="fas fa-shopping-cart text-3xl hover:text-green-500 text-gray-600"></i>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="buttons-area flex items-center gap-4">
-                        {!hasData ? (
-                          <>
-                            <Link
-                              href="/page/register"
-                              class="border border-gray-300 rounded-full px-4 py-2 text-black hover:border-pink-700 hover:text-pink-700 transition-all"
-                            >
-                              Đăng ký
-                            </Link>
-                            <Link
-                              href="/page/login"
-                              class="border border-gray-300 rounded-full px-4 py-2 bg-gray-200 text-black hover:border-pink-700 hover:text-pink-700 transition-all"
-                            >
-                              Đăng nhập
-                            </Link>
-                          </>
-                        ) : (
-                          <div className="flex items-center gap-4">
-                            <button
-                              onClick={handleLogout}
-                              className="px-4 py-2 text-red-600 hover:bg-pink-700 rounded-full transition-colors"
-                            >
-                              Đăng xuất
-                            </button>
-                            <div className="relative" ref={dropdownRef}>
-                              <Image
-                                width={48}
-                                height={48}
-                                src={data?.hinh || "/default-avatar.png"}
-                                alt="Profile"
-                                className="rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all"
-                                onClick={toggleDropdown}
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </nav>
-                  </div>
-                )}
-
-                <div className="hidden lg:block">
-                  <nav>
+                <div>
+                  <nav className="hidden md:block">
                     <ul
-                      className="flex flex-wrap items-center justify-between gap-8"
+                      className="flex flex-wrap items-center justify-between gap-8 "
                       style={{ zoom: "80%" }}
                     >
+                      {/* Home */}
                       <li className="group relative">
                         <Link
                           className="flex items-center text-gray-700 hover:text-pink-700 transition-colors"
                           href="/"
                         >
                           <i className="fas fa-home text-2xl mr-2" />
-                          <span className="font-medium text-3xl">Trang chủ</span>
+                          <span className="font-medium text-3xl">
+                            Trang chủ
+                          </span>
                         </Link>
                       </li>
 
+                      {/* About */}
                       <li className="group relative">
                         <Link
                           className="flex items-center text-gray-700 hover:text-pink-700 transition-colors"
                           href="#"
                         >
                           <i className="fas fa-info-circle text-2xl mr-2" />
-                          <span className="font-medium text-3xl">Giới thiệu</span>
+                          <span className="font-medium text-3xl">
+                            Giới thiệu
+                          </span>
                         </Link>
                       </li>
+                      {/* Thể loại */}
                       <li className="group relative">
                         <div className="flex items-center text-gray-700 hover:text-pink-700 transition-colors cursor-pointer">
                           <i class="fa-solid fa-list text-2xl mr-2"></i>
-                          <span className="text-3xl font-medium mr-2">Thể loại</span>
+                          <span className="text-3xl font-medium mr-2">
+                            Thể loại
+                          </span>
                           <i className="fas fa-chevron-down text-xl transition-transform group-hover:rotate-180"></i>
                         </div>
                         <div className="dropdown-menu hidden group-hover:block absolute left-0 mt-2 w-350 shadow-lg rounded-lg z-10">
                           <Categoryheader />
                         </div>
                       </li>
+                      {/* Courses Mega Menu */}
                       <li className="group relative">
                         <Link
                           className="flex items-center text-gray-700 hover:text-pink-700 transition-colors"
@@ -770,7 +449,9 @@ export default function Header() {
 
                         <div className="hidden group-hover:block absolute left-1/2 transform -translate-x-1/2 top-full w-[1030px] bg-white shadow-xl z-50 border border-black rounded-2xl">
                           <div className="mx-auto px-4">
+                            {/* Custom grid with fixed column widths */}
                             <div className="grid grid-cols-1 md:grid-cols-[300px_300px_300px] gap-8 p-8">
+                              {/* Courses Section */}
                               <div className="space-y-4 p-6 hover:bg-gray-50 rounded-xl transition-colors">
                                 <h3 className="font-medium text-3xl text-gray-800 border-b-2 pb-2">
                                   Khóa học
@@ -813,6 +494,7 @@ export default function Header() {
                                 </ul>
                               </div>
 
+                              {/* Other Section */}
                               <div className="space-y-4 p-6 hover:bg-gray-50 rounded-xl transition-colors">
                                 <h3 className="font-medium text-3xl text-gray-800 border-b-2 pb-2">
                                   Mục khác
@@ -855,6 +537,7 @@ export default function Header() {
                                 </ul>
                               </div>
 
+                              {/* Promo Section */}
                               <div className="p-6 w-[300px] bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
                                 <Link
                                   href="/page/KhuyenMai"
@@ -885,13 +568,16 @@ export default function Header() {
                         </div>
                       </li>
 
+                      {/* Dashboard */}
                       <li className="group relative">
                         <Link
                           className="flex items-center text-gray-700 hover:text-pink-700 transition-colors"
                           href="#"
                         >
                           <i className="fas fa-columns text-2xl mr-2" />
-                          <span className="font-medium text-3xl">Trang tính</span>
+                          <span className="font-medium text-3xl">
+                            Trang tính
+                          </span>
                         </Link>
                         <ul className="hidden group-hover:block absolute right-0 top-full bg-white shadow-lg rounded-lg py-3 min-w-[200px] z-50 border border-black">
                           <li>
@@ -955,6 +641,7 @@ export default function Header() {
                         </ul>
                       </li>
 
+                      {/* teacher */}
                       <li className="group relative">
                         {data ? (
                           data.vaitro !== 0 ? (
@@ -986,6 +673,7 @@ export default function Header() {
 
                 <div className="header-right-area-one">
                   <div className="actions-area flex items-center gap-3">
+                    {/* Search Button */}
                     <div
                       className="search-btn transition-transform hover:scale-110 lg:block hidden"
                       onClick={openSearch}
@@ -993,6 +681,7 @@ export default function Header() {
                       <i className="bi bi-search search text-3xl text-blue-500 hover:text-blue-600 pl-5"></i>
                     </div>
 
+                    {/* Favorites */}
                     <div className="relative group lg:block hidden">
                       <Link
                         href="/page/dashboard-student/YeuThich"
@@ -1012,6 +701,7 @@ export default function Header() {
                       </div>
                     </div>
 
+                    {/* Notifications */}
                     <div className="relative group lg:block hidden">
                       <div
                         className="relative cursor-pointer group"
@@ -1028,14 +718,15 @@ export default function Header() {
                         <div className="absolute inset-0 rounded-full bg-yellow-500/10 animate-ping" />
                       </div>
 
+                      {/* Notification Dropdown */}
                       <div
                         className="absolute hidden group-hover:block w-80 p-4 bg-white rounded-lg 
-                shadow-xl hover:shadow-2xl mt-2 right-0 z-[100]
-                transform transition-all duration-300 ease-in-out origin-top
-                border border-gray-100 hover:border-blue-200
-                hover:scale-[1.02] opacity-0 group-hover:opacity-100
-                transition-[opacity,transform,visibility] delay-[0ms,0ms,2000ms]
-                group-hover:delay-[0ms,0ms,0ms]"
+                            shadow-xl hover:shadow-2xl mt-2 right-0 z-[100]
+                            transform transition-all duration-300 ease-in-out origin-top
+                            border border-gray-100 hover:border-blue-200
+                            hover:scale-[1.02] opacity-0 group-hover:opacity-100
+                            transition-[opacity,transform,visibility] delay-[0ms,0ms,2000ms]
+                            group-hover:delay-[0ms,0ms,0ms]"
                         ref={dropdownRef}
                       >
                         <h3 className="text-xl font-medium text-gray-700 hover:text-pink-700 transition-colors">
@@ -1046,7 +737,7 @@ export default function Header() {
                             <div
                               key={index}
                               className="flex items-start gap-3 p-2 hover:bg-blue-50 
-                      rounded-lg transition-colors duration-200 cursor-pointer"
+                              rounded-lg transition-colors duration-200 cursor-pointer"
                             >
                               <Image
                                 width={40}
@@ -1068,6 +759,7 @@ export default function Header() {
                         </div>
                       </div>
                     </div>
+                    {/* Shopping Cart */}
                     <div className="relative group lg:block hidden">
                       <div
                         className="cursor-pointer transition-transform hover:scale-110"
@@ -1078,6 +770,7 @@ export default function Header() {
                     </div>
                   </div>
 
+                  {/* Auth Buttons */}
                   <div className="buttons-area flex items-center gap-2">
                     {!hasData ? (
                       <>
@@ -1116,12 +809,325 @@ export default function Header() {
                     )}
                   </div>
                 </div>
+
+
               </div>
             </div>
           </div>
-        </div>
 
+          <div
+            className={`fixed inset-0 h-screen z-[1000] backdrop-blur-sm bg-black/30 transition-all ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+          >
+            <div
+              className={`absolute top-0 right-0 h-full bg-white shadow-2xl transform transition-transform duration-200 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"
+                } w-[400px]`} // Set width to 800px
+            >
+              {/* Header */}
+              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700">
+                <h2 className="text-xl font-bold text-white">
+                  <i className="bi bi-list text-3xl"></i>
+                </h2>
+                <button
+                  onClick={closeHeader2}
+                  className="rounded-full p-2 hover:bg-white/20 transition-colors w-10"
+                >
+                  <i className="bi bi-x-lg text-2xl text-white"></i>
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="px-4 py-2 max-h-[calc(100vh-80px)] overflow-y-auto bg-gray-50">
+                {/* User Profile Section */}
+                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl mb-4">
+                  <Image
+                    width={70}
+                    height={70}
+                    src={data?.hinh || "/default-avatar.png"}
+                    alt="User Avatar"
+                    className="rounded-full border-4 border-white shadow-md"
+                  />
+                  <div>
+                    <p className="font-bold text-gray-800 text-3xl">
+                      {data?.ten}
+                    </p>
+                    <p className="text-xl text-gray-500 pt-2">
+                      Tài khoản sinh viên
+                    </p>
+                  </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  <button
+                    className="flex items-center justify-center gap-2 p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                    onClick={handleLogout}
+                  >
+                    <i className="bi bi-box-arrow-right text-red-600 text-xl"></i>
+                    <span className="text-red-600 text-xl">
+                      Đăng Xuất
+                    </span>
+                  </button>
+                  <Link
+                    href="/page/dashboard-student/setting"
+                    className="flex items-center justify-center gap-2 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+                  >
+                    <i className="bi bi-gear-fill text-blue-600 text-xl"></i>
+                    <span className="text-blue-600 text-xl">
+                      Cài Đặt
+                    </span>
+                  </Link>
+                </div>
+
+                {/* Menu Items */}
+                <div className="space-y-2 bg-white">
+                  <Link
+                    href="/page/cart"
+                    className="flex items-center gap-3 p-3 hover:text-pink-700 rounded-lg transition-colors"
+                  >
+                    <i className="bi bi-cart text-gray-600 text-2xl hover:text-pink-700"></i>
+                    <span className="text-2xl">Giỏ Hàng</span>
+                  </Link>
+                  <Link
+                    href="/page/dashboard-student/lichsudonhang"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 hover:text-pink-700 rounded-lg"
+                  >
+                    <i className="bi bi-clock-history text-gray-600 text-2xl hover:text-pink-700"></i>
+                    <span className="text-2xl">Lịch Sử Mua</span>
+                  </Link>
+                  <Link
+                    href="/page/dashboard-student/myprofile"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg hover:text-pink-700"
+                  >
+                    <i className="bi bi-person text-gray-600 text-2xl hover:text-pink-700"></i>
+                    <span className="text-2xl">Hồ Sơ</span>
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg hover:text-pink-700"
+                  >
+                    <i className="bi bi-share text-gray-600 text-2xl hover:text-pink-700"></i>
+                    <span className="text-2xl">Mạng Xã Hội</span>
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg hover:text-pink-700"
+                  >
+                    <i className="bi bi-gift text-gray-600 text-2xl hover:text-pink-700"></i>
+                    <span className="text-2xl">Ưu Đãi</span>
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg hover:text-pink-700"
+                  >
+                    <i className="bi bi-bell text-gray-600 text-2xl hover:text-pink-700"></i>
+                    <span className="text-2xl">Thông Báo</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </header>
+
+      {isMobileMenuOpen && (
+        <div
+          className="lg:hidden fixed top-28 left-0-0 h-full w-80 bg-gradient-to-br from-[#1e3c72] to-[#ff6b6b] z-40 flex flex-col shadow-3xl transform transition-transform duration-300 ease-in-out"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setIsMobileMenuOpen(false);
+            }
+          }}
+        >
+          <nav className="mt-16 p-6 space-y-6 flex flex-col">
+            <button
+              onClick={openSearch}
+              className="w-full text-center text-white text-lg font-medium 
+    bg-[#ff6b6b]
+    hover:b-[#ff6b6b]
+    active:bg-orange-700
+    transition-all duration-300 ease-out
+    rounded-full px-6 py-3.5 sm:py-3
+    shadow-lg hover:shadow-xl
+    transform hover:scale-[1.02] active:scale-[0.98]
+    focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
+            >
+              <i className="fas fa-search mr-2"></i>
+              Tìm kiếm
+            </button>
+
+            <ul className="flex flex-col space-y-4">
+              <li className="w-full">
+                <Link
+                  className="flex items-center space-x-4 text-white hover:text-yellow-300 transition-all py-3 px-4 rounded-lg hover:bg-white/10 active:bg-white/20"
+                  href="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <i className="fas fa-home text-2xl text-white"></i>
+                  <span className="font-semibold text-lg">Trang chủ</span>
+                </Link>
+              </li>
+
+              <li className="w-full">
+                <button
+                  className="flex items-center justify-between w-full py-3 px-4 text-white hover:text-yellow-300 transition-colors rounded-lg hover:bg-white/10"
+                  onClick={() => setIsCoursesMenuOpen(!isCoursesMenuOpen)}
+                  aria-haspopup="true"
+                  aria-expanded={isCoursesMenuOpen}
+                >
+                  <div className="flex items-center space-x-4">
+                    <i className="fas fa-graduation-cap text-2xl text-white"></i>
+                    <span className="font-semibold text-lg">Khóa học</span>
+                  </div>
+                  <i className={`fas fa-chevron-${isCoursesMenuOpen ? 'up' : 'down'} text-sm text-white transition-transform`}></i>
+                </button>
+
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${isCoursesMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                >
+                  <div className="mt-2 pl-6 border-l-2 border-yellow-300 space-y-4 py-2">
+                    <Link
+                      href="/page/Cours-Filter"
+                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <i className="fas fa-list text-xl text-white"></i>
+                      <span className="text-base">Khóa học thể loại</span>
+                    </Link>
+                    <Link
+                      href="/page/courseLoTrinh"
+                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <i className="fas fa-road text-xl text-white"></i>
+                      <span className="text-base">Lộ trình khóa học</span>
+                    </Link>
+                    <Link
+                      href="/page/KhuyenMai"
+                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <i className="fas fa-tag text-xl text-white"></i>
+                      <span className="text-base">Ưu đãi</span>
+                    </Link>
+                    <Link
+                      href="/page/AllGiangVien"
+                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <i className="fas fa-star text-xl text-white"></i>
+                      <span className="text-base">Giảng viên Nổi Bật</span>
+                    </Link>
+                    <Link
+                      href="/page/NhanTin"
+                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <i className="fas fa-envelope text-xl text-white"></i>
+                      <span className="text-base">Nhắn tin Giảng viên</span>
+                    </Link>
+                  </div>
+                </div>
+              </li>
+
+              <li className="w-full">
+                <button
+                  className="flex items-center justify-between w-full py-3 px-4 text-white hover:text-yellow-300 transition-colors rounded-lg hover:bg-white/10"
+                  onClick={() => setIsDashboardMenuOpen(!isDashboardMenuOpen)}
+                  aria-haspopup="true"
+                  aria-expanded={isDashboardMenuOpen}
+                >
+                  <div className="flex items-center space-x-4">
+                    <i className="fas fa-columns text-2xl text-white"></i>
+                    <span className="font-semibold text-lg">Trang tính</span>
+                  </div>
+                  <i className={`fas fa-chevron-${isDashboardMenuOpen ? 'up' : 'down'} text-sm text-white transition-transform`}></i>
+                </button>
+
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${isDashboardMenuOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                >
+                  <div className="mt-2 pl-6 border-l-2 border-yellow-300 space-y-4 py-2">
+                    <Link
+                      href="/page/dashboard-student"
+                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <i className="fas fa-user-graduate text-xl text-white"></i>
+                      <span className="text-base">Học Viên</span>
+                    </Link>
+                    <Link
+                      href={data && data.vaitro !== 0 ? "/page/lecturer-dashboard" : "/page/become-instructor"}
+                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <i className={`fas ${data && data.vaitro !== 0 ? 'fa-chalkboard-teacher' : 'fa-user-plus'} text-xl text-white`} />
+                      <span className="text-base">{data && data.vaitro !== 0 ? 'Giảng Viên' : 'Giảng viên'}</span>
+                    </Link>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4 mt-auto mb-4 px-4">
+              <div className="buttons-area w-full sm:w-auto flex flex-col sm:flex-row items-stretch gap-3 sm:gap-2">
+                {!hasData ? (
+                  <>
+                    <a
+                      href="/page/register"
+                      className="w-full sm:w-auto border-2 border-gray-300 rounded-xl px-6 py-4 sm:py-3 
+                                  text-white hover:border-pink-700 hover:text-pink-700 
+                                  active:bg-gray-100 transition-all text-center text-lg font-medium
+                                  shadow-sm hover:shadow-md"
+                    >
+                      Đăng ký
+                    </a>
+                    <a
+                      href="/page/login"
+                      className="w-full sm:w-auto border-2 border-gray-300 rounded-xl px-6 py-4 sm:py-3
+                                  bg-[#ff6b6b] text-white hover:border-pink-700 hover:text-pink-700
+                                  active:bg-gray-200 transition-all text-center text-lg font-medium
+                                  shadow-sm hover:shadow-md"
+                    >
+                      Đăng nhập
+                    </a>
+                  </>
+                ) : (
+                  <div className="flex items-center justify-between w-full sm:w-auto gap-4 p-2 rounded-xl bg-white/5">
+                    <div className="relative" ref={dropdownRef}>
+                      <Image
+                        width={48}
+                        height={48}
+                        src={data?.hinh || "/default-avatar.png"}
+                        alt="Profile"
+                        className="rounded-full cursor-pointer 
+                                    hover:ring-3 hover:ring-blue-500 
+                                    active:ring-2 active:ring-blue-600
+                                    transition-all shadow-sm"
+                        onClick={toggleDropdown}
+                      />
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="flex-1 sm:flex-initial text-white hover:text-pink-700 
+                                  active:text-pink-800 rounded-xl transition-all 
+                                  text-lg font-medium px-6 py-3
+                                  hover:bg-gray-100 active:bg-gray-200"
+                    >
+                      Đăng xuất
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+          </nav>
+
+        </div>
+      )}
 
       {isOpenSearch && (
         <div className="fixed inset-0 flex items-center justify-center z-50 animate-[fadeIn_0.3s_ease-out]">
@@ -1380,229 +1386,6 @@ export default function Header() {
 
           .animate-slide-down {
             animation: slide-down 0.3s ease-out;
-          }
-
-          @media (max-width: 768px) {
-            .header-one-wrapper {
-              flex-direction: column;
-              align-items: flex-start;
-            }
-
-            .left-side-header {
-              width: 100%;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-
-            .header-right-area-one {
-              width: 100%;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-
-            .actions-area {
-              display: none;
-            }
-
-            .buttons-area {
-              display: none;
-            }
-
-            .mobile-menu-button {
-              display: block;
-            }
-
-            .mobile-menu {
-              display: block;
-            }
-
-            .mobile-menu ul {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              width: 100%;
-            }
-
-            .mobile-menu ul li {
-              width: 100%;
-              text-align: center;
-            }
-
-            .mobile-menu ul li a {
-              display: block;
-              padding: 1rem;
-              border-bottom: 1px solid #ccc;
-            }
-
-            .mobile-menu ul li:last-child a {
-              border-bottom: none;
-            }
-
-            .mobile-menu ul li a:hover {
-              background-color: #f8f9fa;
-            }
-
-            .mobile-menu ul li a.active {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:focus {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:active {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:visited {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:active {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:focus {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:visited {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:focus:active {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:focus:visited {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:focus:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:active:visited {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:active:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:visited:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:active:focus {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:active:visited {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:active:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:focus:visited {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:focus:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:visited:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:focus:active:visited {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:focus:active:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:focus:visited:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:active:visited:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:active:focus:visited {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:active:focus:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:active:visited:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:focus:visited:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:focus:active:visited:link {
-              background-color: #0066cc;
-              color: white;
-            }
-
-            .mobile-menu ul li a.active:hover:active:focus:visited:link {
-              background-color: #0066cc;
-              color: white;
-            }
           }
         `}</style>
       </div>

@@ -14172,7 +14172,7 @@ xclip
   border-radius: 4px;
   display: flex;
   align-items: center;
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
   background: #FBFAFF;
   gap: 8px;
   position: relative;
@@ -14423,7 +14423,7 @@ xclip
   }
 }
 .header-one.v-5 .left-side-header .search-area input {
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
   color: #1F1F25;
   padding: 5px 17px;
   background: #FBFAFF;
@@ -15224,7 +15224,7 @@ nav ul li a {
   border: 1px solid transparent;
 }
 .rts-btn.btn-primary:hover {
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
   background: transparent !important;
   color: #ff6b6b !important;
 }
@@ -15235,7 +15235,7 @@ nav ul li a {
   min-width: max-content;
 }
 .rts-btn.btn-border {
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
   color: #ff6b6b;
 }
 .rts-btn.btn-border:hover {
@@ -15365,7 +15365,7 @@ nav ul li a {
 .banner-area-one .review-thumb .review-single {
   position: absolute;
   border-radius: 6px;
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
   background: #FFF;
   box-shadow: 0px 4px 30px 0px rgba(85, 60, 223, 0.1);
   top: 51%;
@@ -15735,7 +15735,7 @@ nav ul li a {
   }
 }
 .banner-area-one.v-2 .review-thumb .review-single img {
-  background: #32ADE6;
+  background: #ff6b6b;
 }
 .banner-area-one.v-2 .banner-shape-area-two img {
   position: absolute;
@@ -16167,7 +16167,7 @@ nav ul li a {
 .review-thumb .review-single {
   position: absolute;
   border-radius: 6px;
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
   background: #FFF;
   box-shadow: 0px 4px 30px 0px rgba(85, 60, 223, 0.1);
   top: 49%;
@@ -16216,7 +16216,7 @@ nav ul li a {
   }
 }
 .review-thumb .review-single img {
-  background: #32ADE6;
+  background: #ff6b6b;
   padding: 8px;
   border-radius: 6px;
 }
@@ -16708,7 +16708,7 @@ nav ul li a {
   line-height: 20px;
 }
 .banner-btn-author-wrapper .rts-wrapper-stars-area i {
-  color: #32ADE6;
+  color: #ff6b6b;
 }
 .banner-btn-author-wrapper .rts-wrapper-stars-area.v-8 .title {
   color: var(--color-secondary-2);
@@ -17058,7 +17058,7 @@ nav ul li a {
 .banner-right-course-nine-wrapper .review-thumb .review-single {
   position: absolute;
   border-radius: 6px;
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
   background: #fff0;
   box-shadow: 0px 4px 30px 0px rgba(85, 60, 223, 0.1);
   bottom: -5px;
@@ -17198,7 +17198,7 @@ nav ul li a {
   }
 }
 .banner-content-ten-start .title span {
-  color: #32ADE6;
+  color: #ff6b6b;
   font-size: 60px;
   font-style: normal;
   font-weight: 600;
@@ -17715,7 +17715,7 @@ nav ul li a {
 .about-inner-right-one .author-area .single-author-and-info img {
   padding: 3px;
   border-radius: 50%;
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
 }
 .about-inner-right-one .author-area .single-author-and-info .information .title {
   margin-bottom: 0;
@@ -17776,7 +17776,7 @@ nav ul li a {
 .about-inner-right-two .author-area .single-author-and-info img {
   padding: 3px;
   border-radius: 50%;
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
 }
 .about-inner-right-two .author-area .single-author-and-info .information .title {
   margin-bottom: 0;
@@ -17880,7 +17880,7 @@ nav ul li a {
 .about-area-left-four .review-thumb .review-single {
   position: absolute;
   border-radius: 0;
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
   background: #FFF;
   box-shadow: 0px 4px 30px 0px rgba(85, 60, 223, 0.1);
   top: 90%;
@@ -17899,7 +17899,7 @@ nav ul li a {
   animation: jump-2 10s linear infinite;
 }
 .about-area-left-four .review-thumb .review-single.two img {
-  background: #32ADE6;
+  background: #ff6b6b;
   padding: 8px;
   border-radius: 6px;
 }
@@ -17968,7 +17968,7 @@ nav ul li a {
   align-items: center;
   gap: 10px;
   padding: 3px 6px;
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
   background: #F7F5FF;
 }
 
@@ -19440,7 +19440,7 @@ nav ul li a {
   border-radius: 50px;
   justify-content: center;
   position: absolute;
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
   z-index: 400;
   right: 70px;
   top: 80vh;
@@ -19466,7 +19466,7 @@ nav ul li a {
     border-radius: 50px;
     justify-content: center;
     position: absolute;
-    border: 1px solid #32ADE6;
+    border: 1px solid #ff6b6b;
     z-index: 400;
     right: 20px;
     top: 90vh;
@@ -21866,7 +21866,7 @@ nav ul li a {
 }
 .single-students-feedback .right-content .author-area .stars li i {
   font-size: 14px;
-  color: #32ADE6;
+  color: #ff6b6b;
 }
 .single-students-feedback .right-content .author-area .title {
   color: #fff;
@@ -27819,10 +27819,10 @@ body {
   border: 1px solid transparent;
 }
 #myModal-1 .modal-body .inner-content form input:focus {
-  border-color: #32ADE6;
+  border-color: #ff6b6b;
 }
 #myModal-1 .modal-body .inner-content form button {
-  background: #32ADE6;
+  background: #ff6b6b;
   color: #110C2D;
   display: block;
   padding: 12px 25px;
@@ -27836,7 +27836,7 @@ body {
 #myModal-1 .modal-body .inner-content form button:hover {
   background: transparent;
   color: #fff;
-  border: 1px solid #32ADE6;
+  border: 1px solid #ff6b6b;
 }
 #myModal-1 .modal-body .inner-content form span {
   color: #fff;
