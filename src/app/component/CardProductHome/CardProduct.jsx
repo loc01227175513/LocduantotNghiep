@@ -169,13 +169,13 @@ export default function CardProduct({
                                 <div className="price-wrapper flex items-center gap-2">
                                     <div className="sale-price h-10 flex items-center">
                                         <p className="text-2xl font-bold m-0">
-                                            {giamgia}
+                                            {giamgia.toLocaleString()}
                                             <span className="text-2xl">VNĐ</span>
                                         </p>
                                     </div>
                                     <div className="original-price h-10 flex items-center">
                                         <p className="text-2xl m-0">
-                                            {gia}
+                                            {gia.toLocaleString()}
                                             <span className="text-2xl">VNĐ</span>
                                         </p>
                                     </div>

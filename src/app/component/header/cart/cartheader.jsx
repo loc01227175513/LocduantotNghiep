@@ -71,36 +71,6 @@ const Cart = ({ onAction }) => {
 
     console.log('cartItems', cartItems);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     return (
               <div className='fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm transition-all duration-300 h-screen'>
           <div className='trong cursor-pointer' onClick={onAction}></div>
@@ -144,9 +114,9 @@ const Cart = ({ onAction }) => {
                           </div>
                           <div className='mt-3 flex items-center gap-3'>
                             <span className='text-2xl font-bold relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:animate-[shine_2s_infinite]'>
-                              {khoahoc.giamgia}VNĐ
+                              {khoahoc.giamgia.toLocaleString()}VNĐ
                             </span>
-                            <span className='text-gray-400 line-through text-xl'>{khoahoc.gia}VNĐ</span>
+                            <span className='text-gray-400 line-through text-xl'>{khoahoc.gia.toLocaleString()}VNĐ</span>
                           </div>
                         </div>
                         <div className='flex items-start space-x-2'>
@@ -170,7 +140,7 @@ const Cart = ({ onAction }) => {
             <div className='absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-orange-100 p-5 shadow-lg'>
               <div className='flex justify-between items-center mb-4'>
                 <span className='text-2xl text-gray-800'>Tổng cộng</span>
-                <span className='text-3xl animate-pulse'>{totalPrice}VNĐ</span>
+                <span className='text-3xl animate-pulse'>{totalPrice.toLocaleString()}VNĐ</span>
               </div>
               <div className='space-y-3'>
                 {userData ? (

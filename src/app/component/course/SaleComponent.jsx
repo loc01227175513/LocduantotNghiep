@@ -312,7 +312,7 @@ export default function SaleComponent() {
 
                                         <div className="category-product-info mt-4 space-y-3">
                                             <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-pink-500 bg-clip-text text-transparent">
-                                                {item.khoahoc.giamgia === 0 ? 'Miễn phí' : `${item.khoahoc.giamgia.toLocaleString()} ₫`}
+                                                {item.khoahoc.giamgia === 0 ? 'Miễn phí' : `${item.khoahoc.giamgia.toLocaleString()} VNĐ`}
                                             </div>
                                             <div className="relative min-h-[4rem] flex flex-col">
                                                 <div

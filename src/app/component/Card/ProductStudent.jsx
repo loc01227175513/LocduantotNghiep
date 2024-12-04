@@ -64,13 +64,13 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
                                     <>
                                         <div className="sale-price animate">
                                             <p className="text-3xl font-bold">
-                                                {giamgia}
+                                                {giamgia.toLocaleString()}
                                                 <span className="text-2xl">VNĐ</span>
                                             </p>
                                         </div>
                                         <div className="original-price animate">
                                             <p className="text-3xl">
-                                                {gia}
+                                                {gia.toLocaleString()}
                                                 <span className="text-2xl">VNĐ</span>
                                             </p>
                                         </div>

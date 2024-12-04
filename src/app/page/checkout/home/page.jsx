@@ -125,6 +125,8 @@ const Page = () => {
       gia: cartItems.flatMap(item => item.khoahocs.map(khoahoc => khoahoc.gia)),
       giamgia: cartItems.flatMap(item => item.khoahocs.map(khoahoc => khoahoc.giamgia)),
       id_giohang: cartItems.map(item => item.id),
+    }, {
+      referrerPolicy: "unsafe-url",
     });
 
     const sessionId = response.data.session_id;
@@ -330,7 +332,6 @@ const Page = () => {
                 <span className="material-icons mr-2 text-2xl">
                   Khám phá khóa học
                 </span>
-                <span className="text-2xl">Khám phá khóa học</span>
               </Link>
             </div>
           ) : (

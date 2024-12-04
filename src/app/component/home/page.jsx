@@ -17,6 +17,7 @@ SaleComponent
 import HorizontalScrollImages from "../course/Slider";
 import { NextCategory } from "../category/category.component";
 import Banner from "../banner/page";
+import BannerUser from "../BannerUser/page";
 import Image from "next/image";
 
 import AOS from "aos";
@@ -26,6 +27,8 @@ import "aos/dist/aos.css";
 
 export default function Homecomponent() {
   const [khoaHocDangHoc1, setKhoaHocDangHoc] = useState([]);
+  const NguoiDungString = typeof window !== 'undefined' ? localStorage.getItem('data') : null;
+  const NguoiDung = NguoiDungString ? JSON.parse(NguoiDungString) : {};
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -48,13 +51,27 @@ export default function Homecomponent() {
     fetchData();
   }, []);
 
+  const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+
+  const isInactiveLongTime = NguoiDung && (
+    new Date(NguoiDung.lastLogin).getTime() < Date.now() - ONE_DAY_IN_MS
+  );
 
   return (
     <div data-aos="zoom-in" data-aos-offset="200" data-aos-duration="1500">
       <div className="mt-60 ">
-        <div data-aos="zoom-in">
-          <Banner />
-        </div>
+        {isInactiveLongTime ? (
+          <div data-aos="zoom-in">
+           <BannerUser />
+          </div>
+        ) : (
+          <div data-aos="zoom-in">
+             <Banner />
+          </div>
+        )}
+
+
+
 
         <div data-aos="zoom-in ">
           <NextCategory />
