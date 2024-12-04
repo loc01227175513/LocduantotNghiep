@@ -78,7 +78,9 @@ const Page = () => {
 
   useEffect(() => {
     const handleBeforeUnload = () => {
-      localStorage.removeItem("appliedCoupons");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("appliedCoupons");
+      }
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);

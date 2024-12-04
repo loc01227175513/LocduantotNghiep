@@ -1,5 +1,8 @@
 export const DanhSachTinNhan = async () => {
-    const userData = localStorage.getItem('data');
+    if (typeof window === 'undefined') {
+      throw new Error('localStorage is not available');
+    }
+    const userData = window.localStorage.getItem('data');
     if (!userData) {
       throw new Error('No user data found');
     }
@@ -27,7 +30,10 @@ export const DanhSachTinNhan = async () => {
   };
   
   export const NguoiDungTinNhan = async () => {
-    const userData = localStorage.getItem('data');
+    if (typeof window === 'undefined') {
+      throw new Error('localStorage is not available');
+    }
+    const userData = window.localStorage.getItem('data');
     if (!userData) {
       throw new Error('No user data found');
     }
@@ -74,7 +80,13 @@ export const DanhSachTinNhan = async () => {
   };
   
   export const DanhSachTinNhanGiangVien = async () => {
-    const userData = localStorage.getItem('lecturerId');
+    if (typeof window === 'undefined') {
+      throw new Error('localStorage is not available');
+    }
+    const userData = window.localStorage.getItem('lecturerId');
+    if (!userData) {
+      throw new Error('No lecturer ID found in localStorage');
+    }
     const parsedLecturer = JSON.parse(userData);
     const url = process.env.REACT_APP_API_URL || 'https://huuphuoc.id.vn/api/showAllNhanTinGiangVien';
     try {

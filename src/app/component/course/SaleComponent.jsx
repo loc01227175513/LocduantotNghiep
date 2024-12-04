@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Img from 'next/image';
 import { TatCaKhuyenMaiKhoaHoc } from '../../../service/khuyenmai/khuyenmai';
 import { toast } from 'react-toastify';
-
+import { KhoaHocYeuThich } from "../../../service/YeuThich/YeuThich";
+import Link from 'next/link';
 export default function SaleComponent() {
     const [showTimeSlots, setShowTimeSlots] = useState(false);
     const [KhuyenMai, setKhuyenMai] = useState([]);
@@ -121,14 +122,14 @@ export default function SaleComponent() {
 
     const getTimeSlots = () => {
         const now = new Date().getTime();
-        
+
         const validDiscounts = KhuyenMai
             .filter(item => item.magiamgia && item.magiamgia.giamgia > 0)
             .filter(item => {
                 const end = new Date(item.magiamgia.ngayketthuc).getTime();
                 return now < end;
             });
-    
+
         const groupedByDate = validDiscounts.reduce((groups, item) => {
             const date = new Date(item.magiamgia.ngaybatdau).toLocaleDateString();
             if (!groups[date]) {
@@ -137,7 +138,7 @@ export default function SaleComponent() {
             groups[date].push(item);
             return groups;
         }, {});
-    
+
         return Object.entries(groupedByDate)
             .sort(([dateA], [dateB]) => new Date(dateA) - new Date(dateB))
             .map(([date, items]) => {
@@ -145,27 +146,28 @@ export default function SaleComponent() {
                     const start = new Date(item.magiamgia.ngaybatdau).getTime();
                     return now >= start;
                 }) ? 'Đang diễn ra' : 'Chưa tới';
-    
+
                 const isActive = activeDate === date;
-    
+
                 return (
-                    <div key={date} 
-                        className={`time-slot rounded-lg p-4 border cursor-pointer transition-all duration-300 ease-in-out
-                            ${isActive 
-                                ? 'bg-orange-50 border-orange-500 shadow-md' 
+                    <div key={date}
+                        className={`time-slot rounded-lg p-4 border cursor-pointer transition-all duration-300 ease-in-out max-w-full
+                            ${isActive
+                                ? 'bg-orange-50 border-orange-500 shadow-md'
                                 : 'bg-gray-50 border-gray-200 hover:border-orange-300 hover:bg-orange-50/50'}`}
                         onClick={() => {
                             setActiveDate(date);
                             setSelectedSlot(items[0]);
                         }}>
-                        <p className="slot-time flex items-center gap-2 text-gray-700">
+                        <p className="slot-time flex items-center gap-2 text-gray-700 overflow-hidden text-ellipsis whitespace-nowrap">
                             <i className="fas fa-calendar"></i>
-                            {date}
+                            <span className="overflow-hidden text-ellipsis">{date}</span>
                         </p>
-                        <p className="text-sm text-gray-600 mt-1">
+                        <p className="text-sm text-gray-600 mt-1 overflow-hidden text-ellipsis whitespace-nowrap">
                             {items.length} khuyến mãi
                         </p>
-                        <p className={`slot-status mt-1 ${status === 'Chưa tới' ? 'text-green-500' : 'text-red-500'}`}>
+                        <p className={`slot-status mt-1 overflow-hidden text-ellipsis whitespace-nowrap 
+                            ${status === 'Chưa tới' ? 'text-green-500' : 'text-red-500'}`}>
                             {status}
                         </p>
                     </div>
@@ -176,7 +178,7 @@ export default function SaleComponent() {
     const getFilteredCourses = () => {
         const now = new Date().getTime();
         let courses = KhuyenMai;
-    
+
         // Group by date first
         const groupByDate = (items) => {
             return items.reduce((groups, item) => {
@@ -188,7 +190,7 @@ export default function SaleComponent() {
                 return groups;
             }, {});
         };
-    
+
         // Filter by selected slot if exists
         if (selectedSlot) {
             const selectedDate = new Date(selectedSlot.magiamgia.ngaybatdau).toLocaleDateString();
@@ -200,7 +202,7 @@ export default function SaleComponent() {
                 const end = new Date(item.magiamgia.ngayketthuc).getTime();
                 return now < end;
             });
-    
+
             // Add upcoming courses if enabled
             if (showUpcoming) {
                 const upcomingCourses = KhuyenMai.filter(item => {
@@ -209,15 +211,27 @@ export default function SaleComponent() {
                 });
                 courses = [...courses, ...upcomingCourses];
             }
-    
+
             // Group by date and flatten
             const grouped = groupByDate(courses);
             courses = Object.values(grouped).flat();
         }
-    
+
         return courses;
     };
     console.log(KhuyenMai, 'KhuyenMai');
+    const handleYeuThich = async (id) => {
+        try {
+            const response = await KhoaHocYeuThich(id);
+            console.log(response);
+            toast.success("Added to favorites!");
+        } catch (error) {
+            console.error("Error:", error);
+            toast.error("Error adding to favorites!");
+        }
+    };
+
+
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -264,30 +278,29 @@ export default function SaleComponent() {
                         </div>
                     </div>
 
-                    <div className="flash-sale-container mt-12 px-4">
-                        <div className="flash-sale-row grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                    <div className=" mt-12 px-4 mx-auto overflow-x-auto">
+                        <div className="flex flex-nowrap gap-8 min-w-full pb-4">
                             {getFilteredCourses().map((item) => (
-                                <div key={item.id} className="flash-sale-col relative group">
-                                    <div className="flash-sale-card bg-white border border-gray-200 rounded-2xl shadow-sm p-5 
-                                        hover:shadow-2xl hover:border-orange-200 hover:scale-105 transform transition-all duration-300 ease-in-out">
+                                <div key={item.id} className="flash-sale-col relative group flex-none w-[280px]">
+                                    <div className="flash-sale-card bg-white border border-gray-200 rounded-2xl shadow-sm p-5 hover:shadow-2xl hover:border-orange-200 transform transition-all duration-300 ease-in-out">
                                         <div>
                                             {item.magiamgia && item.magiamgia.giamgia > 0 && (
-                                                <div className="absolute -top-2 -left-2 discount-badge bg-gradient-to-r from-red-500 to-orange-500 
-                                                    text-white px-4 py-1.5 rounded-full text-lg font-bold shadow-lg transform -rotate-12">
+                                                <div className="absolute -top-2 -left-2 discount-badge bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-1.5 rounded-full text-lg font-bold shadow-lg transform -rotate-12">
                                                     -{item.magiamgia.giamgia}%
                                                 </div>
                                             )}
-                                            <Img
-                                                width={150}
-                                                height={100}
-                                                alt={item.khoahoc.ten}
-                                                src={item.khoahoc.hinh}
-                                                className="w-full h-52 object-cover rounded-xl shadow-md group-hover:opacity-95 transition"
-                                                loading="lazy"
-                                            />
+                                            <Link href={`/page/course-detail?id=${item.khoahoc.id}`}>
+                                                <Img
+                                                    width={150}
+                                                    height={150}
+                                                    alt={item.khoahoc.ten}
+                                                    src={item.khoahoc.hinh}
+                                                    className="w-100 h-44 object-cover rounded-xl shadow-md group-hover:opacity-95 transition"
+                                                    loading="lazy"
+                                                />
+                                            </Link>
                                             <div className="bestseller-product-actions mt-3 flex justify-end">
-                                                <button className="bestseller-icon-favorite text-gray-400 hover:text-red-500 
-                                                    transition-colors duration-300 transform hover:scale-125">
+                                                <button className="bestseller-icon-favorite text-gray-400 hover:text-red-500 " onClick={() => handleYeuThich(item.khoahoc.id)}>
                                                     <span role="img" aria-label="heart" className="anticon anticon-heart text-2xl absolute top-4 right-4">
                                                         <svg viewBox="64 64 896 896" focusable="false" data-icon="heart" width="1em" height="1em" fill="currentColor" aria-hidden="true">
                                                             <path d="M923 283.6a260.04 260.04 0 00-56.9-82.8 264.4 264.4 0 00-84-55.5A265.34 265.34 0 00679.7 125c-49.3 0-97.4 13.5-139.2 39-10 6.1-19.5 12.8-28.5 20.1-9-7.3-18.5-14-28.5-20.1-41.8-25.5-89.9-39-139.2-39-35.5 0-69.9 6.8-102.4 20.3-31.4 13-59.7 31.7-84 55.5a258.44 258.44 0 00-56.9 82.8c-13.9 32.3-21 66.6-21 101.9 0 33.3 6.8 68 20.3 103.3 11.3 29.5 27.5 60.1 48.2 91 32.8 48.9 77.9 99.9 133.9 151.6 92.8 85.7 184.7 144.9 188.6 147.3l23.7 15.2c10.5 6.7 24 6.7 34.5 0l23.7-15.2c3.9-2.5 95.7-61.6 188.6-147.3 56-51.7 101.1-102.7 133.9-151.6 20.7-30.9 37-61.5 48.2-91 13.5-35.3 20.3-70 20.3-103.3.1-35.3-7-69.6-20.9-101.9zM512 814.8S156 586.7 156 385.5C156 283.6 240.3 201 344.3 201c73.1 0 136.5 40.8 167.7 100.4C543.2 241.8 606.6 201 679.7 201c104 0 188.3 82.6 188.3 184.5 0 201.2-356 429.3-356 429.3z"></path>
@@ -299,23 +312,20 @@ export default function SaleComponent() {
 
                                         <div className="category-product-info mt-4 space-y-3">
                                             <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-pink-500 bg-clip-text text-transparent">
-                                                {item.khoahoc.giamgia === 0
-                                                    ? 'Miễn phí'
-                                                    : `${item.khoahoc.giamgia.toLocaleString()} ₫`}
+                                                {item.khoahoc.giamgia === 0 ? 'Miễn phí' : `${item.khoahoc.giamgia.toLocaleString()} ₫`}
                                             </div>
                                             <div className="relative min-h-[4rem] flex flex-col">
-    <div 
-        className={`text-xl text-gray-600 font-medium overflow-hidden transition-all duration-300
-            ${showFullText ? 'max-h-[500px]' : 'max-h-[4rem]'} flex-grow`}
-        onMouseEnter={() => setShowFullText(true)}
-        onMouseLeave={() => setShowFullText(false)}
-    >
-        {item.khoahoc.ten}
-    </div>
-    {!showFullText && item.khoahoc.ten.length > 50 && (
-        <div className="absolute bottom-0 inset-x-0 h-8 bg-gradient-to-t from-white to-transparent" />
-    )}
-</div>
+                                                <div
+                                                    className={`text-xl text-gray-600 font-medium overflow-hidden transition-all duration-300 ${showFullText ? 'max-h-[500px]' : 'max-h-[4rem]'} flex-grow`}
+                                                    onMouseEnter={() => setShowFullText(true)}
+                                                    onMouseLeave={() => setShowFullText(false)}
+                                                >
+                                                    {item.khoahoc.ten}
+                                                </div>
+                                                {!showFullText && item.khoahoc.ten.length > 50 && (
+                                                    <div className="absolute bottom-0 inset-x-0 h-8 bg-gradient-to-t from-white to-transparent" />
+                                                )}
+                                            </div>
                                             {item.magiamgia && item.magiamgia.giamgia > 0 && (
                                                 <div className="mt-3 p-3 bg-orange-50 rounded-lg">
                                                     <p className="text-xl text-gray-700">Mã giảm giá: <strong className="text-orange-600">{item.magiamgia.maso}</strong></p>
@@ -330,6 +340,7 @@ export default function SaleComponent() {
                             ))}
                         </div>
                     </div>
+
                 </div>
             </section>
         </div>

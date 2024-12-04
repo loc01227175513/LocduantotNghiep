@@ -2,7 +2,7 @@ export const Oder = async () => {
     const url = 'https://huuphuoc.id.vn/api/lichsumuahang';
   
     // Retrieve data from local storage
-    const data = JSON.parse(localStorage.getItem('data'));
+    const data = typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem('data')) : null;
   
     if (!data || !data.id) {
       throw new Error('No valid data found in local storage');

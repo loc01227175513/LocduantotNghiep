@@ -58,11 +58,11 @@ export default function VoucherPage() {
                                         </Link>
                                         <div className="body-area">
                                             <div className="course-top">
-                                                <div className="price">
+                                                <div className="price line-through ">
                                                     {item.khoahoc.gia === 0 && item.khoahoc.giamgia === 0 ? 'Miễn phí' : `$ ${item.khoahoc.gia}`}
                                                 </div>
                                                 {item.khoahoc.gia !== 0 || item.khoahoc.giamgia !== 0 ? (
-                                                    <div className="line-through price">
+                                                    <div className="price">
                                                         $ {item.khoahoc.giamgia}
                                                     </div>
                                                 ) : null}

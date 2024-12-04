@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import "./cart1.css";
 import Image from "next/image";
 import Accordion from "@mui/material/Accordion";
@@ -1129,82 +1129,13 @@ export default function Header() {
         </div>
       )}
 
-      {isOpenSearch && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 animate-[fadeIn_0.3s_ease-out]">
-          <div
-            className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 backdrop-blur-md animate-[fadeIn_0.3s_ease-out]"
-            onClick={closeSearch}
-          ></div>
-          <div className="relative flex flex-col items-center p-8 rounded-2xl bg-gradient-to-b from-white/95 to-white/90 backdrop-filter backdrop-blur-xl shadow-[0_20px_70px_-15px_rgba(0,0,0,0.3),inset_0_0_20px_rgba(255,255,255,0.7)] border border-white/20 animate-[scaleIn_0.3s_ease-out] transform transition-all duration-300">
-            <div className="absolute top-4 right-4">
-              <button
-                className="bg-transparent border-none cursor-pointer"
-                onClick={closeSearch}
-              >
-                <svg
-                  className="w-8 h-8 text-gray-600 hover:text-gray-800 transition duration-200"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <form onSubmit={formSearch} className="flex w-full min-w-[450px]">
-              <div className="flex border-2 border-gray-200/80 rounded-xl w-full shadow-inner bg-white/90 focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-100/50 transition duration-200 mt-4">
-                <div className="flex items-center pl-4">
-                  <svg
-                    className="w-8 h-8 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Tìm kiếm"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="flex-grow focus:outline-none rounded-l-xl text-2xl pt-15 pb-15 bg-transparent placeholder-gray-400 animate-[slideIn_0.4s_ease-out]"
-                  style={{ fontSize: "15px" }}
-                />
-                <button
-                  type="submit"
-                  className="bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 m-1 w-[120px] px-2 py-3 text-white rounded-lg shadow-md hover:shadow-lg hover:from-pink-700 hover:to-pink-700 active:from-pink-700 active:to-pink-700 transition duration-200 hover:scale-[1.02] transform flex items-center justify-center gap-1"
-                >
-                  <span className="text-2xl">Search</span>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      <Search
+        isOpenSearch={isOpenSearch}
+        closeSearch={closeSearch}
+        formSearch={formSearch}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
 
       <div>
         <style jsx>{`
@@ -1392,3 +1323,145 @@ export default function Header() {
     </>
   );
 }
+
+
+
+const Search = React.memo(function SearchComponent({ isOpenSearch, closeSearch, formSearch, searchTerm, setSearchTerm }) {
+  const [showHistory, setShowHistory] = useState(false);
+  const searchHistory = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("searchHistory") || "[]") : [];
+
+  const handleMouseLeave = useCallback(() => {
+    if (searchTerm && searchTerm.trim().length > 1) {
+      const searchHistory = JSON.parse(localStorage.getItem("searchHistory") || "[]");
+
+      if (!searchHistory.includes(searchTerm)) {
+        searchHistory.unshift(searchTerm);
+
+        const MAX_HISTORY = 10;
+        if (searchHistory.length > MAX_HISTORY) {
+          searchHistory.pop();
+        }
+
+        if (typeof localStorage !== "undefined") {
+          localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+        }
+      }
+    }
+  }, [searchTerm]);
+
+  const handleChange = useCallback((e) => {
+    setSearchTerm(e.target.value);
+  }, [setSearchTerm]);
+
+  const handleHistoryClick = (term) => {
+    setSearchTerm(term);
+    setShowHistory(false);
+  };
+
+  return (
+    <>
+      {isOpenSearch && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 animate-[fadeIn_0.3s_ease-out]">
+          <div
+            className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 backdrop-blur-md animate-[fadeIn_0.3s_ease-out]"
+            onClick={closeSearch}
+          ></div>
+          <div className="relative flex flex-col items-center p-8 rounded-2xl bg-gradient-to-b from-white/95 to-white/90 backdrop-filter backdrop-blur-xl shadow-[0_20px_70px_-15px_rgba(0,0,0,0.3),inset_0_0_20px_rgba(255,255,255,0.7)] border border-white/20 animate-[scaleIn_0.3s_ease-out] transform transition-all duration-300">
+            <div className="absolute top-4 right-4">
+              <button
+                className="bg-transparent border-none cursor-pointer"
+                onClick={closeSearch}
+              >
+                <svg
+                  className="w-8 h-8 text-gray-600 hover:text-gray-800 transition duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <form
+              onSubmit={formSearch}
+              onMouseLeave={handleMouseLeave}
+              className="flex flex-col w-full min-w-[450px]"
+            >
+              <div className="relative">
+                <div className="flex border-2 border-gray-200/80 rounded-xl w-full shadow-inner bg-white/90 focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-100/50 transition duration-200 mt-4">
+                  <div className="flex items-center pl-4">
+                    <svg
+                      className="w-8 h-8 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm"
+                    value={searchTerm}
+                    onChange={handleChange}
+                    onFocus={() => setShowHistory(true)}
+                    className="flex-grow focus:outline-none rounded-l-xl text-2xl pt-15 pb-15 bg-transparent placeholder-gray-400 animate-[slideIn_0.4s_ease-out]"
+                    style={{ fontSize: "15px" }}
+                  />
+                  <button
+                    type="submit"
+                    className="bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 m-1 w-[120px] px-2 py-3 text-white rounded-lg shadow-md hover:shadow-lg hover:from-pink-700 hover:to-pink-700 active:from-pink-700 active:to-pink-700 transition duration-200 hover:scale-[1.02] transform flex items-center justify-center gap-1"
+                  >
+                    <span className="text-2xl">Search</span>
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                {showHistory && searchHistory.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-lg border border-gray-200/80 max-h-[300px] overflow-y-auto">
+                    {searchHistory.map((term, index) => (
+                      <div
+                        key={index}
+                        className="px-4 py-3 hover:bg-gray-50 cursor-pointer flex items-center gap-2"
+                        onClick={() => handleHistoryClick(term)}
+                      >
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{term}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
+  );
+});
+
+

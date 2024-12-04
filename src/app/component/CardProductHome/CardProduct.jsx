@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 export default function CardProduct({
@@ -18,10 +17,26 @@ export default function CardProduct({
     renderStars
 }) {
 
+    // Inside component:
+    const [maxHeight, setMaxHeight] = useState(48);
+    const titleRef = useRef(null);
 
-  
+    useEffect(() => {
+        // Get all title elements
+        const titleElements = document.querySelectorAll('.title');
+        let maxH = 48; // minimum height
+
+        // Find maximum height
+        titleElements.forEach(el => {
+            const height = el.scrollHeight;
+            maxH = Math.max(maxH, height);
+        });
+
+        setMaxHeight(maxH);
+    }, [ten]); // Recalculate when title content changes
+
     return (
-        
+
         <div
             className="transition flash element-item creative"
             data-category="transition"
@@ -65,7 +80,15 @@ export default function CardProduct({
                         href={`/page/course-detail?id=${id}`}
                         className="title-link"
                     >
-                        <p className="title" style={{ fontWeight: "600" }}>
+                        <p
+                            ref={titleRef}
+                            className="title line-clamp-2 flex items-center transition-height"
+                            style={{
+                                fontWeight: "600",
+                                height: `${maxHeight}px`,
+                                minHeight: "48px"
+                            }}
+                        >
                             {ten}
                         </p>
                     </a>
@@ -141,17 +164,17 @@ export default function CardProduct({
                     <div className="rating-and-price">
                         <div className="price-area">
                             {gia === 0 || giamgia === 0 ? (
-                                <div></div>
+                                <div className="h-10 flex items-center"></div>
                             ) : (
-                                <div className="price-wrapper">
-                                    <div className="sale-price">
-                                        <p className="text-2xl font-bold">
+                                <div className="price-wrapper flex items-center gap-2">
+                                    <div className="sale-price h-10 flex items-center">
+                                        <p className="text-2xl font-bold m-0">
                                             {giamgia}
                                             <span className="text-2xl">VNĐ</span>
                                         </p>
                                     </div>
-                                    <div className="original-price">
-                                        <p className=" text-2xl">
+                                    <div className="original-price h-10 flex items-center">
+                                        <p className="text-2xl m-0">
                                             {gia}
                                             <span className="text-2xl">VNĐ</span>
                                         </p>
@@ -160,7 +183,6 @@ export default function CardProduct({
                             )}
                         </div>
                     </div>
-
                     <style jsx>{`
             .course-card {
               padding: 1.5rem;

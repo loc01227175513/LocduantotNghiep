@@ -32,9 +32,16 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
           </div>
         </a>
         <div className="course-card">
-          <a href={`/page/course-detail?id=${id}`} className="title-link">
-            <p className="title">{ten}</p>
+
+          <a
+            href={`/page/course-detail?id=${id}`}
+            className="title-link block h-[60px]" // Fixed height container
+          >
+            <p className="title line-clamp-2 text-base overflow-hidden hover:text-blue-600 transition-colors">
+              {ten}
+            </p>
           </a>
+
           <div className="teacher">
             <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
             <span className="text-xl text-gray-800">{chude}</span>
@@ -74,8 +81,8 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
               </svg>
               <span className="rating-number ml-2">{danhgia}</span>
             </div>
-          </div>  
-          
+          </div>
+
           <div className="progress-wrapper h-1 bg-gray-200 rounded mt-4">
             <div
               className="progress-bar h-full bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] rounded transition-width duration-300 ease-in-out"
@@ -87,6 +94,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
             <i className="fas fa-certificate" />
             Tải xuống chứng chỉ
           </button>
+
           <div className="rating-and-price">
             <div className="price-area">
               <div className="price-wrapper">
@@ -109,6 +117,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
               </div>
             </div>
           </div>
+
           <style jsx>{`
         .course-card {
           padding: 1.5rem;

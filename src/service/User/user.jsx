@@ -2,7 +2,7 @@ export const user = async () => {
     const url = 'https://huuphuoc.id.vn/api/laynguoidung';
   
     // Retrieve data from local storage
-    const data = JSON.parse(localStorage.getItem('data'));
+    const data = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('data')) : null;
   
     if (!data || !data.id) {
       throw new Error('No valid data found in local storage');

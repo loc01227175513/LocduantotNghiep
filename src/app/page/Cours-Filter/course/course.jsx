@@ -134,7 +134,7 @@ const List = ({ courses }) => {
                   {/* Content Section */}
                   <div className="p-4 flex-1">
                     <div className="flex justify-between items-start">
-                      <h2 className="text-3xl text-gray-900" style={{ fontWeight: "600" }}>
+                      <h2 className="text-3xl text-gray-900" >
                         {course.ten}
                       </h2>
                       <button
@@ -142,7 +142,7 @@ const List = ({ courses }) => {
                           e.preventDefault();
                           handleYeuThich(course.id);
                         }}
-                        className="p-2 w-14 h-14 bg-gray-400 hover:bg-red-500 rounded-full transition-colors"
+                        className="p-2 w-14 h-14 border-1 border-white bg-gray-300 hover:bg-orange-600 rounded-full transition-colors"
                       >
                         <i className="fa-regular fa-bookmark text-xl text-white" />
                       </button>
@@ -192,7 +192,7 @@ const List = ({ courses }) => {
                           </div>
                         ) : course.giamgia > 0 ? (
                           <div className="flex items-center gap-2">
-                            <span className="text-gray-500 font-bold line-through text-2xl">
+                            <span className="text-gray-500 font-medium line-through text-2xl">
                               {course.gia}VNĐ
                             </span>
                             <span className="text-2xl font-bold text-red-600">

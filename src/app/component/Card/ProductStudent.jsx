@@ -1,7 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
-export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id, PhanTram ,tieptuchoc}) {
+export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id, PhanTram, tieptuchoc }) {
+    const [isExpanded, setIsExpanded] = useState(false);
     return (
 
         <div
@@ -32,8 +33,13 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
                     </div>
                 </a>
                 <div className="course-card">
-                    <a href={`/page/course-detail?id=${id}`} className="title-link">
-                        <p className="title">{ten}</p>
+                    <a
+                        href={`/page/course-detail?id=${id}`}
+                        className="title-link min-h-[60px] flex items-center"
+                    >
+                        <p className="title line-clamp-2 overflow-hidden">
+                            {ten}
+                        </p>
                     </a>
                     <div className="teacher">
                         <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
@@ -52,22 +58,29 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
                     </div> */}
                     <div className="rating-and-price">
                         <div className="price-area">
-                            <div className="price-wrapper">
-                                {gia === 0 || giamgia === 0 ? null : (
+                            <div className={`price-wrapper ${isExpanded ? 'expanded' : ''}`}
+                                onClick={() => setIsExpanded(!isExpanded)}>
+                                {gia !== 0 && giamgia !== 0 && gia !== giamgia ? (
                                     <>
-                                        <div className="sale-price">
+                                        <div className="sale-price animate">
                                             <p className="text-3xl font-bold">
                                                 {giamgia}
                                                 <span className="text-2xl">VNĐ</span>
                                             </p>
                                         </div>
-                                        <div className="original-price">
+                                        <div className="original-price animate">
                                             <p className="text-3xl">
                                                 {gia}
                                                 <span className="text-2xl">VNĐ</span>
                                             </p>
                                         </div>
                                     </>
+                                ) : (
+                                    <div className="regular-price animate">
+                                        <div className='h-10'>
+
+                                        </div>
+                                    </div>
                                 )}
                             </div>
                         </div>
