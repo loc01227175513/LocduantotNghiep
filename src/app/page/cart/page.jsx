@@ -309,6 +309,7 @@ const Cart = () => {
   );
 }
 
+
 const Voucher = ({ handleApplyCoupon }) => {
   const [vouchers, setVouchers] = useState([]);
   const [couponCode, setCouponCode] = useState('');
@@ -321,83 +322,106 @@ const Voucher = ({ handleApplyCoupon }) => {
         setVouchers(response);
       } catch (error) {
         console.error('Fetch error:', error);
-        alert("Failed to fetch vouchers.");
+        toast.error("Voucher không hợp lệ.");
       }
     };
 
     fetchVouchers();
   }, []);
 
-  const handleSelectVoucher = (voucher) => {
-    setCouponCode(voucher.magiamgia.maso);
-    setSelectedVoucherId(voucher.id);
+  const isVoucherValid = (voucher) => {
+    const today = new Date();
+    const startDate = new Date(voucher.magiamgia.ngaybatdau);
+    const endDate = new Date(voucher.magiamgia.ngayketthuc);
+    const withinDateRange = today >= startDate && today <= endDate;
+    const notUsedUp = voucher.magiamgia.sudunghientai < voucher.magiamgia.luotsudung;
+    const notUsed = voucher.trangthai !== 'Đã sử dụng';
+    return withinDateRange && notUsedUp && notUsed;
   };
-  console.log(vouchers);
+
+  const handleSelectVoucher = (voucher) => {
+    if (isVoucherValid(voucher)) {
+      setCouponCode(voucher.magiamgia.maso);
+      setSelectedVoucherId(voucher.id);
+    } else {
+      toast.error("Mã phiếu giảm giá không hợp lệ, hết hạn, hoặc đã đạt tối đa lượt sử dụng.");
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const matchedVoucher = vouchers.find(
+      (voucher) =>
+        voucher.magiamgia.maso === couponCode && isVoucherValid(voucher)
+    );
+    if (matchedVoucher) {
+      setSelectedVoucherId(matchedVoucher.id);
+      handleApplyCoupon(e);
+    } else {
+      toast.error("Mã phiếu giảm giá không hợp lệ, hết hạn, hoặc đã đạt tối đa lượt sử dụng.");
+    }
+  };
 
   return (
     <>
-      <div className="container my-4">
-        {/* Coupon input form with enhanced styling */}
-        <form className="mb-4 p-3 bg-light rounded shadow-sm" onSubmit={handleApplyCoupon}>
+      <div className="my-4">
+        {/* Coupon input form */}
+        <form className="mb-4 p-3 bg-light rounded shadow-sm" onSubmit={handleSubmit}>
           <div className="row g-2 align-items-center">
-            <div className="col-md-8 ">
+            <div className="col-md-8">
               <input
                 type="text"
                 name="coupon_code"
-                className="form-control form-control-lg  placeholder:text-xl pt-1"
+                className="form-control form-control-lg placeholder:text-xl pt-1"
                 style={{ border: '1px solid gray', borderRadius: '0.5rem' }}
                 placeholder="Nhập mã giảm giá"
                 required
                 value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
+                onChange={(e) => {
+                  setCouponCode(e.target.value);
+                  setSelectedVoucherId(null);
+                }}
               />
             </div>
             <div className="col-md-4">
-              <button type="submit" className="btn rounded-lg font-bold bg-pink-700 text-white btn-lg w-100 fw-bold hover-scale ">
+              <button type="submit" className="btn rounded-lg font-bold bg-pink-700 text-white btn-lg w-100 fw-bold hover-scale">
                 <i className="fas fa-tag me-2"></i>Áp dụng
               </button>
             </div>
           </div>
           <small className="form-text text-muted mt- text-lg">
-            <i className="fas fa-info-circle me-1 "></i>
+            <i className="fas fa-info-circle me-1"></i>
             Mỗi khóa học chỉ áp dụng được một mã giảm giá.
           </small>
         </form>
 
-        {/* Voucher list with animations and enhanced styling */}
+        {/* Voucher list */}
         <div className="voucher-list overflow-auto custom-scrollbar" style={{ maxHeight: '600px' }}>
           {vouchers.map(voucher => {
             const isSelected = selectedVoucherId === voucher.id;
-            const isUsed = voucher.trangthai === 'Đã sử dụng';
+            const isValid = isVoucherValid(voucher);
             const buttonClass = isSelected
               ? 'btn-warning disabled'
-              : isUsed
+              : !isValid
                 ? 'btn-secondary'
                 : 'btn-outline-warning';
 
             return (
               <div
                 key={voucher.id}
-                className={`card mb-3 voucher-card hover-lift ${isSelected ? 'border-warning border-2' : 'border-secondary'
-                  } shadow-sm rounded`}
+                className={`card mb-3 voucher-card hover-lift ${isSelected ? 'border-warning border-2' : 'border-secondary'} shadow-sm rounded`}
               >
-                <div
-                  className="card-body position-relative p-4 mx-auto"
-                  style={{ width: '423.182px' }}
-                >
-                  {/* Diagonal ribbon for status */}
-                  <div className={`${isUsed ? 'bg-white' : 'bg-white'} text-xl text-sky-950 font-bold`}>
-                    {isUsed ? 'Đã dùng' : 'Có sẵn'}
+                <div className="card-body position-relative p-4 mx-auto" style={{ width: '423.182px' }}>
+                  {/* Status */}
+                  <div className="bg-white text-xl text-sky-950 font-bold">
+                    {voucher.trangthai === 'Đã sử dụng' ? 'Đã dùng' : 'Có sẵn'}
                   </div>
 
                   <div className="d-flex justify-content-between align-items-center mb-3">
                     <h4 className="card-title fw-bold text-black mb-0 text-2xl py-1">
                       Mã: {voucher.magiamgia.maso}
                     </h4>
-                    <span
-                      className={`badge ${voucher.magiamgia.trangthai === 'Đã Duyệt' ? 'bg-success' : 'bg-secondary'
-                        } px-3 py-2 text-lg`}
-                    >
+                    <span className={`badge ${voucher.magiamgia.trangthai === 'Đã Duyệt' ? 'bg-success' : 'bg-secondary'} px-3 py-2 text-lg`}>
                       {voucher.magiamgia.trangthai}
                     </span>
                   </div>
@@ -412,7 +436,7 @@ const Voucher = ({ handleApplyCoupon }) => {
                     <div className="col-6">
                       <p className="card-text">
                         <i className="fas fa-users font-bold me-2"></i>
-                        <strong>Đã dùng:</strong> {voucher.magiamgia.sudunghientai}
+                        <strong>Đã dùng:</strong> {voucher.magiamgia.sudunghientai}/{voucher.magiamgia.luotsudung}
                       </p>
                     </div>
                     <div className="col-6">
@@ -432,7 +456,7 @@ const Voucher = ({ handleApplyCoupon }) => {
                   <button
                     className={`btn ${buttonClass} btn-lg bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] w-100 mt-3 position-relative overflow-hidden text-white rounded-lg border-1 border-gray-200`}
                     onClick={() => handleSelectVoucher(voucher)}
-                    disabled={isSelected || isUsed}
+                    disabled={!isValid || isSelected}
                   >
                     <i className={`fas ${isSelected ? 'fa-check' : 'fa-ticket-alt'} me-2`}></i>
                     {isSelected ? 'Đã chọn' : 'Chọn voucher'}
@@ -443,8 +467,9 @@ const Voucher = ({ handleApplyCoupon }) => {
           })}
         </div>
       </div>
+      <ToastContainer />
     </>
   );
-}
+};
 
 export default Cart;

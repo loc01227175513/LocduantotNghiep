@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useEffect, useRef ,useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Img from 'next/image';
 import Swiper from 'swiper';
 import Link from 'next/link';
@@ -34,7 +34,7 @@ const BannerAreaTen = () => {
             {/* Enhanced animated background */}
             <div className="absolute inset-0 z-0">
                 <iframe
-                    src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&mute=1&loop=1&controls=0&playlist=9bFruGkD4Vw"
+                    src="https://www.youtube.com/embed/9bFruGkD4Vw?autoplay=1&mute=1&loop=1&controls=0&playlist=9bFruGkD4Vw"
                     className="absolute w-full h-full object-cover scale-110 pointer-events-none"
                     title="Background Video"
                     frameBorder="0"

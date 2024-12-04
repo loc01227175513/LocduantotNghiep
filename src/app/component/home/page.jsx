@@ -9,6 +9,9 @@ import {
   Courseseal,
   Coursefree,
 } from "../course/course.component";
+import 
+  SaleComponent
+ from "../course/SaleComponent";
 import HorizontalScrollImages from "../course/Slider";
 import { NextCategory } from "../category/category.component";
 import Banner from "../banner/page";
@@ -40,6 +43,9 @@ export default function Homecomponent() {
 
         <div data-aos="zoom-in ">
           <NextCategory />
+        </div>
+        <div data-aos="zoom-in ">
+          <SaleComponent />
         </div>
 
         <div data-aos="zoom-in">
@@ -338,7 +344,10 @@ export default function Homecomponent() {
         <br />
         <br />
         <div data-aos="zoom-in" className="m-10">
+          <div className="container">
           <HorizontalScrollImages />
+          </div>
+
         </div>
         <br />
         <br />
