@@ -41,6 +41,7 @@
     "react-toastify": "^10.0.6",
     "recharts": "^2.13.0",
     "sortablejs": "^1.15.6",
+    "swiper": "^11.1.15",
     "yup": "^1.4.0"
   },
   "devDependencies": {
