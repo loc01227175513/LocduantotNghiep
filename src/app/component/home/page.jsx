@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Counter from "./Counter";
 
 import { Commenthome } from "../comment/comment";
@@ -8,10 +8,12 @@ import {
   CourseNew,
   Courseseal,
   Coursefree,
+  KhoaHocDangHocDay
 } from "../course/course.component";
-import 
-  SaleComponent
- from "../course/SaleComponent";
+import { KhoaHocDangHoc } from "../../../service/dashbordStuden/Dashboard-service";
+import
+SaleComponent
+  from "../course/SaleComponent";
 import HorizontalScrollImages from "../course/Slider";
 import { NextCategory } from "../category/category.component";
 import Banner from "../banner/page";
@@ -23,6 +25,7 @@ import "aos/dist/aos.css";
 // Initialize AOS in useEffect
 
 export default function Homecomponent() {
+  const [khoaHocDangHoc1, setKhoaHocDangHoc] = useState([]);
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -33,6 +36,18 @@ export default function Homecomponent() {
       offset: 100,
     });
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await KhoaHocDangHoc();
+        setKhoaHocDangHoc(data);
+      } catch (error) {
+        console.log("Failed to fetch courses", error);
+      }
+    };
+    fetchData();
+  }, []);
+
 
   return (
     <div data-aos="zoom-in" data-aos-offset="200" data-aos-duration="1500">
@@ -47,6 +62,11 @@ export default function Homecomponent() {
         <div data-aos="zoom-in ">
           <SaleComponent />
         </div>
+        {khoaHocDangHoc1.length ? (
+          <div data-aos="zoom-in">
+            <KhoaHocDangHocDay />
+          </div>
+        ) : null}
 
         <div data-aos="zoom-in">
           <OutstandingCourse />
@@ -345,7 +365,7 @@ export default function Homecomponent() {
         <br />
         <div data-aos="zoom-in" className="m-10">
           <div className="container">
-          <HorizontalScrollImages />
+            <HorizontalScrollImages />
           </div>
 
         </div>
