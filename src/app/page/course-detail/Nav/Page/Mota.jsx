@@ -2,8 +2,15 @@
 import React, { useEffect, useState } from "react";
 import { CourseDetails } from "../../../../../service/course/course.service";
 import Link from "next/link";
-import { FaStar, FaRegStar, FaCheck, FaBookmark, FaCalendar, FaUsers } from 'react-icons/fa';
-import Image from 'next/image';
+import {
+  FaStar,
+  FaRegStar,
+  FaCheck,
+  FaBookmark,
+  FaCalendar,
+  FaUsers,
+} from "react-icons/fa";
+import Image from "next/image";
 import { KhoaHocYeuThich } from "../../../../../service/YeuThich/YeuThich";
 const styles = `
   @keyframes fadeIn {
@@ -129,7 +136,7 @@ export default function Mota({ course }) {
     const rawDescription = course?.mota;
     descriptionSections = splitDescription(rawDescription);
 
-    if (typeof descriptionSections === 'string') {
+    if (typeof descriptionSections === "string") {
       descriptionSections = JSON.parse(descriptionSections);
     }
   } catch (error) {
@@ -156,9 +163,17 @@ export default function Mota({ course }) {
     for (let i = 1; i <= 5; i++) {
       stars.push(
         i <= filledStars ? (
-          <FaStar key={i} className="text-yellow-400 w-5 h-5 star-icon" aria-label="Filled Star" />
+          <FaStar
+            key={i}
+            className="text-yellow-400 w-5 h-5 star-icon"
+            aria-label="Filled Star"
+          />
         ) : (
-          <FaRegStar key={i} className="text-gray-300 w-5 h-5 star-icon" aria-label="Empty Star" />
+          <FaRegStar
+            key={i}
+            className="text-gray-300 w-5 h-5 star-icon"
+            aria-label="Empty Star"
+          />
         )
       );
     }
@@ -170,15 +185,24 @@ export default function Mota({ course }) {
   return (
     <>
       <style>{styles}</style>
-      <div className={`course-description ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
+      <div
+        className={`course-description ${
+          isLoaded ? "animate-fade-in" : "opacity-0"
+        }`}
+      >
         <div className="tab-content mt-12" id="myTabContent">
           <div className="tab-pane fade show active p-6 bg-white rounded-lg shadow-sm">
-            <h4 className="text-2xl font-bold text-gray-800 mb-6">Về khóa học</h4>
+            <h4 className="text-2xl font-bold text-gray-800 mb-6">
+              Về khóa học
+            </h4>
 
             <div className="description-section space-y-4">
               {descriptionSections.map((section, index) => (
-                <p key={index} className="text-gray-700 leading-relaxed animate-slide-in"
-                  style={{ animationDelay: `${index * 100}ms` }}>
+                <p
+                  key={index}
+                  className="text-gray-700 leading-relaxed animate-slide-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
                   {section}.
                 </p>
               ))}
@@ -189,14 +213,18 @@ export default function Mota({ course }) {
                 Bạn sẽ học được gì?
               </h5>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {muctieu.filter(item => item !== "").map((item, index) => (
-                  <div key={index}
-                    className="objective-item flex items-center p-3 bg-green-50 rounded-lg"
-                    style={{ '--item-index': index }}>
-                    <FaCheck className="text-green-500 mr-3 animated-icon" />
-                    <span className="text-gray-700">{item}</span>
-                  </div>
-                ))}
+                {muctieu
+                  .filter((item) => item !== "")
+                  .map((item, index) => (
+                    <div
+                      key={index}
+                      className="objective-item flex items-center p-3 bg-green-50 rounded-lg"
+                      style={{ "--item-index": index }}
+                    >
+                      <FaCheck className="text-green-500 mr-3 animated-icon" />
+                      <span className="text-gray-700">{item}</span>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -211,95 +239,236 @@ export default function Mota({ course }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-0">
             {course.Tongkhoahoc.map((item, index) => {
-              const averageRating = item.danhgia?.length > 0
-                ? item.danhgia.reduce((acc, rating) => acc + parseInt(rating.danhgia, 10), 0) / item.danhgia.length
-                : 0;
+              const averageRating =
+                item.danhgia?.length > 0
+                  ? item.danhgia.reduce(
+                      (acc, rating) => acc + parseInt(rating.danhgia, 10),
+                      0
+                    ) / item.danhgia.length
+                  : 0;
 
               return (
-                <div key={item.id}
-                  className="course-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl"
-                  style={{ animationDelay: `${index * 150}ms` }}>
-                  <div className="relative overflow-hidden">
+                <div
+                className="transition flash element-item creative"
+                data-category="transition"
+                key={item.id} // Use a unique key, preferably item.id
+              >
+                <div className="rts-single-course">
+                  <a href={`/page/course-detail?id=${item.id}`} className="thumbnail relative">
                     <Image
                       width={500}
-                      height={500}
+                      height={300}
                       src={item.hinh}
-                      alt={item.ten}
-                      className="course-image w-full  object-cover"
-                      style={{height: '180px'}}
+                      alt="course"
+                      style={{ height: "170px" }}
                     />
-
-                    <div className="absolute top-4 right-4 flex items-center space-x-2">
-                      {item.gia === 0 ? (
-                        <span className="px-3 py-1 bg-red-500 text-white text-xl font-medium rounded-full">
-                          Miễn phí
-                        </span>
-                      ) : item.giamgia > 0 ? (
-                        <span className="px-3 py-1 bg-red-500 text-white text-xl font-medium rounded-full">
-                          -{Math.round(((item.gia - item.giamgia) / item.gia) * 100)}%
-                        </span>
-                      ) : null}
-
-                      <button
-                        className="bookmark-icon flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        aria-label="Bookmark"
-                        onClick={() => handleYeuThich(item.id)}
-                      >
-                        <FaBookmark className="text-blue-500 w-5 h-5 animated-icon" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="p-5 course-card">
-                  <a
-                            href={`/page/course-detail?id=${item.id}`}
-                            className="title-link"
-                          >
-                            <p className="title text-3xl font-bold">{item.ten}</p>
-                          </a>
-                    <div className="teacher">
-                    <i class="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
-                      <span className="text-xl text-gray-800">
-                       <strong> {item.chude.ten}</strong>
+                    {/* Free course badge */}
+                    {(item.gia === 0 || item.giamgia === 0) && (
+                      <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                        Miễn Phí
+                      </div>
+                    )}
+                    {/* Discount badge - only show if course has discount but isn't free */}
+                    {item.giamgia < item.gia && item.giamgia !== 0 && (
+                      <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                        -{Math.round((1 - item.giamgia / item.gia) * 100)}% OFF
+                      </div>
+                    )}
+                  </a>
+                  
+                  <div
+                          className="save-icon"
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal-login"
+                          onClick={() => handleYeuThich(item.id)}
+                        >
+                          <i className="fa-sharp fa-light fa-bookmark text-lg" />
+                        </div>
+                  <div className="course-card p-4 bg-white rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg">
+                    <a href={`/page/course-detail?id=${item.id}`} className="title-link">
+                      <p className="title text-2xl font-semibold text-gray-800 hover:text-blue-600">
+                        {item.ten}
+                      </p>
+                    </a>
+                    <div className="teacher flex items-center mt-2">
+                      <span className="text-lg text-gray-700" style={{ fontWeight: 'normal' }}>
+                        <strong>{item.chude.ten}</strong>
                       </span>
                     </div>
+                    <div className="flex space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
+                              <i className="fa-light fa-calendar-lines-pen text-gray-600 text-lg" />
+                              <div className="flex flex-col">
+                                <span
+                                  className="text-lg font-bold"
+                                  style={{ fontWeight: "400" }}
+                                >
+                                  {item.baihocs.length}
+                                  <span
+                                    className="text-lg text-gray-600 uppercase tracking-wider pl-1"
+                                    style={{ fontWeight: "400" }}
+                                  >
+                                    Bài
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
 
-                    <div className="flex items-center justify-between text-xl text-gray-600 mb-3 mt-3">
-                      <span className="flex items-center text-xl">
-                        <FaCalendar className="mr-2" />
-                        {item.baihocs.length} Bài học
-                      </span>
-                      <span className="flex items-center text-xl">
-                        <FaUsers className="mr-2 " />
-                        {course.thanhToan.length} Học viên
-                      </span>
-                      <div className="rating-area text-yellow-500 text-2xl flex flex-row align-items-center">
+                            <div className="flex items-center space-x-2 p-2 rounded-full">
+                              <i className="fa-light fa-user-group text-gray-600 text-xl" />
+                              <div className="flex flex-col">
+                                <span
+                                  className="text-lg font-bold"
+                                  style={{ fontWeight: "400" }}
+                                >
+                                 {course.thanhToan.length}
+                                  <span
+                                    className="text-lg text-gray-600 uppercase tracking-wider pl-1"
+                                    style={{ fontWeight: "400" }}
+                                  >
+                                    Students
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="rating-area  text-lg flex p-2 flex-row">
                               <svg
                                 stroke="currentColor"
                                 fill="currentColor"
                                 stroke-width="0"
                                 viewBox="0 0 576 512"
-                                class="text-yellow-400 w-5 h-5"
+                                className="text-yellow-400 w-5 h-5"
                                 aria-label="Filled Star"
                                 height="1em"
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
-                                <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
+                                <path className="text-yellow-500" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
                               </svg>
-                              <span className="rating-number ml-2">
+                              <span
+                                className="rating-number ml-1 text-xl"
+                                style={{ fontWeight: "400" }}
+                              >
                                 {averageRating.toFixed(1)}
                               </span>
                             </div>
-                    </div>
-
+                          </div>
                     <div className="flex justify-between items-center mt-4">
-                      <div className="text-2xl font-bold text-red-600">
-                        {item.gia === 0 || item.giamgia === 0 ? 'Miễn phí' : `$${item.giamgia}`}
-                      </div>
+                    <div className="price-area">
+                              {item.gia === 0 || item.giamgia === 0 ? (
+                                <div></div>
+                              ) : (
+                                <><div className="price-wrapper">
+                                <div className="sale-price">
+                                  <p className="text-2xl font-bold">
+                                    {item.giamgia}
+                                    <span className="text-2xl">VNĐ</span>
+                                  </p>
+                                </div>
+                                <div className="original-price">
+                                  <p className=" text-2xl">
+                                    {item.gia}
+                                    <span className="text-2xl">VNĐ</span>
+                                  </p>
+                                </div>
+                              </div><style jsx>{`
+                                    .course-card {
+                                      padding: 1.5rem;
+                                      transition: all 0.3s ease;
+                                      border-radius: 12px;
+                                      background: white;
+                                      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                                    }
+        
+                                    .course-card:hover {
+                                      transform: translateY(-4px);
+                                      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+                                    }
+        
+                                    .title-link {
+                                      display: block;
+                                    }
+        
+                                    .title {
+                                      font-size: 1.1rem;
+                                      font-weight: 600;
+                                      color: #2d3748;
+                                      transition: color 0.2s ease;
+                                    }
+        
+                                    .title:hover {
+                                      color: #4299e1;
+                                    }
+        
+                                    .rating-area {
+                                      display: flex;
+                                      align-items: center;
+                                      background: #f7fafc;
+                                      padding: 0.5rem;
+                                      border-radius: 8px;
+                                    }
+        
+                                    .rating-number {
+                                      font-weight: 600;
+                                      color: #2d3748;
+                                      margin-right: 0.5rem;
+                                    }
+        
+                                    .stars {
+                                      display: flex;
+                                      color: #ecc94b;
+                                    }
+        
+                                    .free-badge {
+                                      background: -webkit-linear-gradient(
+                                        315deg,
+                                        #1e3c72 0%,
+                                        #ff6b6b 100%
+                                      );
+                                      color: white;
+                                      padding: 5px 20px;
+                                      border-radius: 20px;
+                                      font-weight: 500;
+                                      animation: pulse 2s infinite;
+                                    }
+        
+                                    .price-wrapper {
+                                      display: flex;
+                                      align-items: center;
+                                      gap: 0.75rem;
+                                    }
+        
+                                    .original-price {
+                                      color: #a0aec0;
+                                      text-decoration: line-through;
+                                      font-size: 0.9rem;
+                                    }
+        
+                                    .sale-price {
+                                      color: #e53e3e;
+                                      font-weight: 600;
+                                      font-size: 1.1rem;
+                                    }
+        
+                                    @keyframes pulse {
+                                      0% {
+                                        box-shadow: 0 0 0 0 rgba(11, 197, 234, 0.4);
+                                      }
+                                      70% {
+                                        box-shadow: 0 0 0 10px rgba(11, 197, 234, 0);
+                                      }
+                                      100% {
+                                        box-shadow: 0 0 0 0 rgba(11, 197, 234, 0);
+                                      }
+                                    }
+                                  `}</style></>
+                              )}
+                            </div>
                     </div>
                   </div>
                 </div>
+              </div>
               );
             })}
           </div>

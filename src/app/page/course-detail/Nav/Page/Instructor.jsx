@@ -115,18 +115,19 @@ export default function Instructor({ course }) {
         </Link>
 
         <div className="inner-instructor-area ml-6 flex-1">
-          <h5 className="title text-3xl font-bold hover:text-blue-600 transition-colors duration-300">
+          <h5 className="title text-3xl pb-2 hover:text-blue-600 transition-colors duration-300">
             {course.thongtingiangvien.ten}
           </h5>
-          <span className="deg text-gray-600 font-medium text-2xl">{course.trinhdo}</span>
+          <span className="deg text-gray-600 font-medium text-2xl" style={{ fontWeight: 'normal' }}>{course.trinhdo}</span>
 
           <div className="stats-grid grid grid-cols-3 gap-4 mt-4">
             <div className="stat-item p-3 rounded-lg bg-gray-50 hover:bg-gray-100">
               <div className="stars-area flex items-center">
-                <span className="text-yellow-500 font-bold mr-2 text-2xl">{highestRating}</span>
+                <span className="text-yellow-500  mr-2 text-xl" style={{ fontWeight: 'normal' }}>{highestRating}</span>
                 {[...Array(5)].map((_, index) => (
                   <FaStar key={index} 
-                    className={`${index < starCount ? "text-yellow-500 text-2xl" : "text-gray-300 text-2xl"} star-icon`}
+                    className={`${index < starCount ? "text-yellow-500 text-xl" : "text-gray-300 text-xl"} star-icon`}
+                    style={{paddingRight:"2px"}}
                   />
                 ))}
               </div>
@@ -134,8 +135,8 @@ export default function Instructor({ course }) {
             
             <div className="stat-item p-3 rounded-lg bg-gray-50 hover:bg-gray-100">
               <div className="users-area flex items-center">
-                <FaUsers className="text-blue-500 mr-2 text-2xl" />
-                <span className="text-gray-700 font-semibold student-count text-2xl">
+                <FaUsers className="text-blue-500 mr-2 text-xl" />
+                <span className="text-gray-700 student-count text-xl" style={{ fontWeight: 'normal' }}>
                   {HocSinh} Sinh viên
                 </span>
               </div>
@@ -143,8 +144,8 @@ export default function Instructor({ course }) {
 
             <div className="stat-item p-3 rounded-lg bg-gray-50 hover:bg-gray-100">
               <div className="courses-area flex items-center">
-                <FaVideo className="text-green-500 mr-2 text-2xl" />
-                <span className="text-gray-700 font-semibold text-2xl">
+                <FaVideo className="text-green-500 mr-2 text-xl" />
+                <span className="text-gray-700 text-xl" style={{ fontWeight: 'normal' }}> 
                   {course.Tongkhoahoc.length} Khóa học
                 </span>
               </div>

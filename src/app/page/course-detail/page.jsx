@@ -22,7 +22,7 @@ const Khac = ({ course }) => {
   return (
     <>
       <div className="course-single-information">
-        <h5 className="font-semibold mb-4 text-4xl">Lợi ích cung cấp</h5>
+        <h5 className="font-semibold mb-4 text-3xl">Lợi ích cung cấp</h5>
         <div className="body">
           <div className="single-check">
             <i className="fa-light fa-circle-check pulse" />
@@ -40,7 +40,7 @@ const Khac = ({ course }) => {
       </div>
 
       <div className="course-single-information">
-        <h5 className="font-semibold mb-4 text-4xl">Yêu cầu</h5>
+        <h5 className="font-semibold mb-4 text-3xl">Yêu cầu</h5>
         <div className="body">
           <div className="single-check">
             <i className="fa-light fa-circle-check" />
@@ -54,7 +54,7 @@ const Khac = ({ course }) => {
       </div>
 
       <div className="course-single-information">
-        <h5 className="font-semibold mb-4 text-4xl">Tags</h5>
+        <h5 className="font-semibold mb-4 text-3xl">Tags</h5>
         <div className="body">
           <div className="tags-wrapper">
             <span>{course.chude}</span>
@@ -63,7 +63,7 @@ const Khac = ({ course }) => {
       </div>
 
       <div className="course-single-information">
-        <h5 className="font-semibold mb-4 text-4xl">Chia sẻ</h5>
+        <h5 className="font-semibold mb-4 text-3xl">Chia sẻ</h5>
         <div className="body">
           <div className="social-share-course-side-bar">
             <ul>
@@ -98,7 +98,7 @@ const Khac = ({ course }) => {
       </div>
 
       <div className="course-single-information last">
-        <h5 className="font-semibold mb-4 text-4xl">Khán giả</h5>
+        <h5 className="font-semibold mb-4 text-3xl">Khán giả</h5>
         <div className="body">
           <div className="single-check">
             <i className="fa-light fa-circle-check" />
@@ -211,7 +211,7 @@ const NavPhai = ({
                     </div>
                     {!NguoiDung ? (
                       <Link href={`/page/login`}>
-                        <button className="rts-btn ">Đi Đến Đăng nhập</button>
+                        <button  className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1">Đi Đến Đăng nhập</button>
                       </Link>
                     ) : isCourseRegistered ||
                       course.gia === 0 ||
@@ -219,22 +219,18 @@ const NavPhai = ({
                       <Link href={`/page/Study?id=${course.id}`}>
                         <button
                           onClick={handleThanhToanKhoaHocFree}
-                          className="rts-btn  p-4 "
-                          style={{ fontSize: "13px" }}
+                           className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1"
                         >
                           Đi đến khóa học
                         </button>
                       </Link>
                     ) : isCourseInCart ? (
                       <Link href="/page/cart">
-                        <button className="mt-10 flex justify-center">
-                          <span
-                            className=" text-white font-bold bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-2xl"
-                            style={{
-                              padding: "12px 24px",
-                              borderRadius: "8px",
-                            }}
-                          >
+                        <button
+                          onClick={handleAddCart}
+                          className="mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1"
+                        >
+                          <span className="rts-btn btn-border text-pink-700">
                             Thêm vào giỏ hàng
                           </span>
                         </button>
@@ -244,27 +240,23 @@ const NavPhai = ({
                       <button className="rts-btn ">Bản Demo</button>
                     ) : (
                       <>
-                        <button
-                          onClick={handleAddCart}
-                          className="mt-10 flex justify-center"
-                        >
-                          <span
-                            className=" text-white font-bold bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-2xl"
-                            style={{
-                              padding: "12px 24px",
-                              borderRadius: "8px",
-                            }}
-                          >
-                            Thêm vào giỏ hàng
-                          </span>
-                        </button>
                         <Link
                           href="/page/checkout"
-                          className="rts-btn btn-border"
+                          className="rts-btn btn-border text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1"
                           onClick={handleAddCart}
+                          style={{ marginTop: "20px" }}
                         >
                           Mua ngay
                         </Link>
+                        <button
+                          onClick={handleAddCart}
+                          className="mt-10 flex justify-center text-xl !border-pink-700 !border-1"
+                          style={{ marginTop: "-20px" }}
+                        >
+                          <span className="rts-btn btn-border text-pink-700">
+                            Thêm vào giỏ hàng
+                          </span>
+                        </button>
                       </>
                     )}
                     <div className="p-1 font-bold text-black what-includes text-left">
@@ -276,35 +268,66 @@ const NavPhai = ({
                       </h5>
                       <div className="single-include flex justify-start">
                         <div className="left">
-                          <i className="fa-light fa-chart-bar text-2xl mr-3" />
-                          <span className="text-left text-2xl">Cấp độ</span>
+                          <i
+                            className="fa-light fa-chart-bar text-2xl mr-3"
+                            style={{ fontWeight: "normal" }}
+                          />
+                          <span
+                            className="text-left text-2xl"
+                            style={{ fontWeight: "normal" }}
+                          >
+                            Cấp độ
+                          </span>
                         </div>
                         <div className="right">
-                          <span className="text-left text-2xl">
+                          <span
+                            className="text-left text-2xl"
+                            style={{ fontWeight: "normal" }}
+                          >
                             {course.trinhdo}
                           </span>
                         </div>
                       </div>
                       <div className="single-include flex">
                         <div className="left">
-                          <i className="fa-light fa-timer text-2xl mr-3" />
-                          <span className="text-left text-2xl">
+                          <i
+                            className="fa-light fa-timer text-2xl mr-3"
+                            style={{ fontWeight: "normal" }}
+                          />
+                          <span
+                            className="text-left text-2xl"
+                            style={{ fontWeight: "normal" }}
+                          >
                             Khoảng thời gian
                           </span>
                         </div>
                         <div className="right">
-                          <span className="text-left text-2xl">
+                          <span
+                            className="text-left text-2xl"
+                            style={{ fontWeight: "normal" }}
+                          >
                             {formattedTotalTime}
                           </span>
                         </div>
                       </div>
                       <div className="single-include flex">
                         <div className="left">
-                          <i className="fa-regular fa-floppy-disk text-2xl mr-3" />
-                          <span className="text-left text-2xl">Chủ thể</span>
+                          <i
+                            className="fa-regular fa-floppy-disk text-2xl mr-3"
+                            style={{ fontWeight: "normal" }}
+                          />
+                          <span
+                            className="text-left text-2xl"
+                            style={{ fontWeight: "normal" }}
+                          >
+                            Chủ thể
+                          </span>
                         </div>
                         <div className="right">
-                          <span className="text-left text-2xl">
+                          <span
+                            className="text-left text-2xl"
+                            style={{ fontWeight: "normal" }}
+                          >
                             {course.chude}
                           </span>
                         </div>
@@ -337,7 +360,7 @@ const NavPhai = ({
                   <div className="course-side-bar">
                     {/* course single sidebar */}
                     <div className="course-single-information">
-                      <h5 className="font-semibold mb-4 text-4xl">
+                      <h5 className="font-semibold mb-4 text-3xl">
                         Giảng viên:{" "}
                       </h5>
                       <div className="body">
@@ -644,7 +667,6 @@ export default function Coursedetailcomponent() {
                       href="#"
                       style={{
                         color: "white",
-                        fontWeight: "bold",
                         transition: "0.3s",
                         fontSize: "14px",
                       }}
@@ -687,10 +709,10 @@ export default function Coursedetailcomponent() {
                     >
                       <span
                         style={{
-                          fontWeight: "bold",
-                          marginRight: "5px",
+                          marginRight: "-5px",
                           color: "white",
                           fontSize: "14px",
+                          fontWeight: "normal",
                         }}
                       >
                         4.5
@@ -701,7 +723,7 @@ export default function Coursedetailcomponent() {
                           className="fa-solid fa-star"
                           style={{
                             color: "#ffd700",
-                            marginRight: "-5px",
+                            marginRight: "-8px",
                             fontSize: "14px",
                           }}
                         />
@@ -721,7 +743,7 @@ export default function Coursedetailcomponent() {
                     >
                       <i
                         className="fa-solid fa-users"
-                        style={{ marginRight: "5px", fontSize: "14px" }}
+                        style={{ marginRight: "-5px", fontSize: "14px" }}
                       />
                       <span style={{ fontSize: "14px" }}>
                         {course.thanhToan.length} Sinh viên
@@ -737,7 +759,7 @@ export default function Coursedetailcomponent() {
                     >
                       <i
                         className="fa-light fa-calendar-lines-pen"
-                        style={{ marginRight: "5px", fontSize: "14px" }}
+                        style={{ marginRight: "-5px", fontSize: "14px" }}
                       />
                       <span style={{ fontSize: "14px" }}>
                         Cập nhật lần cuối:{" "}
@@ -758,56 +780,58 @@ export default function Coursedetailcomponent() {
                     }}
                   >
                     <div className="author">
-                      <h6
-                        className="name"
+                      <p
                         style={{
                           margin: "0",
-                          animation: "popIn 0.5s ease-out",
+                          fontWeight: "normal",
                         }}
                       >
-                        <span className="text-white text-xl">Giảng Viên:</span>
+                        <span
+                          className="text-white text-xl"
+                          style={{ fontWeight: "normal" }}
+                        >
+                          Giảng Viên:
+                        </span>
                         <span
                           style={{
                             marginLeft: "5px",
                           }}
                         >
-                          <strong className="text-2xl text-white">
+                          <strong
+                            className="text-2xl text-white"
+                            style={{ fontWeight: "normal" }}
+                          >
                             {course.giangvien}
                           </strong>
                           .
                         </span>
-                      </h6>
-                    </div>
-                    <p
-                      style={{
-                        margin: "10px 0 0 0",
-                        animation: "popIn 0.5s ease-out 0.2s backwards",
-                      }}
-                    >
-                      <span className="text-white text-xl">Thể loại: </span>
-                      <span
-                        className="text-2xl text-white"
+                      </p>
+                      <p
                         style={{
-                          backgroundColor: "rgba(255,255,255,0.2)",
-                          padding: "5px 12px",
-                          borderRadius: "18px",
-                          transition: "all 0.3s ease",
-                          cursor: "pointer",
-                        }}
-                        onMouseOver={(e) => {
-                          e.target.style.backgroundColor =
-                            "rgba(255,215,0,0.3)";
-                          e.target.style.transform = "translateX(5px)";
-                        }}
-                        onMouseOut={(e) => {
-                          e.target.style.backgroundColor =
-                            "rgba(255,255,255,0.2)";
-                          e.target.style.transform = "translateX(0)";
+                          animation: "popIn 0.5s ease-out 0.2s backwards",
                         }}
                       >
-                        {course.chude}
-                      </span>
-                    </p>
+                        <span
+                          className="text-white text-xl"
+                          style={{ fontWeight: "normal" }}
+                        >
+                          Thể loại:{" "}
+                        </span>
+                        <span
+                          className="text-2xl text-white hover:bg-pink-700"
+                          style={{
+                            backgroundColor: "rgba(255,255,255,0.2)",
+                            padding: "5px 12px",
+                            borderRadius: "18px",
+                            transition: "all 0.3s ease",
+                            cursor: "pointer",
+                            fontWeight: "normal",
+                          }}
+                        >
+                          {course.chude}
+                        </span>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -875,22 +899,22 @@ export default function Coursedetailcomponent() {
                             <div className="rts-single-course">
                               <a
                                 href={`/page/course-detail?id=${course.id}`}
-                                className="thumbnail"
+                                className="thumbnail relative"
                               >
                                 <Image
                                   width={500}
                                   height={300}
                                   src={course.hinh}
                                   alt="course"
-                                  style={{ height: "180px" }}
+                                  style={{ height: "170px" }}
                                 />
                                 <div className="course-tags">
                                   {course.gia === 0 ? (
-                                    <span className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                                    <span className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
                                       Miễn phí
                                     </span>
                                   ) : course.giamgia > 0 ? (
-                                    <span className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                                    <span className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
                                       -
                                       {Math.round(
                                         ((course.gia - course.giamgia) /
@@ -902,64 +926,102 @@ export default function Coursedetailcomponent() {
                                   ) : null}
                                 </div>
                               </a>
-                              <div className="body-area">
-                                <div className="course-card hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 p-4 rounded-lg">
-                                  <a
-                                    href={`/page/course-detail?id=${course.id}`}
-                                    className="block"
-                                  >
-                                    <h5 className="title-link text-2xl font-medium hover:text-primary-600 transition-all duration-300 ease-in-out">
-                                      <strong className="title">
-                                        {course.ten}
-                                      </strong>
-                                    </h5>
-                                  </a>
+                              <div
+                                className="save-icon"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal-login"
+                                onClick={() => handleYeuThich(course.id)}
+                              >
+                                <i className="fa-sharp fa-light fa-bookmark text-lg" />
+                              </div>
+                              <div className="course-card p-4 bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-xl">
+                                <a
+                                  href={`/page/course-detail?id=${course.id}`}
+                                  className="title-link"
+                                >
+                                  <h5 className="title text-2xl font-medium hover:text-primary-600 transition-all duration-300">
+                                    <strong>{course.ten}</strong>
+                                  </h5>
+                                </a>
 
-                                  <div className="flex items-center justify-between mt-3">
-                                    <div className="teacher">
-                                      <i className="fas fa-user-tie mr-2 text-gray-800 text-2xl"></i>
-                                      <span className="text-xl text-gray-800">
-                                        {course.giangvien}
-                                      </span>
-                                    </div>
+                                <div className="flex items-center justify-between mt-3">
+                                  <div className="teacher flex items-center">
+                                    <i
+                                      className="fas fa-user-tie mr-2 text-gray-800 text-xl"
+                                      style={{ fontWeight: "400" }}
+                                    ></i>
+                                    <span
+                                      className="text-xl text-gray-800"
+                                      style={{ fontWeight: "400" }}
+                                    >
+                                      {course.giangvien}
+                                    </span>
+                                  </div>
+                                </div>
 
-                                    <div className="flex items-center gap-2 transition-transform duration-300 hover:scale-105">
-                                      <span className="font-medium text-xl">
-                                        {averageRating.toFixed(1)}
+                                <div className="flex flex-row space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+                                  <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
+                                    <i className="fa-light fa-calendar-lines-pen text-gray-600 text-lg" />
+                                    <div className="flex flex-col">
+                                      <span
+                                        className="text-lg font-bold"
+                                        style={{ fontWeight: "400" }}
+                                      >
+                                        {course.baihocs}
+                                        <span
+                                          className="text-lg text-gray-600 uppercase tracking-wider pl-1"
+                                          style={{ fontWeight: "400" }}
+                                        >
+                                          Bài
+                                        </span>
                                       </span>
-                                      <div className="flex text-yellow-400 text-xl">
-                                        {renderStars(averageRating)}
-                                      </div>
                                     </div>
                                   </div>
 
-                                  <div className="flex items-center gap-6 mt-4 text-gray-600">
-                                    <div className="flex items-center gap-3 group">
-                                      <i className="fa-light fa-calendar-lines-pen text-2xl text-primary-500 transition-all duration-300 ease-in-out transform group-hover:scale-110 group-hover:rotate-6" />
-                                      <div className="transition-colors duration-300 group-hover:text-primary-600">
-                                        <span className="font-medium">
-                                          {course.baihocs}
+                                  <div className="flex items-center space-x-2 p-2 rounded-full">
+                                    <i className="fa-light fa-user-group text-gray-600 text-xl" />
+                                    <div className="flex flex-col">
+                                      <span
+                                        className="text-lg font-bold"
+                                        style={{ fontWeight: "400" }}
+                                      >
+                                        {course.dangky}
+                                        <span
+                                          className="text-lg text-gray-600 uppercase tracking-wider pl-1"
+                                          style={{ fontWeight: "400" }}
+                                        >
+                                          Students
                                         </span>
-                                        <span className="text-xl ml-1">
-                                          Bài Học
-                                        </span>
-                                      </div>
-                                    </div>
-
-                                    <div className="flex items-center gap-3 group">
-                                      <i className="fa-light fa-users text-2xl text-primary-500 transition-all duration-300 ease-in-out transform group-hover:scale-110 group-hover:rotate-6" />
-                                      <div className="transition-colors duration-300 group-hover:text-primary-600">
-                                        <span className="font-medium">
-                                          {course.dangky}
-                                        </span>
-                                        <span className="text-xl ml-1">
-                                          Sinh Viên
-                                        </span>
-                                      </div>
+                                      </span>
                                     </div>
                                   </div>
+
+                                  <div className="rating-area text-lg p-2 flex flex-row">
+                                    <svg
+                                      stroke="currentColor"
+                                      fill="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 576 512"
+                                      className="text-yellow-400 w-5 h-5"
+                                      aria-label="Filled Star"
+                                      height="1em"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        className="text-yellow-500"
+                                        d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                      ></path>
+                                    </svg>
+                                    <span
+                                      className="rating-number ml-1 text-xl"
+                                      style={{ fontWeight: "400" }}
+                                    >
+                                      {averageRating.toFixed(1)}
+                                    </span>
+                                  </div>
+                                </div>
                                 <div className="course-top relative mt-5">
-                                  {/* <div className="tags">Người bán tốt nhất</div> */}
                                   <div className="price">
                                     {course.gia === 0 ||
                                     course.giamgia === 0 ? (
@@ -967,19 +1029,18 @@ export default function Coursedetailcomponent() {
                                         Miễn Phí
                                       </span>
                                     ) : (
-                                      <>
+                                      <div className="flex items-center">
                                         <span className="text-red-500 font-bold text-2xl mr-3">
                                           {course.giamgia}{" "}
                                           <span className="text-xl">VNĐ</span>
                                         </span>
-                                        <span className="line-through text-gray-500 mr-2 text-2xl">
+                                        <span className="line-through text-gray-500 text-2xl">
                                           {course.gia}{" "}
                                           <span className="text-xl">VNĐ</span>
                                         </span>
-                                      </>
+                                      </div>
                                     )}
                                   </div>
-                                </div>
                                 </div>
                               </div>
                             </div>

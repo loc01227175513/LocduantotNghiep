@@ -206,7 +206,7 @@ const handleMessageSubmit = async (e, senderType) => {
 
     return (
         <>
-            <div className="container flex h-screen">
+          <div className=" flex h-screen w-[880px]">
                 {/* Enhanced Sidebar */}
                 <aside className="w-1/4 bg-gray-700 p-4 flex flex-col">
                     {/* Search and Messages List */}

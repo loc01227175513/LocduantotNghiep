@@ -94,14 +94,14 @@ export default function Course({ course, formattedTotalTime }) {
       <style>{styles}</style>
       <div className="container mt-4 max-w-3xl mx-auto">
         <div className="p-6 shadow-lg border border-gray-200 rounded-xl hover:scale-105 transition-all duration-300">
-          <h1 className="text-3xl font-medium mb-3 ">
+          <h1 className="text-3xl mb-3 ">
            <strong>Nội dung khóa học</strong> 
           </h1>
-          <p className="text-3xl text-gray-600">
-            <span className="badge bg-pink-700 text-white font-medium mr-2 pulse-badge inline-block">
+          <p className="text-3xl text-gray-600" style={{ fontWeight: 'normal' }}>
+            <span className="badge bg-pink-700 text-white mr-2 pulse-badge inline-block" style={{ fontWeight: 'normal' }}>
               {course.baihocs.length} Bài giảng
             </span>
-            <span className="badge bg-blue-800 text-white font-medium pulse-badge inline-block">
+            <span className="badge bg-blue-800 text-white font-medium pulse-badge inline-block" style={{ fontWeight: 'normal' }}>
               {totalHours} giờ {totalMinutes} phút
             </span>
           </p>

@@ -116,7 +116,7 @@ export default function Page({ course, formattedTotalTime }) {
               whileTap={{ scale: 0.95 }}
               className={`flex-1 text-center py-3 relative ${
                 page === value
-                  ? 'bg-blue-500 text-white font-medium'
+                  ? 'bg-blue-500 text-white'
                   : 'text-gray-700 hover:bg-blue-50'
               } transition-all duration-200 ease-in-out rounded-md mx-1 text-2xl`}
               onClick={() => handlePageChange(value)}

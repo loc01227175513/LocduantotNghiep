@@ -11,6 +11,7 @@ import {
   KhoaHocDangHocDay
 } from "../course/course.component";
 import { KhoaHocDangHoc } from "../../../service/dashbordStuden/Dashboard-service";
+import { Dashboard } from "@/service/dashbordStuden/Dashboard-service";
 import
 SaleComponent
   from "../course/SaleComponent";
@@ -19,7 +20,7 @@ import { NextCategory } from "../category/category.component";
 import Banner from "../banner/page";
 import BannerUser from "../BannerUser/page";
 import Image from "next/image";
-
+import CourseDeXuat from "../course/CourseDeXuat";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -29,6 +30,7 @@ export default function Homecomponent() {
   const [khoaHocDangHoc1, setKhoaHocDangHoc] = useState([]);
   const NguoiDungString = typeof window !== 'undefined' ? localStorage.getItem('data') : null;
   const NguoiDung = NguoiDungString ? JSON.parse(NguoiDungString) : {};
+  const [KhoaHocDaThanhToan, setKhoaHocDaThanhToan] = useState([]);
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -50,6 +52,16 @@ export default function Homecomponent() {
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    Dashboard()
+      .then((res) => {
+        setKhoaHocDaThanhToan(res.data);
+
+      })
+      .catch((error) => {
+        console.error("Error fetching dashboard data:", error);
+      });
+  }, []);
 
   const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
@@ -62,17 +74,13 @@ export default function Homecomponent() {
       <div className="mt-60 ">
         {isInactiveLongTime ? (
           <div data-aos="zoom-in">
-           <BannerUser />
+            <BannerUser />
           </div>
         ) : (
           <div data-aos="zoom-in">
-             <Banner />
+            <Banner />
           </div>
         )}
-
-
-
-
         <div data-aos="zoom-in ">
           <NextCategory />
         </div>
@@ -84,10 +92,17 @@ export default function Homecomponent() {
             <KhoaHocDangHocDay />
           </div>
         ) : null}
+        {KhoaHocDaThanhToan.length ? (
+          <div data-aos="zoom-in">
+            <CourseDeXuat />
+          </div>
+        ) : null}
+
 
         <div data-aos="zoom-in">
           <OutstandingCourse />
         </div>
+
         <div data-aos="zoom-in">
           <div
             className="why-choose-us bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 bg-choose-us-one bg_image rts-section-gap shape-move"

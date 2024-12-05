@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FaStar, FaRegStar, FaThumbsUp, FaHeart } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import { Tooltip } from '@nextui-org/react';
-import Image from 'next/image';
-import { useInView } from 'react-intersection-observer';
+import { Tooltip } from "@nextui-org/react";
+import Image from "next/image";
+import { useInView } from "react-intersection-observer";
 
 const MotionDiv = motion.div;
 
@@ -57,27 +57,27 @@ const styles = `
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
-    }
-  }
+      staggerChildren: 0.1,
+    },
+  },
 };
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+  visible: { opacity: 1, y: 0 },
 };
 
 const StarRating = ({ rating }) => (
-  <motion.div 
+  <motion.div
     className="flex"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ staggerChildren: 0.1 }}
   >
-    {[1,2,3,4,5].map((star) => (
+    {[1, 2, 3, 4, 5].map((star) => (
       <motion.div
         key={star}
         whileHover={{ scale: 1.2 }}
@@ -99,7 +99,7 @@ const ReactionButton = ({ active, icon: Icon, label, onClick }) => (
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       className={`reaction-button flex items-center gap-2 px-3 py-2 rounded-full
-        ${active ? 'bg-blue-50' : 'bg-gray-50'}
+        ${active ? "bg-blue-50" : "bg-gray-50"}
         transition-colors duration-200`}
       onClick={onClick}
     >
@@ -107,9 +107,11 @@ const ReactionButton = ({ active, icon: Icon, label, onClick }) => (
         animate={{ rotate: active ? [0, 20, -20, 0] : 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Icon className={`w-5 h-5 ${active ? 'text-blue-500' : 'text-gray-500'}`} />
+        <Icon
+          className={`w-5 h-5 ${active ? "text-blue-500" : "text-gray-500"}`}
+        />
       </motion.div>
-      <span className={`text-sm ${active ? 'text-blue-500' : 'text-gray-500'}`}>
+      <span className={`text-sm ${active ? "text-blue-500" : "text-gray-500"}`}>
         {label}
       </span>
     </motion.button>
@@ -123,13 +125,13 @@ const LoadingSpinner = () => (
     className="flex justify-center p-4"
   >
     <motion.div
-      animate={{ 
+      animate={{
         rotate: 360,
-        scale: [1, 1.2, 1]
+        scale: [1, 1.2, 1],
       }}
-      transition={{ 
+      transition={{
         rotate: { duration: 1, repeat: Infinity, ease: "linear" },
-        scale: { duration: 1, repeat: Infinity }
+        scale: { duration: 1, repeat: Infinity },
       }}
       className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full"
     />
@@ -137,12 +139,12 @@ const LoadingSpinner = () => (
 );
 
 export default function Review({ course }) {
-  const [sortBy, setSortBy] = useState('newest');
+  const [sortBy, setSortBy] = useState("newest");
   const [filterRating, setFilterRating] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [reactions, setReactions] = useState({});
-  
+
   const { ref, inView } = useInView({
     threshold: 0.1,
   });
@@ -151,19 +153,25 @@ export default function Review({ course }) {
 
   // Filter and sort reviews
   const filteredReviews = course.danhgia
-    .filter(review => filterRating === 0 || parseInt(review.rating, 10) === filterRating)
+    .filter(
+      (review) =>
+        filterRating === 0 || parseInt(review.rating, 10) === filterRating
+    )
     .sort((a, b) => {
-      if (sortBy === 'highest') return parseInt(b.rating, 10) - parseInt(a.rating, 10);
-      if (sortBy === 'lowest') return parseInt(a.rating, 10) - parseInt(b.rating, 10);
+      if (sortBy === "highest")
+        return parseInt(b.rating, 10) - parseInt(a.rating, 10);
+      if (sortBy === "lowest")
+        return parseInt(a.rating, 10) - parseInt(b.rating, 10);
       return new Date(b.date) - new Date(a.date);
     });
 
   // Handle infinite scroll
   useEffect(() => {
-    if (inView && page * 5 < filteredReviews.length) { // Prevent loading beyond available reviews
+    if (inView && page * 5 < filteredReviews.length) {
+      // Prevent loading beyond available reviews
       setLoading(true);
       setTimeout(() => {
-        setPage(prev => prev + 1);
+        setPage((prev) => prev + 1);
         setLoading(false);
       }, 1000);
     }
@@ -171,12 +179,12 @@ export default function Review({ course }) {
 
   // Handle reactions with optimistic updates
   const handleReaction = (reviewId, type) => {
-    setReactions(prev => ({
+    setReactions((prev) => ({
       ...prev,
       [reviewId]: {
         ...prev[reviewId],
-        [type]: !prev[reviewId]?.[type]
-      }
+        [type]: !prev[reviewId]?.[type],
+      },
     }));
   };
 
@@ -203,19 +211,21 @@ export default function Review({ course }) {
       {/* Add filter/sort controls */}
       <div className="flex justify-between mb-4">
         <motion.div className="flex gap-2">
-          {[5,4,3,2,1,0].map(rating => (
+          {[5, 4, 3, 2, 1, 0].map((rating) => (
             <motion.button
               key={rating}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`px-4 py-2 rounded-full shadow-sm transition-all duration-200
-                ${filterRating === rating 
-                  ? 'bg-blue-500 text-white shadow-blue-200' 
-                  : 'bg-gray-50 hover:bg-gray-100 text-2xl'}`}
+                ${
+                  filterRating === rating
+                    ? "bg-blue-500 text-white shadow-blue-200"
+                    : "bg-gray-50 hover:bg-gray-100 text-xl"
+                }`}
               onClick={() => setFilterRating(rating)}
             >
               {rating === 0 ? (
-                <motion.span className="text-2xl">All</motion.span>
+                <motion.span className="text-xl">All</motion.span>
               ) : (
                 <motion.div className="flex items-center gap-1">
                   {rating}
@@ -230,13 +240,15 @@ export default function Review({ course }) {
             </motion.button>
           ))}
         </motion.div>
-        
+
         <motion.div className="flex gap-2">
-          {['mới nhất', 'cao nhất', 'thấp nhất'].map(sort => (
+          {["mới nhất", "cao nhất", "thấp nhất"].map((sort) => (
             <motion.button
               key={sort}
               whileTap={{ scale: 0.95 }}
-              className={`sort-button px-3 py-1 rounded ${sortBy === sort ? 'active' : 'bg-gray-100'} text-2xl`}
+              className={`sort-button px-3 py-1 rounded ${
+                sortBy === sort ? "active" : "bg-gray-100"
+              } text-xl`}
               onClick={() => setSortBy(sort)}
             >
               {sort.charAt(0).toUpperCase() + sort.slice(1)}
@@ -266,7 +278,7 @@ export default function Review({ course }) {
                 <Image
                   width={48}
                   height={48}
-                  src={review.userImage || '/default-user.png'}
+                  src={review.userImage || "/default-user.png"}
                   alt="user"
                   className="w-12 h-12 rounded-full object-cover ring-2 ring-gray-100"
                 />
@@ -276,26 +288,32 @@ export default function Review({ course }) {
                     <div className="flex space-x-1">
                       {renderStars(review.rating)}
                     </div>
-                    <span className="text-gray-500 text-sm">1 tuần trước</span>
+                    <span className="text-gray-500 text-lg">1 tuần trước</span>
                   </div>
                 </div>
               </div>
-              
-              <p className="text-gray-700 mb-4 leading-relaxed">{review.comment}</p>
-              
+
+              <p className="text-gray-700 mb-4 leading-relaxed">
+                {review.comment}
+              </p>
+
               <div className="flex space-x-4">
-                <ReactionButton
-                  active={reactions[review.id]?.helpful}
-                  icon={FaThumbsUp}
-                  label="Hữu ích"
-                  onClick={() => handleReaction(review.id, 'helpful')}
-                />
-                <ReactionButton
-                  active={reactions[review.id]?.favorite}
-                  icon={FaHeart}
-                  label="Yêu thích"
-                  onClick={() => handleReaction(review.id, 'favorite')}
-                />
+                <span className="text-2xl">
+                  <ReactionButton
+                    active={reactions[review.id]?.helpful}
+                    icon={FaThumbsUp}
+                    label="Hữu ích"
+                    onClick={() => handleReaction(review.id, "helpful")}
+                  />
+                </span>
+                <span className="text-2xl">
+                  <ReactionButton
+                    active={reactions[review.id]?.favorite}
+                    icon={FaHeart}
+                    label="Yêu thích"
+                    onClick={() => handleReaction(review.id, "favorite")}
+                  />
+                </span>
               </div>
             </MotionDiv>
           ))}
@@ -304,7 +322,7 @@ export default function Review({ course }) {
 
       {/* Loading indicator */}
       {loading && <LoadingSpinner />}
-      
+
       {/* Intersection observer reference */}
       <div ref={ref} />
     </>
