@@ -113,10 +113,10 @@ const List = ({ courses }) => {
               <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
                 <div className="flex flex-col md:flex-row">
                   {/* Image Section */}
-                  <div className="relative w-full md:w-1/3 ">
+                  <div className="relative w-full md:w-1/3">
                     <Image
                       fill
-                      className="object-cover rounded-lg "
+                      className="object-cover rounded-lg"
                       src={course.hinh}
                       alt={course.ten}
                     />
@@ -134,7 +134,7 @@ const List = ({ courses }) => {
                   {/* Content Section */}
                   <div className="p-4 flex-1">
                     <div className="flex justify-between items-start">
-                      <h2 className="text-3xl text-gray-900" >
+                      <h2 className="text-2xl md:text-3xl text-gray-900 font-semibold">
                         {course.ten}
                       </h2>
                       <button
@@ -148,21 +148,21 @@ const List = ({ courses }) => {
                       </button>
                     </div>
 
-                    <p className="text-gray-600  text-xl font-medium mt-2">
-                      <i className="fas fa-user-tie mr-2 text-gray-800 text-xl" style={{ fontWeight: "400" }}></i>
+                    <p className="text-gray-600 text-lg font-medium mt-2">
+                      <i className="fas fa-user-tie mr-2 text-gray-800 text-lg" style={{ fontWeight: "400" }}></i>
                       {course.giangvien}
                     </p>
 
-                    <div className="flex items-center text-gray-500 text-xl font-medium my-2">
+                    <div className="flex items-center text-gray-500 text-lg font-medium my-2">
                       <i className="fa-light fa-calendar-lines-pen mr-2" />
                       <span>{course.baihocs} Bài</span>
                     </div>
-                    <div className="flex items-center text-gray-500 text-xl font-medium my-2">
+                    <div className="flex items-center text-gray-500 text-lg font-medium my-2">
                       <i className="fa-light fa-user-group mr-2" />
                       <span>{course.dangky} Học viên</span>
                     </div>
 
-                    <div className="flex items-center text-gray-500 text-xl font-medium my-2">
+                    <div className="flex items-center text-gray-500 text-lg font-medium my-2">
                       <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
                       <span>{course.chude}</span>
                     </div>
@@ -187,25 +187,22 @@ const List = ({ courses }) => {
 
                       <div className="text-right">
                         {course.gia === 0 ? (
-                          <div>
-
-                          </div>
+                          <div></div>
                         ) : course.giamgia > 0 ? (
                           <div className="flex items-center gap-2">
-                            <span className="text-gray-500 font-medium line-through text-2xl">
-                              {course.gia}VNĐ
+                            <span className="text-gray-500 font-medium line-through text-lg">
+                              {course.gia.toLocaleString()} VNĐ
                             </span>
-                            <span className="text-2xl font-bold text-red-600">
-                              {course.giamgia}VNĐ
+                            <span className="text-lg font-bold text-red-600">
+                              {course.giamgia.toLocaleString()} VNĐ
                             </span>
                           </div>
                         ) : (
-                          <span className="font-bold text-black text-2xl">
-                            {course.gia}VNĐ
+                          <span className="font-bold text-black text-lg">
+                            {course.gia.toLocaleString()} VNĐ
                           </span>
                         )}
                       </div>
-
                     </div>
                   </div>
                 </div>

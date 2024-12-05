@@ -29,6 +29,13 @@ export default function Page() {
       });
   }, []);
 
+  // Move averageRating function above filteredCourses
+  const averageRating = (danhgia) => {
+    if (!danhgia || danhgia.length === 0) return 0;
+    const sum = danhgia.reduce((acc, curr) => acc + parseFloat(curr.danhgia), 0);
+    return sum / danhgia.length;
+  };
+
   const filteredCourses = useMemo(() => {
     let filtered = courses;
 
@@ -97,12 +104,6 @@ export default function Page() {
 
     return filtered;
   }, [courses, searchTerm, selectedCategories, selectedAuthors, selectedPrices, sortBy, IdTheLoai]);
-
-  const averageRating = (danhgia) => {
-    if (!danhgia || danhgia.length === 0) return 0;
-    const sum = danhgia.reduce((acc, curr) => acc + parseFloat(curr.danhgia), 0);
-    return sum / danhgia.length;
-  };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);

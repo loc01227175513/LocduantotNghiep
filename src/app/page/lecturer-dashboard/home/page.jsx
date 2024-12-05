@@ -407,12 +407,12 @@ export default function Homedashboardlecturer() {
           </div>
         </div>
 
-        <div className=" mt-5">
+        <div className="mt-5">
           <div className="row">
             <div className="col-12">
               <div className="d-flex justify-content-between align-items-center mb-4">
-                <h5 className="mb-0 font-bold text-3xl">Các khóa học của tôi</h5>
-                <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-[#ff6b6b] text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl">
+                <h5 className="mb-0 font-bold text-3xl text-gray-800">Các khóa học của tôi</h5>
+                <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-gradient-to-r from-[#ff6b6b] to-[#ff9a9a] text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl shadow-md">
                   Xem tất cả
                 </Link>
               </div>
@@ -421,22 +421,22 @@ export default function Homedashboardlecturer() {
                   {khoahoc.map((item) => (
                     <div className="flex-none px-2 mb-4" style={{ width: '331.797px' }} key={item.id}>
                       <Link href={`/page/course-detail?id=${item.id}`}>
-                        <div className="card h-[244.344px] hover:shadow-lg hover:cursor-pointer transition-all duration-300 flex flex-col overflow-hidden border rounded-xl">
+                        <div className="card h-[244.344px] hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col overflow-hidden border rounded-xl bg-white">
                           <Image
                             width={332}
                             height={146}
                             src={validImageSrc(item.hinh)}
-                            className="w-full h-[146px] object-cover"
+                            className="w-full h-[146px] object-cover rounded-t-xl"
                             alt={item.ten || 'Course Image'}
                           />
                           <div className="flex-1 p-6 flex flex-col justify-between gap-4">
                             <div className="space-y-4">
                               <div className="flex justify-between items-start gap-3">
-                                <h6 className="card-title font-medium text-xl line-clamp-2 leading-tight max-w-[70%]">
+                                <h6 className="card-title font-medium text-xl line-clamp-2 leading-tight max-w-[70%] text-gray-800 h-12 overflow-hidden">
                                   {item.ten}
                                 </h6>
                                 <span
-                                  className={`badge ${item.trangthai === 'Hoàn thành' ? 'text-green-500' : item.trangthai === 'notyet' ? 'text-red-500' : 'text-[#ff6b6b]'
+                                  className={`badge ${item.trangthai === 'Hoàn thành' ? 'bg-green-500 text-white' : item.trangthai === 'notyet' ? 'bg-red-500 text-white' : 'bg-[#ff6b6b] text-white'
                                     } text-lg px-4 py-1.5 rounded-full whitespace-nowrap`}
                                 >
                                   {item.trangthai}
@@ -444,33 +444,32 @@ export default function Homedashboardlecturer() {
                               </div>
                             </div>
 
-                            {Array.isArray(item.giangVien) ? (
-                              item.giangVien.map((gianVien, index) => (
-                                <div key={index}>
-                                  <Image
-                                    width={32}
-                                    height={32}
-                                    className="rounded-full border border-gray-200 object-cover"
-                                    src={validImageSrc(gianVien.hinh)}
-                                    alt={gianVien.ten || 'Giảng viên'}
-                                  />
-                                  <span className="text-sm text-gray-600 line-clamp-1">
-                                    {gianVien.ten || 'Tên giảng viên'}
-                                  </span>
-                                </div>
-                              ))
-                            ) : (
-                              <div>
-                                <Image
-                                  width={32}
-                                  height={32}
-                                  className="rounded-full border border-gray-200 object-cover"
-                                  src={validImageSrc(item.giangVien.hinh)}
-                                  alt={item.giangVien.ten || 'Giảng viên'}
-                                />
-                              </div>
-                            )}
-
+                            {/* {Array.isArray(item.giangVien) ? (
+                      item.giangVien.map((gianVien, index) => (
+                        <div key={index} className="flex items-center">
+                          <Image
+                            width={32}
+                            height={32}
+                            className="rounded-full border border-gray-200 object-cover"
+                            src={validImageSrc(gianVien.hinh)}
+                            alt={gianVien.ten || 'Giảng viên'}
+                          />
+                          <span className="text-sm text-gray-600 line-clamp-1 ml-2">
+                            {gianVien.ten || 'Tên giảng viên'}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="flex items-center">
+                        <Image
+                          width={32}
+                          height={32}
+                          className="rounded-full border border-gray-200 object-cover"
+                          src={validImageSrc(item.giangVien.hinh)}
+                          alt={item.giangVien.ten || 'Giảng viên'}
+                        />
+                      </div>
+                    )} */}
                           </div>
                         </div>
                       </Link>
@@ -481,6 +480,8 @@ export default function Homedashboardlecturer() {
             </div>
           </div>
         </div>
+
+
       </div>
     </div>
   );
@@ -611,15 +612,16 @@ const DoanhThuChart = () => {
           width: '100%',
           padding: '20px',
           backgroundColor: '#f3f4f6',
-          borderRadius: '8px',
+          borderRadius: '12px', // Increased border radius for a softer look
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)', // Added shadow for depth
           transition: 'all 0.3s ease',
           '&:hover': {
             transform: 'translateY(-5px)',
-            boxShadow: '0 8px 30px rgba(0,0,0,0.7)',
+            boxShadow: '0 8px 30px rgba(0,0,0,0.3)', // Enhanced shadow on hover
           }
         }}
       >
-        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-[#ff6b6b] text-white rounded">
+        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-gradient-to-r from-[#ff6b6b] to-[#ff9a9a] text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
           Reload Data
         </button>
         <motion.div
@@ -635,7 +637,7 @@ const DoanhThuChart = () => {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               fontWeight: 'bold',
-              color: '#000000'
+              fontSize: '1.5rem', // Increased font size for emphasis
             }}
           >
             Thống Kê Doanh Thu theo Thời Gian
@@ -643,22 +645,17 @@ const DoanhThuChart = () => {
         </motion.div>
 
         <Box sx={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
-          <Box>
-            <Typography variant="subtitle1" sx={{ color: '#000000' }}>Tổng Doanh Thu</Typography>
-            <Typography variant="h6" sx={{ color: '#000000' }}>{totalRevenue.toLocaleString()} VND</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1" sx={{ color: '#000000' }}>Doanh Thu Trung Bình</Typography>
-            <Typography variant="h6" sx={{ color: '#000000' }}>{averageRevenue} VND</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1" sx={{ color: '#000000' }}>Doanh Thu Tối Đa</Typography>
-            <Typography variant="h6" sx={{ color: '#000000' }}>{maxRevenue.toLocaleString()} VND</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1" sx={{ color: '#000000' }}>Doanh Thu Tối Thiểu</Typography>
-            <Typography variant="h6" sx={{ color: '#000000' }}>{minRevenue.toLocaleString()} VND</Typography>
-          </Box>
+          {[
+            { label: 'Tổng Doanh Thu', value: totalRevenue.toLocaleString() },
+            { label: 'Doanh Thu Trung Bình', value: averageRevenue },
+            { label: 'Doanh Thu Tối Đa', value: maxRevenue.toLocaleString() },
+            { label: 'Doanh Thu Tối Thiểu', value: minRevenue.toLocaleString() },
+          ].map((item, index) => (
+            <Box key={index} sx={{ textAlign: 'center' }}>
+              <Typography variant="subtitle1" sx={{ color: '#000000', fontWeight: '600' }}>{item.label}</Typography>
+              <Typography variant="h6" sx={{ color: '#000000', fontWeight: '700' }}>{item.value} VND</Typography>
+            </Box>
+          ))}
         </Box>
 
         <Box sx={{ marginBottom: '20px', display: 'flex', justifyContent: 'flex-end' }}>
@@ -668,18 +665,18 @@ const DoanhThuChart = () => {
             displayEmpty
             sx={{
               width: '200px',
-              backgroundColor: '#ff6b6b', // Màu cam
-              color: '#ffffff', // Màu trắng
-              '& .MuiSelect-icon': { color: '#ffffff' }, // Màu trắng cho icon
-              '& .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' }, // Màu cam cho border
-              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' }, // Màu cam cho border khi hover
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' }, // Màu cam cho border khi focused
+              backgroundColor: '#ff6b6b',
+              color: '#ffffff',
+              '& .MuiSelect-icon': { color: '#ffffff' },
+              '& .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' },
+              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' },
             }}
             MenuProps={{
               PaperProps: {
                 sx: {
-                  backgroundColor: '#ff6b6b', // Màu cam cho dropdown
-                  color: '#ffffff', // Màu trắng cho chữ trong dropdown
+                  backgroundColor: '#ff6b6b',
+                  color: '#ffffff',
                 },
               },
             }}
@@ -696,12 +693,12 @@ const DoanhThuChart = () => {
           >
             <defs>
               <linearGradient id="colorTongDoanhThu" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#ffffff" stopOpacity={1} />
-                <stop offset="95%" stopColor="#ffffff" stopOpacity={0.1} />
+                <stop offset="5%" stopColor="#ff6b6b" stopOpacity={1} />
+                <stop offset="95%" stopColor="#ff6b6b" stopOpacity={0.1} />
               </linearGradient>
               <linearGradient id="colorSoDuKhaDung" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#ffffff" stopOpacity={1} />
-                <stop offset="95%" stopColor="#ffffff" stopOpacity={0.1} />
+                <stop offset="5%" stopColor="#4f46e5" stopOpacity={1} />
+                <stop offset="95%" stopColor="#4f46e5" stopOpacity={0.1} />
               </linearGradient>
               <filter id="glow">
                 <feGaussianBlur stdDeviation="2" result="coloredBlur" />
@@ -860,12 +857,13 @@ const CustomChart = () => {
       </Box>
     );
   }
+
   return (
     <Box
       sx={{ width: '70%' }}
-      className="p-4 bg-gray-100 backdrop-blur rounded-lg h-[400px] transform transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] duration-500"
+      className="p-4 bg-gradient-to-r from-[#f3f4f6] to-[#e2e8f0] backdrop-blur rounded-lg h-[400px] transform transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] duration-500"
     >
-      <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-[#ff6b6b] text-white rounded">
+      <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-gradient-to-r from-[#ff6b6b] to-[#ff9a9a] text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
         Reload Data
       </button>
       <motion.div
@@ -937,13 +935,13 @@ const CustomChart = () => {
           />
 
           <XAxis
-            dataKey="name"
-            stroke="#000000" // Changed from #ffffff to black
+            dataKey="date"
+            stroke="#000000"
             className="animate-slide"
           />
 
           <YAxis
-            stroke="#000000" // Changed from #ffffff to black
+            stroke="#000000"
             className="animate-number-scroll"
           />
 
@@ -980,7 +978,7 @@ const CustomChart = () => {
                   />
                   <path
                     d={isUp ? "M0 10L6 4L12 10" : "M0 4L6 10L12 4"}
-                    stroke="#000000" // Changed from #fff to black
+                    stroke="#000000"
                     strokeWidth="2"
                     fill="none"
                   />
@@ -995,11 +993,11 @@ const CustomChart = () => {
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: 'rgba(255, 255, 255, 0.9)', // Lighter background
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
               border: '1px solid #4f46e5',
               borderRadius: '8px',
-              color: '#000000', // Changed to black
-            }} path
+              color: '#000000',
+            }}
             className="animate-tooltip"
           />
         </LineChart>
@@ -1039,8 +1037,6 @@ const CustomChart = () => {
           0%, 100% { opacity: 0.8; }
           50% { opacity: 1; }
         }
-    
-        /* Existing and enhanced animations remain unchanged */
       `}</style>
     </Box>
   );

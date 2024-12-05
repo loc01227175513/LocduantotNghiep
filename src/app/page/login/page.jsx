@@ -12,11 +12,11 @@ import { motion } from "framer-motion";
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  
-  const initialValues = { 
-    email: "", 
-    password: "", 
-    rememberMe: false 
+
+  const initialValues = {
+    email: "",
+    password: "",
+    rememberMe: false
   };
 
   const validationSchema = Yup.object({
@@ -48,7 +48,7 @@ export default function Login() {
       if (response.ok) {
         const result = await response.json();
         console.log("Login successful:", result);
-        
+
         // Handle remember me
         if (values.rememberMe) {
           localStorage.setItem("rememberedUser", values.email);
@@ -107,7 +107,7 @@ export default function Login() {
 
   const imageVariants = {
     hidden: { x: 100, opacity: 0 },
-    visible: { 
+    visible: {
       x: 0,
       opacity: 1,
       transition: { duration: 0.8, ease: "easeOut" }
@@ -140,7 +140,7 @@ export default function Login() {
   return (
     <>
       <Header />
-      <motion.div 
+      <motion.div
         className="login-registration-wrapper"
         initial="hidden"
         animate="visible"
@@ -155,26 +155,26 @@ export default function Login() {
         <div className="container">
           <div className="row g-0">
             <div className="col-lg-6" style={{ marginTop: 150 }}>
-              <motion.div 
+              <motion.div
                 className="login-page-form-area"
                 variants={itemVariants}
                 style={{
-                  background: "rgba(255, 255, 255, 0.9)",
-                  borderRadius: "15px",
-                  backdropFilter: "blur(10px)",
-                  boxShadow: "0 8px 32px rgba(31, 38, 135, 0.15)",
-                  padding: "2rem",
-                  border: "1px solid rgba(255, 255, 255, 0.18)"
+                  background: "rgba(255, 255, 255, 0.95)", // Slightly more opaque background
+                  borderRadius: "20px", // Increased border radius for a softer look
+                  backdropFilter: "blur(15px)", // Increased blur for better contrast
+                  boxShadow: "0 12px 40px rgba(31, 38, 135, 0.2)", // Enhanced shadow for depth
+                  padding: "2.5rem", // Increased padding for more space
+                  border: "1px solid rgba(255, 255, 255, 0.25)" // More visible border
                 }}
                 whileHover="hover"
               >
-                <motion.h4 
+                <motion.h4
                   className="title"
                   variants={itemVariants}
                 >
                   Đăng nhập vào tài khoản của bạn 👋
                 </motion.h4>
-                
+
                 {/* <div className="social-login mb-4">
                   <motion.button 
                     onClick={() => handleSocialLogin('google')}
@@ -236,7 +236,7 @@ export default function Login() {
                         <ErrorMessage
                           name="password"
                           component="div"
-                           className="error text-danger my-2 text-xl bg-inherit border-none"
+                          className="error text-danger my-2 text-xl bg-inherit border-none"
                         />
                       </motion.div>
 
@@ -267,6 +267,14 @@ export default function Login() {
                         className="rts-btn btn-primary w-100 text-2xl"
                         disabled={isSubmitting || isLoading}
                         variants={itemVariants}
+                        style={{
+                          backgroundColor: "#4285f4", // Primary color for the button
+                          color: "#fff", // White text for contrast
+                          borderRadius: "25px", // Rounded button
+                          padding: "10px 0", // Padding for button
+                          transition: "background-color 0.3s ease" // Smooth transition
+                        }}
+                        whileHover={{ backgroundColor: "#34a853" }} // Change color on hover
                       >
                         {isLoading ? (
                           <CircularProgress size={32} color="inherit" />
@@ -288,14 +296,14 @@ export default function Login() {
             </div>
 
             <div className="col-lg-6">
-              <motion.div 
+              <motion.div
                 className="contact-thumbnail-login-p flex justify-center items-center"
                 variants={imageVariants}
               >
-                <Image 
+                <Image
                   src="https://frontends.udemycdn.com/components/auth/desktop-illustration-x1.webp"
-                  width={500} 
-                  height={300}   
+                  width={500}
+                  height={300}
                   className="img-fluid bg-transparent py-36"
                   alt="Student Home"
                   priority

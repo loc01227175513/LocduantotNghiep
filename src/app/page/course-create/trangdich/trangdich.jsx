@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 
+
 function TrangDich() {
     const [category, setCategory] = useState('');
     const [subCategory, setSubCategory] = useState('');
@@ -26,7 +27,9 @@ function TrangDich() {
     });
     const [imageSelected, setImageSelected] = useState(null);
     const [imageUrl, setImageUrl] = useState('');
-
+    const [showSearchImage, setShowSearchImage] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(null);
     useEffect(() => {
         if (typeof window !== "undefined") {
             const currentUrl = window.location.href;
@@ -80,6 +83,7 @@ function TrangDich() {
                 console.error('There was an error fetching the data!', error);
             });
     }, []);
+    
 
     const handleCategoryChange = (e) => {
         setCategory(e.target.value);
@@ -101,6 +105,34 @@ function TrangDich() {
             setFilteredTopics(filtered);
         }
     };
+
+    const handleImageSelect = async (imageUrl, index) => {
+        if (!imageUrl || loading) return;
+        
+        try {
+            setSelectedImageIndex(index);
+            setLoading(true);
+            await onSelectImage(imageUrl, index);
+        } catch (error) {
+            console.error('Error selecting image:', error);
+            setSelectedImageIndex(null);
+        }
+    };
+
+    const handleCloseSearch = () => {
+        setShowSearchImage(false);
+        setLoading(false);
+    };
+
+    if (showSearchImage) {
+        return (
+            <SearchImage 
+                onClose={handleCloseSearch}
+                setImageUrl={setImageUrl}
+                setFormData={setFormData}
+            />
+        );
+    }
 
     const handleTopicClick = (topicName, topicId) => {
         setSearchTerm(topicName);
@@ -125,47 +157,83 @@ function TrangDich() {
     };
 
     const uploadImage = async () => {
-        if (!imageSelected) return;
-        const imageFormData = new FormData();
-        imageFormData.append("file", imageSelected);
-        imageFormData.append("upload_preset", uploadPreset);
-
+        if (!imageSelected) return false;
+        
         try {
+            const imageFormData = new FormData();
+            imageFormData.append("file", imageSelected);
+            imageFormData.append("upload_preset", uploadPreset);
+
             const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
                 method: "POST",
                 body: imageFormData,
             });
+
+            if (!response.ok) {
+                throw new Error('Failed to upload image to Cloudinary');
+            }
+
             const data = await response.json();
             setImageUrl(data.secure_url);
             setFormData(prevFormData => ({
                 ...prevFormData,
                 hinh: data.secure_url
             }));
+            return true;
         } catch (err) {
-            console.error(err);
+            console.error('Error uploading image:', err);
+            alert('Không thể tải lên hình ảnh. Vui lòng thử lại.');
+            return false;
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (imageSelected) {
-            await uploadImage();
+        // Check if we have either an uploaded image or image URL
+        if (!imageUrl && !imageSelected) {
+            alert('Vui lòng chọn một hình ảnh cho khóa học');
+            return;
         }
-
-        const submitData = new FormData();
-        Object.keys(formData).forEach(key => {
-            submitData.append(key, formData[key]);
-        });
 
         try {
-            const response = await axios.post('https://huuphuoc.id.vn/api/TrangDichKhoaHoc', submitData, {
-                referrerPolicy: 'unsafe-url'
+            // If there's a selected file, upload it first
+            if (imageSelected) {
+                await uploadImage();
+            }
+
+            // Make sure we have an image URL after upload
+            if (!formData.hinh) {
+                alert('Không thể tải lên hình ảnh. Vui lòng thử lại.');
+                return;
+            }
+
+            const submitData = new FormData();
+            Object.keys(formData).forEach(key => {
+                submitData.append(key, formData[key]);
             });
-            console.log(response.data);
+
+            const response = await axios.post('https://huuphuoc.id.vn/api/TrangDichKhoaHoc', submitData, {
+                referrerPolicy: 'unsafe-url',
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            if (response.data.success) {
+                alert('Tạo khóa học thành công!');
+                // Redirect or handle success
+            } else {
+                throw new Error(response.data.message || 'Có lỗi xảy ra khi tạo khóa học');
+            }
         } catch (error) {
             console.error('There was an error submitting the form!', error);
+            // alert(error.response?.data?.message || 'Có lỗi xảy ra khi tạo khóa học. Vui lòng thử lại.');
         }
+    };
+
+    const handleSearchImage = () => {
+        setShowSearchImage(true);
     };
 
     return (
@@ -228,7 +296,7 @@ function TrangDich() {
                             value={category}
                             onChange={handleCategoryChange}
                         >
-                            <option value="">-- Chọn mục thể loại --</option>
+                            <option value="">-- Chọn mc thể loại --</option>
                             {categories
                                 .filter(cat => cat.theloaicons && cat.theloaicons.length > 0)
                                 .map(cat => (
@@ -299,7 +367,14 @@ function TrangDich() {
                             <input type="file" className="hidden" name="hinh" onChange={handleFileChange} />
                         </label>
                     </div>
-                                    {imageUrl && (
+                    <button 
+                        type="button"
+                        onClick={handleSearchImage} 
+                        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
+                    >
+                        Tìm ảnh trên mạng
+                    </button>
+                    {imageUrl && (
                       <div className="mt-2 group perspective-[1000px] hover:cursor-pointer">
                         <div
                           className={`
@@ -318,11 +393,9 @@ function TrangDich() {
                             animation: "float 6s ease-in-out infinite, fadeScale 0.8s ease-out"
                           }}
                         >
-                          <Image
-                            width={500}
-                            height={300}
+                          <Image width={100} height={50} 
                             src={imageUrl}
-                            alt="Uploaded"
+                            alt="Course preview"
                             className={`
                               w-full h-auto rounded-lg 
                               border-2 border-purple-200/50
@@ -331,13 +404,10 @@ function TrangDich() {
                               relative z-20
                             `}
                             loading="lazy"
-                            onLoadStart={() => (
-                              <div className={`
-                                animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200
-                                rounded-lg w-full h-[300px]
-                                background-animate
-                              `}/>
-                            )}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = '/placeholder-image.jpg';
+                            }}
                           />
                         </div>
                       </div>
@@ -354,4 +424,131 @@ function TrangDich() {
     );
 }
 
+
+
+function SearchImage({ 
+    onClose, 
+    setImageUrl,
+    setFormData
+}) {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+
+    const handleImageSelect = async (imageUrl, index) => {
+        if (!imageUrl || loading) return;
+        
+        try {
+            setSelectedImageIndex(index);
+            setLoading(true);
+
+            // Directly update the parent component's state with the image URL
+            setImageUrl(imageUrl);
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                hinh: imageUrl
+            }));
+
+            // Close modal after successful selection
+            onClose();
+        } catch (error) {
+            console.error('Error selecting image:', error);
+            alert('Failed to select image. Please try again.');
+            setSelectedImageIndex(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const response = await fetch(`/api/search-images?q=${encodeURIComponent(searchQuery)}`);
+            const data = await response.json();
+            if (data.items) {
+                setSearchResults(data.items);
+            } else {
+                setSearchResults([]);
+            }
+        } catch (error) {
+            console.error('Error searching images:', error);
+            setSearchResults([]);
+        }
+        setLoading(false);
+    };
+
+    const handleModalClose = () => {
+        if (!loading && typeof onClose === 'function') {
+            onClose();
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded-lg w-[80%] max-h-[80vh] overflow-y-auto">
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-2xl font-bold">Search Images</h2>
+                    <button 
+                        onClick={handleModalClose}
+                        className="text-gray-500 hover:text-gray-700 w-10"
+                        disabled={loading}
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <form onSubmit={handleSearch} className="mb-4">
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="flex-1 p-2 border rounded"
+                            placeholder="Search for images..."
+                        />
+                        <button 
+                            type="submit"
+                            className="bg-blue-500 text-white px-4 py-2 rounded w-32 hover:bg-blue-600"
+                            disabled={loading}
+                        >
+                            {loading ? 'Searching...' : 'Search'}
+                        </button>
+                    </div>
+                </form>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {searchResults.map((image, index) => (
+                        <div 
+                            key={index}
+                            className={`
+                                cursor-pointer hover:opacity-80 transition-opacity relative
+                                ${selectedImageIndex === index ? 'ring-2 ring-blue-500' : ''}
+                                ${loading ? 'pointer-events-none' : ''}
+                            `}
+                            onClick={() => handleImageSelect(image.link, index)}
+                        >
+                            <Image width={100} height={50}  
+                                src={image.link} 
+                                alt={image.title || 'Search result'}
+                                className="w-full h-48 object-cover rounded"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = '/placeholder-image.jpg';
+                                }}
+                            />
+                            {selectedImageIndex === index && loading && (
+                                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
+  
 export default TrangDich;

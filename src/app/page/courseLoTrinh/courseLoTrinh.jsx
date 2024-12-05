@@ -12,9 +12,9 @@ const Modal = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center ">
             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose}></div>
-            <div className="relative bg-white rounded-2xl shadow-2xl p-6 m-4 max-w-2xl w-full">
+            <div className="relative bg-white rounded-2xl shadow-2xl p-6 m-4 h-[400px] min-w-[400px]">
                 <button
                     onClick={onClose}
                     className="absolute -top-4 -right-4 bg-red-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center hover:bg-red-600 transition-all"
@@ -27,6 +27,7 @@ const Modal = ({ isOpen, onClose, children }) => {
     );
 };
 
+// ... existing code ...
 export default function Roadmap() {
     const [loTrinhKhoaHoc, setLoTrinhKhoaHoc] = useState([]);
     const [loTrinhKhoaHocCon, setLoTrinhKhoaHocCon] = useState([]);
@@ -69,92 +70,89 @@ export default function Roadmap() {
     }, []);
 
     return (
-        <div className="py-80 min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <div className="container mx-auto px-4">
-            <div className="text-center mb-16 relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 to-purple-100/20 blur-3xl -z-10"></div>
-                <h1 className="text-center text-6xl font-medium mb-8 bg-gradient-to-r text-black bg-clip-text">
-                    Lộ Trình Khóa Học
-                </h1>
-                <p className="text-2xl text-gray-600 max-w-2xl mx-auto font-medium">
-                    Lên kế hoạch cho hành trình học tập của bạn với lộ trình được chế tác chuyên nghiệp của chúng tôi
-                </p>
-            </div>
-    
-            <div className="flex flex-wrap -mx-4">
-    {loTrinhKhoaHoc.map((course) => (
-        <div
-            key={course.id}
-            className="course-section group relative border-1  border-amber-500 bg-white/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer m-4"
-            style={{ width: '300px' }}
-            onClick={() => setSelectedCourse(course)}
-        >
-            <div className="overflow-hidden rounded-t-2xl" style={{ width: '300px' }}>
-                <Image
-                    src={course.hinh || fallbackImageUrl}
-                    alt={course.ten}
-                    width={400}
-                    height={300}
-                    className="w-full h-64 object-cover transition-all duration-700"
-                    onError={(e) => {
-                        e.target.src = fallbackImageUrl;
-                    }}
-                />
-            </div>
-            <div className="p-8 relative z-10" style={{ width: '300px' }}>
-                <div className="flex items-center mb-4">
-                    <FaGraduationCap className="text-blue-500 text-3xl mr-3" />
-                    <h2 className="text-2xl font-bold text-gray-800">
-                        {course.ten}
-                    </h2>
+        <div className="py-20 min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+            <div className="container mx-auto px-4">
+                <div className="text-center mb-16 relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 to-purple-100/20 blur-3xl -z-10"></div>
+                    <h1 className="text-center text-6xl font-bold mb-8 bg-gradient-to-r text-black bg-clip-text">
+                        Lộ Trình Khóa Học
+                    </h1>
+                    <p className="text-2xl text-gray-600 max-w-2xl mx-auto font-medium">
+                        Lên kế hoạch cho hành trình học tập của bạn với lộ trình được chế tác chuyên nghiệp của chúng tôi
+                    </p>
                 </div>
-                <p className="text-gray-600">
-                    {course.mota}
-                </p>
-            </div>
-        </div>
-    ))}
-</div>
-        </div>
     
-        <Modal
-            isOpen={!!selectedCourse}
-            onClose={() => setSelectedCourse(null)}
-        >
-            {selectedCourse && (
-                <div className="space-y-6 overflow-hidden">
-                    <h3 className="text-3xl font-bold text-blue-600 flex items-center">
-                        <FaBook className="mr-3" />
-                        Lộ trình: {selectedCourse.ten}
-                    </h3>
-                    <div className="space-y-4">
-                        {getSubCourses(selectedCourse.id).map((subCourse) => (
-                            <Link
-                                key={subCourse.id}
-                                href={`/page/course-detail?id=${subCourse.khoahoc.id}`}
-                            >
-                                <div
-                                    className="p-4 rounded-xl bg-gradient-to-r from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 transition-all duration-300 group cursor-pointer transform hover:scale-105 hover:shadow-xl"
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <div className="transition-all duration-300">
-                                            <h4 className="font-bold text-blue-700 group-hover:text-purple-700">
-                                                {subCourse.khoahoc.ten}
-                                            </h4>
-                                            <p className="text-sm text-gray-600 mt-1 group-hover:text-gray-800">
-                                                {subCourse.khoahoc.mota}
-                                            </p>
-                                        </div>
-                                        <FaArrowRight className="text-blue-500 group-hover:text-purple-500 transition-all duration-300" />
-                                    </div>
+                <div className="grid xl:grid-cols-4 grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6">
+                    {loTrinhKhoaHoc.map((course) => (
+                        <div
+                            key={course.id}
+                            className="course-section group relative border border-amber-500 bg-white/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer m-4"
+                            style={{ width: '300px' }}
+                            onClick={() => setSelectedCourse(course)}
+                        >
+                            <div className="overflow-hidden rounded-t-2xl" style={{ width: '300px' }}>
+                                <Image
+                                    src={course.hinh || fallbackImageUrl}
+                                    alt={course.ten}
+                                    width={400}
+                                    height={300}
+                                    className="w-full h-64 object-cover transition-all duration-700"
+                                    onError={(e) => {
+                                        e.target.src = fallbackImageUrl;
+                                    }}
+                                />
+                            </div>
+                            <div className="p-6 relative z-10" style={{ width: '300px' }}>
+                                <div className="flex items-center mb-4">
+                                    <FaGraduationCap className="text-blue-500 text-3xl mr-3" />
+                                    <h2 className="text-2xl font-bold text-gray-800">
+                                        {course.ten}
+                                    </h2>
                                 </div>
-                            </Link>
-                        ))}
-                    </div>
+                                <p className="text-gray-600">
+                                    {course.mota}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-            )}
-        </Modal>
-    </div>
+            </div>
     
+            <Modal
+                isOpen={!!selectedCourse}
+                onClose={() => setSelectedCourse(null)}
+            >
+                {selectedCourse && (
+                    <div className=" ">
+                        <h3 className="flex items-center gap-2 text-blue-800 text-4xl">
+                            <FaBook className="" />
+                            Lộ trình: {selectedCourse.ten}
+                        </h3>
+                        <div className="flex mt-4">
+                            {getSubCourses(selectedCourse.id).map((subCourse, index) => (
+                                <Link
+                                    key={subCourse.id}
+                                    href={`/page/course-detail?id=${subCourse.khoahoc.id}`}
+                                >
+                                    <div
+                                        className={`containerhshss group ${index > 0 ? "shift-left" : ""}`}
+                                    >                     
+                                        <div className="arrow-box relative inline-block bg-[#ff6b6b] text-white py-[10px] px-[30px] text-xl group-hover:bg-pink-700 transition-colors duration-500">
+                                            <div className="content p-3">
+                                                <p className='font-bold'>{subCourse.khoahoc.ten}</p>
+                                            </div>
+                                        </div>
+                                        <div className="h-[270px] m-[10px] bg-white absolute left-0 rounded-md shadow p-2" style={{ width: 'calc(100% - 30px)' }} >
+                                            <p className='text-xl text-blue-500 group-hover:text-pink-700 transition-colors duration-300'>{subCourse.khoahoc.mota}</p>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </Modal>
+        </div>
     );
 }
+// ... existing code ...

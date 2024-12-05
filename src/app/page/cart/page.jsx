@@ -157,7 +157,7 @@ const Cart = () => {
                     <th className="py-4 text-xl">Sản phẩm</th>
                     <th className="py-4 text-xl">Giá</th>
                     <th className="py-4 text-xl">Giảm Giá</th>
-                    <th className="py-4 text-xl">Tổng phụ</th>
+                    <th className="py-4 text-xl">Tổng</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -185,14 +185,13 @@ const Cart = () => {
                               ></i>
                             </button>
                           </td>
-                          <td>
+                          <td className="flex items-center justify-center w-[120px] h-[120px]">
                             <Image
-                              width={500}
-                              height={300}
+                              width={120}
+                              height={120}
                               src={khoahoc.hinh}
-                              className="img-fluid rounded-lg shadow-sm hover:scale-110 hover:rotate-2 transition-all duration-300"
+                              className="rounded-lg shadow-sm hover:scale-110 hover:rotate-2 transition-all duration-300 w-full h-full object-cover"
                               alt={khoahoc.ten}
-                              style={{ maxWidth: '120px' }}
                             />
                           </td>
                           <td className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">

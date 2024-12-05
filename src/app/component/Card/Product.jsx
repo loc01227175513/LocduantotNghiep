@@ -3,20 +3,11 @@ import Image from 'next/image';
 
 export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id, PhanTram }) {
   return (
-
-    <div
-      className="transition flash element-item creative "
-      data-category="transition"
-    >
-      <div className="rts-single-course ">
+    <div className="transition flash element-item creative" data-category="transition">
+      <div className="rts-single-course">
         <a href={`/page/course-detail?id=${id}`} className="thumbnail relative">
           <div className="thumbnail relative" style={{ aspectRatio: '16 / 9' }}>
-            <Image
-              src={hinh}
-              alt="course"
-              layout="fill"
-              objectFit="cover"
-            />
+            <Image src={hinh} alt="course" layout="fill" objectFit="cover" />
             {/* Free course badge */}
             {(gia === 0 || giamgia === 0) && (
               <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
@@ -32,11 +23,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
           </div>
         </a>
         <div className="course-card">
-
-          <a
-            href={`/page/course-detail?id=${id}`}
-            className="title-link block h-[60px]" // Fixed height container
-          >
+          <a href={`/page/course-detail?id=${id}`} className="title-link block h-[60px]">
             <p className="title line-clamp-2 text-base overflow-hidden hover:text-blue-600 transition-colors">
               {ten}
             </p>
@@ -92,7 +79,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
 
           <button className="download-cert-btn mt-4 w-full py-2 bg-[#ff6b6b] text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-[#1e3c72]">
             <i className="fas fa-certificate" />
-            Tải xuống chứng chỉ
+            Nhận chứng chỉ ngay
           </button>
 
           <div className="rating-and-price">
@@ -119,83 +106,82 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
           </div>
 
           <style jsx>{`
-        .course-card {
-          padding: 1.5rem;
-          transition: all 0.3s ease;
-          border-radius: 12px;
-          background: white;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        .course-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-        }
-        .title-link {
-          display: block;
-        }
-        .title {
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #2d3748;
-          transition: color 0.2s ease;
-        }
-        .title:hover {
-          color: #4299e1;
-        }
-        .rating-area {
-          display: flex;
-          align-items: center;
-          background: #f7fafc;
-          padding: 0.5rem;
-          border-radius: 8px;
-        }
-        .rating-number {
-          font-weight: 600;
-          color: #2d3748;
-          margin-right: 0.5rem;
-        }
-        .stars {
-          display: flex;
-          color: #ecc94b;
-        }
-        .free-badge {
-          background: -webkit-linear-gradient(315deg, #1e3c72 0%, #ff6b6b 100%);
-          color: white;
-          padding: 5px 20px;
-          border-radius: 20px;
-          font-weight: 500;
-          animation: pulse 2s infinite;
-        }
-        .price-wrapper {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-        }
-        .original-price {
-          color: #a0aec0;
-          text-decoration: line-through;
-          font-size: 0.9rem;
-        }
-        .sale-price {
-          color: #e53e3e;
-          font-weight: 600;
-          font-size: 1.1rem;
-        }
-        @keyframes pulse {
-          0% {
-            box-shadow: 0 0 0 0 rgba(11, 197, 234, 0.4);
-          }
-          70% {
-            box-shadow: 0 0 0 10px rgba(11, 197, 234, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(11, 197, 234, 0);
-          }
-        }
-      `}</style>
+            .course-card {
+              padding: 1.5rem;
+              transition: all 0.3s ease;
+              border-radius: 12px;
+              background: white;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+            .course-card:hover {
+              transform: translateY(-4px);
+              box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+            }
+            .title-link {
+              display: block;
+            }
+            .title {
+              font-size: 1.1rem;
+              font-weight: 600;
+              color: #2d3748;
+              transition: color 0.2s ease;
+            }
+            .title:hover {
+              color: #4299e1;
+            }
+            .rating-area {
+              display: flex;
+              align-items: center;
+              background: #f7fafc;
+              padding: 0.5rem;
+              border-radius: 8px;
+            }
+            .rating-number {
+              font-weight: 600;
+              color: #2d3748;
+              margin-right: 0.5rem;
+            }
+            .stars {
+              display: flex;
+              color: #ecc94b;
+            }
+            .free-badge {
+              background: -webkit-linear-gradient(315deg, #1e3c72 0%, #ff6b6b 100%);
+              color: white;
+              padding: 5px 20px;
+              border-radius: 20px;
+              font-weight: 500;
+              animation: pulse 2s infinite;
+            }
+            .price-wrapper {
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+            }
+            .original-price {
+              color: #a0aec0;
+              text-decoration: line-through;
+              font-size: 0.9rem;
+            }
+            .sale-price {
+              color: #e53e3e;
+              font-weight: 600;
+              font-size: 1.1rem;
+            }
+            @keyframes pulse {
+              0% {
+                box-shadow: 0 0 0 0 rgba(11, 197, 234, 0.4);
+              }
+              70% {
+                box-shadow: 0 0 0 10px rgba(11, 197, 234, 0);
+              }
+              100% {
+                box-shadow: 0 0 0 0 rgba(11, 197, 234, 0);
+              }
+            }
+          `}</style>
         </div>
       </div>
     </div>
-
   );
 }

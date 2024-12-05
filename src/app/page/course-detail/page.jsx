@@ -126,41 +126,18 @@ const NavPhai = ({
 
   return (
     <>
-      <div
-        className="rts-course-area rts-section-gap"
-        style={{ transform: "none" }}
-      >
-        <div className="container" style={{ transform: "none" }}>
-          <div className="row g-5" style={{ transform: "none" }}>
+      <div className="rts-course-area rts-section-gap">
+        <div className="container">
+          <div className="row g-5">
             <div className="order-2 col-lg-8 order-cl-1 order-lg-1 order-md-2 order-sm-2">
               <Nav course={course} formattedTotalTime={formattedTotalTime} />
             </div>
 
-            <div
-              className="order-1 col-lg-4 order-cl-2 order-lg-2 order-md-1 order-sm-1 rts-sticky-column-item"
-              style={{
-                position: "relative",
-                overflow: "visible",
-                boxSizing: "border-box",
-                minHeight: 1,
-              }}
-            >
-              <div
-                className="theiaStickySidebar"
-                style={{
-                  paddingTop: 1,
-                  paddingBottom: 1,
-                  position: "static",
-                  transform: "none",
-                  left: "1023.16px",
-                  top: 0,
-                }}
-              >
+            <div className="order-1 col-lg-4 order-cl-2 order-lg-2 order-md-1 order-sm-1 rts-sticky-column-item">
+              <div className="theiaStickySidebar">
                 <div className="right-course-details">
-                  {/* single course-sidebar */}
                   <div className="course-side-bar">
                     <div className="thumbnail">
-                      {/* <Image width={500} height={300} src="/assets/images/course/20.jpg" alt="Course Image" /> */}
                       <div className="vedio-icone">
                         {firstVideo && (
                           <iframe
@@ -173,15 +150,14 @@ const NavPhai = ({
                             allowFullScreen
                           />
                         )}
-
                         <div className="video-overlay">
                           <a className="video-overlay-close">×</a>
                         </div>
                       </div>
                     </div>
-                    <div className="price-area ">
+                    <div className="price-area">
                       {course.gia === 0 && course.giamgia === 0 ? (
-                        <p className=" p-4 text-white font-bold text-2xl text-center w-full">
+                        <p className="p-4 text-white font-bold text-2xl text-center w-full">
                           Miễn phí
                         </p>
                       ) : (
@@ -190,14 +166,8 @@ const NavPhai = ({
                             {course.giamgia}
                             <span className="text-xl">VNĐ</span>
                           </h3>
-                          {/* <h4 className="price-original bg-white ">${course.gia}</h4> */}
                           <span className="price-discount text-2xl text-red-500">
-                            -
-                            {(
-                              ((course.gia - course.giamgia) / course.gia) *
-                              100
-                            ).toFixed(2)}
-                            %
+                            -{((course.gia - course.giamgia) / course.gia * 100).toFixed(2)}%
                           </span>
                         </>
                       )}
@@ -205,164 +175,70 @@ const NavPhai = ({
 
                     <div className="clock-area" style={{ marginTop: "-15px" }}>
                       <i className="fa-light fa-clock text-xl mr-3" />
-                      <span className="text-xl">
-                        2 ngày còn lại ở mức giá này!
-                      </span>
+                      <span className="text-xl">2 ngày còn lại ở mức giá này!</span>
                     </div>
                     {!NguoiDung ? (
                       <Link href={`/page/login`}>
-                        <button  className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1">Đi Đến Đăng nhập</button>
+                        <button className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1">Đi Đến Đăng nhập</button>
                       </Link>
-                    ) : isCourseRegistered ||
-                      course.gia === 0 ||
-                      course.giamgia == 0 ? (
+                    ) : isCourseRegistered || course.gia === 0 || course.giamgia == 0 ? (
                       <Link href={`/page/Study?id=${course.id}`}>
-                        <button
-                          onClick={handleThanhToanKhoaHocFree}
-                           className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1"
-                        >
-                          Đi đến khóa học
-                        </button>
+                        <button onClick={handleThanhToanKhoaHocFree} className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1">Đi đến khóa học</button>
                       </Link>
                     ) : isCourseInCart ? (
                       <Link href="/page/cart">
-                        <button
-                          onClick={handleAddCart}
-                          className="mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1"
-                        >
-                          <span className="rts-btn btn-border text-pink-700">
-                            Thêm vào giỏ hàng
-                          </span>
+                        <button onClick={handleAddCart} className="mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1">
+                          <span className="rts-btn btn-border text-pink-700">Thêm vào giỏ hàng</span>
                         </button>
                       </Link>
-                    ) : course.trangthai === "Notyet" ||
-                      course.trangthai === "Pending" ? (
-                      <button className="rts-btn ">Bản Demo</button>
+                    ) : course.trangthai === "Notyet" || course.trangthai === "Pending" ? (
+                      <button className="rts-btn">Bản Demo</button>
                     ) : (
                       <>
-                        <Link
-                          href="/page/checkout"
-                          className="rts-btn btn-border text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1"
-                          onClick={handleAddCart}
-                          style={{ marginTop: "20px" }}
-                        >
-                          Mua ngay
-                        </Link>
-                        <button
-                          onClick={handleAddCart}
-                          className="mt-10 flex justify-center text-xl !border-pink-700 !border-1"
-                          style={{ marginTop: "-20px" }}
-                        >
-                          <span className="rts-btn btn-border text-pink-700">
-                            Thêm vào giỏ hàng
-                          </span>
+                        <Link href="/page/checkout" className="rts-btn btn-border text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1" onClick={handleAddCart} style={{ marginTop: "20px" }}>Mua ngay</Link>
+                        <button onClick={handleAddCart} className="mt-10 flex justify-center text-xl !border-pink-700 !border-1" style={{ marginTop: "-20px" }}>
+                          <span className="rts-btn btn-border text-pink-700">Thêm vào giỏ hàng</span>
                         </button>
                       </>
                     )}
                     <div className="p-1 font-bold text-black what-includes text-left">
-                      <span className="m text-left block text-xl text-gray-500">
-                        Đảm bảo hoàn lại tiền 30 ngày
-                      </span>
-                      <h5 className="text-3xl text-left">
-                        Khóa học này bao gồm:
-                      </h5>
+                      <span className="m text-left block text-xl text-gray-500">Đảm bảo hoàn lại tiền 30 ngày</span>
+                      <h5 className="text-3xl text-left">Khóa học này bao gồm:</h5>
                       <div className="single-include flex justify-start">
                         <div className="left">
-                          <i
-                            className="fa-light fa-chart-bar text-2xl mr-3"
-                            style={{ fontWeight: "normal" }}
-                          />
-                          <span
-                            className="text-left text-2xl"
-                            style={{ fontWeight: "normal" }}
-                          >
-                            Cấp độ
-                          </span>
+                          <i className="fa-light fa-chart-bar text-2xl mr-3" />
+                          <span className="text-left text-2xl">Cấp độ</span>
                         </div>
                         <div className="right">
-                          <span
-                            className="text-left text-2xl"
-                            style={{ fontWeight: "normal" }}
-                          >
-                            {course.trinhdo}
-                          </span>
+                          <span className="text-left text-2xl">{course.trinhdo}</span>
                         </div>
                       </div>
                       <div className="single-include flex">
                         <div className="left">
-                          <i
-                            className="fa-light fa-timer text-2xl mr-3"
-                            style={{ fontWeight: "normal" }}
-                          />
-                          <span
-                            className="text-left text-2xl"
-                            style={{ fontWeight: "normal" }}
-                          >
-                            Khoảng thời gian
-                          </span>
+                          <i className="fa-light fa-timer text-2xl mr-3" />
+                          <span className="text-left text-2xl">Khoảng thời gian</span>
                         </div>
                         <div className="right">
-                          <span
-                            className="text-left text-2xl"
-                            style={{ fontWeight: "normal" }}
-                          >
-                            {formattedTotalTime}
-                          </span>
+                          <span className="text-left text-2xl">{formattedTotalTime}</span>
                         </div>
                       </div>
                       <div className="single-include flex">
                         <div className="left">
-                          <i
-                            className="fa-regular fa-floppy-disk text-2xl mr-3"
-                            style={{ fontWeight: "normal" }}
-                          />
-                          <span
-                            className="text-left text-2xl"
-                            style={{ fontWeight: "normal" }}
-                          >
-                            Chủ thể
-                          </span>
+                          <i className="fa-regular fa-floppy-disk text-2xl mr-3" />
+                          <span className="text-left text-2xl">Chủ thể</span>
                         </div>
                         <div className="right">
-                          <span
-                            className="text-left text-2xl"
-                            style={{ fontWeight: "normal" }}
-                          >
-                            {course.chude}
-                          </span>
+                          <span className="text-left text-2xl">{course.chude}</span>
                         </div>
                       </div>
-                      {/* <div className="single-include flex">
-                                          <div className="left">
-                                            <i className="fa-regular fa-pen-to-square" />
-                                            <span className="text-left">Cập nhật</span>
-                                          </div>
-                                          <div className="right">
-                                            <span className="text-left">{course.created_at}</span>
-                                          </div>
-                                        </div>
-                                        <div className="single-include flex">
-                                          <div className="left">
-                                            <i className="fa-sharp fa-light fa-file-certificate" />
-                                            <span className="text-left">Giấy chứng nhận</span>
-                                          </div>
-                                          <div className="right">
-                                            <span className="text-left">Giấy chứng nhận hoàn thành</span>
-                                          </div>
-                                        </div> */}
                     </div>
                   </div>
-                  {/* single course-sidebar end */}
                 </div>
 
                 <div className="right-course-details mt--30">
-                  {/* single course-sidebar */}
                   <div className="course-side-bar">
-                    {/* course single sidebar */}
                     <div className="course-single-information">
-                      <h5 className="font-semibold mb-4 text-3xl">
-                        Giảng viên:{" "}
-                      </h5>
+                      <h5 className="font-semibold mb-4 text-3xl">Giảng viên:</h5>
                       <div className="body">
                         <div className="single-check">
                           <i className="fa-light fa-circle-check pulse" />
@@ -371,68 +247,6 @@ const NavPhai = ({
                       </div>
                     </div>
                     <Khac course={course} />
-
-                    {/* course single sidebar end*/}
-                  </div>
-                  {/* single course-sidebar end */}
-                </div>
-                <div
-                  className="resize-sensor"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    overflow: "hidden",
-                    zIndex: -1,
-                    visibility: "hidden",
-                  }}
-                >
-                  <div
-                    className="resize-sensor-expand"
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      overflow: "hidden",
-                      zIndex: -1,
-                      visibility: "hidden",
-                    }}
-                  >
-                    <div
-                      style={{
-                        position: "absolute",
-                        left: 0,
-                        top: 0,
-                        transition: "all 0s ease 0s",
-                        width: 506,
-                        height: 1805,
-                      }}
-                    />
-                  </div>
-                  <div
-                    className="resize-sensor-shrink"
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      overflow: "hidden",
-                      zIndex: -1,
-                      visibility: "hidden",
-                    }}
-                  >
-                    <div
-                      style={{
-                        position: "absolute",
-                        left: 0,
-                        top: 0,
-                        transition: "0s",
-                        width: "200%",
-                        height: "200%",
-                      }}
-                    />
                   </div>
                 </div>
               </div>

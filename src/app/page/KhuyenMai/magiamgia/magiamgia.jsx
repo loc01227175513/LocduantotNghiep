@@ -133,166 +133,162 @@ export default function VoucherShop() {
 
     return (
         <>
-            <div className="h-screen">
-                <ToastContainer position="top-right" autoClose={3000} />
-                <div className="container flex ">
-                    <div className="w-[317.078px]  mx-auto bg-white rounded-xl border border-black flex flex-col p-10">
-                        <h1 className="text-3xl font-bold text-center mb-6 text-black">
-                            Ưu Đãi Đặc Biệt 🎉
-                        </h1>
-                        <div className="space-y-5">
-                            <div className="filter-group">
-                                <label className="block text-xl font-medium text-gray-700 mb-2">
-                                    <span className="flex items-center gap-2">
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
-                                        </svg>
-                                        Giảm Giá Tối Thiểu (%)
-                                    </span>
-                                </label>
-                                <div className="border-1 border-black ">
-                                    <input
-                                        type="number"
-                                        value={discount}
-                                        onChange={(e) => setDiscount(e.target.value)}
-                                        className="w-full px-4 py-2  rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                                    />
+         <div className="h-screen">
+    <ToastContainer position="top-right" autoClose={3000} />
+    <div className="container flex">
+        <div className="w-[317.078px] mx-auto bg-white rounded-xl border border-gray-300 flex flex-col p-10 shadow-lg">
+            <h1 className="text-3xl font-bold text-center mb-6 text-black">
+                Ưu Đãi Đặc Biệt 🎉
+            </h1>
+            <div className="space-y-5">
+                <div className="filter-group">
+                    <label className="block text-xl font-medium text-gray-700 mb-2">
+                        <span className="flex items-center gap-2">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                            </svg>
+                            Giảm Giá Tối Thiểu (%)
+                        </span>
+                    </label>
+                    <div className="border border-gray-300 rounded-lg">
+                        <input
+                            type="number"
+                            value={discount}
+                            onChange={(e) => setDiscount(e.target.value)}
+                            className="w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                        />
+                    </div>
+                </div>
+                <div className="filter-group">
+                    <label className="block text-xl font-medium text-gray-700 mb-2">
+                        <span className="flex items-center gap-2">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Giá Tối Thiểu (₫)
+                        </span>
+                    </label>
+                    <div className="border border-gray-300 rounded-lg">
+                        <input
+                            type="number"
+                            value={minPrice}
+                            onChange={(e) => setMinPrice(e.target.value)}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                        />
+                    </div>
+                </div>
+                <div className="filter-group">
+                    <label className="block text-xl font-medium text-gray-700 mb-2">
+                        <span className="flex items-center gap-2">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Giá Tối Đa (₫)
+                        </span>
+                    </label>
+                    <div className="border border-gray-300 rounded-lg">
+                        <input
+                            type="number"
+                            value={maxPrice}
+                            onChange={(e) => setMaxPrice(e.target.value)}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                        />
+                    </div>
+                </div>
+                <button
+                    onClick={() => {
+                        setDiscount('');
+                        setMinPrice('');
+                        setMaxPrice('');
+                    }}
+                    className="w-full mt-6 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg"
+                >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Đặt Lại
+                </button>
+            </div>
+        </div>
+        <div className="w-3/4">
+            {loading ? (
+                <div className="flex justify-center items-center min-h-[200px]">
+                    <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-red-600"></div>
+                </div>
+            ) : (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <div className="container mx-auto">
+                        <div
+                            className="flex flex-row justify-between gap-5 flex-wrap"
+                            style={{
+                                width: "1086px"
+                            }}
+                        >
+                            {currentVouchers.length > 0 ? (
+                                currentVouchers.map((item) => (
+                                    <motion.div
+                                        key={item.id}
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <VoucherCard
+                                            maso={item.magiamgia.maso}
+                                            giamgia={item.magiamgia.giamgia}
+                                            gia={item.khoahoc.gia}
+                                            hinh={item.khoahoc.hinh}
+                                            hansudung={item.magiamgia.ngayketthuc}
+                                            onSave={handleSave}
+                                            isSaved={savedVouchers.includes(item.magiamgia.maso)}
+                                            isSaving={savingVouchers.includes(item.magiamgia.maso)}
+                                        />
+                                    </motion.div>
+                                ))
+                            ) : (
+                                <div className="col-span-full text-center text-gray-500">
+                                    Không tìm thấy voucher phù hợp.
                                 </div>
+                            )}
+                        </div>
 
-                            </div>
-                            <div className="filter-group">
-                                <label className="block text-xl font-medium text-gray-700 mb-2 ">
-                                    <span className="flex items-center gap-2">
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Giá Tối Thiểu (₫)
-                                    </span>
-                                </label>
-                                <div className="border-1 border-black ">
-                                    <input
-                                        type="number"
-                                        value={minPrice}
-                                        onChange={(e) => setMinPrice(e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                                    />
-                                </div>
-                            </div>
-                            <div className="filter-group">
-                                <label className="block text-xl font-medium text-gray-700 mb-2">
-                                    <span className="flex items-center gap-2">
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Giá Tối Đa (₫)
-                                    </span>
-                                </label>
-                                <div className="border-1 border-black ">
-                                    <input
-                                        type="number"
-                                        value={maxPrice}
-                                        onChange={(e) => setMaxPrice(e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                                    />
-                                </div>
-                            </div>
+                        <div className="flex items-center justify-center mt-6 gap-2">
                             <button
-                                onClick={() => {
-                                    setDiscount('');
-                                    setMinPrice('');
-                                    setMaxPrice('');
-                                }}
-                                className="w-full mt-6 px-4 py-2 bg-gradient-to-r bg-[#ff6b6b] text-white rounded-lg hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2"
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
+                                className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center disabled:opacity-50 hover:bg-purple-300 shadow-md"
                             >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                </svg>
-                                Đặt Lại
+                                ←
+                            </button>
+
+                            {[...Array(totalPages)].map((_, index) => (
+                                <button
+                                    key={index + 1}
+                                    onClick={() => setCurrentPage(index + 1)}
+                                    className={`w-10 h-10 rounded-full flex items-center justify-center
+                                    ${currentPage === index + 1 ? 'bg-purple-600 text-white' : 'bg-purple-200 hover:bg-purple-300'}`}
+                                >
+                                    {index + 1}
+                                </button>
+                            ))}
+
+                            <button
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
+                                className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center disabled:opacity-50 hover:bg-purple-300 shadow-md"
+                            >
+                                →
                             </button>
                         </div>
                     </div>
-                    <div className="w-3/4 ">
-                        {loading ? (
-                            <div className="flex justify-center items-center min-h-[200px]">
-                                <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-red-600"></div>
-                            </div>
-                        ) : (
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <div className="container mx-auto ">
-                                    <div
-                                        className="flex flex-row justify-between gap-5 flex-wrap"
-                                        style={{
-                                            width: "1086px"
-
-                                        }}
-                                    >
-                                        {currentVouchers.length > 0 ? (
-                                            currentVouchers.map((item) => (
-                                                <motion.div
-                                                    key={item.id}
-                                                    initial={{ opacity: 0, scale: 0.9 }}
-                                                    animate={{ opacity: 1, scale: 1 }}
-                                                    transition={{ duration: 0.3 }}
-                                                >
-                                                    <VoucherCard
-                                                        maso={item.magiamgia.maso}
-                                                        giamgia={item.magiamgia.giamgia}
-                                                        gia={item.khoahoc.gia}
-                                                        hinh={item.khoahoc.hinh}
-                                                        hansudung={item.magiamgia.ngayketthuc}
-                                                        onSave={handleSave}
-                                                        isSaved={savedVouchers.includes(item.magiamgia.maso)}
-                                                        isSaving={savingVouchers.includes(item.magiamgia.maso)}
-                                                    />
-                                                </motion.div>
-                                            ))
-                                        ) : (
-                                            <div className="col-span-full text-center text-gray-500">
-                                                Không tìm thấy voucher phù hợp.
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div className="flex items-center justify-center mt-6 gap-2">
-                                        <button
-                                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                            disabled={currentPage === 1}
-                                            className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center disabled:opacity-50 hover:bg-purple-300"
-                                        >
-                                            ←
-                                        </button>
-
-                                        {[...Array(totalPages)].map((_, index) => (
-                                            <button
-                                                key={index + 1}
-                                                onClick={() => setCurrentPage(index + 1)}
-                                                className={`w-10 h-10 rounded-full flex items-center justify-center
-                                                ${currentPage === index + 1 ? 'bg-purple-600 text-white' : 'bg-purple-200 hover:bg-purple-300'}`}
-                                            >
-                                                {index + 1}
-                                            </button>
-                                        ))}
-
-                                        <button
-                                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                                            disabled={currentPage === totalPages}
-                                            className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center disabled:opacity-50 hover:bg-purple-300"
-                                        >
-                                            →
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </motion.div>
-                        )}
-                    </div>
-                </div>
-            </div>
-
+                </motion.div>
+            )}
+        </div>
+    </div>
+</div>
         </>
     );
 }

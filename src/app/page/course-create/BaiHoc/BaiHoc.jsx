@@ -4,7 +4,7 @@ import Axios from "axios";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Sortable from 'sortablejs';
 import { TaoBaiTracNghiem, ShowTracNghiem, TaoCauHoi, XoaCauHoi, XoaPhanTracNghiem, ShowCauHoi } from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem"
-
+import Image from "next/image";
 
 
 
@@ -303,7 +303,7 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
                       <div className="flex justify-between items-center font-medium text-gray-800 mb-2 text-2xl">
                         {qIndex + 1}.{hoiIndex + 1} {hoi}
                         <button
-                          onClick={() => handleDeleteQuestion(currentQuestions.BaihocidNe,currentQuestions.quizId,hoiIndex)}
+                          onClick={() => handleDeleteQuestion(currentQuestions.BaihocidNe, currentQuestions.quizId, hoiIndex)}
                           className="px-3 py-1 text-sm w-20 text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
                         >
                           Xóa
@@ -329,7 +329,263 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
 };
 
 
+const DanhSachURL = ({ urls, onClose, handleDeleteUrl }) => {
+  const [position, setPosition] = useState({ x: window.innerWidth - 350, y: 10 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const containerRef = useRef(null);
 
+  const handleMouseDown = (e) => {
+    if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+    setIsDragging(true);
+    const rect = containerRef.current.getBoundingClientRect();
+    setDragOffset({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
+
+  const handleMouseMove = useCallback((e) => {
+    if (!isDragging) return;
+    
+    const newX = e.clientX - dragOffset.x;
+    const newY = e.clientY - dragOffset.y;
+    
+    // Get window dimensions
+    const maxX = window.innerWidth - containerRef.current.offsetWidth;
+    const maxY = window.innerHeight - containerRef.current.offsetHeight;
+    
+    // Constrain position within window bounds
+    const constrainedX = Math.max(0, Math.min(newX, maxX));
+    const constrainedY = Math.max(0, Math.min(newY, maxY));
+    
+    setPosition({ x: constrainedX, y: constrainedY });
+  }, [isDragging, dragOffset]);
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging ,handleMouseMove]);
+
+  const copyToClipboard = async (url) => {
+    try {
+      await navigator.clipboard.writeText(url);
+      alert('URL đã được sao chép!');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      alert('Không thể sao chép đường dẫn. Vui lòng thử lại.');
+    }
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className={`fixed bg-white shadow-lg rounded-lg p-6 z-50 w-80 cursor-${isDragging ? 'grabbing' : 'grab'}`}
+      style={{
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        userSelect: 'none'
+      }}
+      onMouseDown={handleMouseDown}
+    >
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-semibold">Danh sách URL</h2>
+        <button 
+          onClick={onClose}
+          className="text-red-500 hover:text-red-700 transition-colors"
+        >
+          Đóng
+        </button>
+      </div>
+      {urls.length === 0 ? (
+        <p className="text-gray-500">Không có URL nào.</p>
+      ) : (
+        urls.map(({ url, title }, index) => (
+          <div key={index} className="mb-3 p-2 bg-gray-100 rounded-lg shadow-sm">
+            <div className="font-medium text-gray-800">{title}</div>
+            <a 
+              href={url} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-blue-500 hover:underline"
+            >
+              {url}
+            </a>
+            <div className="flex justify-between mt-2">
+              <button 
+                onClick={() => copyToClipboard(url)}
+                className="text-green-500 hover:text-blue-700 transition-colors"
+              >
+                Sao chép URL
+              </button>
+              <button 
+                onClick={() => handleDeleteUrl(url)}
+                className="text-red-500 hover:text-red-700 transition-colors"
+              >
+                Xóa
+              </button>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+const LayvideoKhoaHoc = () => {
+  const API_KEY = "AIzaSyBp5InFSDElAVnQ2uNGZQV7Ws-AXH2c6N8"; // Ensure you've added this to your .env.local file
+  const [query, setQuery] = useState('');
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [copiedVideoId, setCopiedVideoId] = useState(null);
+  const [trolai, setTrolai] = useState(false);
+  const [showUrlList, setShowUrlList] = useState(false);
+  const [urls, setUrls] = useState([]);
+
+  useEffect(() => {
+    // Load URLs from localStorage on component mount
+    const storedUrls = JSON.parse(localStorage.getItem('videoUrls')) || [];
+    setUrls(storedUrls);
+  }, []);
+if(trolai){
+  return(
+    <BaiHoc />
+  )
+}
+
+  const searchYouTube = async () => {
+    if (!query.trim()) {
+      alert('Vui lòng nhập nội dung tìm kiếm!');
+      return;
+    }
+
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&key=${API_KEY}&maxResults=10`;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setVideos(data.items);
+    } catch (error) {
+      console.error('Lỗi khi tìm kiếm:', error);
+      setError('Đã xảy ra lỗi khi tìm kiếm video. Vui lòng thử lại sau.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const copyToClipboard = async (text, videoId, title) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedVideoId(videoId);
+
+      // Add the copied URL and title to localStorage
+      const updatedUrls = [...urls, { url: text, title }];
+      setUrls(updatedUrls);
+      localStorage.setItem('videoUrls', JSON.stringify(updatedUrls));
+
+      // Reset the copied state after 2 seconds
+      setTimeout(() => {
+        setCopiedVideoId(null);
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      alert('Không thể sao chép đường dẫn. Vui lòng thử lại.');
+    }
+  };
+  const handleDeleteUrl = (urlToDelete) => {
+    const updatedUrls = urls.filter(urlObj => urlObj.url !== urlToDelete);
+    setUrls(updatedUrls);
+    localStorage.setItem('videoUrls', JSON.stringify(updatedUrls));
+  };
+  return (
+    <div className="p-6 bg-white rounded-lg shadow-md max-w-full mx-auto">
+      <h2 className="text-2xl font-semibold mb-4 text-center">Tìm kiếm Video Khoá Học</h2>
+      <button
+        type="button"
+        onClick={() => setTrolai(true)}
+        className="bg-sky-500 hover:bg-sky-700 w-52 mb-2 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
+      >
+        Trở lại
+      </button>
+      <button
+        type="button"
+        onClick={() => setShowUrlList(!showUrlList)}
+        className="bg-green-500 hover:bg-green-700 w-52 mb-2 ml-2 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
+      >
+        {showUrlList ? 'Ẩn Danh Sách URL' : 'Hiện Danh Sách URL'}
+      </button>
+      {showUrlList && <DanhSachURL urls={urls} onClose={() => setShowUrlList(false)} handleDeleteUrl={handleDeleteUrl} />}
+      <div className="search-container flex items-center space-x-2 mb-6 text-xl">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Nhập nội dung tìm kiếm"
+          className="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              searchYouTube();
+            }
+          }}
+        />
+        <button
+          onClick={searchYouTube}
+          className={`bg-blue-500 hover:bg-blue-700 w-32 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          disabled={loading}
+        >
+          {loading ? 'Đang tìm kiếm...' : 'Tìm kiếm'}
+        </button>
+      </div>
+      {error && (
+        <div className="mb-4 p-4 text-red-700 bg-red-100 border border-red-300 rounded">
+          {error}
+        </div>
+      )}
+    <div className="video-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {videos.length === 0 && !loading && !error ? (
+        <p className="text-center text-gray-500 col-span-full">Không có video nào được hiển thị.</p>
+      ) : (
+        videos.map((video) => (
+          <div key={video.id.videoId} className="video bg-gray-50 p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
+            <a href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank" rel="noopener noreferrer">
+              <Image width={100} height={50} 
+                src={video.snippet.thumbnails.high.url}
+                alt={video.snippet.title}
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+            </a>
+            <h3 className="text-lg font-semibold mb-2">{video.snippet.title}</h3>
+            <p className="text-gray-600 mb-4">{video.snippet.channelTitle}</p>
+            <button
+              onClick={() => copyToClipboard(`https://www.youtube.com/watch?v=${video.id.videoId}`, video.id.videoId, video.snippet.title)}
+              className="text-blue-500 hover:underline font-medium focus:outline-none"
+            >
+              {copiedVideoId === video.id.videoId ? 'Đã sao chép!' : 'Sao chép link video'}
+            </button>
+          </div>
+        ))
+      )}
+    </div>
+    </div>
+  );
+};
 
 
 
@@ -374,6 +630,9 @@ const NoiDungBaiHoc = ({
 }) => {
   const onDragEnd = (result) => {
     const { source, destination, type } = result;
+
+
+
 
     if (!destination) return;
 
@@ -423,6 +682,9 @@ const NoiDungBaiHoc = ({
   const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
   const [newQuestionTitle, setNewQuestionTitle] = useState('');
   const [newQuestionDescription, setNewQuestionDescription] = useState('');
+  const [showUrlList, setShowUrlList] = useState(false);
+  const [urls, setUrls] = useState([]);
+  const [layVideoKhoaHoc, setLayvideoKhoaHoc] = useState(false);
 
   const handleAddQuestion = useCallback(async (itemId) => {
     if (newQuestionTitle && newQuestionDescription && newQuestionTitle.trim() && newQuestionDescription.trim()) {
@@ -441,269 +703,298 @@ const NoiDungBaiHoc = ({
     }
   }, [newQuestionTitle, newQuestionDescription]);
 
+  useEffect(() => {
+    // Load URLs from localStorage on component mount
+    const storedUrls = JSON.parse(localStorage.getItem('videoUrls')) || [];
+    setUrls(storedUrls);
+  }, []);
+
+  // Render the LayvideoKhoaHoc component conditionally
+  if (layVideoKhoaHoc) {
+    return <LayvideoKhoaHoc />;
+  }
+  const handleDeleteUrl = (urlToDelete) => {
+    const updatedUrls = urls.filter(urlObj => urlObj.url !== urlToDelete);
+    setUrls(updatedUrls);
+    localStorage.setItem('videoUrls', JSON.stringify(updatedUrls));
+  };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-    <Droppable droppableId="lessons" type="lesson">
-      {(provided) => (
-        <div
-          id="hs-nested-sortable"
-          className="p-8 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-sm"
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-        >
-          {items.length === 0 ? (
-            <div className="p-4 text-gray-500 text-center border-2 border-dashed border-gray-200 rounded-lg">
-              No lessons available. Click &quot;Thêm Phần&quot; to add your first lesson.
-            </div>
-          ) : (
-            items.map((item, index) =>
-              item && item.name && (
-                <Draggable key={`lesson-${item.id}`} draggableId={`lesson-${item.id}`} index={index}>
-                  {(provided) => (
-                    <div
-                      className="mb-6 bg-white rounded-lg shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg"
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                    >
-                      <div
-                        className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-blue-700"
-                        {...provided.dragHandleProps}
-                      >
-                        <span className="font-semibold text-white text-2xl">{item.name}</span>
-                        <div className="flex space-x-3">
-                          <button
-                            onClick={() => {
-                              setIsSubModalOpen(true);
-                              setCurrentItemId(item.id);
-                            }}
-                            className="px-3 py-1.5 text-sm font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-colors"
-                          >
-                            + Thêm Sub Item
-                          </button>
-                          <button
-                            onClick={() => handleExpandLesson(item.id)}
-                            className="px-3 py-1.5 text-sm font-medium text-white bg-blue-500 rounded-full hover:bg-blue-400 transition-colors"
-                          >
-                            Mở rộng
-                          </button>
-                          <button
-                            onClick={() => handleRemoveItem(item.id)}
-                            className="px-3 py-1.5 text-sm font-medium text-white bg-red-500 rounded-full hover:bg-red-400 transition-colors"
-                          >
-                            Xóa
-                          </button>
-                          <button
-                            onClick={() => {
-                              setIsQuestionModalOpen(true);
-                              setCurrentItemId(item.id);
-                            }}
-                            className="px-3 py-1.5 text-sm font-medium text-green-600 bg-white rounded-full hover:bg-green-50 transition-colors"
-                          >
-                            + Thêm trắc nghiệm
-                          </button>
-                        </div>
-                      </div>
-
-                      {expandedLessons[item.id] && (
-                        <Droppable droppableId={`${item.id}`} type="subItem">
-                          {(provided) => (
-                            <div
-                              className="p-4 space-y-3"
-                              ref={provided.innerRef}
-                              {...provided.droppableProps}
-                              data-parent-id={item.id}
-                            >
-                              {item.subItems.map((subItem, subIndex) =>
-                                subItem && subItem.name && (
-                                  <Draggable key={`subItem-${subItem.id}`} draggableId={`subItem-${subItem.id}`} index={subIndex}>
-                                    {(provided) => (
-                                      <div
-                                        className="flex items-center justify-between p-3 bg-gray-50 border border-gray-200 rounded-lg hover:shadow-sm transition-all duration-200"
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        data-id={subItem.id}
-                                      >
-                                        <span className="text-gray-700 font-medium">{subItem.name}</span>
-                                        <div className="flex space-x-2">
-                                          <button
-                                            onClick={() => {
-                                              setIsContentModalOpen(true);
-                                              setCurrentSubItemId(subItem.id);
-                                            }}
-                                            className="px-3 py-1 text-sm text-yellow-600 bg-yellow-100 rounded-full hover:bg-yellow-200 transition-colors"
-                                          >
-                                            Nội Dung
-                                          </button>
-                                          <button
-                                            onClick={() => handleRemoveSubItem(item.id, subItem.id)}
-                                            className="px-3 py-1 text-sm text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
-                                          >
-                                            Xóa
-                                          </button>
-                                        </div>
-                                      </div>
-                                    )}
-                                  </Draggable>
-                                )
-                              )}
-                              {provided.placeholder}
-                              <RenderQuizItems quizItems={questionData[item.id]} subItemsLength={item.subItems.length} />
-                            </div>
-                          )}
-                        </Droppable>
-                      )}
-                    </div>
-                  )}
-                </Draggable>
-              )
-            )
-          )}
-          {provided.placeholder}
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="px-6 py-3 mt-6 text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full font-medium hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-sm hover:shadow focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+      <button
+        onClick={() => setLayvideoKhoaHoc(true)}
+        className="bg-blue-500 hover:bg-blue-700 w-60 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-colors duration-300 transform hover:scale-105"
+      >
+        Lấy video khoá học
+      </button>
+      <button
+        type="button"
+        onClick={() => setShowUrlList(!showUrlList)}
+        className="bg-green-500 hover:bg-green-700 ml-4 w-52 mb-2 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
+      >
+        {showUrlList ? 'Ẩn Danh Sách URL' : 'Hiện Danh Sách URL'}
+      </button>
+      {showUrlList && <DanhSachURL urls={urls} onClose={() => setShowUrlList(false)} handleDeleteUrl={handleDeleteUrl} />}
+      <Droppable droppableId="lessons" type="lesson">
+        {(provided) => (
+          <div
+            id="hs-nested-sortable"
+            className="p-8 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-sm"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
           >
-            + Thêm Phần Mới
-          </button>
-          {isModalOpen && (
-            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
-              <div className="p-5 bg-white rounded-lg">
-                <h2 className="mb-4 text-xl text-black">Nhập tên phần mới</h2>
-                <input
-                  type="text"
-                  value={newItemName}
-                  onChange={(e) => setNewItemName(e.target.value)}
-                  className="w-full p-2 bg-red-500 border border-black"
-                  placeholder="Tên phần"
-                />
-                <div className="flex justify-end mt-4">
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="p-2 mr-2 bg-gray-300 rounded"
-                  >
-                    Hủy
-                  </button>
-                  <button
-                    onClick={handleAddItem}
-                    className="p-2 text-white bg-blue-500 rounded"
-                  >
-                    Thêm
-                  </button>
+            {items.length === 0 ? (
+              <div className="p-4 text-gray-500 text-center border-2 border-dashed border-gray-200 rounded-lg">
+                No lessons available. Click &quot;Thêm Phần&quot; to add your first lesson.
+              </div>
+            ) : (
+              items.map((item, index) =>
+                item && item.name && (
+                  <Draggable key={`lesson-${item.id}`} draggableId={`lesson-${item.id}`} index={index}>
+                    {(provided) => (
+                      <div
+                        className="mb-6 bg-white rounded-lg shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                      >
+                        <div
+                          className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-blue-700"
+                          {...provided.dragHandleProps}
+                        >
+                          <span className="font-semibold text-white text-2xl">{item.name}</span>
+                          <div className="flex space-x-3">
+                            <button
+                              onClick={() => {
+                                setIsSubModalOpen(true);
+                                setCurrentItemId(item.id);
+                              }}
+                              className="px-3 py-1.5 text-sm font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-colors"
+                            >
+                              + Thêm Sub Item
+                            </button>
+                            <button
+                              onClick={() => handleExpandLesson(item.id)}
+                              className="px-3 py-1.5 text-sm font-medium text-white bg-blue-500 rounded-full hover:bg-blue-400 transition-colors"
+                            >
+                              Mở rộng
+                            </button>
+                            <button
+                              onClick={() => handleRemoveItem(item.id)}
+                              className="px-3 py-1.5 text-sm font-medium text-white bg-red-500 rounded-full hover:bg-red-400 transition-colors"
+                            >
+                              Xóa
+                            </button>
+                            <button
+                              onClick={() => {
+                                setIsQuestionModalOpen(true);
+                                setCurrentItemId(item.id);
+                              }}
+                              className="px-3 py-1.5 text-sm font-medium text-green-600 bg-white rounded-full hover:bg-green-50 transition-colors"
+                            >
+                              + Thêm trắc nghiệm
+                            </button>
+                          </div>
+                        </div>
+
+                        {expandedLessons[item.id] && (
+                          <Droppable droppableId={`${item.id}`} type="subItem">
+                            {(provided) => (
+                              <div
+                                className="p-4 space-y-3"
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                data-parent-id={item.id}
+                              >
+                                {item.subItems.map((subItem, subIndex) =>
+                                  subItem && subItem.name && (
+                                    <Draggable key={`subItem-${subItem.id}`} draggableId={`subItem-${subItem.id}`} index={subIndex}>
+                                      {(provided) => (
+                                        <div
+                                          className="flex items-center justify-between p-3 bg-gray-50 border border-gray-200 rounded-lg hover:shadow-sm transition-all duration-200"
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          data-id={subItem.id}
+                                        >
+                                          <span className="text-gray-700 font-medium">{subItem.name}</span>
+                                          <div className="flex space-x-2">
+                                            <button
+                                              onClick={() => {
+                                                setIsContentModalOpen(true);
+                                                setCurrentSubItemId(subItem.id);
+                                              }}
+                                              className="px-3 py-1 text-sm text-yellow-600 bg-yellow-100 rounded-full hover:bg-yellow-200 transition-colors"
+                                            >
+                                              Nội Dung
+                                            </button>
+                                            <button
+                                              onClick={() => handleRemoveSubItem(item.id, subItem.id)}
+                                              className="px-3 py-1 text-sm text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
+                                            >
+                                              Xóa
+                                            </button>
+                                          </div>
+                                        </div>
+                                      )}
+                                    </Draggable>
+                                  )
+                                )}
+                                {provided.placeholder}
+                                <RenderQuizItems quizItems={questionData[item.id]} subItemsLength={item.subItems.length} />
+                              </div>
+                            )}
+                          </Droppable>
+                        )}
+                      </div>
+                    )}
+                  </Draggable>
+                )
+              )
+            )}
+            {provided.placeholder}
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="px-6 py-3 mt-6 text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full font-medium hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-sm hover:shadow focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+            >
+              + Thêm Phần Mới
+            </button>
+            {isModalOpen && (
+              <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
+                <div className="p-5 bg-white rounded-lg">
+                  <h2 className="mb-4 text-xl text-black">Nhập tên phần mới</h2>
+                  <input
+                    type="text"
+                    value={newItemName}
+                    onChange={(e) => setNewItemName(e.target.value)}
+                    className="w-full p-2 bg-red-500 border border-black"
+                    placeholder="Tên phần"
+                  />
+                  <div className="flex justify-end mt-4">
+                    <button
+                      onClick={() => setIsModalOpen(false)}
+                      className="p-2 mr-2 bg-gray-300 rounded"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      onClick={handleAddItem}
+                      className="p-2 text-white bg-blue-500 rounded"
+                    >
+                      Thêm
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {isSubModalOpen && (
-            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
-              <div className="p-5 bg-white rounded-lg">
-                <h2 className="mb-4 text-xl text-black">Nhập tên Sub Item mới</h2>
-                <input
-                  type="text"
-                  value={newSubItemName}
-                  onChange={(e) => setNewSubItemName(e.target.value)}
-                  className="w-full p-2 bg-red-500 border border-black"
-                  placeholder="Tên Sub Item"
-                />
-                <div className="flex justify-end mt-4">
-                  <button
-                    onClick={() => setIsSubModalOpen(false)}
-                    className="p-2 mr-2 bg-gray-300 rounded"
-                  >
-                    Hủy
-                  </button>
-                  <button
-                    onClick={() => handleAddSubItem(currentItemId)}
-                    className="p-2 text-white bg-blue-500 rounded"
-                  >
-                    Thêm
-                  </button>
+            {isSubModalOpen && (
+              <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
+                <div className="p-5 bg-white rounded-lg">
+                  <h2 className="mb-4 text-xl text-black">Nhập tên Sub Item mới</h2>
+                  <input
+                    type="text"
+                    value={newSubItemName}
+                    onChange={(e) => setNewSubItemName(e.target.value)}
+                    className="w-full p-2 bg-red-500 border border-black"
+                    placeholder="Tên Sub Item"
+                  />
+                  <div className="flex justify-end mt-4">
+                    <button
+                      onClick={() => setIsSubModalOpen(false)}
+                      className="p-2 mr-2 bg-gray-300 rounded"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      onClick={() => handleAddSubItem(currentItemId)}
+                      className="p-2 text-white bg-blue-500 rounded"
+                    >
+                      Thêm
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {isContentModalOpen && (
-            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
-              <div className="p-5 bg-white rounded-lg">
-                <h2 className="mb-4 text-xl text-black">Nhập URL nội dung mới</h2>
-                <input
-                  type="text"
-                  value={newContentUrl}
-                  onChange={(e) => setNewContentUrl(e.target.value)}
-                  className="w-full p-2 mt-2 bg-red-500 border border-black"
-                  placeholder="URL"
-                />
-                {newContentUrl && (
-                  <iframe
-                    id="youtube-player"
-                    width="100%"
-                    height="400"
-                    src={`https://www.youtube.com/embed/${extractVideoId(newContentUrl)}?enablejsapi=1`}
-                    title="YouTube Video"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                )}
+            {isContentModalOpen && (
+              <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
+                <div className="p-5 bg-white rounded-lg">
+                  <h2 className="mb-4 text-xl text-black">Nhập URL nội dung mới</h2>
+                  <input
+                    type="text"
+                    value={newContentUrl}
+                    onChange={(e) => setNewContentUrl(e.target.value)}
+                    className="w-full p-2 mt-2 bg-red-500 border border-black"
+                    placeholder="URL"
+                  />
+                  {newContentUrl && (
+                    <iframe
+                      id="youtube-player"
+                      width="100%"
+                      height="400"
+                      src={`https://www.youtube.com/embed/${extractVideoId(newContentUrl)}?enablejsapi=1`}
+                      title="YouTube Video"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  )}
 
-                <div className="flex justify-end mt-4">
-                  <button
-                    onClick={() => setIsContentModalOpen(false)}
-                    className="p-2 mr-2 bg-gray-300 rounded"
-                  >
-                    Hủy
-                  </button>
-                  <button
-                    onClick={() => handleAddContent(currentSubItemId)}
-                    className="p-2 text-white bg-blue-500 rounded"
-                  >
-                    Thêm
-                  </button>
+                  <div className="flex justify-end mt-4">
+                    <button
+                      onClick={() => setIsContentModalOpen(false)}
+                      className="p-2 mr-2 bg-gray-300 rounded"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      onClick={() => handleAddContent(currentSubItemId)}
+                      className="p-2 text-white bg-blue-500 rounded"
+                    >
+                      Thêm
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {isQuestionModalOpen && (
-            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
-              <div className="p-5 bg-white rounded-lg">
-                <h2 className="mb-4 text-xl text-black">Nhập câu hỏi trắc nghiệm mới</h2>
-                <input
-                  type="text"
-                  value={newQuestionTitle}
-                  onChange={(e) => setNewQuestionTitle(e.target.value)}
-                  className="w-full p-2 bg-red-500 border text-xl "
-                  placeholder="Tiêu đề"
-                />
-                <textarea
-                  value={newQuestionDescription}
-                  onChange={(e) => setNewQuestionDescription(e.target.value)}
-                  className="w-full p-2 mt-2 border text-xl "
-                  placeholder="Mô tả"
-                />
-                <div className="flex justify-end mt-4">
-                  <button
-                    onClick={() => setIsQuestionModalOpen(false)}
-                    className="p-2 mr-2 bg-gray-300 rounded"
-                  >
-                    Hủy
-                  </button>
-                  <button
-                    onClick={() => handleAddQuestion(currentItemId)}
-                    className="p-2 text-white bg-blue-500 rounded"
-                  >
-                    Thêm
-                  </button>
+            {isQuestionModalOpen && (
+              <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
+                <div className="p-5 bg-white rounded-lg">
+                  <h2 className="mb-4 text-xl text-black">Nhập câu hỏi trắc nghiệm mới</h2>
+                  <input
+                    type="text"
+                    value={newQuestionTitle}
+                    onChange={(e) => setNewQuestionTitle(e.target.value)}
+                    className="w-full p-2 bg-red-500 border text-xl "
+                    placeholder="Tiêu đề"
+                  />
+                  <textarea
+                    value={newQuestionDescription}
+                    onChange={(e) => setNewQuestionDescription(e.target.value)}
+                    className="w-full p-2 mt-2 border text-xl "
+                    placeholder="Mô tả"
+                  />
+                  <div className="flex justify-end mt-4">
+                    <button
+                      onClick={() => setIsQuestionModalOpen(false)}
+                      className="p-2 mr-2 bg-gray-300 rounded"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      onClick={() => handleAddQuestion(currentItemId)}
+                      className="p-2 text-white bg-blue-500 rounded"
+                    >
+                      Thêm
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-      )}
-    </Droppable>
-  </DragDropContext>
+            )}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 
@@ -1284,41 +1575,44 @@ const BaiHoc = () => {
 
 
   return (
-    <NoiDungBaiHoc
-      items={items}
-      setItems={setItems}
-      setIsSubModalOpen={setIsSubModalOpen}
-      setCurrentItemId={setCurrentItemId}
-      handleRemoveItem={handleRemoveItem}
-      handleRemoveSubItem={handleRemoveSubItem}
-      currentSubItemId={currentSubItemId}
-      currentItemId={currentItemId}
-      id={id}
-      setIsModalOpen={setIsModalOpen}
-      handleAddItem={handleAddItem}
-      newItemName={newItemName}
-      setNewItemName={setNewItemName}
-      isModalOpen={isModalOpen}
-      handleAddSubItem={handleAddSubItem}
-      isSubModalOpen={isSubModalOpen}
-      newSubItemName={newSubItemName}
-      setNewSubItemName={setNewSubItemName}
-      handleExpandLesson={handleExpandLesson}
-      isContentModalOpen={isContentModalOpen}
-      setIsContentModalOpen={setIsContentModalOpen}
-      newContentUrl={newContentUrl}
-      setNewContentUrl={setNewContentUrl}
-      handleAddContent={handleAddContent}
-      extractVideoId={extractVideoId}
-      setCurrentSubItemId={setCurrentSubItemId}
-      handleMoveSubItem={handleMoveSubItem}
-      updateSubItemOrder={updateSubItemOrder}
-      updateSubItemParent={updateSubItemParent}
-      setExpandedLessons={setExpandedLessons}
-      setQuestionData={setQuestionData}
-      questionData={questionData}
-      expandedLessons={expandedLessons} // Pass expandedLessons as a prop
-    />
+
+    <>
+      <NoiDungBaiHoc
+        items={items}
+        setItems={setItems}
+        setIsSubModalOpen={setIsSubModalOpen}
+        setCurrentItemId={setCurrentItemId}
+        handleRemoveItem={handleRemoveItem}
+        handleRemoveSubItem={handleRemoveSubItem}
+        currentSubItemId={currentSubItemId}
+        currentItemId={currentItemId}
+        id={id}
+        setIsModalOpen={setIsModalOpen}
+        handleAddItem={handleAddItem}
+        newItemName={newItemName}
+        setNewItemName={setNewItemName}
+        isModalOpen={isModalOpen}
+        handleAddSubItem={handleAddSubItem}
+        isSubModalOpen={isSubModalOpen}
+        newSubItemName={newSubItemName}
+        setNewSubItemName={setNewSubItemName}
+        handleExpandLesson={handleExpandLesson}
+        isContentModalOpen={isContentModalOpen}
+        setIsContentModalOpen={setIsContentModalOpen}
+        newContentUrl={newContentUrl}
+        setNewContentUrl={setNewContentUrl}
+        handleAddContent={handleAddContent}
+        extractVideoId={extractVideoId}
+        setCurrentSubItemId={setCurrentSubItemId}
+        handleMoveSubItem={handleMoveSubItem}
+        updateSubItemOrder={updateSubItemOrder}
+        updateSubItemParent={updateSubItemParent}
+        setExpandedLessons={setExpandedLessons}
+        setQuestionData={setQuestionData}
+        questionData={questionData}
+        expandedLessons={expandedLessons} // Pass expandedLessons as a prop
+      />
+    </>
   );
 };
 

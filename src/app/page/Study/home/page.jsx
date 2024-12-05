@@ -212,7 +212,7 @@ export default function Page() {
         };
 
         checkVideoWatched();
-    }, [currentVideoId, khoahoc]);
+    }, [currentVideoId, khoahoc ]);
 
     const formatDuration = (totalSeconds) => {
         const hours = Math.floor(totalSeconds / 3600);

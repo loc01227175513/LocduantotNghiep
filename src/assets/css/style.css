@@ -31213,3 +31213,12 @@ header.header-three .sub-dropdown .submenu.third-lvl.base {
   transform: scale(1.05);
 }
 /*# sourceMappingURL=../maps/style.css.map */
+.arrow-box {
+    clip-path: polygon(10px 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 10px 100%, 30px 50%);
+  }
+  .containerhshss{
+      position: relative;
+  }
+  .containerhshss.shift-left {
+    margin-left: -25px; 
+  }

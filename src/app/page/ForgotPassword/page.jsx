@@ -54,12 +54,12 @@ export default function Login() {
   return (
     <>
       <Header />
-      <motion.div 
+      <motion.div
         className="login-registration-wrapper"
         initial="hidden"
         animate="visible"
         style={{
-          background: "linear-gradient(45deg, #4285f4, #34a853)",
+          background: "linear-gradient(45deg, #1e3c72, #ff6b6b)",
           minHeight: "100vh",
           padding: "2rem 0",
           overflowY: "scroll"
@@ -68,7 +68,7 @@ export default function Login() {
         <div className="container">
           <div className="row g-0">
             <div className="col-lg-6" style={{ marginTop: 150 }}>
-              <motion.div 
+              <motion.div
                 className="login-page-form-area"
                 style={{
                   background: "rgba(255, 255, 255, 0.9)",
@@ -98,7 +98,8 @@ export default function Login() {
                         <ErrorMessage
                           name="email"
                           component="div"
-                          className="error"
+                          className="text-xl text-orange-500 bg-none  border-none mt-2" // Updated class names for better visibility
+                          style={{ padding: "0.5rem", borderRadius: "5px" }} // Added inline styles for better appearance
                         />
                       </div>
 
@@ -115,13 +116,13 @@ export default function Login() {
               </motion.div>
             </div>
             <div className="col-lg-6">
-              <motion.div 
+              <motion.div
                 className="contact-thumbnail-login-p flex justify-center items-center"
               >
-                <Image  
+                <Image
                   src="https://frontends.udemycdn.com/components/auth/desktop-illustration-x1.webp"
-                  width={500} 
-                  height={300}   
+                  width={500}
+                  height={300}
                   className="img-fluid bg-transparent"
                   alt="Student Home"
                 />

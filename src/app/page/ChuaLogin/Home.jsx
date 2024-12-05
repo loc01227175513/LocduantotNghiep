@@ -30,7 +30,7 @@ const Home = () => {
 
 const BannerAreaTen = () => {
     return (
-        <div className=" banner-area-ten min-h-screen py-20 relative overflow-hidden bg-gradient-to-br ">
+        <div className="banner-area-ten min-h-screen py-20 relative overflow-hidden bg-gradient-to-br from-blue-900 to-purple-600">
             {/* Enhanced animated background */}
             <div className="absolute inset-0 z-0">
                 <iframe
@@ -42,25 +42,21 @@ const BannerAreaTen = () => {
                     allowFullScreen
                 ></iframe>
                 {/* Gradient overlay on video */}
-                <div className="absolute inset-0 bg-gradient-to-br "></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-transparent"></div>
 
                 {/* Animated glowing orbs */}
                 <div className="animate-pulse-slow absolute top-1/4 left-1/4 w-96 h-96 bg-pink-500/30 rounded-full blur-[100px]"></div>
                 <div className="animate-pulse-slow absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-[100px]"></div>
 
                 {/* Noise texture overlay */}
-                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5 mix-blend-overlay"></div>
-
-                {/* Additional fancy effects */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                <div className="absolute inset-0 backdrop-blur-[2px]"></div>
+                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay"></div>
             </div>
 
-            <div className="container  lg:mt-32 mx-auto px-6 lg:px-8 space-y-20 relative z-10">
+            <div className="container lg:mt-32 mx-auto px-6 lg:px-8 space-y-20 relative z-10">
                 <div className="grid mt-80 lg:grid-cols-2 gap-16 items-center">
                     {/* Left Content */}
                     <div className="space-y-10 order-2 lg:order-1">
-                        <div className="flex items-center space-x-4 animate-fadeIn backdrop-blur-sm bg-white/5 rounded-full py-2 px-4 w-fit">
+                        <div className="flex items-center space-x-4 animate-fadeIn backdrop-blur-sm bg-white/10 rounded-full py-2 px-4 w-fit">
                             <Img width={24} height={24} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733238928/11_jyq71p.png"
                                 alt="pre-title" className="w-6 h-6 animate-bounce-slow" />
                             <span className="text-transparent bg-gradient-to-r text-white bg-clip-text font-medium">
@@ -68,15 +64,12 @@ const BannerAreaTen = () => {
                             </span>
                         </div>
 
-                        <h1 className="text-4xl md:text-6xl xl:text-7xl font-bold text-white leading-tight animate-slideUp tracking-tight">
+                        <h1 className="text-5xl md:text-7xl xl:text-8xl font-bold text-white leading-tight animate-slideUp tracking-tight">
                             Học những gì <br />
-                            bạn                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600
-                              [-webkit-text-stroke:1px_rgba(255,255,255,0.3)]
-                              animate-pulse-slow">
+                            bạn <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-red-500 to-pink-600 animate-pulse-slow">
                                 có hứng thú
                             </span> <br />
-                            Với <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600
-  [-webkit-text-stroke:1px_rgba(255,255,255,0.3)]">
+                            Với <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-red-500 to-pink-600">
                                 TECHSTUDENT
                             </span>
                         </h1>
@@ -97,7 +90,7 @@ const BannerAreaTen = () => {
         after:rounded-xl after:border-2 after:border-white/10
         after:transition-all after:duration-500
         hover:after:scale-110 hover:after:blur-md
-        boder-1 border-white
+        border-1 border-white
         ">
                                 <span className="text-white group-hover:text-pink-100 relative z-10">
                                     Tìm khóa học
@@ -114,13 +107,13 @@ const BannerAreaTen = () => {
                     <div className="order-1 lg:order-2">
                         <div className="relative group animate-float-slow">
                             {/* Background glow effects */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 
+                            <div className="absolute inset-0 bg-gradient-to-r from-pink-500/30 to-purple-500/30 
                             rounded-3xl blur-3xl transform -rotate-6 group-hover:scale-110 transition-transform duration-700"></div>
-                            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 
+                            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 
                             rounded-3xl blur-2xl transform rotate-3 group-hover:scale-105 transition-transform duration-700"></div>
 
                             {/* Image container */}
-                            <div className="relative z-10 p-2 backdrop-blur-sm bg-white/5 rounded-3xl 
+                            <div className="relative z-10 p-2 backdrop-blur-sm bg-white/10 rounded-3xl 
                             border border-white/10 shadow-2xl
                             before:absolute before:inset-0 before:-z-10 before:rounded-3xl 
                             before:bg-gradient-to-r before:from-pink-500/20 before:to-purple-500/20 
@@ -172,11 +165,11 @@ const ServiceArea = () => {
     return (
         <div className="container">
             <section className="py-32 bg-gray-50 relative overflow-hidden">
-                {/* Simplified floating decorations */}
+                {/* Enhanced floating decorations */}
                 <div className="absolute inset-0">
-                    <div className="absolute top-20 left-20 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob"></div>
-                    <div className="absolute top-40 right-20 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-2000"></div>
-                    <div className="absolute -bottom-8 left-40 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-4000"></div>
+                    <div className="absolute top-20 left-20 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob"></div>
+                    <div className="absolute top-40 right-20 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-2000"></div>
+                    <div className="absolute -bottom-8 left-40 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-4000"></div>
                 </div>
 
                 <div className="container mx-auto px-4 relative">
@@ -190,7 +183,7 @@ const ServiceArea = () => {
                                         height={50}
                                         src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733241753/bulb_y2heue.png"
                                         alt="icon"
-                                        className="object-contain hover:scale-105 transition-transform duration-300"
+                                        className="object-contain hover:scale-125 transition-transform duration-300"
                                     />
                                 </div>
                             </div>
@@ -206,14 +199,13 @@ const ServiceArea = () => {
                                 Khóa học
                             </span>
                         </h2>
-                        {/* Rest of the component remains the same */}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         {DanhMuc.map((item, index) => (
                             <div
                                 key={index}
-                                className="group bg-white rounded-xl p-6 shadow-md hover:shadow-lg 
+                                className="group bg-white rounded-xl p-6 shadow-lg hover:shadow-xl 
             transition-all duration-300 hover:-translate-y-1 border border-gray-100"
                             >
                                 <div className="flex items-start space-x-4">
@@ -223,7 +215,7 @@ const ServiceArea = () => {
                                             height={80}
                                             src={item.hinh}
                                             alt="service"
-                                            className="object-contain rounded-lg group-hover:scale-105 transition-transform duration-300"
+                                            className="object-contain rounded-lg group-hover:scale-110 transition-transform duration-300"
                                         />
                                     </div>
                                     <div>
@@ -243,7 +235,6 @@ const ServiceArea = () => {
                 </div>
             </section>
         </div>
-
     );
 };
 
@@ -252,6 +243,7 @@ const ServiceArea = () => {
 
 
 
+// ... existing code ...
 const CourseArea = () => {
     const [KhoaHoc, setKhoaHoc] = useState([]);
 
@@ -301,19 +293,19 @@ const CourseArea = () => {
         for (let i = 0; i < 5; i++) {
             if (i < fullStars) {
                 stars.push(
-                    <svg key={i} className="w-4 h-4 text-[#ffd230]" fill="currentColor" viewBox="0 0 20 20">
+                    <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                 );
             } else if (i === fullStars && halfStar) {
                 stars.push(
-                    <svg key={i} className="w-4 h-4 text-[#ffd230]" fill="currentColor" viewBox="0 0 20 20">
+                    <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                 );
             } else {
                 stars.push(
-                    <svg key={i} className="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                    <svg key={i} className="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                 );
@@ -327,7 +319,7 @@ const CourseArea = () => {
                 <section className="py-20 bg-gray-50 ">
                     <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
                         {/* Header */}
-                        <div className="flex justify-between items-center mb-16 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 rounded-2xl shadow-2xl p-8 transform hover:scale-[1.02] transition-all duration-300">
+                        <div className="flex justify-between items-center mb-16 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 rounded-2xl shadow-2xl p-8 transform hover:scale-[1.02] transition-all duration-300">
                             <div className="max-w-2xl">
                                 <div className="flex items-center gap-4 mb-6 group">
                                     <div className="p-4 bg-white/10 backdrop-blur-sm rounded-2xl transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg">
@@ -347,7 +339,7 @@ const CourseArea = () => {
                             </div>
                             <Link
                                 href="#"
-                                className=" inline-flex items- gap-3 px-8 py-4 text-white font-bold bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 rounded-full group border border-white/20 hover:border-white/40 shadow-lg hover:shadow-xl"
+                                className="inline-flex items-center gap-3 px-8 py-4 text-white font-bold bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 rounded-full group border border-white/20 hover:border-white/40 shadow-lg hover:shadow-xl"
                             >
                                 <span>Xem tất cả các khóa học</span>
                                 <svg
@@ -373,7 +365,7 @@ const CourseArea = () => {
                                     {KhoaHoc.map((course, index) => (
                                         <div key={index} className="swiper-slide w-full p-4">
                                             <Link href={`/page/course-detail?id=${course.id}`}>
-                                                <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 ease-out transform hover:-translate-y-1 h-[320px] flex overflow-hidden">
+                                                <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 ease-out transform hover:-translate-y-1 h-[320px] flex overflow-hidden border border-gray-200 hover:border-gray-300">
                                                     {/* Course Image */}
                                                     <div className="relative w-1/2">
                                                         <Img
@@ -386,6 +378,7 @@ const CourseArea = () => {
                                                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                                         <div className="absolute top-4 left-4 flex gap-2">
                                                             <span className="bg-[#ff6b6b] text-white px-4 py-1.5 rounded-full text-sm font-medium shadow-lg">
+                                                                {/* Updated color for better visibility */}
                                                                 Phổ biến
                                                             </span>
                                                         </div>
@@ -463,9 +456,10 @@ const CourseArea = () => {
                 </section>
             </div>
         </div>
-
     );
-};
+}
+// ... existing code ...
+
 
 
 
