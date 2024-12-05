@@ -20,7 +20,7 @@ import { NextCategory } from "../category/category.component";
 import Banner from "../banner/page";
 import BannerUser from "../BannerUser/page";
 import Image from "next/image";
-import CourseDeXuat from "../course/CourseDeXuat";
+import CourseDeXuat from "../../component/course/courseDeXuat";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
