@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-
+import Link from 'next/link';
 export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id, PhanTram, tieptuchoc }) {
     const [isExpanded, setIsExpanded] = useState(false);
     return (
@@ -10,7 +10,7 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
             data-category="transition"
         >
             <div className="rts-single-course ">
-                <a href={`/page/course-detail?id=${id}`} className="thumbnail relative">
+                <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative">
                     <div className="thumbnail relative" style={{ aspectRatio: '16 / 9' }}>
                         <Image
                             src={hinh}
@@ -31,16 +31,16 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
                             </div>
                         )}
                     </div>
-                </a>
+                </Link>
                 <div className="course-card">
-                    <a
+                    <Link
                         href={`/page/course-detail?id=${id}`}
                         className="title-link min-h-[60px] flex items-center"
                     >
                         <p className="title line-clamp-2 overflow-hidden">
                             {ten}
                         </p>
-                    </a>
+                    </Link>
                     <div className="teacher">
                         <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
                         <span className="text-xl text-gray-800">{chude}</span>

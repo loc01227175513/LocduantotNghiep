@@ -57,13 +57,30 @@ export const AllGiangVien = () => {
             </div>
 
             <div className="container mx-auto px-4 py-16">
-                <div className="mb-8">
-                    <input
-                        type="text"
-                        placeholder="Tìm kiếm giảng viên..."
-                        className="placeholder:text-xl w-full md:w-96 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                <div className="mb-12 max-w-2xl mx-auto">
+                    <div className="relative group">
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-gradient-xy"></div>
+                        <div className="relative flex items-center bg-white rounded-lg">
+                            <input
+                                type="text"
+                                placeholder="Tìm kiếm giảng viên..."
+                                className="w-full px-6 py-4 text-lg rounded-lg border-none focus:outline-none focus:ring-0 placeholder:text-gray-400"
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            <div className="absolute right-4 flex items-center">
+                                <i className="fas fa-search text-xl text-gray-400 group-hover:text-[#1e3c72] transition-colors duration-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                    {searchTerm && (
+                        <motion.div 
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="text-center mt-4 text-gray-600"
+                        >
+                            Đang hiển thị {filteredInstructors.length} kết quả cho &quot;{searchTerm}&quot;
+                        </motion.div>
+                    )}
                 </div>
 
                 <motion.div
@@ -116,11 +133,13 @@ export const AllGiangVien = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="p-6">
+                                    <div className="p-6 flex flex-col justify-between h-[120px]">
                                         <h3 className="text-xl font-semibold mb-2 transition-colors duration-300 hover:text-blue-600">
                                             {instructor.ten}
                                         </h3>
-                                        <p className="text-gray-600 line-clamp-2">{instructor.tieusu}</p>
+                                        <p className="text-gray-600 line-clamp-2 overflow-hidden">
+                                            {instructor.tieusu}
+                                        </p>
                                     </div>
                                 </div>
                             </motion.div>

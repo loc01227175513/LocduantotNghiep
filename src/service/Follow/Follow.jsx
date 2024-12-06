@@ -33,7 +33,8 @@ export const TheoDoiGiangVien = async () => {
     });
   
     if (!response.ok) {
-      throw new Error('Failed to fetch courses');
+        const errorData = await response.json();
+        throw new Error(`Failed to fetch courses: ${errorData.message || 'Unknown error'}`);
     }
     return response.json();
   };
@@ -53,7 +54,8 @@ export const TheoDoiGiangVien = async () => {
       referrerPolicy: 'unsafe-url',
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch courses');
+        const errorData = await response.json();
+        throw new Error(`Failed to fetch courses: ${errorData.message || 'Unknown error'}`);
     }
     return response.json();
   };
@@ -61,17 +63,26 @@ export const TheoDoiGiangVien = async () => {
   export const BoTheoDoiGiangVien = async (id) => {
     const url = `https://huuphuoc.id.vn/api/deleteTheoDoi/${id}`;
     try {
-      const response = await fetch(url, {
-        method: 'DELETE',
-        referrerPolicy: 'unsafe-url',
-      });
-      if (!response.ok) {
-        throw new Error('Failed to unfollow lecturer');
-      }
-      const data = await response.json();
-      return data;
+        const response = await fetch(url, {
+            method: 'DELETE',
+            referrerPolicy: 'unsafe-url',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message || 'Unknown error'}`);
+        }
+        
+        const data = await response.json();
+        return {
+            status: "success",
+            data: data
+        };
     } catch (error) {
-      console.error('Error:', error);
-      throw error;
+        console.error('Error:', error);
+        throw new Error('Failed to unfollow lecturer');
     }
   };

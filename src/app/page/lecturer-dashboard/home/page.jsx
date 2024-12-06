@@ -229,9 +229,11 @@ export default function Homedashboardlecturer() {
   const [doanhthu, setDoanhthu] = useState({});
   const [khoahocdamua, setKhoahocdamua] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const dashboardRes = await Dashboard();
         localStorage.setItem('lecturerId', JSON.stringify(dashboardRes.data));
@@ -247,6 +249,8 @@ export default function Homedashboardlecturer() {
         setIsDataLoaded(true);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -333,156 +337,160 @@ export default function Homedashboardlecturer() {
   };
 
   return (
-    <div className="overflow-y-scroll col-lg-9 ịadkljas"  >
-      <div className="right-sidebar-dashboard">
-        <style jsx>{KhoaHocDangKyCss}</style>
+    <div className="overflow-y-scroll col-lg-9">
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        <div className="right-sidebar-dashboard">
+          <style jsx>{KhoaHocDangKyCss}</style>
 
-        <div className="row g-5">
-          {cardData.map((card, index) => (
-            <motion.div
-              key={index}
-              className="col-lg-4 col-md-6 col-sm-6 col-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="single-dashboard-card">
-                <motion.div
-                  className="icon"
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{
-                    duration: 0.5,
-                    type: "spring",
-                    stiffness: 100
-                  }}
-                >
-                  {React.createElement(card.icon, {
-                    className: "h-8 w-8",
-                    "aria-hidden": "true"
-                  })}
-                </motion.div>
-                <h5 className="title">
-                  <CountUp
-                    end={card.value}
-                    duration={2}
-                    separator=","
-                    className="counter"
-                  />
-                </h5>
-                <p>{card.label}</p>
-              </div>
-            </motion.div>
-          ))}
-          <div className='flex justify-center'>
-            <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê khóa học</p>
-          </div>
-          <div className='flex'>
-            <CustomChart />
-            <div className='flex-grow rounded-lg'>
-              <div className="ml-4 h-full flex flex-col gap-4">
-                <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
-                  <p className='my-2 text-xl font-semibold'>Khóa học bán chạy nhất</p>
-                  <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocbanchay.ten}</p>
-                  <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocbanchay.ThanhToan.length}</p>
-                  <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
+          <div className="row g-5">
+            {cardData.map((card, index) => (
+              <motion.div
+                key={index}
+                className="col-lg-4 col-md-6 col-sm-6 col-12"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className="single-dashboard-card">
+                  <motion.div
+                    className="icon"
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{
+                      duration: 0.5,
+                      type: "spring",
+                      stiffness: 100
+                    }}
+                  >
+                    {React.createElement(card.icon, {
+                      className: "h-8 w-8",
+                      "aria-hidden": "true"
+                    })}
+                  </motion.div>
+                  <h5 className="title">
+                    <CountUp
+                      end={card.value}
+                      duration={2}
+                      separator=","
+                      className="counter"
+                    />
+                  </h5>
+                  <p>{card.label}</p>
                 </div>
+              </motion.div>
+            ))}
+            <div className='flex justify-center'>
+              <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê khóa học</p>
+            </div>
+            <div className='flex'>
+              <CustomChart />
+              <div className='flex-grow rounded-lg'>
+                <div className="ml-4 h-full flex flex-col gap-4">
+                  <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
+                    <p className='my-2 text-xl font-semibold'>Khóa học bán chạy nhất</p>
+                    <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocbanchay.ten}</p>
+                    <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocbanchay.ThanhToan.length}</p>
+                    <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
+                  </div>
 
-                <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
-                  <p className='text-xl my-2 font-semibold'>Khóa học có doanh thu cao nhất</p>
-                  <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocMaxSotien.ten}</p>
-                  <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toFixed(2)}</p>
-                  <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
+                  <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
+                    <p className='text-xl my-2 font-semibold'>Khóa học có doanh thu cao nhất</p>
+                    <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocMaxSotien.ten}</p>
+                    <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toFixed(2)}</p>
+                    <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className=" mt-5">
-            <div className=' flex justify-center'>
-              <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê doanh thu</p>
-            </div>
-            <div className='mt-10'>
-              <DoanhThuChart />
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-5">
-          <div className="row">
-            <div className="col-12">
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                <h5 className="mb-0 font-bold text-3xl text-gray-800">Các khóa học của tôi</h5>
-                <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-gradient-to-r from-[#ff6b6b] to-[#ff9a9a] text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl shadow-md">
-                  Xem tất cả
-                </Link>
+            <div className=" mt-5">
+              <div className=' flex justify-center'>
+                <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê doanh thu</p>
               </div>
-              <div className="overflow-x-auto" style={{ maxWidth: '100%' }}>
-                <div className="flex flex-nowrap px-4" style={{ minWidth: 'min-content' }}>
-                  {khoahoc.map((item) => (
-                    <div className="flex-none px-2 mb-4" style={{ width: '331.797px' }} key={item.id}>
-                      <Link href={`/page/course-detail?id=${item.id}`}>
-                        <div className="card h-[244.344px] hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col overflow-hidden border rounded-xl bg-white">
-                          <Image
-                            width={332}
-                            height={146}
-                            src={validImageSrc(item.hinh)}
-                            className="w-full h-[146px] object-cover rounded-t-xl"
-                            alt={item.ten || 'Course Image'}
-                          />
-                          <div className="flex-1 p-6 flex flex-col justify-between gap-4">
-                            <div className="space-y-4">
-                              <div className="flex justify-between items-start gap-3">
-                                <h6 className="card-title font-medium text-xl line-clamp-2 leading-tight max-w-[70%] text-gray-800 h-12 overflow-hidden">
-                                  {item.ten}
-                                </h6>
-                                <span
-                                  className={`badge ${item.trangthai === 'Hoàn thành' ? 'bg-green-500 text-white' : item.trangthai === 'notyet' ? 'bg-red-500 text-white' : 'bg-[#ff6b6b] text-white'
-                                    } text-lg px-4 py-1.5 rounded-full whitespace-nowrap`}
-                                >
-                                  {item.trangthai}
-                                </span>
+              <div className='mt-10'>
+                <DoanhThuChart />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5">
+            <div className="row">
+              <div className="col-12">
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <h5 className="mb-0 font-bold text-3xl text-gray-800">Các khóa học của tôi</h5>
+                  <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-gradient-to-r from-[#ff6b6b] to-[#ff9a9a] text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl shadow-md">
+                    Xem tất cả
+                  </Link>
+                </div>
+                <div className="overflow-x-auto" style={{ maxWidth: '100%' }}>
+                  <div className="flex flex-nowrap px-4" style={{ minWidth: 'min-content' }}>
+                    {khoahoc.map((item) => (
+                      <div className="flex-none px-2 mb-4" style={{ width: '331.797px' }} key={item.id}>
+                        <Link href={`/page/course-detail?id=${item.id}`}>
+                          <div className="card h-[244.344px] hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col overflow-hidden border rounded-xl bg-white">
+                            <Image
+                              width={332}
+                              height={146}
+                              src={validImageSrc(item.hinh)}
+                              className="w-full h-[146px] object-cover rounded-t-xl"
+                              alt={item.ten || 'Course Image'}
+                            />
+                            <div className="flex-1 p-6 flex flex-col justify-between gap-4">
+                              <div className="space-y-4">
+                                <div className="flex justify-between items-start gap-3">
+                                  <h6 className="card-title font-medium text-xl line-clamp-2 leading-tight max-w-[70%] text-gray-800 h-12 overflow-hidden">
+                                    {item.ten}
+                                  </h6>
+                                  <span
+                                    className={`badge ${item.trangthai === 'Hoàn thành' ? 'bg-green-500 text-white' : item.trangthai === 'notyet' ? 'bg-red-500 text-white' : 'bg-[#ff6b6b] text-white'
+                                      } text-lg px-4 py-1.5 rounded-full whitespace-nowrap`}
+                                  >
+                                    {item.trangthai}
+                                  </span>
+                                </div>
                               </div>
-                            </div>
 
-                            {/* {Array.isArray(item.giangVien) ? (
-                      item.giangVien.map((gianVien, index) => (
-                        <div key={index} className="flex items-center">
+                              {/* {Array.isArray(item.giangVien) ? (
+                        item.giangVien.map((gianVien, index) => (
+                          <div key={index} className="flex items-center">
+                            <Image
+                              width={32}
+                              height={32}
+                              className="rounded-full border border-gray-200 object-cover"
+                              src={validImageSrc(gianVien.hinh)}
+                              alt={gianVien.ten || 'Giảng viên'}
+                            />
+                            <span className="text-sm text-gray-600 line-clamp-1 ml-2">
+                              {gianVien.ten || 'Tên giảng viên'}
+                            </span>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="flex items-center">
                           <Image
                             width={32}
                             height={32}
                             className="rounded-full border border-gray-200 object-cover"
-                            src={validImageSrc(gianVien.hinh)}
-                            alt={gianVien.ten || 'Giảng viên'}
+                            src={validImageSrc(item.giangVien.hinh)}
+                            alt={item.giangVien.ten || 'Giảng viên'}
                           />
-                          <span className="text-sm text-gray-600 line-clamp-1 ml-2">
-                            {gianVien.ten || 'Tên giảng viên'}
-                          </span>
                         </div>
-                      ))
-                    ) : (
-                      <div className="flex items-center">
-                        <Image
-                          width={32}
-                          height={32}
-                          className="rounded-full border border-gray-200 object-cover"
-                          src={validImageSrc(item.giangVien.hinh)}
-                          alt={item.giangVien.ten || 'Giảng viên'}
-                        />
-                      </div>
-                    )} */}
+                      )} */}
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                    </div>
-                  ))}
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+
         </div>
-
-
-      </div>
+      )}
     </div>
   );
 }

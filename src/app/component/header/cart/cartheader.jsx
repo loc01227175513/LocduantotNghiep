@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
 import Image from 'next/image';
+
 const Cart = ({ onAction }) => {
 
 
@@ -120,10 +121,10 @@ const Cart = ({ onAction }) => {
                       </div>
                     </div>
                     <div className='flex items-start space-x-2'>
-                      <a href={`/page/course-detail?id=${khoahoc.id}`}
+                      <Link href={`/page/course-detail?id=${khoahoc.id}`}
                         className='p-2.5 hover:text-blue-500 rounded-full transition-all duration-300 hover:scale-110'>
                         <i className='bi bi-pencil-square text-2xl'></i>
-                      </a>
+                      </Link>
                       <button onClick={() => xoagiohang(khoahoc.id)}
                         className='p-2.5 hover:text-red-500 rounded-full transition-all duration-300 hover:scale-110'>
                         <i className='bi bi-trash3 text-2xl'></i>
@@ -145,22 +146,22 @@ const Cart = ({ onAction }) => {
           <div className='space-y-3'>
             {userData ? (
               <>
-                <a href="/page/checkout" className='block transform hover:scale-[1.02] transition-all duration-300'>
+                <Link href="/page/checkout" className='block transform hover:scale-[1.02] transition-all duration-300'>
                   <button className='w-full py-3.5 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 hover:from-pink-700 hover:to-pink-700 text-white rounded-xl transition-all duration-300 shadow-lg animate-[pulse_2s_infinite] text-2xl'>
                     Tiến hành thanh toán
                   </button>
-                </a>
+                </Link>
                 <button onClick={() => openCart()}
                   className='w-full py-3.5 border-2 border-orange-500 text-gray-700 hover:bg-pink-50 rounded-xl transition-all duration-300 text-2xl'>
                   Xem giỏ hàng
                 </button>
               </>
             ) : (
-              <a href="/page/login" className='block transform hover:scale-[1.02] transition-all duration-300'>
+              <Link href="/page/login" className='block transform hover:scale-[1.02] transition-all duration-300'>
                 <button className='w-full py-3.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-200'>
                   Đăng nhập
                 </button>
-              </a>
+              </Link>
             )}
           </div>
         </div>

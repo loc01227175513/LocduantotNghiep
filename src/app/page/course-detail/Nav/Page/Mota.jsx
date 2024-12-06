@@ -12,6 +12,8 @@ import {
 } from "react-icons/fa";
 import Image from "next/image";
 import { KhoaHocYeuThich } from "../../../../../service/YeuThich/YeuThich";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const styles = `
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -110,11 +112,28 @@ export default function Mota({ course }) {
   const handleYeuThich = async (id) => {
     try {
       const response = await KhoaHocYeuThich(id);
-      console.log(response);
-      toast.success("Added to favorites!");
+      if (response) {
+        toast.success('Đã thêm vào danh sách yêu thích!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Error adding to favorites!");
+      toast.error('Có lỗi xảy ra khi thêm vào yêu thích!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
   const capitalizeFirstLetter = (string) => {
@@ -143,17 +162,14 @@ export default function Mota({ course }) {
     console.error("Error processing description:", error);
     descriptionSections = [];
   }
-
-  let muctieu;
+  let muctieu = [];
   try {
-    muctieu = JSON.parse(course?.muctieu);
+    if (course?.muctieu) {
+      const parsedMuctieu = JSON.parse(course.muctieu);
+      muctieu = Array.isArray(parsedMuctieu) ? parsedMuctieu : [];
+    }
   } catch (error) {
-    console.error("Error parsing muctieu:", error);
-    muctieu = [];
-  }
-
-  if (!Array.isArray(muctieu)) {
-    muctieu = [];
+    console.error("Error parsing muctieu:", error.message);
   }
 
   const renderStars = (rating) => {
@@ -254,13 +270,14 @@ export default function Mota({ course }) {
                 key={item.id} // Use a unique key, preferably item.id
               >
                 <div className="rts-single-course">
-                  <a href={`/page/course-detail?id=${item.id}`} className="thumbnail relative">
+                  <Link href={`/page/course-detail?id=${item.id}`} className="thumbnail relative">
                     <Image
                       width={500}
                       height={300}
-                      src={item.hinh}
-                      alt="course"
-                      style={{ height: "170px" }}
+                      src={item.hinh || '/images/placeholder-course.jpg'}
+                      alt={`Course: ${item.ten}`}
+                      style={{ height: "170px", objectFit: "cover" }}
+                      priority={index < 3}
                     />
                     {/* Free course badge */}
                     {(item.gia === 0 || item.giamgia === 0) && (
@@ -274,7 +291,7 @@ export default function Mota({ course }) {
                         -{Math.round((1 - item.giamgia / item.gia) * 100)}% OFF
                       </div>
                     )}
-                  </a>
+                  </Link>
                   
                   <div
                           className="save-icon"
@@ -285,11 +302,11 @@ export default function Mota({ course }) {
                           <i className="fa-sharp fa-light fa-bookmark text-lg" />
                         </div>
                   <div className="course-card p-4 bg-white rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg">
-                    <a href={`/page/course-detail?id=${item.id}`} className="title-link">
+                    <Link href={`/page/course-detail?id=${item.id}`} className="title-link">
                       <p className="title text-2xl font-semibold text-gray-800 hover:text-blue-600">
                         {item.ten}
                       </p>
-                    </a>
+                    </Link>
                     <div className="teacher flex items-center mt-2">
                       <span className="text-lg text-gray-700" style={{ fontWeight: 'normal' }}>
                         <strong>{item.chude.ten}</strong>

@@ -1,15 +1,22 @@
-export const Addcart = async () => {
-  const url = 'https://huuphuoc.id.vn/api/addcart';
+// Thêm hàm phụ trợ để lấy ID người dùng
+const getUserId = () => {
   const user = localStorage.getItem('data');
-
   if (!user) {
     return null;
   }
-
-  let parsedUser;
   try {
-    parsedUser = JSON.parse(user);
+    const parsedUser = JSON.parse(user);
+    return parsedUser.id;
   } catch (error) {
+    return null;
+  }
+};
+
+export const Addcart = async () => {
+  const url = 'https://huuphuoc.id.vn/api/addcart';
+  const id_nguoidung = getUserId();
+
+  if (!id_nguoidung) {
     return null;
   }
 
@@ -27,8 +34,8 @@ export const Addcart = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id_nguoidung: parsedUser.id,
-        id_khoahoc: id_khoahoc,
+        id_nguoidung,
+        id_khoahoc,
       }),
       referrerPolicy: 'unsafe-url',
     });

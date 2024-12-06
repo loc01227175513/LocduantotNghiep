@@ -167,11 +167,11 @@ export default function Instructor({ course }) {
                 { icon: FaYoutube, color: "red", label: "YouTube" }
               ].map((social, index) => (
                 <li key={index}>
-                  <a href="#" 
+                  <Link href="#" 
                     aria-label={social.label}
                     className={`text-${social.color}-600 hover:text-${social.color}-800 social-icon p-2 inline-block`}>
                     <social.icon size={24} />
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

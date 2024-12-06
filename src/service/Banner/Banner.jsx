@@ -10,7 +10,7 @@ export const fetchBanner = async () => {
     }
     return response.json();
   } catch (error) {
-    console.error('Error fetching courses:', error);
+    console.error('Error fetching banners:', error);
     throw error;
   }
 };

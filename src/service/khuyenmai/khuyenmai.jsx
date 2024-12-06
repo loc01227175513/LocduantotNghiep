@@ -1,8 +1,11 @@
 export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
     const url = 'https://huuphuoc.id.vn/api/addMaGiamGiaKhoaHoc';
-  
     const urlParams = new URLSearchParams(window.location.search);
     const id_khoahoc = urlParams.get('id');
+  
+    if (!id_khoahoc) {
+      throw new Error('Không tìm thấy ID khóa học');
+    }
   
     try {
       const response = await fetch(url, {
@@ -11,20 +14,22 @@ export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id_khoahoc: id_khoahoc,
+          id_khoahoc,
           id_magiamgia: selectedCoupon,
         }),
         referrerPolicy: 'unsafe-url',
       });
   
+      const data = await response.json();
+      
       if (!response.ok) {
-        throw new Error('Failed to add MaGiamGia');
+        throw new Error(data.message || 'Thêm mã giảm giá thất bại');
       }
   
-      return response.json();
+      return data;
     } catch (error) {
-      console.error('Fetch error:', error);
-      throw new Error('Network error or server is down');
+      console.error('Lỗi:', error);
+      throw new Error(error.message || 'Lỗi kết nối hoặc máy chủ');
     }
   };
   
@@ -62,15 +67,18 @@ export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
   
   export const NguoiDungMaGiamGia = async (DataCoupon) => {
     const url = 'https://huuphuoc.id.vn/api/addNguoiDungMaGiamGia';
-    const userData = localStorage.getItem('data');
-  
-    if (!userData) {
-      throw new Error('User not authenticated');
-    }
-  
-    const user = JSON.parse(userData);
   
     try {
+      const userData = localStorage.getItem('data');
+      if (!userData) {
+        throw new Error('Người dùng chưa đăng nhập');
+      }
+  
+      const user = JSON.parse(userData);
+      if (!user.id) {
+        throw new Error('Thông tin người dùng không hợp lệ');
+      }
+  
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -85,15 +93,16 @@ export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
         referrerPolicy: 'unsafe-url',
       });
   
+      const data = await response.json();
+      
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to add MaGiamGia');
+        throw new Error(data.message || 'Thêm mã giảm giá thất bại');
       }
   
-      return response.json();
+      return data;
     } catch (error) {
-      console.error('Fetch error:', error);
-      throw new Error(error.message || 'Network error or server is down');
+      console.error('Lỗi:', error);
+      throw new Error(error.message || 'Lỗi kết nối hoặc máy chủ');
     }
   };
   
@@ -127,23 +136,24 @@ export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
   
   export const TinhMaGiamGia = async () => {
     const url = "https://huuphuoc.id.vn/api/TinhMaGiamGia";
-    const userData = localStorage.getItem('data');
-    const MaGiamGia = localStorage.getItem('appliedCoupons');
-  
-    if (!userData) {
-      throw new Error('User not authenticated');
-    }
-  
-    if (!MaGiamGia) {
-      throw new Error('No applied coupons found');
-    }
   
     try {
+      const userData = localStorage.getItem('data');
+      const MaGiamGia = localStorage.getItem('appliedCoupons');
+  
+      if (!userData) {
+        throw new Error('Người dùng chưa đăng nhập');
+      }
+  
+      if (!MaGiamGia) {
+        throw new Error('Không tìm thấy mã giảm giá đã áp dụng');
+      }
+  
       const user = JSON.parse(userData);
-      const MaArray = MaGiamGia ? JSON.parse(MaGiamGia) : [];
+      const MaArray = JSON.parse(MaGiamGia);
   
       if (!user.id || !MaArray[0]?.id_magiamgia) {
-        throw new Error('Invalid user or coupon data');
+        throw new Error('Dữ liệu người dùng hoặc mã giảm giá không hợp lệ');
       }
   
       const response = await fetch(url, {
@@ -158,14 +168,15 @@ export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
         referrerPolicy: 'unsafe-url',
       });
   
+      const data = await response.json();
+      
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to add MaGiamGia');
+        throw new Error(data.message || 'Tính mã giảm giá thất bại');
       }
   
-      return response.json();
+      return data;
     } catch (error) {
-      console.error('Fetch error:', error);
-      throw new Error(error.message || 'Network error or server is down');
+      console.error('Lỗi:', error);
+      throw new Error(error.message || 'Lỗi kết nối hoặc máy chủ');
     }
   };

@@ -18,13 +18,18 @@ export const Allcoursesss = async () => {
 
 export const CourseDetails = async (id) => {
   const url = `https://huuphuoc.id.vn/api/Khoahocchitiet/${id}`;
-  const response = await fetch(`${url}`, {
-    referrerPolicy: 'unsafe-url',
-  }); // Gọi API nội bộ
-  if (!response.ok) {
-    throw new Error('Failed to fetch courses');
+  try {
+    const response = await fetch(`${url}`, {
+      referrerPolicy: 'unsafe-url',
+    }); // Gọi API nội bộ
+    if (!response.ok) {
+      throw new Error('Failed to fetch course details');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching course details:', error);
+    throw error; // Re-throw the error after logging it
   }
-  return response.json();
 };
 
 export const ThemKhoaHocDaHoc = async () => {
@@ -58,7 +63,7 @@ export const ThemKhoaHocDaHoc = async () => {
       throw new Error(`Failed to fetch certificate: ${response.status} ${response.statusText} - ${errorDetails}`);
     }
 
-    return response.json();
+    return await response.json();
   } catch (error) {
     console.error('Error:', error);
     throw error;
@@ -77,13 +82,18 @@ export const GiangVienKhoaHocHienThi = async () => {
   const url = `https://huuphuoc.id.vn/api/GiangVienKhoaHocHienThi/${id_khoahoc}`;
   console.log('Fetching URL:', url);
 
-  const response = await fetch(`${url}`, {
-    referrerPolicy: 'unsafe-url',
-  }); // Gọi API nội bộ
+  try {
+    const response = await fetch(`${url}`, {
+      referrerPolicy: 'unsafe-url',
+    }); // Gọi API nội bộ
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch courses');
+    if (!response.ok) {
+      throw new Error('Failed to fetch course instructors');
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching course instructors:', error);
+    throw error; // Re-throw the error after logging it
   }
-
-  return response.json();
 };

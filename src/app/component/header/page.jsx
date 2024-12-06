@@ -774,18 +774,18 @@ export default function Header() {
                   <div className="buttons-area flex items-center gap-2">
                     {!hasData ? (
                       <>
-                        <a
+                        <Link
                           href="/page/register"
-                          class="border border-gray-300 rounded-full px-4 py-2 text-black hover:border-pink-700 hover:text-pink-700 transition-all"
+                          className="border border-gray-300 rounded-full px-4 py-2 text-black hover:border-pink-700 hover:text-pink-700 transition-all"
                         >
                           Đăng ký
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                           href="/page/login"
-                          class="border border-gray-300 rounded-full px-4 py-2 bg-gray-200 text-black hover:border-pink-700 hover:text-pink-700 transition-all"
+                          className="border border-gray-300 rounded-full px-4 py-2 bg-gray-200 text-black hover:border-pink-700 hover:text-pink-700 transition-all"
                         >
                           Đăng nhập
-                        </a>
+                        </Link>
                       </>
                     ) : (
                       <div className="flex items-center gap-0">
@@ -941,27 +941,31 @@ export default function Header() {
           }}
         >
           <nav className="mt-16 p-6 space-y-6 flex flex-col">
-            <button
-              onClick={openSearch}
+            <Link
+              href="/page/Cours-Filter"
               className="w-full text-center text-white text-lg font-medium 
-    bg-[#ff6b6b]
-    hover:b-[#ff6b6b]
-    active:bg-orange-700
-    transition-all duration-300 ease-out
-    rounded-full px-6 py-3.5 sm:py-3
-    shadow-lg hover:shadow-xl
-    transform hover:scale-[1.02] active:scale-[0.98]
-    focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
+        bg-[#ff6b6b]
+        hover:bg-[#ff6b6b]
+        active:bg-orange-700
+        transition-all duration-300 ease-out
+        rounded-full px-6 py-3.5 sm:py-3
+        shadow-lg hover:shadow-xl
+        transform hover:scale-[1.02] active:scale-[0.98]
+        focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                openSearch();
+              }}
             >
               <i className="fas fa-search mr-2"></i>
               Tìm kiếm
-            </button>
+            </Link>
 
             <ul className="flex flex-col space-y-4">
               <li className="w-full">
                 <Link
-                  className="flex items-center space-x-4 text-white hover:text-yellow-300 transition-all py-3 px-4 rounded-lg hover:bg-white/10 active:bg-white/20"
                   href="/"
+                  className="flex items-center space-x-4 text-white hover:text-yellow-300 transition-all py-3 px-4 rounded-lg hover:bg-white/10 active:bg-white/20"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <i className="fas fa-home text-2xl text-white"></i>
@@ -970,162 +974,61 @@ export default function Header() {
               </li>
 
               <li className="w-full">
-                <button
-                  className="flex items-center justify-between w-full py-3 px-4 text-white hover:text-yellow-300 transition-colors rounded-lg hover:bg-white/10"
-                  onClick={() => setIsCoursesMenuOpen(!isCoursesMenuOpen)}
-                  aria-haspopup="true"
-                  aria-expanded={isCoursesMenuOpen}
+                <Link
+                  href="/page/Cours-Filter"
+                  className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <div className="flex items-center space-x-4">
-                    <i className="fas fa-graduation-cap text-2xl text-white"></i>
-                    <span className="font-semibold text-lg">Khóa học</span>
-                  </div>
-                  <i className={`fas fa-chevron-${isCoursesMenuOpen ? 'up' : 'down'} text-sm text-white transition-transform`}></i>
-                </button>
-
-                <div
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${isCoursesMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
-                    }`}
-                >
-                  <div className="mt-2 pl-6 border-l-2 border-yellow-300 space-y-4 py-2">
-                    <Link
-                      href="/page/Cours-Filter"
-                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <i className="fas fa-list text-xl text-white"></i>
-                      <span className="text-base">Khóa học thể loại</span>
-                    </Link>
-                    <Link
-                      href="/page/courseLoTrinh"
-                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <i className="fas fa-road text-xl text-white"></i>
-                      <span className="text-base">Lộ trình khóa học</span>
-                    </Link>
-                    <Link
-                      href="/page/KhuyenMai"
-                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <i className="fas fa-tag text-xl text-white"></i>
-                      <span className="text-base">Ưu đãi</span>
-                    </Link>
-                    <Link
-                      href="/page/AllGiangVien"
-                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <i className="fas fa-star text-xl text-white"></i>
-                      <span className="text-base">Giảng viên Nổi Bật</span>
-                    </Link>
-                    <Link
-                      href="/page/NhanTin"
-                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <i className="fas fa-envelope text-xl text-white"></i>
-                      <span className="text-base">Nhắn tin Giảng viên</span>
-                    </Link>
-                  </div>
-                </div>
+                  <i className="fas fa-list text-xl text-white"></i>
+                  <span className="text-base">Khóa học thể loại</span>
+                </Link>
               </li>
 
               <li className="w-full">
-                <button
-                  className="flex items-center justify-between w-full py-3 px-4 text-white hover:text-yellow-300 transition-colors rounded-lg hover:bg-white/10"
-                  onClick={() => setIsDashboardMenuOpen(!isDashboardMenuOpen)}
-                  aria-haspopup="true"
-                  aria-expanded={isDashboardMenuOpen}
+                <Link
+                  href="/page/courseLoTrinh"
+                  className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <div className="flex items-center space-x-4">
-                    <i className="fas fa-columns text-2xl text-white"></i>
-                    <span className="font-semibold text-lg">Trang tính</span>
-                  </div>
-                  <i className={`fas fa-chevron-${isDashboardMenuOpen ? 'up' : 'down'} text-sm text-white transition-transform`}></i>
-                </button>
+                  <i className="fas fa-road text-xl text-white"></i>
+                  <span className="text-base">Lộ trình khóa học</span>
+                </Link>
+              </li>
 
-                <div
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${isDashboardMenuOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
-                    }`}
+              <li className="w-full">
+                <Link
+                  href="/page/KhuyenMai"
+                  className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <div className="mt-2 pl-6 border-l-2 border-yellow-300 space-y-4 py-2">
-                    <Link
-                      href="/page/dashboard-student"
-                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <i className="fas fa-user-graduate text-xl text-white"></i>
-                      <span className="text-base">Học Viên</span>
-                    </Link>
-                    <Link
-                      href={data && data.vaitro !== 0 ? "/page/lecturer-dashboard" : "/page/become-instructor"}
-                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <i className={`fas ${data && data.vaitro !== 0 ? 'fa-chalkboard-teacher' : 'fa-user-plus'} text-xl text-white`} />
-                      <span className="text-base">{data && data.vaitro !== 0 ? 'Giảng Viên' : 'Giảng viên'}</span>
-                    </Link>
-                  </div>
-                </div>
+                  <i className="fas fa-tag text-xl text-white"></i>
+                  <span className="text-base">Ưu đãi</span>
+                </Link>
+              </li>
+
+              <li className="w-full">
+                <Link
+                  href="/page/AllGiangVien"
+                  className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <i className="fas fa-star text-xl text-white"></i>
+                  <span className="text-base">Giảng viên Nổi Bật</span>
+                </Link>
+              </li>
+
+              <li className="w-full">
+                <Link
+                  href="/page/NhanTin"
+                  className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <i className="fas fa-envelope text-xl text-white"></i>
+                  <span className="text-base">Nhắn tin Giảng viên</span>
+                </Link>
               </li>
             </ul>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4 mt-auto mb-4 px-4">
-              <div className="buttons-area w-full sm:w-auto flex flex-col sm:flex-row items-stretch gap-3 sm:gap-2">
-                {!hasData ? (
-                  <>
-                    <a
-                      href="/page/register"
-                      className="w-full sm:w-auto border-2 border-gray-300 rounded-xl px-6 py-4 sm:py-3 
-                                  text-white hover:border-pink-700 hover:text-pink-700 
-                                  active:bg-gray-100 transition-all text-center text-lg font-medium
-                                  shadow-sm hover:shadow-md"
-                    >
-                      Đăng ký
-                    </a>
-                    <a
-                      href="/page/login"
-                      className="w-full sm:w-auto border-2 border-gray-300 rounded-xl px-6 py-4 sm:py-3
-                                  bg-[#ff6b6b] text-white hover:border-pink-700 hover:text-pink-700
-                                  active:bg-gray-200 transition-all text-center text-lg font-medium
-                                  shadow-sm hover:shadow-md"
-                    >
-                      Đăng nhập
-                    </a>
-                  </>
-                ) : (
-                  <div className="flex items-center justify-between w-full sm:w-auto gap-4 p-2 rounded-xl bg-white/5">
-                    <div className="relative" ref={dropdownRef}>
-                      <Image
-                        width={48}
-                        height={48}
-                        src={data?.hinh || "/default-avatar.png"}
-                        alt="Profile"
-                        className="rounded-full cursor-pointer 
-                                    hover:ring-3 hover:ring-blue-500 
-                                    active:ring-2 active:ring-blue-600
-                                    transition-all shadow-sm"
-                        onClick={toggleDropdown}
-                      />
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="flex-1 sm:flex-initial text-white hover:text-pink-700 
-                                  active:text-pink-800 rounded-xl transition-all 
-                                  text-lg font-medium px-6 py-3
-                                  hover:bg-gray-100 active:bg-gray-200"
-                    >
-                      Đăng xuất
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-
           </nav>
-
         </div>
       )}
 

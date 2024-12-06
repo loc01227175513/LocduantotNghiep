@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-
+import Link from 'next/link';
 export default function CardProduct({
     id,
     hinh,
@@ -37,7 +37,7 @@ export default function CardProduct({
     return (
         <div className="transition flash element-item creative" data-category="transition" key={id}>
             <div className="rts-single-course">
-                <a href={`/page/course-detail?id=${id}`} className="thumbnail relative">
+                <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative">
                     <Image width={500} height={300} src={hinh} alt="course" style={{ height: "170px" }} />
                     {/* Free course badge */}
                     {(gia === 0 || giamgia === 0) && (
@@ -51,16 +51,16 @@ export default function CardProduct({
                             -{Math.round((1 - giamgia / gia) * 100)}% OFF
                         </div>
                     )}
-                </a>
+                </Link>
                 <div className="save-icon" data-bs-toggle="modal" data-bs-target="#exampleModal-login" onClick={() => handleYeuThich(id)}>
                     <i className="fa-sharp fa-light fa-bookmark text-lg" />
                 </div>
                 <div className="course-card">
-                    <a href={`/page/course-detail?id=${id}`} className="title-link">
+                    <Link href={`/page/course-detail?id=${id}`} className="title-link">
                         <p ref={titleRef} className="title line-clamp-2 flex items-center transition-height" style={{ fontWeight: "600", height: `${maxHeight}px`, minHeight: "48px" }}>
                             {ten}
                         </p>
-                    </a>
+                    </Link>
                     <div className="teacher">
                         <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
                         <span className="text-xl text-gray-800" style={{ fontWeight: "400" }}>{chude}</span>

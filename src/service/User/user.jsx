@@ -19,6 +19,8 @@ export const user = async () => {
       });
   
       if (!response.ok) {
+        const errorResponse = await response.json();
+        console.error('Error Response:', errorResponse);
         throw new Error('Failed to fetch user data');
       }
   
@@ -47,6 +49,8 @@ export const user = async () => {
       });
   
       if (!response.ok) {
+        const errorResponse = await response.json();
+        console.error('Error Response:', errorResponse);
         throw new Error('Failed to update user data');
       }
   
@@ -75,7 +79,9 @@ export const user = async () => {
       });
   
       if (!response.ok) {
-        throw new Error('Failed to update user data');
+        const errorResponse = await response.json();
+        console.error('Error Response:', errorResponse);
+        throw new Error('Failed to show user data');
       }
   
       return response.json();
@@ -111,7 +117,7 @@ export const user = async () => {
       if (!response.ok) {
         const errorResponse = await response.json();
         console.error('Error Response:', errorResponse);
-        throw new Error('Failed to update user data');
+        throw new Error('Failed to update password');
       }
   
       return await response.json();

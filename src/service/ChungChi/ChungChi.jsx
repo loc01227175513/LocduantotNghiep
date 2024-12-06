@@ -39,7 +39,7 @@ export const ChonChungChi = async (id) => {
       throw new Error(`Failed to fetch certificate: ${response.status} ${response.statusText} - ${errorDetails}`);
     }
 
-    return response.json();
+    return await response.json();
   } catch (error) {
     console.error('Error:', error);
     throw error;

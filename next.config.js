@@ -5,7 +5,8 @@ const nextConfig = {
       'laptrinhkid.com',
       'res.cloudinary.com',
       'lh3.googleusercontent.com',
-      'encrypted-tbn0.gstatic.com'
+      'encrypted-tbn0.gstatic.com',
+      'your-image-domain.com'
     ],
     remotePatterns: [
       {
@@ -13,6 +14,7 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    unoptimized: true,
   },
 }
 

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Link from "next/link";
 export default function FooterComponent() {
   useEffect(() => {
     AOS.init({
@@ -32,7 +33,7 @@ export default function FooterComponent() {
                 >
                   TechStudent Chứng nhận
                 </p>
-                <a
+                <Link
                   href="/page/Cours-Filter"
                   className="inline-flex items-center px-6 py-3 bg-white text-pink-700 rounded-lg hover:bg-blue-50 transition duration-300 text-xl"
                 >
@@ -50,7 +51,7 @@ export default function FooterComponent() {
                       d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -63,7 +64,7 @@ export default function FooterComponent() {
                   giáo dục chất lượng cao và công nghệ tiên tiến.
                 </p>
                 <div className="space-y-3">
-                  <a
+                  <Link
                     href="#"
                     className="flex items-center text-gray-600 hover:text-blue-600 text-xl"
                   >
@@ -87,8 +88,8 @@ export default function FooterComponent() {
                       />
                     </svg>
                     Melbourne, Úc
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="tel:+61485826710"
                     className="flex items-center text-gray-600 hover:text-blue-600 text-xl"
                   >
@@ -106,7 +107,7 @@ export default function FooterComponent() {
                       />
                     </svg>
                     +61 485 826 710
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -115,36 +116,36 @@ export default function FooterComponent() {
                 <h6 className="font-semibold mb-6 text-2xl">Quick Links</h6>
                 <ul className="space-y-3">
                   <li>
-                    <a
+                    <Link
                       href="/courses"
                       className="text-gray-600 hover:text-blue-600 text-xl"
                     >
                       Các khóa học mới nhất
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       href="/about"
                       className="text-gray-600 hover:text-blue-600 text-xl"
                     >
                       Về chúng tôi
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       href="/careers"
                       className="text-gray-600 hover:text-blue-600 text-xl"
                     >
                       Sự nghiệp
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       href="/pricing"
                       className="text-gray-600 hover:text-blue-600 text-xl"
                     >
                       Kế hoạch định giá
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -188,18 +189,18 @@ export default function FooterComponent() {
                   © 2024 TechStudent.Tất cả quyền được bảo lưu. lưu.
                 </p>
                 <div className="flex space-x-6 mt-4 md:mt-0">
-                  <a href="#" className="text-gray-400 hover:text-blue-600">
+                  <Link href="#" className="text-gray-400 hover:text-blue-600">
                     <i className="fab fa-facebook-f"></i>
-                  </a>
-                  <a href="#" className="text-gray-400 hover:text-pink-600">
+                  </Link>
+                  <Link href="#" className="text-gray-400 hover:text-pink-600">
                     <i className="fab fa-instagram"></i>
-                  </a>
-                  <a href="#" className="text-gray-400 hover:text-blue-500">
+                  </Link>
+                  <Link href="#" className="text-gray-400 hover:text-blue-500">
                     <i className="fab fa-linkedin-in"></i>
-                  </a>
-                  <a href="#" className="text-gray-400 hover:text-red-600">
+                  </Link>
+                  <Link href="#" className="text-gray-400 hover:text-red-600">
                     <i className="fab fa-youtube"></i>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

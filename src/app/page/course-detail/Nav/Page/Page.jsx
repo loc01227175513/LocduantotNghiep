@@ -6,7 +6,7 @@ import Instructor from './Instructor';
 import Review from './Review';
 import Course from './course';
 import NhanTin from './Nhantin';
-
+import Link from 'next/link';
 const MotionDiv = motion.div;
 
 const menuVariants = {

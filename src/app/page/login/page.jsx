@@ -199,6 +199,12 @@ export default function Login() {
                   <span>Hoặc đăng nhập bằng email</span>
                 </div> */}
 
+                {isLoading && (
+                  <motion.div className="loading-message" variants={itemVariants}>
+                    Đang xử lý, vui lòng chờ...
+                  </motion.div>
+                )}
+
                 <Formik
                   initialValues={initialValues}
                   validationSchema={validationSchema}

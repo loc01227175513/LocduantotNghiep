@@ -1,42 +1,115 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { DanhSachYeuThich, XoaKhoaHocYeuThich } from '../../../../service/YeuThich/YeuThich';
 import Image from 'next/image';
 
 export default function VoucherPage() {
     const [love, setLove] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Memoize fetchLove to prevent unnecessary re-renders
+    const fetchLove = useCallback(async () => {
+        try {
+            setError(null);
+            const response = await DanhSachYeuThich();
+            
+            if (!response) {
+                throw new Error('Không thể tải dữ liệu');
+            }
+
+            if (response?.khoahoc) {
+                setLove(response.khoahoc);
+            }
+        } catch (error) {
+            console.error("Error fetching favorites:", error);
+            setError(error.message || 'Đã xảy ra lỗi khi tải danh sách yêu thích');
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
 
     useEffect(() => {
-        const fetchLove = async () => {
-            try {
-                const response = await DanhSachYeuThich();
-                setLove(response.khoahoc);
-            } catch (error) {
-                console.error('Fetch error:', error);
+        let isMounted = true;
+        
+        const initializeFetch = async () => {
+            if (isMounted) {
+                await fetchLove();
             }
         };
 
-        fetchLove();
-    }, []);
+        initializeFetch();
 
-        const deleteFavorite = async (id) => {
-        try {
-            const response = await XoaKhoaHocYeuThich(id);
-            if (!response.ok) {
-                if (response.status === 404) {
-                    throw new Error(`Course with ID ${id} not found. Status: ${response.status}`);
-                } else {
-                    throw new Error(`Failed to delete course with ID ${id}. Status: ${response.status}`);
-                }
+        // Set up polling interval
+        const interval = setInterval(() => {
+            if (isMounted) {
+                fetchLove();
             }
-            setTimeout(() => {
+        }, 5000);
+
+        // Cleanup function
+        return () => {
+            isMounted = false;
+            clearInterval(interval);
+        };
+    }, [fetchLove]);
+
+    const deleteFavorite = async (id) => {
+        try {
+            setError(null);
+            const response = await XoaKhoaHocYeuThich(id);
+            
+            if (!response) {
+                throw new Error('Không thể xóa khóa học');
+            }
+
+            if (response?.ok) {
+                // Optimistic update
                 setLove(prevLove => prevLove.filter(item => item.khoahoc.id !== id));
-            }, 500);
+                
+                // Verify update with server
+                await fetchLove();
+            } else {
+                throw new Error(response?.message || 'Không thể xóa khóa học');
+            }
         } catch (error) {
-            window.location.reload();
+            console.error("Error deleting favorite:", error);
+            setError(error.message || 'Đã xảy ra lỗi khi xóa khóa học');
+            // Rollback on error by refetching
+            await fetchLove();
         }
     };
+
+    if (isLoading) {
+        return (
+            <div className="col-lg-9 h-lvh">
+                <div className="page-background">
+                    <div className="exrolled-course-wrapper-dashed">
+                        <p>Đang tải...</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="col-lg-9 h-lvh">
+                <div className="page-background">
+                    <div className="exrolled-course-wrapper-dashed">
+                        <p className="text-red-500">{error}</p>
+                        <button 
+                            onClick={fetchLove}
+                            className="rts-btn btn-border mt-3"
+                        >
+                            Thử lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <>

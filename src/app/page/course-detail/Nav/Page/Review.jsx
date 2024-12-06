@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Tooltip } from "@nextui-org/react";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
-
+import Link from 'next/link';
 const MotionDiv = motion.div;
 
 const styles = `

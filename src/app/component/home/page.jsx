@@ -23,6 +23,7 @@ import Image from "next/image";
 import CourseDeXuat from "../../component/course/courseDeXuat";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Link from "next/link";
 
 // Initialize AOS in useEffect
 
@@ -131,7 +132,7 @@ export default function Homecomponent() {
                       />
                     </div>
                     <div className="circle-animation">
-                      <a
+                      <Link
                         className="uni-circle-text uk-background-white dark:uk-background-gray-80 uk-box-shadow-large uk-visible@m"
                         href="#view_in_opensea"
                       >
@@ -154,7 +155,7 @@ export default function Homecomponent() {
                           </text>
                         </svg>
                         <i className="fa-regular fa-arrow-up-right" />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -235,7 +236,7 @@ export default function Homecomponent() {
                     ))}
                   </div>
                   <div className="flex flex-row gap-10">
-                    <a
+                    <Link
                       href="/page/Cours-Filter"
                       className="rts-btn hover-effect border-white bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 border border-white"
                     >
@@ -243,8 +244,8 @@ export default function Homecomponent() {
                         Xem tất cả các khóa học
                       </span>
                       <i className="fas fa-arrow-right ml-2 text-xl text-white"></i>
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href="#khoahocmoi"
                       className="rts-btn hover-effect border-white  border border-white"
                     >
@@ -252,7 +253,7 @@ export default function Homecomponent() {
                         Xem các khóa học mới
                       </span>
                       <i className="fas fa-arrow-right ml-2 text-xl text-white"></i>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

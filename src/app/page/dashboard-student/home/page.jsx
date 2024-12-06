@@ -6,6 +6,9 @@ import { KhoaHocDaHoc } from "../../../../service/dashbordStuden/Dashboard-servi
 export default function Homedashboardstudent() {
   const [data, setData] = useState([]);
   const [khoahocdahoc, setKhoahocdahoc] = useState([]);
+  const [showAll, setShowAll] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const calculateMinutesDifference =(date) => { 
     const now = new Date(); 
     const pastDate = new Date(date); 
@@ -27,22 +30,22 @@ export default function Homedashboardstudent() {
     return `${diffInMinutes} phút trước`;
   }
   useEffect(() => {
-    Dashboard()
-      .then((res) => {
-        setData(res.data);
+    Promise.all([Dashboard(), KhoaHocDaHoc()])
+      .then(([dashboardRes, khoahocRes]) => {
+        setData(dashboardRes.data);
+        setKhoahocdahoc(khoahocRes.data);
       })
       .catch((error) => {
         console.error("Error fetching dashboard data:", error);
-      });
-
-    KhoaHocDaHoc()
-      .then((res) => {
-        setKhoahocdahoc(res.data);
       })
-      .catch((error) => {
-        console.error("Error fetching dashboard data:", error);
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   console.log(data.length);
   console.log(khoahocdahoc.length);
@@ -106,8 +109,8 @@ export default function Homedashboardstudent() {
             {/* in progress course area */}
             <div className="in-progress-course-wrapper title-between-dashboard mb--10">
               <h5 className="title text-xl" >Các khóa học của tôi</h5>
-              <a href="#" className="more">
-                Xem tất cả
+              <a href="#" className="more" onClick={(e) => { e.preventDefault(); setShowAll(!showAll); }}>
+                {showAll ? 'Ẩn bớt' : 'Xem tất cả'}
               </a>
             </div>
             {/* in progress course area end */}
@@ -127,7 +130,7 @@ export default function Homedashboardstudent() {
               </div>
               {/* single course inroll end */}
               {/* single course inroll */}
-              {data.map((item, itemIndex) =>
+              {data.slice(0, showAll ? data.length : 4).map((item, itemIndex) => (
                 item.khoahocs.map((khoahoc, khoahocIndex) => (
                   <div
                     key={`${itemIndex}-${khoahocIndex}`}
@@ -146,7 +149,7 @@ export default function Homedashboardstudent() {
                     </div>
                   </div>
                 ))
-              )}
+              ))}
               {/* single course inroll end */}
             </div>
             {/* my course enroll wrapper end */}

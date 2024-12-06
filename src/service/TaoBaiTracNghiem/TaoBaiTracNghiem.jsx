@@ -24,7 +24,7 @@ export const TaoBaiTracNghiem = async ({ id_baihoc, tieu_de, mo_ta }) => {
       throw new Error(errorData.message || 'Failed to register');
     }
 
-    return response.json();
+    return await response.json();
   } catch (error) {
     console.error('Error during registration:', error);
     throw error;

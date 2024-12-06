@@ -26,7 +26,8 @@ export const ThanhToanKhoaHocFree = async (id_giangvien) => {
       });
   
       if (!response.ok) {
-        throw new Error('Failed to fetch user data');
+        const errorMessage = await response.text();
+        throw new Error(`Failed to fetch user data: ${errorMessage}`);
       }
   
       return response.json();

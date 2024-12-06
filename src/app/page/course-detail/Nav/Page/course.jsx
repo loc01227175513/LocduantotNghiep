@@ -3,7 +3,7 @@ import { Spinner, Box, Text, VStack, Accordion, AccordionItem, AccordionButton, 
 import { Circle, HStack, Badge, Icon } from '@chakra-ui/react'
 import { ChevronDownIcon, TimeIcon } from "@chakra-ui/icons";
 import { FaVideo } from 'react-icons/fa'
-
+import Link from 'next/link';
 // Utility function to parse time and convert it to a readable format
 const parseDuration = (duration) => {
   const parts = duration.split(":");

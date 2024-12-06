@@ -1,11 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
-
+import Link from 'next/link';
 export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id, PhanTram }) {
   return (
     <div className="transition flash element-item creative" data-category="transition">
       <div className="rts-single-course">
-        <a href={`/page/course-detail?id=${id}`} className="thumbnail relative">
+        <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative">
           <div className="thumbnail relative" style={{ aspectRatio: '16 / 9' }}>
             <Image src={hinh} alt="course" layout="fill" objectFit="cover" />
             {/* Free course badge */}
@@ -21,13 +21,13 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
               </div>
             )}
           </div>
-        </a>
+        </Link>
         <div className="course-card">
-          <a href={`/page/course-detail?id=${id}`} className="title-link block h-[60px]">
+          <Link href={`/page/course-detail?id=${id}`} className="title-link block h-[60px]">
             <p className="title line-clamp-2 text-base overflow-hidden hover:text-blue-600 transition-colors">
               {ten}
             </p>
-          </a>
+          </Link>
 
           <div className="teacher">
             <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>

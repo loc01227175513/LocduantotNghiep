@@ -1,37 +1,46 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { GiangVienKhoaHocHienThi } from '../../../service/course/course.service';
-import { TheoDoiGiangVien, DanhSachTheoDoi } from '../../../service/Follow/Follow';
+import { TheoDoiGiangVien, DanhSachTheoDoi, BoTheoDoiGiangVien } from '../../../service/Follow/Follow';
 import { KhoaHocYeuThich } from "../../../service/YeuThich/YeuThich";
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export const Profileinsructor = () => {
     const [data, setData] = useState([]);
     const [follow, setFollow] = useState(false);
+    const [followStatusChanged, setFollowStatusChanged] = useState(false);
+    const [favorites, setFavorites] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        GiangVienKhoaHocHienThi().then((res) => {
-            const dataWithSocialLinks = res.data.map((item) => {
-                const socialLinks = res.MangXaHoi.filter(
-                    (social) => social.id_giangvien === item.giangVien.id
-                );
-                return {
+        const fetchData = async () => {
+            try {
+                const res = await GiangVienKhoaHocHienThi();
+                const dataWithSocialLinks = res.data.map((item) => ({
                     ...item,
                     giangVien: {
                         ...item.giangVien,
-                        MangXaHoi: socialLinks,
+                        MangXaHoi: res.MangXaHoi.filter(
+                            (social) => social.id_giangvien === item.giangVien.id
+                        ),
                     },
-                };
-            });
-            setData(dataWithSocialLinks);
-        });
+                    isLiked: false
+                }));
+                setData(dataWithSocialLinks);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                toast.error('Lỗi khi tải dữ liệu');
+            }
+        };
+        fetchData();
     }, []);
     useEffect(() => {
         const fetchFollowStatus = async () => {
             try {
                 const res = await DanhSachTheoDoi();
-                console.log(res, "res");
-
                 const urlParams = new URLSearchParams(window.location.search);
                 const id_giangvien = urlParams.get('id');
 
@@ -40,16 +49,28 @@ export const Profileinsructor = () => {
                         (item) => String(item.id_giangvien) === id_giangvien
                     );
                     setFollow(isFollowing);
-                } else {
-                    console.warn('id_giangvien not found in URL');
+                    setData(prevData =>
+                        prevData.map(item =>
+                            item.giangVien.id === parseInt(id_giangvien)
+                                ? {
+                                    ...item,
+                                    giangVien: {
+                                        ...item.giangVien,
+                                        isFollowed: isFollowing
+                                    }
+                                }
+                                : item
+                        )
+                    );
                 }
             } catch (error) {
                 console.error('Error fetching follow status:', error);
+                toast.error('Lỗi khi kiểm tra trạng thái theo dõi');
             }
         };
 
         fetchFollowStatus();
-    }, []);
+    }, [followStatusChanged]);
     console.log(follow, "follow");
 
 
@@ -95,25 +116,109 @@ export const Profileinsructor = () => {
     };
     const handleFollow = async () => {
         try {
-            await TheoDoiGiangVien();
-            setFollow(true);
-            alert('Theo dõi thành công');
+            setIsLoading(true);
+            const urlParams = new URLSearchParams(window.location.search);
+            const id_giangvien = urlParams.get('id');
+
+            if (!id_giangvien) {
+                toast.error('Không tìm thấy ID giảng viên');
+                return;
+            }
+
+            const response = await TheoDoiGiangVien(id_giangvien);
+
+            if (response && (response.status === 200 || response.status === "success")) {
+                setFollow(true);
+                setFollowStatusChanged(prev => !prev);
+                toast.success('Theo dõi thành công');
+            } else if (response && response.message) {
+                toast.error(response.message);
+            } else {
+                window.location.reload();
+            }
         } catch (error) {
-            alert('Theo dõi thất bại');
+            window.location.reload();
+        } finally {
+            setIsLoading(false);
         }
-    }
+    };
     const handleYeuThich = async (id) => {
         try {
             const response = await KhoaHocYeuThich(id);
-            console.log(response);
-            toast.success("Added to favorites!");
+            if (response && response.status === "success") {
+                setData(prevData =>
+                    prevData.map(item =>
+                        item.id === id
+                            ? { ...item, isLiked: !item.isLiked }
+                            : item
+                    )
+                );
+                toast.success("Đã thêm vào danh sách yêu thích!");
+            } else {
+                throw new Error(response?.message || 'Không thể thêm vào yêu thích');
+            }
         } catch (error) {
-            console.error("Error:", error);
-            toast.error("Error adding to favorites!");
+            window.location.reload();
+        }
+    };
+
+    const handleUnfollow = async () => {
+        try {
+            setIsLoading(true);
+            const urlParams = new URLSearchParams(window.location.search);
+            const id_giangvien = urlParams.get('id');
+
+            if (!id_giangvien) {
+                toast.error('Không tìm thấy ID giảng viên');
+                return;
+            }
+
+            const followList = await DanhSachTheoDoi();
+            const followRecord = followList.find(item => String(item.id_giangvien) === id_giangvien);
+
+            if (!followRecord) {
+                toast.error('Không tìm thấy thông tin theo dõi');
+                return;
+            }
+
+            const response = await BoTheoDoiGiangVien(followRecord.id);
+
+            if (response && (response.status === 200 || response.status === "success")) {
+                setFollow(false);
+                setFollowStatusChanged(prev => !prev);
+                toast.success('Đã bỏ theo dõi thành công');
+            } else if (response && response.message) {
+                toast.error(response.message);
+            } else {
+                toast.error('Không thể bỏ theo dõi. Vui lòng thử lại sau');
+            }
+        } catch (error) {
+            console.error('Error unfollowing:', error);
+            if (error.response) {
+                toast.error(`Lỗi: ${error.response.data?.message || 'Không thể bỏ theo dõi'}`);
+            } else if (error.request) {
+                toast.error('Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng');
+            } else {
+                toast.error('Có lỗi xảy ra: ' + (error.message || 'Không thể bỏ theo dõi'));
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (<>
+        <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+        />
 
         <div className="container">
             <div className="dashboard-banner-area-wrapper">
@@ -128,8 +233,19 @@ export const Profileinsructor = () => {
                                             {renderStars(overallAverageRating())}
                                         </div>
                                         <p>Giảng viên tiếp thị kỹ thuật số</p>
-                                        <button onClick={handleFollow} className="create-btn" disabled={follow}>
-                                            <i className="fa-regular fa-circle-plus" /> {follow ? 'Đã Theo Dõi' : 'Theo Dõi'}
+                                        <button
+                                            onClick={follow ? handleUnfollow : handleFollow}
+                                            className="create-btn"
+                                            disabled={isLoading}
+                                        >
+                                            {isLoading ? (
+                                                <span>Đang xử lý...</span>
+                                            ) : (
+                                                <>
+                                                    <i className={`fa-regular ${follow ? 'fa-user-minus' : 'fa-circle-plus'}`} />
+                                                    {follow ? 'Bỏ Theo Dõi' : 'Theo Dõi'}
+                                                </>
+                                            )}
                                         </button>
                                     </div>
                                     <div className="author-profile-image-and-name absolute top-0 flex items-center space-x-4 p-4 h-60 mt-40 bg-white shadow-md rounded-lg">
@@ -200,37 +316,35 @@ export const Profileinsructor = () => {
                                             key={item.id}
                                         >
                                             <Link href={`/page/course-detail?id=${item.id}`}>
-                                                <div className="rts-single-course">
-                                                <div className="thumbnail relative group">
-    <Image 
-        width={500} 
-        height={300}
-        src={item.hinh}
-        alt="course"
-        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-    />
-    {item.gia === 0 || item.giamgia === 0 ? (
-        <div className="absolute top-4 left-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full font-bold shadow-lg transform -rotate-12">
-            Miễn Phí
-        </div>
-    ) : (
-        <div className="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-full font-bold shadow-lg transform -rotate-12">
-            -{Math.round(((item.gia - item.giamgia) / item.gia) * 100)}%
-        </div>
-    )}
-</div>
-                                                    <div
-                                                        className="save-icon"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal-login"
-                                                        onClick={(event) => {
-                                                            event.preventDefault();
-                                                            handleYeuThich(item.id);
-                                                        }}
-                                                    >
-                                                        <i className="fa-sharp fa-light fa-bookmark" />
+                                                <div className="course-item relative">
+                                                    <div className="thumbnail relative group">
+                                                        <Image
+                                                            width={500}
+                                                            height={300}
+                                                            src={item.hinh}
+                                                            alt="course"
+                                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                                        />
+                                                        {item.gia === 0 || item.giamgia === 0 ? (
+                                                            <div className="absolute top-4 left-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full font-bold shadow-lg transform -rotate-12">
+                                                                Miễn Phí
+                                                            </div>
+                                                        ) : (
+                                                            <div className="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-full font-bold shadow-lg transform -rotate-12">
+                                                                -{Math.round(((item.gia - item.giamgia) / item.gia) * 100)}%
+                                                            </div>
+                                                        )}
+                                                        <button
+                                                            className="save-icon"
+                                                            onClick={(event) => {
+                                                                event.preventDefault();
+                                                                handleYeuThich(item.id);
+                                                            }}
+                                                        >
+                                                            <i className={`fa-${item.isLiked ? 'solid' : 'regular'} fa-heart text-xl ${item.isLiked ? 'text-red-500' : 'text-gray-600'}`} />
+                                                        </button>
                                                     </div>
-                                                                                                     <div className="tags-area-wrapper flex gap-2 p-4">
+                                                    <div className="tags-area-wrapper flex gap-2 p-4">
                                                         <div className="single-tag transform hover:-translate-y-1 transition-all duration-300">
                                                             <span className="bg-gradient-to-r from-blue-100 to-blue-50 px-3 py-1 rounded-full text-blue-600 text-sm font-medium hover:shadow-lg">
                                                                 {item.theLoaiCon.ten}
@@ -242,7 +356,7 @@ export const Profileinsructor = () => {
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div className="lesson-studente p-4 flex justify-between items-center border-b border-gray-100">
                                                         <div className="lesson group flex items-center space-x-2">
                                                             <i className="fa-light fa-calendar-lines-pen text-blue-500 group-hover:scale-110 transition-transform duration-300" />
@@ -257,15 +371,15 @@ export const Profileinsructor = () => {
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <h5 className="title p-4 text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors duration-300">
                                                         {item.ten}
                                                     </h5>
-                                                    
+
                                                     <p className="teacher px-4 text-gray-600 hover:text-purple-600 transition-colors duration-300">
                                                         {item.giangVien.ten}
                                                     </p>
-                                                    
+
                                                     <div className="rating-and-price p-4 flex justify-between items-center">
                                                         <div className="stars flex items-center space-x-1 group">
                                                             <span className="text-yellow-500 group-hover:scale-105 transition-transform duration-300">
@@ -303,12 +417,12 @@ export const Profileinsructor = () => {
         </div>
         <style jsx>{`
         /* Add these styles */
-.rts-single-course {
+. {
     transform: translateY(0);
     transition: all 0.3s ease-in-out;
 }
 
-.rts-single-course:hover {
+.:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
@@ -397,7 +511,7 @@ export const Profileinsructor = () => {
   color: #1976d2;
 }
 
-.rts-single-course {
+. {
   background: white;
   border-radius: 15px;
   overflow: hidden;
@@ -405,7 +519,7 @@ export const Profileinsructor = () => {
   box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
-.rts-single-course:hover {
+.:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 30px rgba(0,0,0,0.12);
 }
@@ -419,7 +533,7 @@ export const Profileinsructor = () => {
   transition: transform 0.5s ease;
 }
 
-.rts-single-course:hover .thumbnail img {
+.:hover .thumbnail img {
   transform: scale(1.05);
 }
 
@@ -463,16 +577,24 @@ export const Profileinsructor = () => {
   position: absolute;
   right: 1rem;
   top: 1rem;
-  background: rgba(255,255,255,0.9);
-  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
+  z-index: 10;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .save-icon:hover {
   transform: scale(1.1);
   background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .price-area {
@@ -530,14 +652,14 @@ export const Profileinsructor = () => {
   cursor: not-allowed;
 }
 
-.rts-single-course {
+. {
   border-radius: 1rem;
   overflow: hidden;
   transition: all 0.3s ease;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.rts-single-course:hover {
+.:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
@@ -577,6 +699,16 @@ export const Profileinsructor = () => {
 .social-area-dashboard-footer a:hover {
   color: #2a5298;
   transform: translateY(-2px);
+}
+
+.course-item {
+  position: relative;
+  overflow: visible;
+}
+
+.thumbnail {
+  overflow: hidden;
+  border-radius: 12px;
 }
 
 

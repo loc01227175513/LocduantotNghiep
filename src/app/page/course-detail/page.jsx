@@ -68,29 +68,29 @@ const Khac = ({ course }) => {
           <div className="social-share-course-side-bar">
             <ul>
               <li>
-                <a href="#" data-tooltip="Share on Facebook">
+                <Link href="#" data-tooltip="Share on Facebook">
                   <i className="fa-brands fa-facebook-f" />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" data-tooltip="Share on Instagram">
+                <Link href="#" data-tooltip="Share on Instagram">
                   <i className="fa-brands fa-instagram" />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" data-tooltip="Share on LinkedIn">
+                <Link href="#" data-tooltip="Share on LinkedIn">
                   <i className="fa-brands fa-linkedin" />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" data-tooltip="Share on Pinterest">
+                <Link href="#" data-tooltip="Share on Pinterest">
                   <i className="fa-brands fa-pinterest" />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" data-tooltip="Share on YouTube">
+                <Link href="#" data-tooltip="Share on YouTube">
                   <i className="fa-brands fa-youtube" />
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -151,7 +151,7 @@ const NavPhai = ({
                           />
                         )}
                         <div className="video-overlay">
-                          <a className="video-overlay-close">×</a>
+                          <Link href="#" className="video-overlay-close">×</Link>
                         </div>
                       </div>
                     </div>
@@ -178,25 +178,40 @@ const NavPhai = ({
                       <span className="text-xl">2 ngày còn lại ở mức giá này!</span>
                     </div>
                     {!NguoiDung ? (
-                      <Link href={`/page/login`}>
-                        <button className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1">Đi Đến Đăng nhập</button>
+                      <Link href="/page/login">
+                        <button className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700  !border-pink-700 !border-1">
+                          Đi Đến Đăng nhập
+                        </button>
                       </Link>
-                    ) : isCourseRegistered || course.gia === 0 || course.giamgia == 0 ? (
+                    ) : isCourseRegistered || course.gia === 0 || course.giamgia === 0 ? (
                       <Link href={`/page/Study?id=${course.id}`}>
-                        <button onClick={handleThanhToanKhoaHocFree} className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1">Đi đến khóa học</button>
+                        <button 
+                          onClick={handleThanhToanKhoaHocFree} 
+                          className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700  !border-pink-700 !border-1"
+                        >
+                          Đi đến khóa học
+                        </button>
                       </Link>
                     ) : isCourseInCart ? (
                       <Link href="/page/cart">
-                        <button onClick={handleAddCart} className="mt-10 flex justify-center text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1">
-                          <span className="rts-btn btn-border text-pink-700">Thêm vào giỏ hàng</span>
+                        <button 
+                          onClick={handleAddCart} 
+                          className="mt-10 flex justify-center text-xl text-pink-700  !border-pink-700 !border-1"
+                        >
+                          <span className="rts-btn btn-border text-pink-700">Đi Đến Giỏ Hàng</span>
                         </button>
                       </Link>
                     ) : course.trangthai === "Notyet" || course.trangthai === "Pending" ? (
                       <button className="rts-btn">Bản Demo</button>
                     ) : (
                       <>
-                        <Link href="/page/checkout" className="rts-btn btn-border text-xl text-pink-700 bg-pink-200 !border-pink-700 !border-1" onClick={handleAddCart} style={{ marginTop: "20px" }}>Mua ngay</Link>
-                        <button onClick={handleAddCart} className="mt-10 flex justify-center text-xl !border-pink-700 !border-1" style={{ marginTop: "-20px" }}>
+                        <Link href="/page/checkout" className="rts-btn btn-border text-xl text-pink-700  !border-pink-700 !border-1" onClick={handleAddCart}>
+                          Mua ngay
+                        </Link>
+                        <button 
+                          onClick={handleAddCart} 
+                          className="mt-10 flex justify-center text-xl !border-pink-700 !border-1"
+                        >
                           <span className="rts-btn btn-border text-pink-700">Thêm vào giỏ hàng</span>
                         </button>
                       </>
@@ -264,13 +279,22 @@ export default function Coursedetailcomponent() {
   const [isCourseInCart, setIsCourseInCart] = useState(false);
   const [isCourseRegistered, setIsCourseRegistered] = useState(false);
   const [Allcourse, setAllcourse] = useState(null);
-
   const [loading, setLoading] = useState(true);
+  const [imageLoadingStates, setImageLoadingStates] = useState({});
+  const [NguoiDung, setNguoiDung] = useState(null);
 
-  const NguoiDung =
-    typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("data"))
-      : null;
+  useEffect(() => {
+    const userData = localStorage.getItem("data");
+    if (userData) {
+      try {
+        const parsedData = JSON.parse(userData);
+        setNguoiDung(parsedData);
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        setNguoiDung(null);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -437,6 +461,42 @@ export default function Coursedetailcomponent() {
     return stars;
   };
 
+  // Update the getImageUrl function
+  const getImageUrl = (imageUrl) => {
+    try {
+      // Handle null, undefined, empty string cases
+      if (!imageUrl || imageUrl === "0" || imageUrl === "") {
+        return '/placeholder.jpg';
+      }
+
+      // Remove any leading/trailing whitespace
+      const trimmedUrl = imageUrl.trim();
+
+      // If it's already a full URL starting with http/https, return as is
+      if (trimmedUrl.match(/^https?:\/\//)) {
+        return trimmedUrl;
+      }
+
+      // If it starts with a slash, assume it's from the public folder
+      if (trimmedUrl.startsWith('/')) {
+        return trimmedUrl;
+      }
+
+      // For all other cases, assume it's a relative path and add leading slash
+      return `/${trimmedUrl}`;
+    } catch (error) {
+      console.error('Error processing image URL:', error);
+      return '/placeholder.jpg';
+    }
+  };
+
+  const handleImageLoad = (courseId) => {
+    setImageLoadingStates(prev => ({
+      ...prev,
+      [courseId]: false
+    }));
+  };
+
   return (
     <div className="mt-32">
       <Header />
@@ -462,7 +522,7 @@ export default function Coursedetailcomponent() {
                   }}
                 >
                   <div className="meta-area mt--15">
-                    <a
+                    <Link
                       href="index.html"
                       style={{
                         color: "#fff",
@@ -471,12 +531,12 @@ export default function Coursedetailcomponent() {
                       }}
                     >
                       Trang chủ
-                    </a>
+                    </Link>
                     <i
                       className="fa-solid fa-chevron-right"
                       style={{ margin: "0 10px" }}
                     />
-                    <a
+                    <Link
                       className="active"
                       href="#"
                       style={{
@@ -486,7 +546,7 @@ export default function Coursedetailcomponent() {
                       }}
                     >
                       Chi tiết khóa học
-                    </a>
+                    </Link>
                   </div>
                   <h1
                     className="title"
@@ -689,39 +749,45 @@ export default function Coursedetailcomponent() {
               <div className="col-lg-12">
                 <div className="overflow-x-scroll swiper swiper-float-right-course swiper-data swiper-initialized swiper-horizontal swiper-pointer-events">
                   <div className="swiper-wrapper chialaiflex">
-                    {khoahoclienquan && Array.isArray(khoahoclienquan) ? (
+                    {loading ? (
+                      <div className="loading-skeleton">Loading...</div>
+                    ) : khoahoclienquan?.length > 0 ? (
                       khoahoclienquan.map((course, index) => {
-                        const averageRating =
-                          course.danhgia && course.danhgia.length > 0
-                            ? course.danhgia.reduce(
-                                (acc, rating) =>
-                                  acc + parseInt(rating.danhgia, 10),
-                                0
-                              ) / course.danhgia.length
-                            : 0;
+                        if (!course) return null;
+                        
+                        const averageRating = course.danhgia && course.danhgia.length > 0
+                          ? course.danhgia.reduce((acc, rating) => 
+                              acc + parseInt(rating.danhgia, 10), 0
+                            ) / course.danhgia.length
+                          : 0;
+
                         return (
-                          <div
-                            key={index}
-                            className="transition flash element-item creative"
-                            data-swiper-slide-index={index}
-                            role="group"
-                            aria-label={`${index + 1} / ${
-                              khoahoclienquan.length
-                            }`}
-                          >
+                          <div key={index} className="transition flash element-item creative">
                             {/* Single course style */}
                             <div className="rts-single-course">
-                              <a
+                              <Link
                                 href={`/page/course-detail?id=${course.id}`}
                                 className="thumbnail relative"
                               >
-                                <Image
-                                  width={500}
-                                  height={300}
-                                  src={course.hinh}
-                                  alt="course"
-                                  style={{ height: "170px" }}
-                                />
+                                <div className="relative w-full h-[170px]">
+                                  {imageLoadingStates[course.id] !== false && (
+                                    <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+                                  )}
+                                  <Image
+                                    src={getImageUrl(course?.hinh)}
+                                    alt={course?.ten || 'Course thumbnail'}
+                                    width={500}
+                                    height={300}
+                                    className={`object-cover w-full h-full ${
+                                      imageLoadingStates[course.id] === false ? 'block' : 'hidden'
+                                    }`}
+                                    onLoad={() => handleImageLoad(course.id)}
+                                    onError={() => handleImageLoad(course.id)}
+                                    priority={false}
+                                    quality={75}
+                                    unoptimized={true}
+                                  />
+                                </div>
                                 <div className="course-tags">
                                   {course.gia === 0 ? (
                                     <span className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
@@ -739,7 +805,7 @@ export default function Coursedetailcomponent() {
                                     </span>
                                   ) : null}
                                 </div>
-                              </a>
+                              </Link>
                               <div
                                 className="save-icon"
                                 data-bs-toggle="modal"
@@ -749,14 +815,14 @@ export default function Coursedetailcomponent() {
                                 <i className="fa-sharp fa-light fa-bookmark text-lg" />
                               </div>
                               <div className="course-card p-4 bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-xl">
-                                <a
+                                <Link
                                   href={`/page/course-detail?id=${course.id}`}
                                   className="title-link"
                                 >
                                   <h5 className="title text-2xl font-medium hover:text-primary-600 transition-all duration-300">
                                     <strong>{course.ten}</strong>
                                   </h5>
-                                </a>
+                                </Link>
 
                                 <div className="flex items-center justify-between mt-3">
                                   <div className="teacher flex items-center">
@@ -810,23 +876,11 @@ export default function Coursedetailcomponent() {
                                     </div>
                                   </div>
 
-                                  <div className="rating-area text-lg p-2 flex flex-row">
-                                    <svg
-                                      stroke="currentColor"
-                                      fill="currentColor"
-                                      stroke-width="0"
-                                      viewBox="0 0 576 512"
-                                      className="text-yellow-400 w-5 h-5"
-                                      aria-label="Filled Star"
-                                      height="1em"
-                                      width="1em"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        className="text-yellow-500"
-                                        d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                      ></path>
-                                    </svg>
+                                  <div className="rating-area text-lg p-2 flex flex-row items-center">
+                                    <FaStar 
+                                      className="text-yellow-400 w-5 h-5" 
+                                      aria-label="Rating Star"
+                                    />
                                     <span
                                       className="rating-number ml-1 text-xl"
                                       style={{ fontWeight: "400" }}
@@ -863,7 +917,7 @@ export default function Coursedetailcomponent() {
                         );
                       })
                     ) : (
-                      <p>Không có khóa học có sẵn</p>
+                      <p>No related courses found</p>
                     )}
                   </div>
                   <span
