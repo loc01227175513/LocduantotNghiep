@@ -237,23 +237,23 @@ export default function SaleComponent() {
         <div className="container mx-auto px-4 py-8">
             <section className="flash-sale-section relative">
                 <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-6 h-full">
-                    <div className="flash-sale-banner flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-xl shadow-lg">
+                    <div className="flash-sale-banner flex flex-col md:flex-row justify-between items-start md:items-center gap-6  bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 p-6 rounded-xl shadow-lg">
                         <h2 className="text-3xl font-extrabold flex items-center gap-6">
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500 drop-shadow-sm text-4xl">
+                            <span className="text-white bg-clip-text bg-gradient-to-r from-pink-600 to-pink-600 drop-shadow-sm text-4xl">
                                 FLASH SALE
                             </span>
-                            <span className="text-red-500 text-2xl font-semibold">Kết thúc sau</span>
+                            <span className=" text-white text-2xl font-semibold">Kết thúc sau</span>
                             <div className="flash-sale-countdown flex items-center space-x-3">
-                                <span className="countdown-box bg-gradient-to-br from-red-500 to-red-600 text-white px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.hours}</span>
-                                <span className="countdown-separator font-bold text-red-500 text-2xl">:</span>
-                                <span className="countdown-box bg-gradient-to-br from-red-500 to-red-600 text-white px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.minutes}</span>
-                                <span className="countdown-separator font-bold text-red-500 text-2xl">:</span>
-                                <span className="countdown-box bg-gradient-to-br from-red-500 to-red-600 text-white px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.seconds}</span>
+                                <span className="countdown-box bg-gradient-to-br from-pink-600 to-pink-600 text-white px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.hours}</span>
+                                <span className="countdown-separator font-bold text-white text-2xl">:</span>
+                                <span className="countdown-box bg-gradient-to-br from-pink-600 to-pink-600 text-white px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.minutes}</span>
+                                <span className="countdown-separator font-bold text-white text-2xl">:</span>
+                                <span className="countdown-box bg-gradient-to-br from-pink-600 to-pink-600 text-white px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.seconds}</span>
                             </div>
                         </h2>
                         <button
                             onClick={handleToggleSlots}
-                            className="relative right-0 toggle-slots-btn bg-white text-orange-500 border-2 border-orange-500 hover:bg-orange-500 hover:text-white px-6 py-2.5 rounded-lg transition-all duration-300 font-semibold flex items-center justify-between gap-3 shadow-sm hover:shadow-md w-44"
+                            className="relative right-0 toggle-slots-btn bg-white text-pink-600 border-2 border-pink-600 hover:bg-pink-600 hover:text-white px-6 py-2.5 rounded-lg transition-all duration-300 font-semibold flex items-center justify-between gap-3 shadow-sm hover:shadow-md w-44"
                         >
                             <span>Xem tất cả</span>
                             <svg
@@ -278,14 +278,16 @@ export default function SaleComponent() {
                         </div>
                     </div>
 
-                    <div className=" mt-12 px-4 mx-auto overflow-x-auto">
-                        <div className="flex flex-nowrap gap-8 min-w-full pb-4">
+                    <div className="mt-12 px-1 mx-auto overflow-x-auto">
+                        <div className="flex flex-nowrap gap-4 min-w-full pb-2">
                             {getFilteredCourses().map((item) => (
                                 <div key={item.id} className="flash-sale-col relative group flex-none w-[280px]">
-                                    <div className="flash-sale-card bg-white border border-gray-200 rounded-2xl shadow-sm p-5 hover:shadow-2xl hover:border-orange-200 transform transition-all duration-300 ease-in-out">
+
+                                    <div className="flash-sale-card  bg-white rounded-2xl shadow-[5px_0_15px_-3px_rgba(0,0,0,0.1),-5px_0_15px_-3px_rgba(0,0,0,0.1)] p-2 hover:shadow-lg transform transition-all duration-300 ease-in-out">
+
                                         <div>
                                             {item.magiamgia && item.magiamgia.giamgia > 0 && (
-                                                <div className="absolute -top-2 -left-2 discount-badge bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-1.5 rounded-full text-lg font-bold shadow-lg transform -rotate-12">
+                                                <div className="absolute top-4 right-4 discount-badge bg-gradient-to-r from-red-500 to-orange-500 text-white px-2 py-1 rounded-full text-lg font-bold shadow-lg transform -rotate-12 z-10">
                                                     -{item.magiamgia.giamgia}%
                                                 </div>
                                             )}
@@ -299,18 +301,16 @@ export default function SaleComponent() {
                                                     loading="lazy"
                                                 />
                                             </Link>
-                                            <div className="bestseller-product-actions mt-3 flex justify-end">
-                                                <button className="bestseller-icon-favorite text-gray-400 hover:text-red-500 " onClick={() => handleYeuThich(item.khoahoc.id)}>
-                                                    <span role="img" aria-label="heart" className="anticon anticon-heart text-2xl absolute top-4 right-4">
-                                                        <svg viewBox="64 64 896 896" focusable="false" data-icon="heart" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                            <path d="M923 283.6a260.04 260.04 0 00-56.9-82.8 264.4 264.4 0 00-84-55.5A265.34 265.34 0 00679.7 125c-49.3 0-97.4 13.5-139.2 39-10 6.1-19.5 12.8-28.5 20.1-9-7.3-18.5-14-28.5-20.1-41.8-25.5-89.9-39-139.2-39-35.5 0-69.9 6.8-102.4 20.3-31.4 13-59.7 31.7-84 55.5a258.44 258.44 0 00-56.9 82.8c-13.9 32.3-21 66.6-21 101.9 0 33.3 6.8 68 20.3 103.3 11.3 29.5 27.5 60.1 48.2 91 32.8 48.9 77.9 99.9 133.9 151.6 92.8 85.7 184.7 144.9 188.6 147.3l23.7 15.2c10.5 6.7 24 6.7 34.5 0l23.7-15.2c3.9-2.5 95.7-61.6 188.6-147.3 56-51.7 101.1-102.7 133.9-151.6 20.7-30.9 37-61.5 48.2-91 13.5-35.3 20.3-70 20.3-103.3.1-35.3-7-69.6-20.9-101.9zM512 814.8S156 586.7 156 385.5C156 283.6 240.3 201 344.3 201c73.1 0 136.5 40.8 167.7 100.4C543.2 241.8 606.6 201 679.7 201c104 0 188.3 82.6 188.3 184.5 0 201.2-356 429.3-356 429.3z"></path>
-                                                        </svg>
+                                            <div className="bestseller-product-actions mt-2 flex justify-end absolute top-28 right-4">
+                                                <button className="bestseller-icon-favorite text-white hover:text-red-500" onClick={() => handleYeuThich(item.khoahoc.id)}>
+                                                    <span role="img" aria-label="bookmark" className="flex items-center justify-center w-14 h-14 rounded-full bg-transparent border-2  hover:border-red-500">
+                                                        <i className="fa-sharp fa-light fa-bookmark text-lg"></i>
                                                     </span>
                                                 </button>
                                             </div>
                                         </div>
 
-                                        <div className="category-product-info mt-4 space-y-3">
+                                        <div className="category-product-info mt-2 space-y-2 p-3">
                                             <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-pink-500 bg-clip-text text-transparent">
                                                 {item.khoahoc.giamgia === 0 ? 'Miễn phí' : `${item.khoahoc.giamgia.toLocaleString()} VNĐ`}
                                             </div>
@@ -327,7 +327,7 @@ export default function SaleComponent() {
                                                 )}
                                             </div>
                                             {item.magiamgia && item.magiamgia.giamgia > 0 && (
-                                                <div className="mt-3 p-3 bg-orange-50 rounded-lg">
+                                                <div className="mt-2 p-2 bg-orange-50 rounded-lg">
                                                     <p className="text-xl text-gray-700">Mã giảm giá: <strong className="text-orange-600">{item.magiamgia.maso}</strong></p>
                                                     <p className="text-base text-gray-500 mt-1">
                                                         Thời gian: {new Date(item.magiamgia.ngaybatdau).toLocaleDateString()} - {new Date(item.magiamgia.ngayketthuc).toLocaleDateString()}

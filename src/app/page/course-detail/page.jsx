@@ -1,9 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "../../component/header/page";
 import Footercomponent from "../../component/footer/page";
 import { CourseDetails } from "../../../service/course/course.service";
-
+import { useRouter } from "next/navigation";
 import { Addcart } from "../../../service/cart/cart";
 import { Showcart } from "../../../service/cart/cart";
 import { KhoaHocDaDanKy } from "../../../service/cart/cart";
@@ -15,7 +15,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Allcoursesss } from "../../../service/course/course.service";
 import Nav from "./Nav/Nav";
 import { FaStar, FaRegStar } from "react-icons/fa"; // Import star icons
-
 import Image from "next/image";
 
 const Khac = ({ course }) => {
@@ -115,15 +114,34 @@ const NavPhai = ({
   formattedTotalTime,
   firstVideo,
   handleAddCart,
+  handleBuyNow,
   NguoiDung,
   isCourseRegistered,
   isCourseInCart,
+  buttonStates
 }) => {
+  const LoadingSpinner = () => (
+    <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+    </svg>
+  );
+
   const handleThanhToanKhoaHocFree = async () => {
-    await ThanhToanKhoaHocFree(course.id_giangvien);
-    toast.success("Bạn đã Nhận Kháo Học Miễn phí!");
+    setButtonLoading(prev => ({ ...prev, freeCourse: true }));
+    try {
+      await ThanhToanKhoaHocFree(course.id_giangvien);
+      toast.success("Bạn đã Nhận Khóa Học Miễn phí!");
+      setIsCourseRegistered(true);
+    } catch (error) {
+      console.error("Error registering free course:", error);
+      toast.error("Có lỗi xảy ra khi đăng ký khóa học");
+    } finally {
+      setButtonLoading(prev => ({ ...prev, freeCourse: false }));
+    }
   };
 
+  const router = useRouter();
   return (
     <>
       <div className="rts-course-area rts-section-gap">
@@ -158,7 +176,7 @@ const NavPhai = ({
                     <div className="price-area">
                       {course.gia === 0 && course.giamgia === 0 ? (
                         <p className="p-4 text-white font-bold text-2xl text-center w-full">
-                          Miễn phí
+                          Miễn ph
                         </p>
                       ) : (
                         <>
@@ -179,25 +197,29 @@ const NavPhai = ({
                     </div>
                     {!NguoiDung ? (
                       <Link href="/page/login">
-                        <button className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700  !border-pink-700 !border-1">
+                        <button className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1">
                           Đi Đến Đăng nhập
                         </button>
                       </Link>
                     ) : isCourseRegistered || course.gia === 0 || course.giamgia === 0 ? (
                       <Link href={`/page/Study?id=${course.id}`}>
                         <button 
-                          onClick={handleThanhToanKhoaHocFree} 
-                          className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700  !border-pink-700 !border-1"
+                          onClick={handleThanhToanKhoaHocFree}
+                          disabled={buttonStates.freeCourse.disabled}
+                          className={`rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1 
+                            ${buttonStates.freeCourse.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
-                          Đi đến khóa học
+                          {buttonStates.freeCourse.loading ? (
+                            <span className="flex items-center">
+                              <LoadingSpinner />
+                              Đang xử lý...
+                            </span>
+                          ) : "Đi đến khóa học"}
                         </button>
                       </Link>
                     ) : isCourseInCart ? (
                       <Link href="/page/cart">
-                        <button 
-                          onClick={handleAddCart} 
-                          className="mt-10 flex justify-center text-xl text-pink-700  !border-pink-700 !border-1"
-                        >
+                        <button className="mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1">
                           <span className="rts-btn btn-border text-pink-700">Đi Đến Giỏ Hàng</span>
                         </button>
                       </Link>
@@ -205,14 +227,33 @@ const NavPhai = ({
                       <button className="rts-btn">Bản Demo</button>
                     ) : (
                       <>
-                        <Link href="/page/checkout" className="rts-btn btn-border text-xl text-pink-700  !border-pink-700 !border-1" onClick={handleAddCart}>
-                          Mua ngay
-                        </Link>
                         <button 
-                          onClick={handleAddCart} 
-                          className="mt-10 flex justify-center text-xl !border-pink-700 !border-1"
+                          onClick={handleBuyNow}
+                          disabled={buttonStates.buyNow.disabled}
+                          className={`rts-btn btn-border text-xl text-pink-700 !border-pink-700 !border-1
+                            ${buttonStates.buyNow.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
-                          <span className="rts-btn btn-border text-pink-700">Thêm vào giỏ hàng</span>
+                          {buttonStates.buyNow.loading ? (
+                            <span className="flex items-center">
+                              <LoadingSpinner />
+                              Đang xử lý...
+                            </span>
+                          ) : "Mua ngay"}
+                        </button>
+                        <button 
+                          onClick={handleAddCart}
+                          disabled={buttonStates.addCart.disabled}
+                          className={`mt-10 flex justify-center text-xl !border-pink-700 !border-1
+                            ${buttonStates.addCart.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                          <span className="rts-btn btn-border text-pink-700">
+                            {buttonStates.addCart.loading ? (
+                              <span className="flex items-center">
+                                <LoadingSpinner />
+                                Đang thêm...
+                              </span>
+                            ) : "Thêm vào giỏ hàng"}
+                          </span>
                         </button>
                       </>
                     )}
@@ -282,42 +323,77 @@ export default function Coursedetailcomponent() {
   const [loading, setLoading] = useState(true);
   const [imageLoadingStates, setImageLoadingStates] = useState({});
   const [NguoiDung, setNguoiDung] = useState(null);
-
-  useEffect(() => {
-    const userData = localStorage.getItem("data");
-    if (userData) {
-      try {
-        const parsedData = JSON.parse(userData);
-        setNguoiDung(parsedData);
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-        setNguoiDung(null);
-      }
+  const router = useRouter();
+  const [buttonStates, setButtonStates] = useState({
+    addCart: {
+      loading: false,
+      disabled: false
+    },
+    buyNow: {
+      loading: false,
+      disabled: false
+    },
+    freeCourse: {
+      loading: false,
+      disabled: false
     }
-  }, []);
+  });
+
+  const khoahoclienquan = useMemo(() => {
+    return Allcourse?.filter((item) => item.id_chude === course?.chude_id) || [];
+  }, [Allcourse, course?.chude_id]);
+
+  const averageRating = useMemo(() => {
+    if (!course?.danhgia?.length) return 0;
+    return (
+      course.danhgia
+        .map(review => parseInt(review.rating, 10))
+        .reduce((acc, rating) => acc + rating, 0) / course.danhgia.length
+    );
+  }, [course?.danhgia]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    const id = queryParams.get("id");
-    setId(id);
+    const courseId = queryParams.get("id");
+    setId(courseId);
   }, []);
 
   useEffect(() => {
-    if (id) {
+    const loadUserData = async () => {
+      try {
+        const userData = localStorage.getItem("data");
+        if (userData) {
+          const parsedData = JSON.parse(userData);
+          setNguoiDung(parsedData);
+        }
+      } catch (error) {
+        console.error("Error loading user data:", error);
+        setNguoiDung(null);
+      }
+    };
+    loadUserData();
+  }, []);
+
+  useEffect(() => {
+    const loadCourseDetails = async () => {
+      if (!id) return;
+      
       setLoading(true);
-      CourseDetails(id)
-        .then((res) => {
-          setCourse(res.khoahoc || null);
-          setLoading(false);
-        })
-        .catch(() => {
-          setLoading(false);
-        });
-    }
+      try {
+        const res = await CourseDetails(id);
+        setCourse(res.khoahoc || null);
+      } catch (error) {
+        console.error("Error loading course details:", error);
+        setCourse(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadCourseDetails();
   }, [id]);
 
   useEffect(() => {
-    const fetchCartData = async () => {
+    const checkCartStatus = async () => {
       try {
         const res = await Showcart();
         const urlParams = new URLSearchParams(window.location.search);
@@ -325,22 +401,19 @@ export default function Coursedetailcomponent() {
 
         if (res?.data && Array.isArray(res.data)) {
           const isInCart = res.data.some((item) =>
-            item.khoahocs.some(
-              (khoahoc) => khoahoc.id.toString() === id_khoahoc
-            )
+            item.khoahocs.some((khoahoc) => khoahoc.id.toString() === id_khoahoc)
           );
           setIsCourseInCart(isInCart);
         }
-      } catch {
-        // Do nothing
+      } catch (error) {
+        console.error("Error checking cart status:", error);
       }
     };
-
-    fetchCartData();
+    checkCartStatus();
   }, []);
 
   useEffect(() => {
-    const fetchRegisteredCourses = async () => {
+    const checkRegistrationStatus = async () => {
       try {
         const res = await KhoaHocDaDanKy();
         const urlParams = new URLSearchParams(window.location.search);
@@ -348,34 +421,29 @@ export default function Coursedetailcomponent() {
 
         if (res?.data && Array.isArray(res.data)) {
           const isRegistered = res.data.some((item) =>
-            item.khoahocs.some(
-              (khoahoc) => khoahoc.id.toString() === id_khoahoc
-            )
+            item.khoahocs.some((khoahoc) => khoahoc.id.toString() === id_khoahoc)
           );
           setIsCourseRegistered(isRegistered);
         }
-      } catch {
-        // Do nothing
+      } catch (error) {
+        console.error("Error checking registration status:", error);
       }
     };
-    fetchRegisteredCourses();
+    checkRegistrationStatus();
   }, []);
 
   useEffect(() => {
-    const fetchAllCourses = async () => {
+    const loadAllCourses = async () => {
       try {
         const res = await Allcoursesss();
         setAllcourse(res.data || []);
-      } catch {
-        // Do nothing
+      } catch (error) {
+        console.error("Error loading all courses:", error);
+        setAllcourse([]);
       }
     };
-
-    fetchAllCourses();
+    loadAllCourses();
   }, []);
-
-  const khoahoclienquan =
-    Allcourse?.filter((item) => item.id_chude === course?.chude_id) || [];
 
   if (loading) {
     return <div>Loading...</div>;
@@ -426,15 +494,49 @@ export default function Coursedetailcomponent() {
 
   const firstVideo = course.baihocs?.[0]?.video?.[0] || null;
 
-  const handleAddCart = () => {
-    Addcart()
-      .then(() => {
-        toast.success("Sản phẩm đã được thêm vào giỏ hàng!");
-        window.location.reload();
-      })
-      .catch(() => {
-        // Do nothing
-      });
+  const handleAddCart = async () => {
+    setButtonStates(prev => ({
+      ...prev,
+      addCart: { loading: true, disabled: true },
+      buyNow: { ...prev.buyNow, disabled: true }
+    }));
+
+    try {
+      await Addcart();
+      toast.success("Sản phẩm đã được thêm vào giỏ hàng!");
+      setIsCourseInCart(true);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Không thể thêm vào giỏ hàng");
+    } finally {
+      setButtonStates(prev => ({
+        ...prev,
+        addCart: { loading: false, disabled: false },
+        buyNow: { ...prev.buyNow, disabled: false }
+      }));
+    }
+  };
+
+  const handleBuyNow = async () => {
+    setButtonStates(prev => ({
+      ...prev,
+      buyNow: { loading: true, disabled: true },
+      addCart: { ...prev.addCart, disabled: true }
+    }));
+
+    try {
+      await handleAddCart();
+      router.push('/page/checkout');
+    } catch (error) {
+      console.error("Error processing buy now:", error);
+      toast.error("Có lỗi xảy ra khi xử lý mua ngay");
+    } finally {
+      setButtonStates(prev => ({
+        ...prev,
+        buyNow: { loading: false, disabled: false },
+        addCart: { ...prev.addCart, disabled: false }
+      }));
+    }
   };
 
   const renderStars = (rating) => {
@@ -461,28 +563,22 @@ export default function Coursedetailcomponent() {
     return stars;
   };
 
-  // Update the getImageUrl function
   const getImageUrl = (imageUrl) => {
     try {
-      // Handle null, undefined, empty string cases
       if (!imageUrl || imageUrl === "0" || imageUrl === "") {
         return '/placeholder.jpg';
       }
 
-      // Remove any leading/trailing whitespace
       const trimmedUrl = imageUrl.trim();
 
-      // If it's already a full URL starting with http/https, return as is
       if (trimmedUrl.match(/^https?:\/\//)) {
         return trimmedUrl;
       }
 
-      // If it starts with a slash, assume it's from the public folder
       if (trimmedUrl.startsWith('/')) {
         return trimmedUrl;
       }
 
-      // For all other cases, assume it's a relative path and add leading slash
       return `/${trimmedUrl}`;
     } catch (error) {
       console.error('Error processing image URL:', error);
@@ -563,6 +659,7 @@ export default function Coursedetailcomponent() {
                     }}
                   >
                     {course.ten}
+                    
                   </h1>
                   <div
                     className="rating-area"
@@ -589,23 +686,9 @@ export default function Coursedetailcomponent() {
                           fontWeight: "normal",
                         }}
                       >
-                        4.5
+                        {averageRating.toFixed(1)}
                       </span>
-                      {[1, 2, 3, 4].map((i) => (
-                        <i
-                          key={i}
-                          className="fa-solid fa-star"
-                          style={{
-                            color: "#ffd700",
-                            marginRight: "-8px",
-                            fontSize: "14px",
-                          }}
-                        />
-                      ))}
-                      <i
-                        className="fa-regular fa-star"
-                        style={{ color: "#ffd700", fontSize: "14px" }}
-                      />
+                      {renderStars(averageRating)}
                     </div>
                     <div
                       className="students"
@@ -719,9 +802,11 @@ export default function Coursedetailcomponent() {
           formattedTotalTime={formattedTotalTime}
           firstVideo={firstVideo}
           handleAddCart={handleAddCart}
+          handleBuyNow={handleBuyNow}
           NguoiDung={NguoiDung}
           isCourseRegistered={isCourseRegistered}
           isCourseInCart={isCourseInCart}
+          buttonStates={buttonStates}
         />
         {/* course details area end */}
         <div className="rts-section-gapBottom rts-feature-course-area">
@@ -736,7 +821,7 @@ export default function Coursedetailcomponent() {
                         style={{ color: "#32ADE6" }}
                       ></i>
                       <span className="text-2xl">
-                        Các khóa học tương tự hơn
+                        Các khóa hc tương tự hơn
                       </span>
                     </div>
                     <h2 className="title text-2xl">Các khóa học liên quan</h2>

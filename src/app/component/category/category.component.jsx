@@ -159,7 +159,7 @@ const NextCategory = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6">
           {img.map((item, index) => (
             <div
               key={index}
@@ -173,16 +173,16 @@ const NextCategory = () => {
                       height={180}
                       src={item.image}
                       alt=""
-                      className="w-full h-45 object-cover transform group-hover:scale-110 transition-transform duration-300"
+                      className="w-full h-60 sm:h-45 object-cover transform group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
-                  <div className="p-6 text-center">
-                    <h6 className="text-2xl text-gray-800 mb-2 group-hover:text-pink-700 transition-colors">
+                  <div className="p-3 sm:p-6 text-center">
+                    <h6 className="text-lg sm:text-2xl text-gray-800 mb-2 group-hover:text-pink-700 transition-colors">
                       {item.name}
                     </h6>
-                    <p className="text-sm flex items-center justify-center gap-2">
-                      <i className="bi bi-collection text-2xl"></i>
-                      <span className="text-2xl" style={{ fontWeight: '400' }}>130+ khóa học</span>
+                    <p className="text-xs sm:text-sm flex items-center justify-center gap-1 sm:gap-2">
+                      <i className="bi bi-collection text-xl sm:text-2xl"></i>
+                      <span className="text-lg sm:text-2xl" style={{ fontWeight: '400' }}>130+ khóa học</span>
                     </p>
                   </div>
                 </div>

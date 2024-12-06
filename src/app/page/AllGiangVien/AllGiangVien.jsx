@@ -42,104 +42,77 @@ export const AllGiangVien = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white my-40">
-            <div className="rts-bread-crumbarea-1 py-16 bg-blue-50">
+        <>
+            <div className="border-b border-gray-800 py-4 absolute top-[130px] w-full bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 z-[5]">
                 <div className="container mx-auto px-4">
-                    <div className="text-center">
-                        <h1 className="text-4xl font-bold mb-4 text-white">Người hướng dẫn</h1>
-                        <div className="flex justify-center items-center gap-2">
-                            <Link href="/" className="text-white text-xl">Trang chủ</Link>
-                            <span className='text-xl text-white'>›</span>
-                            <span className="text-white text-xl">Tất cả người hướng dẫn</span>
+                    <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+                        <h1 className="text-xl font-bold">Người hướng dẫn</h1>
+                        <div className="relative w-full md:w-1/3">
+                            <input
+                                type="text"
+                                placeholder="Tìm kiếm giảng viên..."
+                                className="w-full px-4 py-2 rounded-full bg-gray-900 border border-gray-700 focus:outline-none focus:border-gray-600"
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            <i className="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 py-16">
-                <div className="mb-12 max-w-2xl mx-auto">
-                    <div className="relative group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-gradient-xy"></div>
-                        <div className="relative flex items-center bg-white rounded-lg">
-                            <input
-                                type="text"
-                                placeholder="Tìm kiếm giảng viên..."
-                                className="w-full px-6 py-4 text-lg rounded-lg border-none focus:outline-none focus:ring-0 placeholder:text-gray-400"
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                            <div className="absolute right-4 flex items-center">
-                                <i className="fas fa-search text-xl text-gray-400 group-hover:text-[#1e3c72] transition-colors duration-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                    {searchTerm && (
-                        <motion.div 
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="text-center mt-4 text-gray-600"
-                        >
-                            Đang hiển thị {filteredInstructors.length} kết quả cho &quot;{searchTerm}&quot;
-                        </motion.div>
-                    )}
-                </div>
-
+            <div className="container mt-40 mx-auto px-4 pt-20">
                 <motion.div
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
                 >
                     {loading ? (
                         [...Array(8)].map((_, index) => (
-                            <div key={index} className="animate-pulse">
-                                <div className="bg-gray-200 h-64 rounded-lg mb-4"></div>
-                                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                            <div key={index} className="animate-pulse bg-gray-900 rounded-lg p-4 h-[500px]">
+                                <div className="bg-gray-800 h-[400px] rounded-lg mb-3"></div>
+                                <div className="h-4 bg-gray-800 rounded w-3/4 mb-2"></div>
+                                <div className="h-4 bg-gray-800 rounded w-1/2"></div>
                             </div>
                         ))
                     ) : (
                         filteredInstructors.map((instructor) => (
-                            // Update the instructor card markup inside the filteredInstructors.map()
                             <motion.div
                                 key={instructor.id}
                                 variants={item}
-                                className="group relative p-[2px] rounded-xl bg-gradient-to-r from-[#1e3c72]  to-[#ff6b6b] animate-gradient-xy"
+                                className="group relative bg-gray-900 rounded-lg overflow-hidden hover:scale-[1.02] transition-all duration-300"
                             >
-                                <div className="bg-white rounded-xl overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                                    <div className="relative">
-                                        <Link href={`/page/Profile-insructor?id=${instructor.id}`}>
-                                            <div className="aspect-w-3 aspect-h-2">
-                                                <Image
-                                                    fill
-                                                    src={instructor.hinh}
-                                                    alt={instructor.ten}
-                                                    className="object-cover transform transition-transform duration-500 group-hover:scale-110"
-                                                />
-                                            </div>
-                                        </Link>
-                                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out transform translate-y-2 group-hover:translate-y-0">
-                                            <div className="flex gap-3 justify-center">
-                                                {instructor.mangxahoi?.map((social) => (
-                                                    <a
-                                                        key={social.id}
-                                                        href={social.url}
-                                                        className="text-white hover:text-blue-400 transition-colors transform hover:scale-125 duration-300"
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                    >
-                                                        <i className={`fa-brands fa-${social.nentang} text-xl`} />
-                                                    </a>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="p-6 flex flex-col justify-between h-[120px]">
-                                        <h3 className="text-xl font-semibold mb-2 transition-colors duration-300 hover:text-blue-600">
+                                <div className="relative h-[500px]">
+                                    <Link href={`/page/Profile-insructor?id=${instructor.id}`}>
+                                        <Image
+                                            fill
+                                            src={instructor.hinh}
+                                            alt={instructor.ten}
+                                            className="object-cover"
+                                        />
+                                    </Link>
+
+                                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/70 to-transparent">
+                                        <h3 className="text-lg font-semibold mb-2">
                                             {instructor.ten}
                                         </h3>
-                                        <p className="text-gray-600 line-clamp-2 overflow-hidden">
+                                        <p className="text-sm text-gray-300 line-clamp-2 mb-3">
                                             {instructor.tieusu}
                                         </p>
+
+                                        <div className="flex items-center gap-4">
+                                            {instructor.mangxahoi?.map((social) => (
+                                                <a
+                                                    key={social.id}
+                                                    href={social.url}
+                                                    className="text-white hover:text-pink-500 transition-colors"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <i className={`fa-brands fa-${social.nentang} text-xl`} />
+                                                </a>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </motion.div>
@@ -147,28 +120,6 @@ export const AllGiangVien = () => {
                     )}
                 </motion.div>
             </div>
-            <style jsx>{`@keyframes gradient-xy {
-  0%, 100% {
-    background-size: 400% 400%;
-    background-position: left top;
-  }
-  25% {
-    background-size: 400% 400%;
-    background-position: right top;
-  }
-  50% {
-    background-size: 400% 400%;
-    background-position: right bottom;
-  }
-  75% {
-    background-size: 400% 400%;
-    background-position: left bottom;
-  }
-}
-
-.animate-gradient-xy {
-  animation: gradient-xy 15s ease infinite;
-}`}</style>
-        </div>
+        </>
     );
 };

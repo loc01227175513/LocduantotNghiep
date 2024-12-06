@@ -6,27 +6,27 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
     return (
 
         <div
-            className="transition flash element-item creative "
+            className="transition flash element-item creative p-2 sm:p-3"
             data-category="transition"
         >
-            <div className="rts-single-course ">
-                <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative">
+            <div className="rts-single-course rounded-xl overflow-hidden bg-white">
+                <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative block">
                     <div className="thumbnail relative" style={{ aspectRatio: '16 / 9' }}>
                         <Image
                             src={hinh}
-                            alt="course"
+                            alt={ten}
                             layout="fill"
                             objectFit="cover"
+                            className="transition-transform duration-300 hover:scale-105"
                         />
-                        {/* Free course badge */}
+                        {/* Badge styling improved */}
                         {(gia === 0 || giamgia === 0) && (
-                            <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                            <div className="absolute top-3 right-3 bg-red-500 text-white px-4 py-2 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10 backdrop-blur-sm bg-opacity-90">
                                 Miễn Phí
                             </div>
                         )}
-                        {/* Discount badge */}
                         {giamgia < gia && giamgia !== 0 && (
-                            <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                            <div className="absolute top-3 right-3 bg-red-500 text-white px-4 py-2 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10 backdrop-blur-sm bg-opacity-90">
                                 -{Math.round((1 - giamgia / gia) * 100)}% OFF
                             </div>
                         )}
@@ -35,82 +35,72 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
                 <div className="course-card">
                     <Link
                         href={`/page/course-detail?id=${id}`}
-                        className="title-link min-h-[60px] flex items-center"
+                        className="title-link min-h-12 sm:min-h-15 flex items-center mb-2 sm:mb-4"
                     >
-                        <p className="title line-clamp-2 overflow-hidden">
+                        <p className="title line-clamp-2 overflow-hidden text-base sm:text-lg">
                             {ten}
                         </p>
                     </Link>
-                    <div className="teacher">
-                        <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
-                        <span className="text-xl text-gray-800">{chude}</span>
+                    <div className="teacher mb-3 sm:mb-6">
+                        <i className="bi bi-grid mr-2 sm:mr-3 text-gray-800 text-xl sm:text-2xl"></i>
+                        <span className="text-lg sm:text-xl text-gray-800">{chude}</span>
                     </div>
-                    {/* <div className="flex space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-                        <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
-                            <i className="fa-light fa-calendar-lines-pen text-blue-500 text-xl" />
-                            <div className="flex flex-col">
-                                <span className="text-2xl font-bold">
-                                    {baihocs}
-                                    <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">Lessons</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div> */}
-                    <div className="rating-and-price">
+                    <div className="rating-and-price ">
                         <div className="price-area">
                             <div className={`price-wrapper ${isExpanded ? 'expanded' : ''}`}
                                 onClick={() => setIsExpanded(!isExpanded)}>
                                 {gia !== 0 && giamgia !== 0 && gia !== giamgia ? (
                                     <>
-                                        <div className="sale-price animate">
+                                        <div className="sale-price animate mb-2">
                                             <p className="text-3xl font-bold">
                                                 {giamgia.toLocaleString()}
-                                                <span className="text-2xl">VNĐ</span>
+                                                <span className="text-2xl ml-2">VNĐ</span>
                                             </p>
                                         </div>
                                         <div className="original-price animate">
                                             <p className="text-3xl">
                                                 {gia.toLocaleString()}
-                                                <span className="text-2xl">VNĐ</span>
+                                                <span className="text-2xl ml-2">VNĐ</span>
                                             </p>
                                         </div>
                                     </>
                                 ) : (
-                                    <div className="regular-price animate">
-                                        <div className='h-10'>
-
-                                        </div>
-                                    </div>
+                                    <></>
                                 )}
                             </div>
                         </div>
                     </div>
-                    <div className="progress-wrapper h-1 bg-gray-200 rounded mt-4">
+                    <div className="progress-wrapper h-2 bg-gray-200 rounded-full mb-6 overflow-hidden">
                         <div
-                            className="progress-bar h-full bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] rounded transition-width duration-300 ease-in-out"
+                            className="progress-bar h-full bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] rounded-full transition-all duration-500 ease-out"
                             style={{ width: `${PhanTram}%` }}
                         />
                     </div>
                     {PhanTram == 100 ? (
-                        <button className="download-cert-btn mt-4 w-full py-2 bg-[#ff6b6b] text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-[#1e3c72]">
-                            <i className="fas fa-certificate" />
-                            Tải xuống chứng chỉ
+                        <button className="download-cert-btn w-full py-3 sm:py-4 bg-[#ff6b6b] text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-[#1e3c72] hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3">
+                            <i className="fas fa-certificate text-lg sm:text-xl" />
+                            <span className="text-base sm:text-lg font-medium">Tải xuống chứng chỉ</span>
                         </button>
                     ) : (
-
-                        <button className="download-cert-btn mt-4 w-full py-2 bg-[#ff6b6b] text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-[#1e3c72]" onClick={() => tieptuchoc(id)}>
-                            <i className="fas fa-certificate" />
-                            Tiếp tục học
+                        <button 
+                            className="download-cert-btn w-full py-3 sm:py-4 bg-[#ff6b6b] text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-[#1e3c72] hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3" 
+                            onClick={() => tieptuchoc(id)}
+                        >
+                            <i className="fas fa-certificate text-lg sm:text-xl" />
+                            <span className="text-base sm:text-lg font-medium">Tiếp tục học</span>
                         </button>
                     )}
 
                     <style jsx>{`
         .course-card {
-          padding: 1.5rem;
+          padding: 1.25rem;
           transition: all 0.3s ease;
           border-radius: 12px;
           background: white;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+          @media (min-width: 640px) {
+            padding: 1.75rem;
+          }
         }
         .course-card:hover {
           transform: translateY(-4px);
@@ -120,10 +110,13 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
           display: block;
         }
         .title {
-          font-size: 1.1rem;
+          font-size: 1rem;
           font-weight: 600;
           color: #2d3748;
           transition: color 0.2s ease;
+          @media (min-width: 640px) {
+            font-size: 1.1rem;
+          }
         }
         .title:hover {
           color: #4299e1;
@@ -165,7 +158,10 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
         .sale-price {
           color: #e53e3e;
           font-weight: 600;
-          font-size: 1.1rem;
+          font-size: 1rem;
+          @media (min-width: 640px) {
+            font-size: 1.1rem;
+          }
         }
         @keyframes pulse {
           0% {

@@ -25,7 +25,7 @@
     "@stripe/react-stripe-js": "^3.0.0",
     "@stripe/stripe-js": "^5.2.0",
     "aos": "^2.3.4",
-    "axios": "^1.7.8",
+    "axios": "^1.7.9",
     "chart.js": "^4.4.6",
     "formik": "^2.4.6",
     "framer-motion": "^11.11.17",

@@ -96,19 +96,19 @@ const OutstandingCourse = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                      <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg">
-                      Khóa học
+                    <span className="text-white-500 uppercase text-lg font-bold ">
+                      Khóa Học 
                     </span>
                   </div>
-                  <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                  <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     <strong>Khám phá các khóa học nổi bật</strong>
-                    <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                    <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
                       Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao
                     </p>
                   </h2>
@@ -121,7 +121,7 @@ const OutstandingCourse = () => {
           </div>
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal chialaiflex">
+              <div className="filter mt--30 portfolio-feed personal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {paginatedCourses.map((item) => {
                   // Calculate averageRating per course
                   const averageRating =
@@ -184,7 +184,7 @@ const CourseNew = () => {
   const [KhoaHoc, setKhoaHoc] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 5;
 
   useEffect(() => {
     fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
@@ -275,20 +275,20 @@ const CourseNew = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                      <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
                     </div>
                     <span className="text-white-500 uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
-                  <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                  <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     <strong> Khám phá các khóa học mới</strong>
                   </h2>
-                  <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                  <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
                     Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng
                     cao
                   </p>
@@ -302,7 +302,7 @@ const CourseNew = () => {
 
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal chialaiflex">
+              <div className="filter mt--30 portfolio-feed personal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {paginatedCourses.map((item) => {
                   // Calculate averageRating per course
                   const averageRating =
@@ -369,7 +369,7 @@ const Courseseal = () => {
   const [KhoaHoc, setKhoaHoc] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Updated from 4 to 5
+  const itemsPerPage = 5;
 
   useEffect(() => {
     fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
@@ -448,23 +448,23 @@ const Courseseal = () => {
     <div>
       <ToastContainer />
       <div className="course-area-start rts-section-gap">
-        <div className="container">
+        <div className="container px-4 sm:px-6 lg:px-8">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
+                    <div className="flex items-center justify-center text-white w-10 h-10 rounded-full bg-pink-300">
                       <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
                     </div>
                     <span className="text-white-500 uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
-                  <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                  <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     <strong> Khám phá các khóa học giảm giá</strong>
                   </h2>
-                  <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                  <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
                     Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng
                     cao
                   </p>
@@ -478,8 +478,7 @@ const Courseseal = () => {
 
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              {/* Updated Grid Layout */}
-              <div className="filter mt--30 portfolio-feed grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              <div className="filter mt--30 portfolio-feed grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {displayedCourses.map((item) => {
                   // Calculate averageRating per course
                   const averageRating =
@@ -513,21 +512,23 @@ const Courseseal = () => {
           </div>
 
           {/* Pagination Buttons */}
-          <Box display="flex" justifyContent="center" className="mt-8">
-            <ButtonGroup spacing="2">
+          <Box display="flex" justifyContent="center" className="mt-4 sm:mt-6 lg:mt-8">
+            <ButtonGroup spacing="2" className="flex flex-row justify-center gap-2">
               {[...Array(totalPages).keys()].map((page) => (
                 <Button
                   key={page}
-                  className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"
-                    }`}
+                  className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"}`}
                   style={{
-                    outline: "none",
+                    outline: "none", 
                     border: "none",
-                    backgroundColor:
-                      page + 1 === currentPage ? "#C71585" : "", // Màu hồng-700
-                    color: page + 1 === currentPage ? "#FFFFFF" : "", // Màu trắng
+                    backgroundColor: page + 1 === currentPage ? "#C71585" : "",
+                    color: page + 1 === currentPage ? "#FFFFFF" : "",
                     borderColor: page + 1 === currentPage ? "teal.500" : "gray.500",
                     borderWidth: "1px",
+                    padding: "0.5rem 1rem",
+                    fontSize: "0.875rem",
+                    minWidth: "2.5rem",
+                    display: "inline-flex"
                   }}
                   onClick={() => handlePageChange(page + 1)}
                 >
@@ -546,7 +547,7 @@ const Coursefree = () => {
   const [KhoaHoc, setKhoaHoc] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Updated from 4 to 5
+  const itemsPerPage = 5;
 
   useEffect(() => {
     fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
@@ -623,22 +624,22 @@ const Coursefree = () => {
     <div>
       <ToastContainer />
       <div className="course-area-start rts-section-gap">
-        <div className="container">
+        <div className="container px-4 sm:px-6 lg:px-8">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
+                    <div className="flex items-center justify-center text-white w-10 h-10 rounded-full bg-pink-300">
                       <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
                     </div>
                     <span className="text-white-500 uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
-                  <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                  <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     <strong> Khám phá các khóa học miễn phí</strong>
-                    <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                    <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
                       Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và
                       nâng cao
                     </p>
@@ -653,7 +654,7 @@ const Coursefree = () => {
 
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              <div className="filter mt--30 portfolio-feed grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {displayedCourses.map((item) => {
                   // Calculate averageRating per course
                   const averageRating =
@@ -692,8 +693,7 @@ const Coursefree = () => {
               {[...Array(totalPages).keys()].map((page) => (
                 <Button
                   key={page}
-                  className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"
-                    }`}
+                  className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"}`}
                   style={{
                     outline: "none",
                     border: "none",
@@ -749,8 +749,6 @@ const KhoaHocDangHocDay = () => {
     setCurrentPage(page);
   };
 
-
-
   const filteredCourses = selectedCategory
     ? khoahocdanghoc1.filter((item) => item.id_chude === selectedCategory)
     : khoahocdanghoc1;
@@ -763,22 +761,22 @@ const KhoaHocDangHocDay = () => {
     <div>
       <ToastContainer />
       <div className="course-area-start rts-section-gap">
-        <div className="container">
+        <div className="container px-4 sm:px-6 lg:px-8">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
+                    <div className="flex items-center justify-center w-10 text-white h-10 rounded-full bg-pink-300">
                       <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
                     </div>
                     <span className="text-white-500 uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
-                  <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                  <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     <strong>Các khóa học bạn đang Học</strong>
-                    <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                    <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
                       Đừng bỏ lỡ cơ hội học tập tốt nhất
                     </p>
                   </h2>
@@ -788,7 +786,7 @@ const KhoaHocDangHocDay = () => {
           </div>
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal chialaiflex">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt--30">
                 {paginatedCourses.map((item) => {
                   const averageRating =
                     item.danhgia && item.danhgia.length > 0
@@ -798,7 +796,7 @@ const KhoaHocDangHocDay = () => {
 
                   return (
                     <ProductStudent
-                      key={item.id} // Sử dụng item.id làm key duy nhất
+                      key={item.id}
                       id={item.id}
                       gia={item.gia}
                       giamgia={item.giamgia}
@@ -808,25 +806,27 @@ const KhoaHocDangHocDay = () => {
                       giangvien={item.giangvien}
                       baihocs={item.baihoc1?.length}
                       PhanTram={item.TongTongHoanthanhphantram}
-                      tieptuchoc={tieptuchoc} // Truyền props tieptuchoc nếu cần
+                      tieptuchoc={tieptuchoc}
                     />
                   );
                 })}
               </div>
             </div>
             <Box display="flex" justifyContent="center">
-              <ButtonGroup spacing="2">
+              <ButtonGroup display="flex" flexDirection="row" spacing="2">
                 {[...Array(totalPages).keys()].map((page) => (
                   <Button
                     key={page}
                     className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"}`}
                     style={{
-                      outline: "none",
+                      outline: "none", 
                       border: "none",
                       backgroundColor: page + 1 === currentPage ? "#C71585" : "",
                       color: page + 1 === currentPage ? "#FFFFFF" : "",
                       borderColor: page + 1 === currentPage ? "teal.500" : "gray.500",
                       borderWidth: "1px",
+                      display: "inline-flex",
+                      margin: "0 4px"
                     }}
                     onClick={() => handlePageChange(page + 1)}
                   >

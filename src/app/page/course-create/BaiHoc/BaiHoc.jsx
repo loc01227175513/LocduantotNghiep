@@ -167,19 +167,19 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
                   </span>
                   <div className="flex space-x-2">
                     <button
-                      className="px-3 py-1 text-sm text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
+                      className="px-3 py-1 text-sm w-36 text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
                       onClick={() => handleDeleteQuizItem(quiz.id_baihoc, item.id_baitracnghiem)}
                     >
                       Xóa
                     </button>
                     <button
-                      className="px-3 py-1 text-sm text-blue-600 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors"
+                      className="px-3 py-1 text-sm w-36 text-blue-600 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors"
                       onClick={() => openModal(quiz.id_baihoc, item.id_baitracnghiem)}
                     >
                       Thêm câu hỏi
                     </button>
                     <button
-                      className="px-3 py-1 text-sm text-green-600 bg-green-100 rounded-full hover:bg-green-200 transition-colors"
+                      className="px-3 py-1 text-sm w-36  text-green-600 bg-green-100 rounded-full hover:bg-green-200 transition-colors"
                       onClick={() => toggleShowQuestions(item.id_baitracnghiem, quiz.id_baihoc)}
                     >
                       {quizQuestions[item.id_baitracnghiem] ? 'Ẩn câu hỏi' : 'Hiện câu hỏi'}
@@ -720,19 +720,22 @@ const NoiDungBaiHoc = ({
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <button
-        onClick={() => setLayvideoKhoaHoc(true)}
-        className="bg-blue-500 hover:bg-blue-700 w-60 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-colors duration-300 transform hover:scale-105"
-      >
-        Lấy video khoá học
-      </button>
-      <button
-        type="button"
-        onClick={() => setShowUrlList(!showUrlList)}
-        className="bg-green-500 hover:bg-green-700 ml-4 w-52 mb-2 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
-      >
-        {showUrlList ? 'Ẩn Danh Sách URL' : 'Hiện Danh Sách URL'}
-      </button>
+      <div className="flex gap-4 mb-4">
+        <button
+          onClick={() => setLayvideoKhoaHoc(true)}
+          className="bg-blue-600 hover:bg-blue-700 w-60 text-white font-bold py-2.5 px-6 rounded-md  transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2"
+        >
+          <i className="fas fa-video"></i>
+          Lấy video khoá học
+        </button>
+        <button
+          type="button" 
+          onClick={() => setShowUrlList(!showUrlList)}
+          className="bg-green-500 hover:bg-green-700 w-60 text-white font-bold py-2.5 px-6 rounded-md transition-colors duration-300"
+        >
+          {showUrlList ? 'Ẩn Danh Sách URL' : 'Hiện Danh Sách URL'}
+        </button>
+      </div>
       {showUrlList && <DanhSachURL urls={urls} onClose={() => setShowUrlList(false)} handleDeleteUrl={handleDeleteUrl} />}
       <Droppable droppableId="lessons" type="lesson">
         {(provided) => (
@@ -767,19 +770,19 @@ const NoiDungBaiHoc = ({
                                 setIsSubModalOpen(true);
                                 setCurrentItemId(item.id);
                               }}
-                              className="px-3 py-1.5 text-sm font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-colors"
+                              className="px-3 py-1.5 text-sm w-40 font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-colors"
                             >
                               + Thêm Sub Item
                             </button>
                             <button
                               onClick={() => handleExpandLesson(item.id)}
-                              className="px-3 py-1.5 text-sm font-medium text-white bg-blue-500 rounded-full hover:bg-blue-400 transition-colors"
+                              className="px-3 py-1.5 text-sm font-medium  w-24 text-white bg-blue-500 rounded-full hover:bg-blue-400 transition-colors"
                             >
                               Mở rộng
                             </button>
                             <button
                               onClick={() => handleRemoveItem(item.id)}
-                              className="px-3 py-1.5 text-sm font-medium text-white bg-red-500 rounded-full hover:bg-red-400 transition-colors"
+                              className="px-3 py-1.5 text-sm font-medium w-24 text-white bg-red-500 rounded-full hover:bg-red-400 transition-colors"
                             >
                               Xóa
                             </button>
@@ -788,7 +791,7 @@ const NoiDungBaiHoc = ({
                                 setIsQuestionModalOpen(true);
                                 setCurrentItemId(item.id);
                               }}
-                              className="px-3 py-1.5 text-sm font-medium text-green-600 bg-white rounded-full hover:bg-green-50 transition-colors"
+                              className="px-3 py-1.5 w-40  text-sm font-medium text-green-600 bg-white rounded-full hover:bg-green-50 transition-colors"
                             >
                               + Thêm trắc nghiệm
                             </button>
@@ -822,13 +825,13 @@ const NoiDungBaiHoc = ({
                                                 setIsContentModalOpen(true);
                                                 setCurrentSubItemId(subItem.id);
                                               }}
-                                              className="px-3 py-1 text-sm text-yellow-600 bg-yellow-100 rounded-full hover:bg-yellow-200 transition-colors"
+                                              className="px-3 py-1 w-24 text-sm text-yellow-600 bg-yellow-100 rounded-full hover:bg-yellow-200 transition-colors"
                                             >
                                               Nội Dung
                                             </button>
                                             <button
                                               onClick={() => handleRemoveSubItem(item.id, subItem.id)}
-                                              className="px-3 py-1 text-sm text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
+                                              className="px-3 py-1 w-24  text-sm text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
                                             >
                                               Xóa
                                             </button>

@@ -133,7 +133,7 @@ export default function Homecomponent() {
                     </div>
                     <div className="circle-animation">
                       <Link
-                        className="uni-circle-text uk-background-white dark:uk-background-gray-80 uk-box-shadow-large uk-visible@m"
+                        className="uni-circle-text uk-visible@m"
                         href="#view_in_opensea"
                       >
                         <svg
@@ -218,14 +218,14 @@ export default function Homecomponent() {
                         data-aos="zoom-in"
                         data-aos-delay={index * 100}
                       >
-                        <div className="icon-wrapper">
+                        <div className="flex items-center justify-center mx-auto w-24 h-24 rounded-md bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 hover:shadow-lg transition-all duration-300 border border-white">
                           <Image
                             width={500}
                             height={300}
                             src={`https://res.cloudinary.com/dnjakwi6l/image/upload/v1728219100/${item.img}`}
                             alt={item.title}
-                            className="hover-scale"
-                            style={{ width: '45px', height: '45px' }}
+                            className="hover-scale p-3"
+                            style={{ width: '65px', height: '65px', backgroundColor: 'transparent' }}
                           />
                         </div>
                         <h4 className="text-white mt-3 mb-2 text-2xl text-center">
@@ -238,7 +238,7 @@ export default function Homecomponent() {
                   <div className="flex flex-row gap-10">
                     <Link
                       href="/page/Cours-Filter"
-                      className="rts-btn hover-effect border-white bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 border border-white"
+                      className="rts-btn hover-effect  bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 border border-white"
                     >
                       <span className="text-white text-xl" style={{ fontWeight: '400' }}>
                         Xem tất cả các khóa học

@@ -17,22 +17,7 @@ export default function CardProduct({
     renderStars
 }) {
     // Inside component:
-    const [maxHeight, setMaxHeight] = useState(48);
-    const titleRef = useRef(null);
-
-    useEffect(() => {
-        // Get all title elements
-        const titleElements = document.querySelectorAll('.title');
-        let maxH = 48; // minimum height
-
-        // Find maximum height
-        titleElements.forEach(el => {
-            const height = el.scrollHeight;
-            maxH = Math.max(maxH, height);
-        });
-
-        setMaxHeight(maxH);
-    }, [ten]); // Recalculate when title content changes
+   
 
     return (
         <div className="transition flash element-item creative" data-category="transition" key={id}>
@@ -56,8 +41,8 @@ export default function CardProduct({
                     <i className="fa-sharp fa-light fa-bookmark text-lg" />
                 </div>
                 <div className="course-card">
-                    <Link href={`/page/course-detail?id=${id}`} className="title-link">
-                        <p ref={titleRef} className="title line-clamp-2 flex items-center transition-height" style={{ fontWeight: "600", height: `${maxHeight}px`, minHeight: "48px" }}>
+                    <Link href={`/page/course-detail?id=${id}`} className="title-link flex items-center">
+                        <p className="title line-clamp-2 transition-height" style={{ fontWeight: "600", height: "48px" }}>
                             {ten}
                         </p>
                     </Link>
@@ -99,13 +84,13 @@ export default function CardProduct({
                     <div className="rating-and-price">
                         <div className="price-area">
                             {gia === 0 || giamgia === 0 ? (
-                                <div className="h-10 flex items-center"></div>
+                                <div></div>
                             ) : (
                                 <div className="price-wrapper flex items-center gap-2">
-                                    <div className="sale-price h-10 flex items-center">
+                                    <div className="sale-price">
                                         <p className="text-2xl font-bold m-0">{giamgia.toLocaleString()}<span className="text-2xl">VNĐ</span></p>
                                     </div>
-                                    <div className="original-price h-10 flex items-center">
+                                    <div className="original-price">
                                         <p className="text-2xl m-0">{gia.toLocaleString()}<span className="text-2xl">VNĐ</span></p>
                                     </div>
                                 </div>

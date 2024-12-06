@@ -70,7 +70,7 @@ export default function Roadmap() {
     }, []);
 
     return (
-        <div className="py-20 min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <div className="py-20 min-h-screen bg-gradient-to-br mt-60 from-blue-50 via-white to-purple-50">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16 relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 to-purple-100/20 blur-3xl -z-10"></div>
@@ -82,34 +82,33 @@ export default function Roadmap() {
                     </p>
                 </div>
     
-                <div className="grid xl:grid-cols-4 grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                     {loTrinhKhoaHoc.map((course) => (
                         <div
                             key={course.id}
-                            className="course-section group relative border border-amber-500 bg-white/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer m-4"
-                            style={{ width: '300px' }}
+                            className="course-section group relative border border-amber-500 bg-white/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer mx-auto w-full max-w-[300px]"
                             onClick={() => setSelectedCourse(course)}
                         >
-                            <div className="overflow-hidden rounded-t-2xl" style={{ width: '300px' }}>
+                            <div className="overflow-hidden rounded-t-2xl w-full">
                                 <Image
                                     src={course.hinh || fallbackImageUrl}
                                     alt={course.ten}
                                     width={400}
                                     height={300}
-                                    className="w-full h-64 object-cover transition-all duration-700"
+                                    className="w-full h-48 sm:h-64 object-cover transition-all duration-700"
                                     onError={(e) => {
                                         e.target.src = fallbackImageUrl;
                                     }}
                                 />
                             </div>
-                            <div className="p-6 relative z-10" style={{ width: '300px' }}>
+                            <div className="p-4 sm:p-6 relative z-10">
                                 <div className="flex items-center mb-4">
-                                    <FaGraduationCap className="text-blue-500 text-3xl mr-3" />
-                                    <h2 className="text-2xl font-bold text-gray-800">
+                                    <FaGraduationCap className="text-blue-500 text-2xl sm:text-3xl mr-2 sm:mr-3" />
+                                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800 line-clamp-2">
                                         {course.ten}
                                     </h2>
                                 </div>
-                                <p className="text-gray-600">
+                                <p className="text-gray-600 text-sm sm:text-base line-clamp-3">
                                     {course.mota}
                                 </p>
                             </div>

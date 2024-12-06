@@ -59,7 +59,7 @@ const Headerdashboardstudent1 = () => {
         setTheoDoi(followingResponse);
       
       } catch (error) {
-        window.location.reload();
+       console.log(error);
       } finally {
         setIsLoading(false);
       }

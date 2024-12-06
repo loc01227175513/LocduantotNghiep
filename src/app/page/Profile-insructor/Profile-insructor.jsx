@@ -220,503 +220,302 @@ export const Profileinsructor = () => {
             theme="colored"
         />
 
-        <div className="container">
-            <div className="dashboard-banner-area-wrapper">
-                <div className="container">
-                    <div className="row">
-                        {data.slice(0, 1).map((item) => (
-                            <div className="col-lg-12" key={item.giangVien.id}>
-                                <div className="dashboard-banner-area-start bg_image">
-                                    <div className="rating-area-banner-dashboard">
-                                        <div className="stars">
-                                            <span>{overallAverageRating()}</span>
-                                            {renderStars(overallAverageRating())}
-                                        </div>
-                                        <p>Giảng viên tiếp thị kỹ thuật số</p>
-                                        <button
-                                            onClick={follow ? handleUnfollow : handleFollow}
-                                            className="create-btn"
-                                            disabled={isLoading}
-                                        >
-                                            {isLoading ? (
-                                                <span>Đang xử lý...</span>
-                                            ) : (
-                                                <>
-                                                    <i className={`fa-regular ${follow ? 'fa-user-minus' : 'fa-circle-plus'}`} />
-                                                    {follow ? 'Bỏ Theo Dõi' : 'Theo Dõi'}
-                                                </>
-                                            )}
-                                        </button>
-                                    </div>
-                                    <div className="author-profile-image-and-name absolute top-0 flex items-center space-x-4 p-4 h-60 mt-40 bg-white shadow-md rounded-lg">
-                                        <div className="flex-shrink-0">
-                                            <Image width={500} height={300}
-                                                src={item.giangVien.hinh}
-                                                className="w-24 h-24 rounded-full object-cover"
-                                                alt="dashboard"
-                                            />
-                                        </div>
-                                        <div>
-                                            <h1 className="title text-3xl font-extrabold text-black">
-                                                {item.giangVien.ten}
-                                            </h1>
-                                            <div className="course-video mt-2">
-                                                <div className="single flex items-center space-x-2 text-black">
-                                                    <i className="fa-regular fa-video" />
-                                                    <span className="text-lg font-semibold">
-                                                        {TongBaiHoc} Bài Học
-                                                    </span>
-                                                </div>
-                                                <div className="single flex items-center space-x-2 text-black mt-1">
-                                                    <i className="fa-light fa-users" />
-                                                    <span className="text-lg font-semibold">
-                                                        {TongHocVien} Sinh viên
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+        <div className="container ">
+            {data.slice(0, 1).map((item) => (
+                <div className="profile-header " key={item.giangVien.id}>
+                    <div className="profile-cover-image mt-52">
+                        <div className="profile-info-overlay  ">
+                            <div className="flex justify-center items-center">
+                                <Image 
+                                    width={120} 
+                                    height={120}
+                                    src={item.giangVien.hinh}
+                                    alt="profile"
+                                    className="avatar-image rounded-full h-40 w-40"
+                                />
+                            </div>
+                            <h1 className="profile-name text-white">{item.giangVien.ten}</h1>
+                            <p className="profile-username text-white">@{item.giangVien.ten.toLowerCase().replace(/\s+/g, '')}</p>
+                            
+                            <div className="profile-stats">
+                                <div className="stat-item">
+                                    <span className="stat-value text-white">{TongBaiHoc}</span>
+                                    <span className="stat-label text-white">Bài học</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-value text-white">{TongHocVien}</span>
+                                    <span className="stat-label text-white">Học viên</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-value text-white">{overallAverageRating()}</span>
+                                    <span className="stat-label text-white">Đánh giá</span>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            <div className="rts-instructor-profile rts-section-gapBottom pt-12">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-3"></div>
-                        <div className="col-lg-9">
-                            <div className="instructor-profile-right-area-start">
-                                <div className="bio-graphyarea">
-                                    <h5 className="title">Tiểu sử</h5>
-                                    {data.slice(0, 1).map((item) => (
-                                        <div key={item.giangVien.id}>
-                                            <p className="disc">
-                                                {item.giangVien.tieusu}
-                                            </p>
-                                            <div className="social-area-dashboard-footer">
-                                                <ul>
-                                                    {item.giangVien.MangXaHoi.map((social) => (
-                                                        <li key={social.id}>
-                                                            <a href={social.url}>
-                                                                <i className={`fa-brands fa-${social.nentang}`} />
-                                                            </a>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="row g-5 mt-8">
-                                    {data.map((item) => (
-                                        <div
-                                            className="col-lg-4 col-md-6 col-sm-12"
-                                            key={item.id}
-                                        >
-                                            <Link href={`/page/course-detail?id=${item.id}`}>
-                                                <div className="course-item relative">
-                                                    <div className="thumbnail relative group">
-                                                        <Image
-                                                            width={500}
-                                                            height={300}
-                                                            src={item.hinh}
-                                                            alt="course"
-                                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                                                        />
-                                                        {item.gia === 0 || item.giamgia === 0 ? (
-                                                            <div className="absolute top-4 left-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full font-bold shadow-lg transform -rotate-12">
-                                                                Miễn Phí
-                                                            </div>
-                                                        ) : (
-                                                            <div className="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-full font-bold shadow-lg transform -rotate-12">
-                                                                -{Math.round(((item.gia - item.giamgia) / item.gia) * 100)}%
-                                                            </div>
-                                                        )}
-                                                        <button
-                                                            className="save-icon"
-                                                            onClick={(event) => {
-                                                                event.preventDefault();
-                                                                handleYeuThich(item.id);
-                                                            }}
-                                                        >
-                                                            <i className={`fa-${item.isLiked ? 'solid' : 'regular'} fa-heart text-xl ${item.isLiked ? 'text-red-500' : 'text-gray-600'}`} />
-                                                        </button>
-                                                    </div>
-                                                    <div className="tags-area-wrapper flex gap-2 p-4">
-                                                        <div className="single-tag transform hover:-translate-y-1 transition-all duration-300">
-                                                            <span className="bg-gradient-to-r from-blue-100 to-blue-50 px-3 py-1 rounded-full text-blue-600 text-sm font-medium hover:shadow-lg">
-                                                                {item.theLoaiCon.ten}
-                                                            </span>
-                                                        </div>
-                                                        <div className="single-tag transform hover:-translate-y-1 transition-all duration-300">
-                                                            <span className="bg-gradient-to-r from-purple-100 to-purple-50 px-3 py-1 rounded-full text-purple-600 text-sm font-medium hover:shadow-lg">
-                                                                {item.chuDe.ten}
-                                                            </span>
-                                                        </div>
-                                                    </div>
 
-                                                    <div className="lesson-studente p-4 flex justify-between items-center border-b border-gray-100">
-                                                        <div className="lesson group flex items-center space-x-2">
-                                                            <i className="fa-light fa-calendar-lines-pen text-blue-500 group-hover:scale-110 transition-transform duration-300" />
-                                                            <span className="text-gray-600 group-hover:text-blue-500 transition-colors duration-300">
-                                                                {item.baihoc.length} Lessons
-                                                            </span>
-                                                        </div>
-                                                        <div className="lesson group flex items-center space-x-2">
-                                                            <i className="fa-light fa-user-group text-purple-500 group-hover:scale-110 transition-transform duration-300" />
-                                                            <span className="text-gray-600 group-hover:text-purple-500 transition-colors duration-300">
-                                                                {item.ThanhToan.length} Students
-                                                            </span>
-                                                        </div>
-                                                    </div>
+                            <button
+                                onClick={follow ? handleUnfollow : handleFollow}
+                                className={`follow-button ${follow ? 'following' : ''} w-80`}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? (
+                                    <span>Đang xử lý...</span>
+                                ) : (
+                                    follow ? 'Đang Follow' : 'Follow'
+                                )}
+                            </button>
 
-                                                    <h5 className="title p-4 text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors duration-300">
-                                                        {item.ten}
-                                                    </h5>
+                            <div className="social-links">
+                                {item.giangVien.MangXaHoi.map((social) => (
+                                    <a href={social.url} key={social.id} className="social-icon">
+                                        <i className={`fa-brands fa-${social.nentang}`} />
+                                    </a>
+                                ))}
+                            </div>
 
-                                                    <p className="teacher px-4 text-gray-600 hover:text-purple-600 transition-colors duration-300">
-                                                        {item.giangVien.ten}
-                                                    </p>
-
-                                                    <div className="rating-and-price p-4 flex justify-between items-center">
-                                                        <div className="stars flex items-center space-x-1 group">
-                                                            <span className="text-yellow-500 group-hover:scale-105 transition-transform duration-300">
-                                                                {DanhGia(item.danhgia)}
-                                                            </span>
-                                                            {renderStars(DanhGia(item.danhgia))}
-                                                        </div>
-                                                        <div className="price-area">
-                                                            {item.gia === 0 || item.giamgia === 0 ? (
-                                                                <div className="price bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full font-bold transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
-                                                                    Miễn Phí
-                                                                </div>
-                                                            ) : (
-                                                                <div className="flex items-center space-x-2 group">
-                                                                    <div className="not price line-through text-gray-400 group-hover:text-gray-600 transition-colors duration-300">
-                                                                        ${item.gia}
-                                                                    </div>
-                                                                    <div className="price bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-full font-bold transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
-                                                                        ${item.giamgia}
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        </div>
-                                    ))}
-                                </div>
+                            <div className="bio-text text-white">
+                                {item.giangVien.tieusu}
                             </div>
                         </div>
                     </div>
                 </div>
+            ))}
+
+            <div className="courses-grid">
+                {data.map((item) => (
+                    <div className="course-card" key={item.id}>
+                        <Link href={`/page/course-detail?id=${item.id}`}>
+                            <div className="course-thumbnail">
+                                <Image
+                                    width={300}
+                                    height={300}
+                                    src={item.hinh}
+                                    alt="course"
+                                    className="thumbnail-image w-full h-full"
+                                />
+                                <button
+                                    className="like-button"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handleYeuThich(item.id);
+                                    }}
+                                >
+                                    <i className={`fa-${item.isLiked ? 'solid' : 'regular'} fa-heart`} />
+                                </button>
+                                {(item.gia === 0 || item.giamgia === 0) ? (
+                                    <span className="price-tag free text-white" style={{ background: '#fe2c55' }}>Miễn phí</span>
+                                ) : (
+                                    <span className="price-tag discount">
+                                        -{Math.round(((item.gia - item.giamgia) / item.gia) * 100)}%
+                                    </span>
+                                )}
+                            </div>
+                            <div className="course-info">
+                                <h3 className="course-title">{item.ten}</h3>
+                                <div className="course-meta">
+                                    <span className="students-count">
+                                        <i className="fa-light fa-users" /> {item.ThanhToan.length}
+                                    </span>
+                                    <span className="rating">
+                                        {DanhGia(item.danhgia)} <i className="fa-solid fa-star" />
+                                    </span>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                ))}
             </div>
         </div>
+
         <style jsx>{`
-        /* Add these styles */
-. {
-    transform: translateY(0);
-    transition: all 0.3s ease-in-out;
-}
+            .tiktok-profile-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                color: #fff;
+            }
 
-.:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
+            .profile-header {
+                position: relative;
+                margin-bottom: 40px;
+            }
 
-.stars i {
-    transition: all 0.3s ease;
-    transform-origin: center;
-}
+            .profile-cover-image {
+                position: relative;
+                height: 400px;
+                background: linear-gradient(to right, #1a1a1a, #d63384, #4a5568);
+                border-radius: 8px;
+                overflow: hidden;
+            }
 
-.stars:hover i {
-    animation: starPulse 1s infinite;
-}
+            .profile-info-overlay {
+                position: absolute;
+                top:0px;
+                left: 0;
+                right: 0;
+                padding: 40px;
+               
+                text-align: center;
+            }
 
-@keyframes starPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-        /* Add these styles */
-.thumbnail {
-    overflow: hidden;
-    border-radius: 12px;
-}
+            .profile-avatar {
+                margin-bottom: 20px;
+            }
 
-.thumbnail::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+            .avatar-image {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                border: 4px solid #fff;
+                object-fit: cover;
+            }
 
-.thumbnail:hover::after {
-    opacity: 1;
-}
-/* Add these styles to your CSS file */
+            .profile-name {
+                font-size: 32px;
+                font-weight: bold;
+                margin-bottom: 8px;
+            }
 
-.rts-instructor-profile {
-  background: linear-gradient(to right, #f6f9fc 0%, #ffffff 100%);
-  padding: 3rem 0;
-}
+            .profile-username {
+                color: #a7a7a7;
+                margin-bottom: 20px;
+            }
 
-.bio-graphyarea {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  margin-bottom: 3rem;
-}
+            .profile-stats {
+                display: flex;
+                justify-content: center;
+                gap: 40px;
+                margin-bottom: 24px;
+            }
 
-.bio-graphyarea .title {
-  font-size: 1.8rem;
-  color: #1a237e;
-  margin-bottom: 1.5rem;
-  border-bottom: 2px solid #e3f2fd;
-  padding-bottom: 0.5rem;
-}
+            .stat-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
 
-.bio-graphyarea .disc {
-  line-height: 1.8;
-  color: #37474f;
-}
+            .stat-value {
+                font-size: 24px;
+                font-weight: bold;
+            }
 
-.social-area-dashboard-footer ul {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
+            .stat-label {
+                color: #a7a7a7;
+            }
 
-.social-area-dashboard-footer a {
-  background: #f5f5f5;
-  padding: 0.8rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
+            .follow-button {
+                background: #fe2c55;
+                color: #fff;
+                border: none;
+                padding: 12px 48px;
+                border-radius: 4px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
 
-.social-area-dashboard-footer a:hover {
-  transform: translateY(-3px);
-  background: #e3f2fd;
-  color: #1976d2;
-}
+            .follow-button.following {
+                background: #fff;
+                color: #000;
+            }
 
-. {
-  background: white;
-  border-radius: 15px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
+            .social-links {
+                margin-top: 24px;
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+            }
 
-.:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-}
+            .social-icon {
+                color: #fff;
+                font-size: 24px;
+                transition: color 0.3s ease;
+            }
 
-.thumbnail {
-  position: relative;
-  overflow: hidden;
-}
+            .social-icon:hover {
+                color: #fe2c55;
+            }
 
-.thumbnail img {
-  transition: transform 0.5s ease;
-}
+            .courses-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 24px;
+                padding: 20px 0;
+            }
 
-.:hover .thumbnail img {
-  transform: scale(1.05);
-}
+            .course-card {
+                background: #1f1f1f;
+                border-radius: 8px;
+                overflow: hidden;
+                transition: transform 0.3s ease;
+            }
 
-.tags-area-wrapper {
-  padding: 1rem;
-  display: flex;
-  gap: 0.5rem;
-}
+            .course-card:hover {
+                transform: translateY(-4px);
+            }
 
-.single-tag span {
-  background: #e3f2fd;
-  color: #1976d2;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
+            .course-thumbnail {
+                position: relative;
+                aspect-ratio: 16/9;
+            }
 
-.lesson-studente {
-  padding: 0.5rem 1rem;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #f5f5f5;
-}
+            .thumbnail-image {
+                width: 150%;
+                height: 200px; /* Fixed height for all thumbnails */
+                object-fit: cover;
+            }
 
-.lesson {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #616161;
-}
+            .like-button {
+                position: absolute;
+                right: 12px;
+                top: 12px;
+                background: rgba(0,0,0,0.5);
+                border: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                color: #fff;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
 
-.rating-and-price {
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+            .like-button:hover {
+                background: rgba(254,44,85,0.8);
+            }
 
-.save-icon {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  background: rgba(255, 255, 255, 0.9);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
-  border: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
+            .price-tag {
+                position: absolute;
+                left: 12px;
+                top: 12px;
+                padding: 4px 12px;
+                border-radius: 4px;
+                font-weight: bold;
+            }
 
-.save-icon:hover {
-  transform: scale(1.1);
-  background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
+            .price-tag.free {
+                background: #25f4ee;
+                color: #000;
+            }
 
-.price-area {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+            .price-tag.discount {
+                background: #fe2c55;
+                color: #fff;
+            }
 
-/* Add these styles to your CSS file */
+            .course-info {
+                padding: 16px;
+            }
 
-.dashboard-banner-area-wrapper {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-  padding: 3rem 0;
-  color: white;
-  border-radius: 1rem;
-  margin-top: 2rem;
-}
+            .course-title {
+                font-size: 18px;
+                margin-bottom: 12px;
+                color: #fff;
+            }
 
-.dashboard-banner-area-start {
-  position: relative;
-  overflow: hidden;
-  padding: 2rem;
-  backdrop-filter: blur(10px);
-}
-
-.author-profile-image-and-name {
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.author-profile-image-and-name:hover {
-  transform: translateY(0);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-}
-
-.create-btn {
-  background: linear-gradient(45deg, #2196F3, #00BCD4);
-  border: none;
-  padding: 0.8rem 2rem;
-  border-radius: 2rem;
-  color: white;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-.create-btn:hover:not([disabled]) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-}
-
-.create-btn:disabled {
-  background: #gray;
-  cursor: not-allowed;
-}
-
-. {
-  border-radius: 1rem;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-}
-
-.tags-area-wrapper .single-tag span {
-  background: #f0f2f5;
-  padding: 0.3rem 0.8rem;
-  border-radius: 1rem;
-  font-size: 0.9rem;
-  color: #2a5298;
-}
-
-.stars {
-  color: #ffc107;
-  font-size: 1.2rem;
-}
-
-.bio-graphyarea {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-}
-
-.social-area-dashboard-footer ul {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.social-area-dashboard-footer a {
-  color: #1e3c72;
-  font-size: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.social-area-dashboard-footer a:hover {
-  color: #2a5298;
-  transform: translateY(-2px);
-}
-
-.course-item {
-  position: relative;
-  overflow: visible;
-}
-
-.thumbnail {
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-
-
-
-
-            
-            `}</style>
-    </>
-    );
+            .course-meta {
+                display: flex;
+                justify-content: space-between;
+                color: #a7a7a7;
+            }
+        `}</style>
+    </>);
 }
