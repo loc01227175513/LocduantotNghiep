@@ -1,17 +1,20 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Oder } from "../../../../service/Oder/Oder";
-
+import { Oder , OderDetail} from "../../../../service/Oder/Oder";
+import {Allcoursesss} from "../../../../service/course/course.service";
 // Add font import
 import { Roboto } from 'next/font/google';
-
+import Image from "next/image";
 export default function Khoahocdanghoc() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [filter, setFilter] = useState("");
   const [tab, setTab] = useState("today");
   const [date, setDate] = useState("");
-  
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [orderDetails, setOrderDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [courseDetails, setCourseDetails] = useState([]);
   const calculateMinutesDifference =(date) => { 
     const now = new Date(); 
     const pastDate = new Date(date); 
@@ -70,8 +73,30 @@ export default function Khoahocdanghoc() {
   const handleTabChange = (newTab) => {
     setTab(newTab);
   };
- 
 
+  const handleViewDetails = async (orderId) => {
+    try {
+      setIsLoading(true);
+      setSelectedOrder(orderId);
+      const response = await OderDetail(orderId);
+      setOrderDetails(response.data);
+    } catch (error) {
+      console.error("Lỗi khi lấy chi tiết đơn hàng:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    Allcoursesss().then((response) => {
+      setCourseDetails(response.data);
+    });
+  }, []);
+
+  const closeModal = () => {
+    setSelectedOrder(null);
+    setOrderDetails(null);
+  };
+console.log(orderDetails);
   return (
     <div className="overflow-y-scroll col-lg-9 h-lvh p-4 font-[Roboto]">
       <div className="bg-white rounded-lg shadow-sm p-6">
@@ -146,7 +171,10 @@ export default function Khoahocdanghoc() {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-100">
-                  <button className="w-full py-2 bg-pink-400 text-white text-[14px] font-medium rounded-lg hover:bg-pink-300 transition-colors duration-300">
+                  <button 
+                    onClick={() => handleViewDetails(item.id)}
+                    className="w-full py-2 bg-pink-400 text-white text-[14px] font-medium rounded-lg hover:bg-pink-300 transition-colors duration-300"
+                  >
                     Xem chi tiết
                   </button>
                 </div>
@@ -154,6 +182,70 @@ export default function Khoahocdanghoc() {
             </div>
           ))}
         </div>
+
+        {/* Order Detail Modal */}
+        {selectedOrder && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold" style={{fontFamily: '-apple-system, HelveticaNeue, Helvetica, Roboto, Droid Sans, Arial, sans-serif'}}>Chi tiết đơn hàng #{selectedOrder}</h3>
+                <button onClick={closeModal} className="text-gray-500 hover:text-gray-700 w-10 h-10">
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
+
+              {isLoading ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-400 mx-auto"></div>
+                  <p className="mt-2 text-gray-600" style={{fontFamily: '-apple-system, HelveticaNeue, Helvetica, Roboto, Droid Sans, Arial, sans-serif'}}>Đang tải...</p>
+                </div>
+              ) : orderDetails ? (
+                <div className="space-y-4 p-4">
+                  {orderDetails.map((detail, index) => (
+                    <div key={index} className="border-b pb-4 px-4">
+                      <div className="flex items-center gap-4">
+                        {courseDetails.find(course => course.id === detail.id_khoahoc) && (
+                          <div className="relative p-2">
+                            <Image 
+                              width={500}
+                              height={300}
+                              src={courseDetails.find(course => course.id === detail.id_khoahoc).hinh || '/placeholder.png'} 
+                              alt={detail.ten} 
+                              className="w-20 h-20 object-cover rounded"
+                            />
+                            {detail.gia !== detail.giamgia && detail.giamgia !== 0 && (
+                              <div className="absolute top-0 right-0 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded" style={{fontFamily: '-apple-system, HelveticaNeue, Helvetica, Roboto, Droid Sans, Arial, sans-serif'}}>
+                                -{Math.round((1 - detail.giamgia / detail.gia) * 100)}%
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        <div className="p-2">
+                        {courseDetails.find(course => course.id === detail.id_khoahoc) && (
+                          <h4 className="font-medium text-[14px]" style={{fontFamily: '-apple-system, HelveticaNeue, Helvetica, Roboto, Droid Sans, Arial, sans-serif'}}>{courseDetails.find(course => course.id === detail.id_khoahoc).ten}</h4>
+                        )}
+                          <div className="flex justify-between items-center mt-2">
+                            {detail.gia === 0 || detail.giamgia === 100 ? (
+                              <p className="text-gray-600 text-[12px]" style={{fontFamily: '-apple-system, HelveticaNeue, Helvetica, Roboto, Droid Sans, Arial, sans-serif'}}>Miễn phí</p>
+                            ) : (
+                              <>
+                                <p className="text-gray-600 text-[12px] px-2 line-through" style={{fontFamily: '-apple-system, HelveticaNeue, Helvetica, Roboto, Droid Sans, Arial, sans-serif'}}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(detail.gia).replace('₫', 'VNĐ')}</p>
+                                <p className="text-red-500 text-[12px] px-2 font-medium" style={{fontFamily: '-apple-system, HelveticaNeue, Helvetica, Roboto, Droid Sans, Arial, sans-serif'}}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(detail.giamgia).replace('₫', 'VNĐ')}</p>
+                              </>
+                            )}
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center text-gray-500" style={{fontFamily: '-apple-system, HelveticaNeue, Helvetica, Roboto, Droid Sans, Arial, sans-serif'}}>Không tìm thấy chi tiết đơn hàng</p>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Add empty state */}
         {filteredData.length === 0 && (

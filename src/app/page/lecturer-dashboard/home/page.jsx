@@ -35,16 +35,20 @@ import {
 import CountUp from 'react-countup';
 import { motion } from 'framer-motion';
 import {
-  BookOpenIcon,
-  AcademicCapIcon,
-  TrophyIcon,
-  BookmarkIcon,
-  UserIcon,
-  CurrencyDollarIcon,
-  UserGroupIcon,
-  ClockIcon,
-  BanknotesIcon
-} from '@heroicons/react/24/outline';
+  FaBook,
+  FaGraduationCap,
+  FaTrophy,
+  FaBookmark,
+  FaUser,
+  FaDollarSign,
+  FaUsers,
+  FaClock,
+  FaMoneyBill,
+  FaExclamationTriangle,
+  FaChartLine,
+  FaChartBar,
+  FaChartPie
+} from 'react-icons/fa';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { Area } from 'recharts';
 
@@ -318,15 +322,15 @@ export default function Homedashboardlecturer() {
     return total + (course.ThanhToan ? course.ThanhToan.length : 0);
   }, 0);
   const cardData = [
-    { icon: BookOpenIcon, value: khoahocdadangky, label: "Khóa học đã đăng ký" },
-    { icon: AcademicCapIcon, value: khoahocdanghoc, label: "Khóa học đang học" },
-    { icon: TrophyIcon, value: khoahocdahoanthanh, label: "Khóa học đã hoàn thành" },
-    { icon: BookmarkIcon, value: khoahocdadangky, label: "Tổng khóa học của tôi" },
-    { icon: UserIcon, value: TongSoHS, label: "Tổng số học sinh" },
-    { icon: CurrencyDollarIcon, value: sodukhadung, label: "Số dư khả dụng" },
-    { icon: UserGroupIcon, value: activeCoursesCount, label: "Tổng khóa học đang phát hành" },
-    { icon: ClockIcon, value: khoahoctamdung, label: "Tổng khóa học tạm dừng" },
-    { icon: BanknotesIcon, value: tongdoanhthu, label: "Tổng thu nhập" },
+    { icon: FaBook, value: khoahocdadangky, label: "Khóa học đã đăng ký" },
+    { icon: FaGraduationCap, value: khoahocdanghoc, label: "Khóa học đang học" },
+    { icon: FaTrophy, value: khoahocdahoanthanh, label: "Khóa học đã hoàn thành" },
+    { icon: FaBookmark, value: khoahocdadangky, label: "Tổng khóa học của tôi" },
+    { icon: FaUser, value: TongSoHS, label: "Tổng số học sinh" },
+    { icon: FaDollarSign, value: sodukhadung, label: "Số dư khả dụng" },
+    { icon: FaUsers, value: activeCoursesCount, label: "Tổng khóa học đang phát hành" },
+    { icon: FaClock, value: khoahoctamdung, label: "Tổng khóa học tạm dừng" },
+    { icon: FaMoneyBill, value: tongdoanhthu, label: "Tổng thu nhập" },
   ];
   console.log(khoahoc, "khoahoc");
 
@@ -355,8 +359,7 @@ export default function Homedashboardlecturer() {
                   <div className="icon flex justify-center">
                     {React.createElement(card.icon, {
                       className: "h-10 w-10 mb-2 text-pink-600",
-                      "aria-hidden": "true", 
-                      strokeWidth: 1.5
+                      size: "2.5em"
                     })}
                   </div>
                   <h5 className="title text-xl">
@@ -379,14 +382,20 @@ export default function Homedashboardlecturer() {
               <div className='flex-grow rounded-lg'>
                 <div className="ml-4 h-full flex flex-col gap-4">
                   <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
-                    <p className='my-2 text-xl font-semibold'>Khóa học bán chạy nhất</p>
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <FaTrophy className="text-[#ff6b6b] w-6 h-6" />
+                      <p className='text-xl font-semibold'>Khóa học bán chạy nhất</p>
+                    </div>
                     <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocbanchay.ten}</p>
                     <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocbanchay.ThanhToan.length}</p>
                     <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
                   </div>
 
                   <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
-                    <p className='text-xl my-2 font-semibold'>Khóa học có doanh thu cao nhất</p>
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <FaMoneyBill className="text-[#ff6b6b] w-6 h-6" />
+                      <p className='text-xl font-semibold'>Khóa học có doanh thu cao nhất</p>
+                    </div>
                     <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocMaxSotien.ten}</p>
                     <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
                     <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
@@ -394,12 +403,15 @@ export default function Homedashboardlecturer() {
                 </div>
               </div>
             </div>
-            <div className=" mt-5">
-              <div className=' flex justify-center'>
-                <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê doanh thu</p>
+            <div className="mt-5">
+              <div className='flex justify-center items-center gap-2'>
+                <FaChartPie className="text-pink-600 w-8 h-8" />
+                <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê Doanh Thu</p>
               </div>
               <div className='mt-10'>
-                <DoanhThuChart />
+                {data?.giangvien && (
+                  <DoanhThuChart />
+                )}
               </div>
             </div>
           </div>
@@ -413,42 +425,56 @@ export default function Homedashboardlecturer() {
                     Xem tất cả
                   </Link>
                 </div>
-                <div className="overflow-x-auto" style={{ maxWidth: '100%' }}>
-                  <div className="flex flex-nowrap px-4" style={{ minWidth: 'min-content' }}>
-                    {khoahoc.map((item) => (
-                      <div className="flex-none px-2 mb-4" style={{ width: '331.797px' }} key={item.id}>
-                        <Link href={`/page/course-detail?id=${item.id}`}>
-                          <div className="card h-[244.344px] hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col overflow-hidden border rounded-xl bg-white">
-                            <Image
-                              width={332}
-                              height={146}
-                              src={validImageSrc(item.hinh)}
-                              className="w-full h-[146px] object-cover rounded-t-xl"
-                              alt={item.ten || 'Course Image'}
-                            />
-                            <div className="flex-1 p-6 flex flex-col justify-between gap-4">
-                              <div className="space-y-4">
-                                <div className="flex justify-between items-start gap-3">
-                                  <h6 className="card-title font-medium text-xl line-clamp-2 leading-tight max-w-[70%] text-gray-800 h-12 overflow-hidden">
-                                    {item.ten}
-                                  </h6>
-                                  <span
-                                    className={`badge ${item.trangthai === 'Hoàn thành' ? 'bg-green-500 text-white' : item.trangthai === 'notyet' ? 'bg-red-500 text-white' : ' text-pink-700'
-                                      } text-lg px-4 py-1.5 rounded-full whitespace-nowrap`}
-                                  >
-                                    {item.trangthai}
-                                  </span>
+                {khoahoc.length > 0 ? (
+                  <div className="overflow-x-auto" style={{ maxWidth: '100%' }}>
+                    <div className="flex flex-nowrap px-4" style={{ minWidth: 'min-content' }}>
+                      {khoahoc.map((item) => (
+                        <div className="flex-none px-2 mb-4" style={{ width: '331.797px' }} key={item.id}>
+                          <Link href={`/page/course-detail?id=${item.id}`}>
+                            <div className="card h-[244.344px] hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col overflow-hidden border rounded-xl bg-white">
+                              <Image
+                                width={332}
+                                height={146}
+                                src={validImageSrc(item.hinh)}
+                                className="w-full h-[146px] object-cover rounded-t-xl"
+                                alt={item.ten || 'Course Image'}
+                              />
+                              <div className="flex-1 p-6 flex flex-col justify-between gap-4">
+                                <div className="space-y-4">
+                                  <div className="flex justify-between items-start gap-3">
+                                    <h6 className="card-title font-medium text-xl line-clamp-2 leading-tight max-w-[70%] text-gray-800 h-12 overflow-hidden">
+                                      {item.ten}
+                                    </h6>
+                                    <span
+                                      className={`badge ${item.trangthai === 'Hoàn thành' ? 'bg-green-500 text-white' : item.trangthai === 'notyet' ? 'bg-red-500 text-white' : ' text-pink-700'
+                                        } text-lg px-4 py-1.5 rounded-full whitespace-nowrap`}
+                                    >
+                                      {item.trangthai}
+                                    </span>
+                                  </div>
                                 </div>
-                              </div>
 
-                             
+                               
+                              </div>
                             </div>
-                          </div>
-                        </Link>
-                      </div>
-                    ))}
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-lg">
+                    <FaExclamationTriangle className="text-yellow-500 w-16 h-16 mb-4" />
+                    <p className="text-xl text-gray-600 font-medium mb-2">Chưa có khóa học nào</p>
+                    <p className="text-gray-500 mb-4">Hãy bắt đầu tạo khóa học đầu tiên của bạn</p>
+                    <Link 
+                      href="/page/lecturer-dashboard/quanlykhoahoc" 
+                      className="px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors duration-300"
+                    >
+                      Tạo khóa học
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -466,18 +492,11 @@ const DoanhThuChart = () => {
   const [loading, setLoading] = useState(true);
   const [metric, setMetric] = useState('tongdoanhthu');
 
-  const fetchDoanhThu = async () => {
+  const fetchDoanhThu = async (giangvienId) => {
+    if (!giangvienId) return;
+    
     setLoading(true);
     setError(null);
-    const storedData = localStorage.getItem('lecturerId');
-
-    if (!storedData) {
-      setError('No lecturer data found.');
-      setLoading(false);
-      return;
-    }
-
-    const data = JSON.parse(storedData);
 
     try {
       const response = await fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
@@ -485,7 +504,7 @@ const DoanhThuChart = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id_giangvien: data.giangvien }),
+        body: JSON.stringify({ id_giangvien: giangvienId }),
         referrerPolicy: 'unsafe-url',
       });
 
@@ -494,15 +513,17 @@ const DoanhThuChart = () => {
       }
 
       const result = await response.json();
-      console.log(result);
-
+      
+      let transformedData;
       if (Array.isArray(result.data)) {
-        setDoanhthu(result.data);
+        transformedData = result.data;
       } else if (typeof result.data === 'object' && result.data !== null) {
-        setDoanhthu([result.data]);
+        transformedData = [result.data];
       } else {
-        throw new Error('Unexpected data format received from API.');
+        transformedData = [];
       }
+
+      setDoanhthu(transformedData);
 
     } catch (error) {
       console.error('Error fetching doanh thu:', error);
@@ -513,7 +534,20 @@ const DoanhThuChart = () => {
   };
 
   useEffect(() => {
-    fetchDoanhThu();
+    const initData = async () => {
+      try {
+        const dashboardRes = await Dashboard();
+        if (dashboardRes?.data?.giangvien) {
+          await fetchDoanhThu(dashboardRes.data.giangvien);
+        }
+      } catch (error) {
+        console.error("Error initializing data:", error);
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    initData();
   }, []);
 
   const handleReload = () => {

@@ -6,7 +6,8 @@ import { TatCaKhuyenMaiKhoaHoc, showAllNguoiDungMaGiamGia } from '../../../servi
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image';
-
+import { FaShoppingCart } from 'react-icons/fa';
+import Link from 'next/link';
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalBeforeDiscount, setTotalBeforeDiscount] = useState(0);
@@ -139,145 +140,162 @@ const Cart = () => {
       <ToastContainer position="top-right" autoClose={3000} />
       <Header />
       <main className="">
-        <h1 className="display-4 text-center my-20 font-bold text-black  ">
+        <h1 className="display-4 text-center my-20 font-bold text-black">
           🛒 Giỏ Hàng Của Tôi
         </h1>
-        <div className="container flex flex-col md:flex-row justify-between items-start ">
-          {/* Giỏ Hàng Của Tôi */}
-          <div className="w-full md:w-2/2 ">
-            <div
-              className="table-responsive shadow-lg p-4 mb-5 bg-white rounded-xl hover:shadow-2xl transition-all duration-500 animate-slideIn"
-              style={{ maxWidth: '100%' }}
+
+        {cartItems.length === 0 ? (
+          // Empty cart message
+          <div className="text-center py-20">
+            <FaShoppingCart className="mx-auto text-gray-400 text-9xl mb-4" />
+            <h2 className="text-2xl font-semibold text-gray-600 mb-4">Giỏ hàng của bạn đang trống</h2>
+            <p className="text-gray-500 mb-8">Hãy thêm khóa học vào giỏ hàng để tiến hành thanh toán</p>
+            <Link
+              href="/"
+              className="bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white font-bold py-3 px-6 rounded-lg hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
             >
-              <table className="table table-hover align-middle">
-                <thead>
-                  <tr className="text-black">
-                    <th className="py-4 text-xl"></th>
-                    <th className="py-4 text-xl">Hình ảnh</th>
-                    <th className="py-4 text-xl">Sản phẩm</th>
-                    <th className="py-4 text-xl">Giá</th>
-                    <th className="py-4 text-xl">Giảm Giá</th>
-                    <th className="py-4 text-xl">Tổng</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cartItems.map((item, index) =>
-                    item.khoahocs.map((khoahoc, subIndex) => {
-                      const coupon = appliedCoupons.find(c => c.id_khoahoc === khoahoc.id);
-                      const discountAmount = coupon ? (khoahoc.giamgia * coupon.giamgia) / 100 : 0;
-                      const finalPrice = khoahoc.giamgia - discountAmount;
-
-                      return (
-                        <tr
-                          key={`${index}-${subIndex}`}
-                          className="hover:bg-gray-50 transition-all duration-300 animate-fadeIn"
-                          style={{
-                            fontSize: '1.1em',
-                            height: '80px',
-                            animation: `fadeIn 0.5s ease-out ${(index + subIndex) * 0.1}s`,
-                          }}
-                        >
-                          <td className="text-center">
-                            <button className="btn w-14 btn-outline-danger btn-sm rounded-circle p-2 hover:scale-125 hover:rotate-12 transition-all duration-300">
-                              <i
-                                onClick={() => xoagiohang(khoahoc.id)}
-                                className="bi bi-trash text-2xl"
-                              ></i>
-                            </button>
-                          </td>
-                          <td className="flex items-center justify-center w-[120px] h-[120px]">
-                            <Image
-                              width={120}
-                              height={120}
-                              src={khoahoc.hinh}
-                              className="rounded-lg shadow-sm hover:scale-110 hover:rotate-2 transition-all duration-300 w-full h-full object-cover"
-                              alt={khoahoc.ten}
-                            />
-                          </td>
-                          <td className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
-                            <h3 className="text-2xl">{khoahoc.ten}</h3>
-                          </td>
-                          <td className="text-gray-600 text-2xl">đ{khoahoc.gia.toLocaleString()}</td>
-                          <td className="text-gray-600 text-2xl">{khoahoc.giamgia.toLocaleString()}</td>
-                          <td className="font-bold text-black animate-numberChange text-2xl">
-                            đ{finalPrice.toLocaleString()}
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
+              Khám phá khóa học
+            </Link>
           </div>
-
-          {/* Tổng Giỏ Hàng */}
-          <div className="w-full md:w-1/3 pl-10 md:ml-4">
-            <div className="card shadow-lg rounded-xl border-0 hover:shadow-2xl transition-all duration-500">
-              <div className="card-header font-medium text-black rounded-t-xl">
-                <h3 className="mb-0 py-3 px-4 text-black text-2xl">
-                  💰 Tổng Giỏ Hàng
-                </h3>
-              </div>
-              <div className="card-body p-4">
-                <table className="table mb-3">
+        ) : (
+          // Existing cart content
+          <div className="container flex flex-col md:flex-row justify-between items-start">
+            {/* Giỏ Hàng Của Tôi */}
+            <div className="w-full md:w-2/2 ">
+              <div
+                className="table-responsive shadow-lg p-4 mb-5 bg-white rounded-xl hover:shadow-2xl transition-all duration-500 animate-slideIn"
+                style={{ maxWidth: '100%' }}
+              >
+                <table className="table table-hover align-middle">
+                  <thead>
+                    <tr className="text-black">
+                      <th className="py-4 text-xl"></th>
+                      <th className="py-4 text-xl">Hình ảnh</th>
+                      <th className="py-4 text-xl">Sản phẩm</th>
+                      <th className="py-4 text-xl">Giá</th>
+                      <th className="py-4 text-xl">Giảm Giá</th>
+                      <th className="py-4 text-xl">Tổng</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                    <tr>
-                      <th className="text-gray-600 text-2xl">Thành tiền</th>
-                      <td className="text-right text-2xl">{totalBeforeDiscount.toLocaleString()} VNĐ</td>
-                    </tr>
-                    <tr>
-                      <th className="text-gray-600 text-2xl">Giảm giá</th>
-                      <td className="text-right text-2xl">-{totalDiscount}%</td>
-                    </tr>
-                    <tr>
-                      <td colSpan="2" className="text-center py-4">
-                        <button
-                          className="bg-[#1e3c72] text-white font-bold py-3 px-6 rounded-md"
-                          onClick={() => setIsModalOpen(true)}
-                        >
-                          🎫 Chọn Ưu Đãi
-                        </button>
-                      </td>
-                    </tr>
-
                     {cartItems.map((item, index) =>
                       item.khoahocs.map((khoahoc, subIndex) => {
                         const coupon = appliedCoupons.find(c => c.id_khoahoc === khoahoc.id);
                         const discountAmount = coupon ? (khoahoc.giamgia * coupon.giamgia) / 100 : 0;
                         const finalPrice = khoahoc.giamgia - discountAmount;
-                        sum += finalPrice;
-                        return null; // Return null since we are not rendering anything here
+
+                        return (
+                          <tr
+                            key={`${index}-${subIndex}`}
+                            className="hover:bg-gray-50 transition-all duration-300 animate-fadeIn"
+                            style={{
+                              fontSize: '1.1em',
+                              height: '80px',
+                              animation: `fadeIn 0.5s ease-out ${(index + subIndex) * 0.1}s`,
+                            }}
+                          >
+                            <td className="text-center">
+                              <button className="btn w-14 btn-outline-danger btn-sm rounded-circle p-2 hover:scale-125 hover:rotate-12 transition-all duration-300">
+                                <i
+                                  onClick={() => xoagiohang(khoahoc.id)}
+                                  className="bi bi-trash text-2xl"
+                                ></i>
+                              </button>
+                            </td>
+                            <td className="flex items-center justify-center w-[120px] h-[120px]">
+                              <Image
+                                width={120}
+                                height={120}
+                                src={khoahoc.hinh}
+                                className="rounded-lg shadow-sm hover:scale-110 hover:rotate-2 transition-all duration-300 w-full h-full object-cover"
+                                alt={khoahoc.ten}
+                              />
+                            </td>
+                            <td className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
+                              <h3 className="text-2xl">{khoahoc.ten}</h3>
+                            </td>
+                            <td className="text-gray-600 text-2xl">đ{khoahoc.gia.toLocaleString()}</td>
+                            <td className="text-gray-600 text-2xl">{khoahoc.giamgia.toLocaleString()}</td>
+                            <td className="font-bold text-black animate-numberChange text-2xl">
+                              đ{finalPrice.toLocaleString()}
+                            </td>
+                          </tr>
+                        );
                       })
                     )}
-                    <tr>
-                      <th className="text-2xl font-bold">Tổng Tiền</th>
-                      <td className="text-right">
-                        <strong className="text-2xl">
-                          {sum.toLocaleString()} VNĐ
-                        </strong>
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
-                {parsedData ? (
-                  <div className="flex">
-                    <a
-                      href="/page/checkout"
-                      className="bg-gradient-to-r text-2xl from-[#1e3c72] to-[#ff6b6b] text-white font-bold py-4 px-6 rounded-xl text-center w-full hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
-                    >
-                      Tiến hành thanh toán →
-                    </a>
-                  </div>
-                ) : (
-                  <p className="text-center text-red-500 mt-3 font-semibold">
-                    ⚠️ Vui Lòng Đăng Nhập
-                  </p>
-                )}
+              </div>
+            </div>
+
+            {/* Tổng Giỏ Hàng */}
+            <div className="w-full md:w-1/3 pl-10 md:ml-4">
+              <div className="card shadow-lg rounded-xl border-0 hover:shadow-2xl transition-all duration-500">
+                <div className="card-header font-medium text-black rounded-t-xl">
+                  <h3 className="mb-0 py-3 px-4 text-black text-2xl">
+                    💰 Tổng Giỏ Hàng
+                  </h3>
+                </div>
+                <div className="card-body p-4">
+                  <table className="table mb-3">
+                    <tbody>
+                      <tr>
+                        <th className="text-gray-600 text-2xl">Thành tiền</th>
+                        <td className="text-right text-2xl">{totalBeforeDiscount.toLocaleString()} VNĐ</td>
+                      </tr>
+                      <tr>
+                        <th className="text-gray-600 text-2xl">Giảm giá</th>
+                        <td className="text-right text-2xl">-{totalDiscount}%</td>
+                      </tr>
+                      <tr>
+                        <td colSpan="2" className="text-center py-4">
+                          <button
+                            className="bg-[#1e3c72] text-white font-bold py-3 px-6 rounded-md"
+                            onClick={() => setIsModalOpen(true)}
+                          >
+                            🎫 Chọn Ưu Đãi
+                          </button>
+                        </td>
+                      </tr>
+
+                      {cartItems.map((item, index) =>
+                        item.khoahocs.map((khoahoc, subIndex) => {
+                          const coupon = appliedCoupons.find(c => c.id_khoahoc === khoahoc.id);
+                          const discountAmount = coupon ? (khoahoc.giamgia * coupon.giamgia) / 100 : 0;
+                          const finalPrice = khoahoc.giamgia - discountAmount;
+                          sum += finalPrice;
+                          return null; // Return null since we are not rendering anything here
+                        })
+                      )}
+                      <tr>
+                        <th className="text-2xl font-bold">Tổng Tiền</th>
+                        <td className="text-right">
+                          <strong className="text-2xl">
+                            {sum.toLocaleString()} VNĐ
+                          </strong>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  {parsedData ? (
+                    <div className="flex">
+                      <Link
+                        href="/page/checkout"
+                        className="bg-gradient-to-r text-2xl from-blue-900 via-pink-700 to-pink-700 text-white font-bold py-4 px-6 rounded-xl text-center w-full hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
+                      >
+                        Tiến hành thanh toán →
+                      </Link>
+                    </div>
+                  ) : (
+                    <p className="text-center text-red-500 mt-3 font-semibold">
+                      ⚠️ Vui Lòng Đăng Nhập
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
 
       {/* Enhanced Modal Animation */}

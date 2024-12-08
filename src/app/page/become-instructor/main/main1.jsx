@@ -200,13 +200,13 @@ export default function Main1() {
                         Trở thành người hướng dẫn liên quan đến một loạt các bước có thể thay đổi tùy thuộc vào loại hướng dẫn mà bạn quan tâm
                     </p>
                 </div>
-                <div className="mb-16 transform hover:scale-102 transition-all duration-500">
+                <div className="mb-16 transform hover:scale-102 transition-all duration-500 flex justify-center">
                     <Image 
                         width={500} 
                         height={300}    
                         src="https://cdn.vus.edu.vn/webroot/css/images/website/2024/banner_inside/banner_giaovien.webp" 
                         alt="instructor" 
-                        className="w-full rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300" 
+                        className="w-[500px] h-[300px]  rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300" 
                     />
                 </div>
             </div>

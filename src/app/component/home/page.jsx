@@ -64,24 +64,12 @@ export default function Homecomponent() {
       });
   }, []);
 
-  const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
-
-  const isInactiveLongTime = NguoiDung && (
-    new Date(NguoiDung.lastLogin).getTime() < Date.now() - ONE_DAY_IN_MS
-  );
-
   return (
     <div>
       <div className="mt-60">
-        {isInactiveLongTime ? (
-          <div data-aos="fade-up">
-            <BannerUser />
-          </div>
-        ) : (
           <div data-aos="fade-up">
             <Banner />
           </div>
-        )}
         <div data-aos="fade-up">
           <NextCategory />
         </div>

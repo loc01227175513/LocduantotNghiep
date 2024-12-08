@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { GiangVienHienTai } from "../../../../service/Lecture/Lecture";
+import { ImSpinner9 } from "react-icons/im";
 
 export default function Myprofilelecturer() {
   const [lecturer, setLecturer] = useState(null);
@@ -32,7 +33,16 @@ export default function Myprofilelecturer() {
   }
 
   if (!lecturer) {
-    return <div>Đang tải...</div>;
+    return (
+      <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas">
+      <div className="right-sidebar-my-profile-dash theiaStickySidebar pt--30">
+      <div className="flex items-center justify-center ">
+        <ImSpinner9 className="animate-spin text-4xl text-blue-500" />
+        <span className="ml-2 text-gray-600">Đang tải...</span>
+        </div>
+      </div>
+      </div>
+    );
   }
 
   return (

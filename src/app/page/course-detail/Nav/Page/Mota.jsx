@@ -389,13 +389,13 @@ export default function Mota({ course }) {
                             <><div className="price-wrapper">
                               <div className="sale-price">
                                 <p className="text-2xl font-bold">
-                                  {item.giamgia}
+                                  {item.giamgia.toLocaleString('vi-VN')}
                                   <span className="text-2xl">VNĐ</span>
                                 </p>
                               </div>
                               <div className="original-price">
                                 <p className=" text-2xl">
-                                  {item.gia}
+                                  {item.gia.toLocaleString('vi-VN')}
                                   <span className="text-2xl">VNĐ</span>
                                 </p>
                               </div>

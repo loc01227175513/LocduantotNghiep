@@ -139,7 +139,7 @@ const LoadingSpinner = () => (
 );
 
 export default function Review({ course }) {
-  const [sortBy, setSortBy] = useState("newest");
+  const [sortBy, setSortBy] = useState("mới nhất");
   const [filterRating, setFilterRating] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -158,9 +158,9 @@ export default function Review({ course }) {
         filterRating === 0 || parseInt(review.rating, 10) === filterRating
     )
     .sort((a, b) => {
-      if (sortBy === "highest")
+      if (sortBy === "cao nhất")
         return parseInt(b.rating, 10) - parseInt(a.rating, 10);
-      if (sortBy === "lowest")
+      if (sortBy === "thấp nhất")
         return parseInt(a.rating, 10) - parseInt(b.rating, 10);
       return new Date(b.date) - new Date(a.date);
     });
@@ -246,8 +246,8 @@ export default function Review({ course }) {
             <motion.button
               key={sort}
               whileTap={{ scale: 0.95 }}
-              className={`sort-button px-3 py-1 rounded ${
-                sortBy === sort ? "active" : "bg-gray-100"
+              className={`sort-button px-3 py-1 rounded w-40 ${
+                sortBy === sort ? "bg-blue-500 text-white" : "bg-gray-100"
               } text-xl`}
               onClick={() => setSortBy(sort)}
             >

@@ -27,7 +27,7 @@ export default function Homedashboardstudent() {
       return `${diffInMinutes} phút trước`;
     }
   
-    return `${diffInMinutes} phút trước`;
+    return `${diffInMinutes} phút trư���c`;
   }
   useEffect(() => {
     Promise.all([Dashboard(), KhoaHocDaHoc()])
@@ -96,40 +96,48 @@ export default function Homedashboardstudent() {
       <div className="bg-white rounded-xl shadow-lg p-8">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-[20px] font-medium tracking-tight">Các khóa học của tôi</h2>
-          <button 
-            onClick={() => setShowAll(!showAll)}
-            className="px-4 py-2 text-blue-500 w-40 hover:text-blue-700 font-medium text-[14px] hover:bg-blue-50 rounded-lg transition-colors"
-          >
-            {showAll ? 'Ẩn bớt' : 'Xem tất cả'}
-          </button>
+          {data.length > 0 && (
+            <button 
+              onClick={() => setShowAll(!showAll)}
+              className="px-4 py-2 text-blue-500 w-40 hover:text-blue-700 font-medium text-[14px] hover:bg-blue-50 rounded-lg transition-colors"
+            >
+              {showAll ? 'Ẩn bớt' : 'Xem tất cả'}
+            </button>
+          )}
         </div>
 
-        {/* Course Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full table-fixed">
-            <thead>
-              <tr className="border-b-2">
-                <th className="text-left py-5 px-6 w-2/5 text-[16px] font-medium">Khóa học</th>
-                <th className="text-left py-5 px-6 w-2/5 text-[16px] font-medium">Giảng viên</th>
-                <th className="text-left py-5 px-6 w-1/5 text-[16px] font-medium">Ngày đăng ký</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.slice(0, showAll ? data.length : 4).map((item, itemIndex) => (
-                item.khoahocs.map((khoahoc, khoahocIndex) => (
-                  <tr 
-                    key={`${itemIndex}-${khoahocIndex}`} 
-                    className="border-b hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="py-5 px-6 text-[14px]">{khoahoc.ten}</td>
-                    <td className="py-5 px-6 text-[14px]">{khoahoc.tenGiangVien}</td>
-                    <td className="py-5 px-6 text-[14px]">{calculateMinutesDifference(khoahoc.updated_at)}</td>
-                  </tr>
-                ))
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {data.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <i className="fal fa-books text-gray-400 text-6xl mb-4"></i>
+            <p className="text-gray-500 text-lg">Bạn chưa đăng ký khóa học nào</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full table-fixed">
+              <thead>
+                <tr className="border-b-2">
+                  <th className="text-left py-5 px-6 w-2/5 text-[16px] font-medium">Khóa học</th>
+                  <th className="text-left py-5 px-6 w-2/5 text-[16px] font-medium">Giảng viên</th>
+                  <th className="text-left py-5 px-6 w-1/5 text-[16px] font-medium">Ngày đăng ký</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.slice(0, showAll ? data.length : 4).map((item, itemIndex) => (
+                  item.khoahocs.map((khoahoc, khoahocIndex) => (
+                    <tr 
+                      key={`${itemIndex}-${khoahocIndex}`} 
+                      className="border-b hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="py-5 px-6 text-[14px]">{khoahoc.ten}</td>
+                      <td className="py-5 px-6 text-[14px]">{khoahoc.tenGiangVien}</td>
+                      <td className="py-5 px-6 text-[14px]">{calculateMinutesDifference(khoahoc.updated_at)}</td>
+                    </tr>
+                  ))
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

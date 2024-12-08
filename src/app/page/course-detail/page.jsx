@@ -1001,11 +1001,11 @@ export default function Coursedetailcomponent() {
                                     ) : (
                                       <div className="flex items-center">
                                         <span className="text-red-500 font-bold text-2xl mr-3">
-                                          {course.giamgia}{" "}
+                                          {course.giamgia.toLocaleString('vi-VN')}{" "}
                                           <span className="text-xl">VNĐ</span>
                                         </span>
                                         <span className="line-through text-gray-500 text-2xl">
-                                          {course.gia}{" "}
+                                          {course.gia.toLocaleString('vi-VN')}{" "}
                                           <span className="text-xl">VNĐ</span>
                                         </span>
                                       </div>

@@ -1,7 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id}) {
+
+export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id }) {
+  const formattedPrice = (gia !== undefined && gia !== null) ? gia.toLocaleString() : "N/A";
+  const formattedDiscount = (giamgia !== undefined && giamgia !== null) ? giamgia.toLocaleString() : "N/A";
+
   return (
     <div className="transition flash element-item creative" data-category="transition">
       <div className="rts-single-course">
@@ -23,8 +27,8 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
           </div>
         </Link>
         <div className="course-card">
-          <Link href={`/page/course-detail?id=${id}`} className="title-link block h-[60px]">
-            <p className="line-clamp-2 font-bold text-2xl overflow-hidden hover:text-gray-600 transition-colors">
+          <Link href={`/page/course-detail?id=${id}`} className="title-link block">
+            <p className="font-bold text-2xl whitespace-nowrap overflow-hidden text-ellipsis hover:text-gray-600 transition-colors group-hover:whitespace-normal" title={ten}>
               {ten}
             </p>
           </Link>
@@ -81,17 +85,31 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
           <div className="rating-and-price">
             <div className="price-area">
               <div className="price-wrapper">
-                {gia === 0 || giamgia === 0 ? null : (
+                {gia === 0 && giamgia === 0 ? (
+                  <div className="sale-price">
+                    <p className="text-2xl font-bold text-red-600">
+                      0
+                      <span className="text-xl">VNĐ</span>
+                    </p>
+                  </div>
+                ) : giamgia === 0 ? (
+                  <div className="sale-price">
+                    <p className="text-2xl font-bold text-red-600">
+                     0
+                      <span className="text-xl">VNĐ</span>
+                    </p>
+                  </div>
+                ) : (
                   <>
                     <div className="sale-price">
                       <p className="text-2xl font-bold text-red-600">
-                        {giamgia.toLocaleString()}
+                        {formattedPrice}
                         <span className="text-xl">VNĐ</span>
                       </p>
                     </div>
                     <div className="original-price">
                       <p className="text-2xl">
-                        {gia.toLocaleString()}
+                        {formattedDiscount}
                         <span className="text-xl">VNĐ</span>
                       </p>
                     </div>

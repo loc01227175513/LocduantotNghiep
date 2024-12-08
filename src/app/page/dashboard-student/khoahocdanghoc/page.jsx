@@ -13,9 +13,7 @@ export default function Khoahoccuatoi() {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const [khoahocdanghoc1, setKhoahocdanghoc] = useState([]);
-  // const [data, setData] = useState([]);
-  // const [khoahocdahoc, setKhoahocdahoc] = useState([]);
+
   const tabVariants = {
     enter: { opacity: 0, x: 20 },
     center: { opacity: 1, x: 0 },
@@ -27,31 +25,7 @@ export default function Khoahoccuatoi() {
     // Simulate loading
     setTimeout(() => setIsLoading(false), 300);
   };
-  // useEffect(() => {
-  //   KhoaHocDangHoc()
-  //     .then((res) => {
-  //       setKhoahocdanghoc(res.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching dashboard data:", error);
-  //     });
-  //   Dashboard()
-  //     .then((res) => {
-  //       setData(res.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching dashboard data:", error);
-  //     });
-
-  //   KhoaHocDaHoc()
-  //     .then((res) => {
-  //       setKhoahocdahoc(res.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching dashboard data:", error);
-  //     });
-  // }, []);
-
+ 
 
 
   return (
@@ -269,6 +243,13 @@ const Khoahocdanghoc = () => {
             <div key={n} className="skeleton-card animate-pulse" />
           ))}
         </div>
+      ) : khoahocdanghoc1.length === 0 ? (
+        <div className="flex flex-col items-center justify-center w-full py-10">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          <p className="mt-4 text-lg text-gray-600">Bạn chưa có khóa học nào đang học</p>
+        </div>
       ) : (
         <div className="flex gap-4 w-full overflow-x-scroll">
           {khoahocdanghoc1.map((item, index) => (
@@ -336,6 +317,13 @@ const Khoahocdathanhtoan = () => {
             <div key={n} className="skeleton-card animate-pulse" />
           ))}
         </div>
+      ) : !data.length ? (
+        <div className="flex flex-col items-center justify-center w-full py-10">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+          </svg>
+          <p className="mt-4 text-lg text-gray-600">Chưa có khóa học nào đã thanh toán</p>
+        </div>
       ) : (
         <div className="flex gap-4 w-full overflow-x-scroll">
           {data
@@ -399,6 +387,13 @@ const Khoahocdahoanthanh = () => {
           {[1, 2, 3].map((n) => (
             <div key={n} className="skeleton-card animate-pulse" />
           ))}
+        </div>
+      ) : !khoahocdahoc.length ? (
+        <div className="flex flex-col items-center justify-center w-full py-10">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p className="mt-4 text-lg text-gray-600">Chưa có khóa học nào hoàn thành</p>
         </div>
       ) : (
         <div className="flex gap-4 w-full overflow-x-scroll">

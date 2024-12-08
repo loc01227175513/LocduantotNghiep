@@ -125,15 +125,15 @@ const Profile = () => {
               )}
             </div>
             <div className="upload-controls">
-              <label htmlFor="hinh" className="upload-button">
+              <label htmlFor="hinh" className="bg-pink-200 hover:bg-pink-300 text-pink-800 font-medium py-2 px-4 rounded-lg cursor-pointer transition-colors duration-300 inline-block">
                 Chọn hình ảnh
                 <input type="file" id="hinh" onChange={handleChange} hidden />
               </label>
             </div>
           </div>
 
-          <button type="submit" className="submit-button bg-">
-            <p className='text-white text-2xl'>Lưu</p>
+          <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-600 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center">
+            <p className="text-white text-xl font-semibold">Lưu</p>
           </button>
         </form>
       </div>
@@ -242,24 +242,9 @@ const Profile = () => {
           transform: translateY(-1px);
         }
 
-        .submit-button {
-          width: 100%;
-          padding: 1rem;
-          background: #48bb78;
-          color: white;
-          border: none;
-          border-radius: 8px;
-          font-size: 1rem;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s;
-          margin-top: 1rem;
-        }
+       
 
-        .submit-button:hover {
-          background: #38a169;
-          transform: translateY(-1px);
-        }
+       
       `}</style>
     </div>
   );
@@ -365,9 +350,9 @@ const MangXaHoi = () => {
             </div>
           ))}
           
-          <button type="submit" className="submit-button">
-            <i className="fas fa-save"></i>
-            Lưu
+          <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-600 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center gap-2">
+            <i className="fas fa-save text-white text-xl"></i>
+            <span className="text-white text-xl font-semibold">Lưu</span>
           </button>
         </form>
       </div>
@@ -555,10 +540,9 @@ const Password = () => {
             </div>
           </div>
         ))}
-        <button type="submit" className="submit-button">
-          <p className='text-xl text-white'>          Đổi mật khẩu
-          </p>   
-     </button>
+        <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-600 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center">
+          <p className='text-xl text-white'>Đổi mật khẩu</p>   
+        </button>
       </form>
 
       <style jsx>{`

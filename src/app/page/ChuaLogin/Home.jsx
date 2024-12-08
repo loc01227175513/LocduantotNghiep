@@ -634,7 +634,7 @@ const WhyChooseUs = () => {
                             <div className="flex flex-wrap gap-4">
                                 <Link
                                     href="/page/Cours-Filter"
-                                    className="px-6 py-3 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white rounded-full hover:from-pink-700 hover:to-pink-700 transition-all duration-300 flex items-center gap-2"
+                                    className="px-6 py-3 bg-gradient-to-r border border-white from-blue-900 via-pink-700 to-pink-700 text-white rounded-full hover:from-pink-700 hover:to-pink-700 transition-all duration-300 flex items-center gap-2"
                                 >
                                     <span className="text-xl">Xem tất cả các khóa học</span>
                                     <i className="fas fa-arrow-right"></i>

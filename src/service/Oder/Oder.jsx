@@ -42,3 +42,41 @@ export const Oder = async () => {
         throw error; // Ném lỗi để component cha có thể xử lý
     }
 };
+
+export const OderDetail = async (id) => {
+    const url = 'https://huuphuoc.id.vn/api/donhangchitiet';
+    
+    try {
+        // Validate id parameter
+        if (!id) {
+            throw new Error('ID đơn hàng không hợp lệ');
+        }
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ id_donhang: id }),
+            referrerPolicy: 'unsafe-url',
+        });
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            throw new Error(`Lỗi API: ${response.status} - ${errorData}`);
+        }
+
+        const data = await response.json();
+        if (!data) {
+            throw new Error('Không có dữ liệu trả về từ API');
+        }
+
+        return data;
+        
+    } catch (error) {
+        console.error('Lỗi trong quá trình xử lý:', error.message);
+        throw error; // Ném lỗi để component cha có thể xử lý
+    }
+};
+

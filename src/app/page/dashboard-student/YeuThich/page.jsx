@@ -3,6 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { DanhSachYeuThich, XoaKhoaHocYeuThich } from '../../../../service/YeuThich/YeuThich';
 import Image from 'next/image';
+import { MdFavoriteBorder } from 'react-icons/md';
+import { BiErrorCircle } from 'react-icons/bi';
 
 // Update font style to match Shopee's font system
 const shopeeFont = {
@@ -66,6 +68,9 @@ export default function VoucherPage() {
 
     const deleteFavorite = async (id) => {
         try {
+            if (!id) {
+                throw new Error('Không thể xác định khóa học');
+            }
             setError(null);
             const response = await XoaKhoaHocYeuThich(id);
             
@@ -74,10 +79,7 @@ export default function VoucherPage() {
             }
 
             if (response?.ok) {
-                // Optimistic update
-                setLove(prevLove => prevLove.filter(item => item.khoahoc.id !== id));
-                
-                // Verify update with server
+                setLove(prevLove => prevLove.filter(item => item.khoahoc?.id !== id));
                 await fetchLove();
             } else {
                 throw new Error(response?.message || 'Không thể xóa khóa học');
@@ -85,7 +87,6 @@ export default function VoucherPage() {
         } catch (error) {
             console.error("Error deleting favorite:", error);
             setError(error.message || 'Đã xảy ra lỗi khi xóa khóa học');
-            // Rollback on error by refetching
             await fetchLove();
         }
     };
@@ -119,18 +120,17 @@ export default function VoucherPage() {
 
     if (error) {
         return (
-            <div className="col-lg-9">
+            <div className="col-lg-9" style={shopeeFont}>
                 <div className="dashboard-content">
                     <div className="card">
-                        <div className="card-body p-4">
-                            <div className="text-center">
-                                <p className="text-red-500">{error}</p>
-                                <button 
-                                    onClick={fetchLove}
-                                    className="rts-btn btn-primary mt-3"
-                                >
-                                    Thử lại
-                                </button>
+                        <div className="card-body">
+                            <h4 className="card-title px-4 py-3 border-b text-[20px] font-normal text-[rgba(0,0,0,.87)] mb-0">
+                                Khóa Học Yêu Thích
+                            </h4>
+                            <div className="flex flex-col items-center justify-center py-16">
+                                <MdFavoriteBorder className="text-6xl text-gray-400 mb-4" />
+                                <p className="text-lg text-gray-500 mb-2">Bạn chưa có khóa học yêu thích nào</p>
+                                <p className="text-sm text-gray-400">Hãy thêm các khóa học bạn quan tâm vào danh sách yêu thích</p>
                             </div>
                         </div>
                     </div>
@@ -144,86 +144,93 @@ export default function VoucherPage() {
         <div className="col-lg-9" style={shopeeFont}>
             <div className="dashboard-content">
                 <div className="card">
-                    {/* Removed p-4 from card-body and adjusted inner spacing */}
                     <div className="card-body">
                         <h4 className="card-title px-4 py-3 border-b text-[20px] font-normal text-[rgba(0,0,0,.87)] mb-0">
                             Khóa Học Yêu Thích
                         </h4>
                         
-                        <div className="grid grid-cols-1 divide-y">
-                            {currentItems.map((item, index) => (
-                                <div key={index} className="course-card hover:bg-[#FAFAFA] transition-all duration-300">
-                                    <div className="flex gap-4 p-4">
-                                        {/* Thumbnail */}
-                                        <div className="flex-shrink-0 w-48 h-48 relative">
-                                            <Link href={`/page/course-detail?id=${item.khoahoc.id}`}>
-                                                <Image 
-                                                    width={192}
-                                                    height={192}
-                                                    className="rounded-lg object-cover w-full h-full"
-                                                    src={item.khoahoc.hinh} 
-                                                    alt={item.khoahoc.ten}
-                                                />
-                                            </Link>
-                                        </div>
-
-                                        {/* Content */}
-                                        <div className="flex-grow">
-                                            <div className="flex justify-between items-start mb-2">
-                                                <Link 
-                                                    href={`/page/course-detail?id=${item.khoahoc.id}`}
-                                                    className="text-decoration-none"
-                                                >
-                                                    <h5 className="text-2xl text-[rgba(0,0,0,.87)] hover:text-pink-500 font-medium">
-                                                        {item.khoahoc.ten}
-                                                    </h5>
+                        {love.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center py-16">
+                                <MdFavoriteBorder className="text-6xl text-gray-400 mb-4" />
+                                <p className="text-lg text-gray-500 mb-2">Bạn chưa có khóa học yêu thích nào</p>
+                                <p className="text-sm text-gray-400">Hãy thêm các khóa học bạn quan tâm vào danh sách yêu thích</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 divide-y">
+                                {currentItems.map((item, index) => (
+                                    <div key={index} className="course-card hover:bg-[#FAFAFA] transition-all duration-300">
+                                        <div className="flex gap-4 p-4">
+                                            {/* Thumbnail */}
+                                            <div className="flex-shrink-0 w-48 h-48 relative">
+                                                <Link href={`/page/course-detail?id=${item.khoahoc.id}`}>
+                                                    <Image 
+                                                        width={192}
+                                                        height={192}
+                                                        className="rounded-lg object-cover w-full h-full"
+                                                        src={item.khoahoc.hinh} 
+                                                        alt={item.khoahoc.ten}
+                                                    />
                                                 </Link>
-                                                <button 
-                                                    className="text-black/70 w-10 h-10 hover:text-pink-500 transition-colors"
-                                                    onClick={() => deleteFavorite(item.id)}
-                                                >
-                                                    <i className="fa-sharp fa-solid fa-trash text-xl"></i>
-                                                </button>
                                             </div>
 
-                                           
+                                            {/* Content */}
+                                            <div className="flex-grow">
+                                                <div className="flex justify-between items-start mb-2">
+                                                    <Link 
+                                                        href={`/page/course-detail?id=${item.khoahoc.id}`}
+                                                        className="text-decoration-none"
+                                                    >
+                                                        <h5 className="text-2xl text-[rgba(0,0,0,.87)] hover:text-pink-500 font-medium">
+                                                            {item.khoahoc.ten}
+                                                        </h5>
+                                                    </Link>
+                                                    <button 
+                                                        className="text-black/70 w-10 h-10 hover:text-pink-500 transition-colors"
+                                                        onClick={() => deleteFavorite(item.id)}
+                                                    >
+                                                        <i className="fa-sharp fa-solid fa-trash text-xl"></i>
+                                                    </button>
+                                                </div>
 
-                                            {/* Stats */}
-                                            <div className="flex gap-4 text-[rgba(0,0,0,.65)] mb-4 text-[15px]">
-                                                <span className="flex items-center gap-1">
-                                                    <i className="far fa-book-open"></i>
-                                                    {item.baihoc.length || 0} Bài học
-                                                </span>
-                                                <span className="flex items-center gap-1">
-                                                    <i className="far fa-users"></i>
-                                                    {item.thanhtoan.length || 0} Học viên
-                                                </span>
-                                            </div>
+                                               
 
-                                            {/* Price and Action */}
-                                            <div className="flex justify-between items-center">
-                                                <div className="text-xl">
-                                                    {item.khoahoc.gia > 0 && (
-                                                        <span className="text-[rgba(0,0,0,.26)] line-through mr-2 text-base">
-                                                            ${item.khoahoc.gia}
-                                                        </span>
-                                                    )}
-                                                    <span className="text-pink-700 font-medium">
-                                                        {item.khoahoc.giamgia > 0 ? `$${item.khoahoc.giamgia}` : 'Miễn phí'}
+                                                {/* Stats */}
+                                                <div className="flex gap-4 text-[rgba(0,0,0,.65)] mb-4 text-[15px]">
+                                                    <span className="flex items-center gap-1">
+                                                        <i className="far fa-book-open"></i>
+                                                        {item.baihoc.length || 0} Bài học
+                                                    </span>
+                                                    <span className="flex items-center gap-1">
+                                                        <i className="far fa-users"></i>
+                                                        {item.thanhtoan.length || 0} Học viên
                                                     </span>
                                                 </div>
-                                                <Link 
-                                                    href={`/page/course-detail?id=${item.khoahoc.id}`}
-                                                    className="px-6 py-2 bg-pink-700 text-white rounded-sm hover:bg-pink-400 transition-colors text-[15px]"
-                                                >
-                                                    Xem Chi Tiết
-                                                </Link>
+
+                                                {/* Price and Action */}
+                                                <div className="flex justify-between items-center">
+                                                    <div className="text-xl">
+                                                        {item.khoahoc.gia > 0 && (
+                                                            <span className="text-[rgba(0,0,0,.26)] line-through mr-2 text-base">
+                                                                ${item.khoahoc.gia}
+                                                            </span>
+                                                        )}
+                                                        <span className="text-pink-700 font-medium">
+                                                            {item.khoahoc.giamgia > 0 ? `$${item.khoahoc.giamgia}` : 'Miễn phí'}
+                                                        </span>
+                                                    </div>
+                                                    <Link 
+                                                        href={`/page/course-detail?id=${item.khoahoc.id}`}
+                                                        className="px-6 py-2 bg-pink-700 text-white rounded-sm hover:bg-pink-400 transition-colors text-[15px]"
+                                                    >
+                                                        Xem Chi Tiết
+                                                    </Link>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        )}
 
                         {/* Adjusted pagination spacing */}
                         {love.length > 3 && (

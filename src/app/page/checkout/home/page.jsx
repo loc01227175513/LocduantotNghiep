@@ -311,7 +311,7 @@ const Page = () => {
         <div className="mx-auto">
           {/* Animated Header */}
           <h1 className="text-5xl font-semibold mb-8 text-center animate-fade-in relative">
-            <span className="absolute -inset-1 blur-2xl bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 opacity-30"></span>
+            <span className="absolute -inset-1 blur-2xl bg-gradient-to-r from-blue-900 via-pink-700 to-gray-600 opacity-30"></span>
             <span className="relative text-pink-700">Thanh Toán</span>
           </h1>
 
@@ -339,7 +339,7 @@ const Page = () => {
               {/* Cart Items Section */}
               <div className="w-full lg:w-1/2 space-y-6">
                 <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
-                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600">
+                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700">
                     Các khóa học trong giỏ hàng
                   </h2>
                   <div className="space-y-6">
@@ -395,7 +395,7 @@ const Page = () => {
                 </div>
                 {/* Order Summary */}
                 <div className="bg-gradient-to-br from-purple-100 to-blue-50 rounded-xl shadow-lg p-6 border border-purple-200">
-                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600">
+                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700">
                     Tóm Tắt Đơn Hàng
                   </h2>
                   <div className="space-y-4">
@@ -424,7 +424,7 @@ const Page = () => {
                           return null; // Return null since we are not rendering anything here
                         })
                       )}
-                      <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
+                      <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700">
                         {sum.toLocaleString()}
                         <span className="text-lg">VNĐ</span>
                       </span>
@@ -437,7 +437,7 @@ const Page = () => {
               <div className="w-full lg:w-1/4 space-y-6">
                 {/* Payment Form */}
                 <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300 border border-purple-100">
-                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600">
+                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700  ">
                     Phương thức - thông tin
                   </h2>
                   {errorMessage && (
@@ -546,7 +546,7 @@ const Page = () => {
                     </div>
                        <button
                       type="submit"
-                      className="w-full text-2xl font-bold  mb-6 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white py-4 rounded-lg  hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+                      className="w-full text-2xl font-bold  mb-6 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white py-4 rounded-lg  hover:from-pink-700 hover:to-pink-800 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
                     >
                       Thanh Toán  
                         <span className="pl-1"> { (totalPrice - (totalPrice * discount) / 100).toLocaleString()}</span><span className="text-lg">VNĐ</span>

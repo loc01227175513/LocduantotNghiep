@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { GiangvienKhoaHocDaMua } from "../../../../service/Dashboard-lecture/Dashboard-lecture.jsx";
+import { RiFileList3Line } from "react-icons/ri";
 
 export default function Khoahocdanghoc() {
   const [lecturer, setLecturer] = useState(null);
@@ -113,35 +114,42 @@ export default function Khoahocdanghoc() {
           <h4 className="mb-4 text-xl">Lịch sử đơn hàng</h4>
            
          <div className="table-responsive">
-            <table className="table table-hover">
-              <thead>
-                <tr className="table-light">
-                  <th className="p-3 text-left text-xl">ID đơn hàng</th>
-                  <th className="p-3 text-left text-xl">Tên khóa học</th>
-                  <th className="p-3 text-left text-xl">Ngày</th>
-                  <th className="p-3 text-left text-xl">Giá</th>
-                  <th className="p-3 text-left text-xl">Trạng thái</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tabFilteredLecturer && tabFilteredLecturer.map((item) => (
-                  <tr key={item.id}>
-                    <td className="p-3 align-middle text-left text-xl"># {item.id}</td>
-                    <td className="p-3 align-middle text-break text-left text-xl">{item.khoahocs.ten}</td>
-                    <td className="p-3 align-middle text-left text-xl">{new Date(item.updated_at).toLocaleDateString("vi-VN")}</td>
-                    <td className="p-3 align-middle text-left text-xl">{item.gia === 0 ? 'Miễn phí' : new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.gia)}</td>
-                    <td className="p-3 align-middle text-left text-xl">
-                      <span className={`badge rounded-pill ${
-                        item.trangthai === 'Đã Thanh Toán' ? 'bg-danger' : 
-                        item.trangthai === 'Đang xử lý' ? 'bg-warning' : 'bg-secondary'
-                      }`}>
-                        {item.trangthai === 'Hoàn thành' ? 'Đã hoàn thành' : item.trangthai}
-                      </span>
-                    </td>
+            {tabFilteredLecturer && tabFilteredLecturer.length > 0 ? (
+              <table className="table table-hover">
+                <thead>
+                  <tr className="table-light">
+                    <th className="p-3 text-left text-xl">ID đơn hàng</th>
+                    <th className="p-3 text-left text-xl">Tên khóa học</th>
+                    <th className="p-3 text-left text-xl">Ngày</th>
+                    <th className="p-3 text-left text-xl">Giá</th>
+                    <th className="p-3 text-left text-xl">Trạng thái</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {tabFilteredLecturer.map((item) => (
+                    <tr key={item.id}>
+                      <td className="p-3 align-middle text-left text-xl"># {item.id}</td>
+                      <td className="p-3 align-middle text-break text-left text-xl">{item.khoahocs.ten}</td>
+                      <td className="p-3 align-middle text-left text-xl">{new Date(item.updated_at).toLocaleDateString("vi-VN")}</td>
+                      <td className="p-3 align-middle text-left text-xl">{item.gia === 0 ? 'Miễn phí' : new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.gia)}</td>
+                      <td className="p-3 align-middle text-left text-xl">
+                        <span className={`badge rounded-pill ${
+                          item.trangthai === 'Đã Thanh Toán' ? 'bg-danger' : 
+                          item.trangthai === 'Đang xử lý' ? 'bg-warning' : 'bg-secondary'
+                        }`}>
+                          {item.trangthai === 'Hoàn thành' ? 'Đã hoàn thành' : item.trangthai}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-12">
+                <RiFileList3Line className="text-gray-400 text-7xl mb-4" />
+                <p className="text-xl text-gray-500">Không có đơn hàng nào</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

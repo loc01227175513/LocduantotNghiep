@@ -107,7 +107,7 @@ export default function Instructor({ course }) {
               height={300}
               src={course.thongtingiangvien.hinh}
               alt={`Instructor ${course.thongtingiangvien.ten}`}
-              className="w-full h-auto rounded-xl instructor-image"
+              className=" instructor-image h-96 w-96 rounded-xl"
               priority
             />
             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />

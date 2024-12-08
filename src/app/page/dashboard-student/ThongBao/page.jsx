@@ -4,6 +4,8 @@ import { LayThongBao } from "@/service/ThongBao/ThongBao";
 import { use } from '@/assets/js/plugins/swiper';
 import Link from 'next/link';
 import Img from 'next/image';
+import { FaBell } from 'react-icons/fa';
+
 const Page = () => {
   const [activeTab, setActiveTab] = useState('student');
   const [ThongBao, setThongBao] = useState([]);
@@ -29,54 +31,59 @@ const Page = () => {
           >
             <div data-testid="notification-tab-pane-student" data-purpose="notification-tab-pane">
               <div className="space-y-4">
-                {/* Notification 1 */}
-                <div data-purpose="notification" className="p-4 bg-white rounded shadow">
-                  {ThongBao.map((item) => (
-                    <Link key={item.id} href={`/page/course-detail?id=${item.noidung.id}`}>
-                      <div className="flex items-start gap-4 mb-4">
-                        <div className="shrink-0">
-                          <Img
-                            width="64"
-                            height="64"
-                            src={item.noidung.hinh}
-                            alt=""
-                            className="w-16 h-16 rounded-full"
-                            loading="lazy"
-                          />
-                        </div>
-                        <div className="flex-1">
-                          <a
-                            data-purpose="notification-message"
-                            href={`/course/learn-php-for-beginners-n/learn/#announcements/${item.noidung.id}/`}
-                            className="text-lg font-semibold text-blue-600 hover:underline"
-                          >
-                            <span>
-                              {item.giangvien.ten} đã thực hiện một thông báo:{' '}
-                              <span className="font-medium text-gray-700">
-                                {item.noidung.mota}
+                {ThongBao.length > 0 ? (
+                  <div data-purpose="notification" className="p-4 bg-white rounded shadow">
+                    {ThongBao.map((item) => (
+                      <Link key={item.id} href={`/page/course-detail?id=${item.noidung.id}`}>
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="shrink-0">
+                            <Img
+                              width="64"
+                              height="64"
+                              src={item.noidung.hinh}
+                              alt=""
+                              className="w-16 h-16 rounded-full"
+                              loading="lazy"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <a
+                              data-purpose="notification-message"
+                              href={`/course/learn-php-for-beginners-n/learn/#announcements/${item.noidung.id}/`}
+                              className="text-lg font-semibold text-blue-600 hover:underline"
+                            >
+                              <span>
+                                {item.giangvien.ten} đã thực hiện một thông báo:{' '}
+                                <span className="font-medium text-gray-700">
+                                  {item.noidung.mota}
+                                </span>
                               </span>
-                            </span>
-                          </a>
-                          <div className="text-sm text-gray-500">{item.thoigiangui}</div>
+                            </a>
+                            <div className="text-sm text-gray-500">{item.thoigiangui}</div>
+                          </div>
+                          <div className="flex items-center">
+                            <button
+                              type="button"
+                              className="p-2 bg-gray-200 rounded-full focus:outline-none hover:bg-gray-300"
+                              aria-label="Đánh dấu là đã đọc"
+                              tabIndex="0"
+                            >
+                              <span className="w-3 h-3 bg-red-500 rounded-full"></span>
+                            </button>
+                          </div>
                         </div>
-                        <div className="flex items-center">
-                          <button
-                            type="button"
-                            className="p-2 bg-gray-200 rounded-full focus:outline-none hover:bg-gray-300"
-                            aria-label="Đánh dấu là đã đọc"
-                            tabIndex="0"
-                          >
-                            <span className="w-3 h-3 bg-red-500 rounded-full"></span>
-                          </button>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center p-8 bg-white rounded shadow">
+                    <FaBell className="text-gray-400 text-5xl mb-4" />
+                    <p className="text-gray-500 text-lg">Không có thông báo nào</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
-
         );
       default:
         return null;

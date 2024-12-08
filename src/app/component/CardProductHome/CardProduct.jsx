@@ -42,7 +42,9 @@ export default function CardProduct({
                 </div>
                 <div className="course-card">
                     <Link href={`/page/course-detail?id=${id}`} className="title-link flex items-center">
-                        <p className="title line-clamp-2 transition-height" style={{ fontWeight: "600", height: "48px" }}>
+                        <p className="title line-clamp-1" 
+                           style={{ fontWeight: "600", height: "24px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
+                           title={ten}>
                             {ten}
                         </p>
                     </Link>

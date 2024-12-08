@@ -1,12 +1,18 @@
-
-import React from "react";
-
+"use client";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Header from "../../component/header/page";
 import { Headerdashboardstudent1, Headerdashboardstudent2 } from './headerdashboardstudent';
 
-
 export default function Layoutdashboardstudent({ children }) {
+  const router = useRouter();
 
+  useEffect(() => {
+    const userData = localStorage.getItem('data');
+    if (!userData) {
+      router.push('/page/login');
+    }
+  }, [router]);
 
   return (
     <>

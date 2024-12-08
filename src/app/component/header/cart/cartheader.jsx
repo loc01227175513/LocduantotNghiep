@@ -2,18 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
-import { ToastContainer, toast } from 'react-toastify';
 import Image from 'next/image';
+import { BsCartX } from 'react-icons/bs';
 
 const Cart = ({ onAction }) => {
-
-
-
-
-
-
-
-
   const router = useRouter();
   const openCart = () => {
     router.push('/page/cart');
@@ -21,6 +13,7 @@ const Cart = ({ onAction }) => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const userData = localStorage.getItem('data');
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -32,14 +25,12 @@ const Cart = ({ onAction }) => {
           const response = await axios.post('https://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id });
           setCartItems(response.data.data);
 
-          // Calculate total discounted price
           const totalDiscountedPrice = response.data.data.reduce((sum, item) => {
             return sum + item.khoahocs.reduce((itemSum, khoahoc) => itemSum + khoahoc.giamgia, 0);
           }, 0);
           setTotalPrice(totalDiscountedPrice);
-        } catch {
-          // Handle error
-          toast.error('Failed to load cart items');
+        } catch (error) {
+          console.error('Failed to load cart items:', error);
         }
       }
       setIsLoading(false);
@@ -60,7 +51,7 @@ const Cart = ({ onAction }) => {
         id_khoahoc: id,
         id_nguoidung: parsedData.id,
       };
-      toast.success('Xóa khóa học thành công');
+      
       await axios.post('https://huuphuoc.id.vn/api/xoasanphamadd', payload);
       
       setCartItems(prevItems => prevItems.filter(item => 
@@ -72,13 +63,10 @@ const Cart = ({ onAction }) => {
       }, 0);
       setTotalPrice(updatedTotalPrice);
       
-    } catch {
-      toast.error('Xóa khóa học thất bại');
+    } catch (error) {
+      console.error('Failed to delete item:', error);
     }
   };
-  const userData = localStorage.getItem('data');
-
-  console.log('cartItems', cartItems);
 
   return (
     <div className='fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm transition-all duration-300 h-screen'>
@@ -101,6 +89,14 @@ const Cart = ({ onAction }) => {
           {isLoading ? (
             <div className="flex justify-center items-center h-full">
               <p className="text-xl text-gray-500">Đang tải giỏ hàng...</p>
+            </div>
+          ) : cartItems.length === 0 ? (
+            <div className="flex flex-col justify-center items-center h-full space-y-4">
+              <BsCartX className="text-gray-400 text-7xl animate-[float_3s_ease-in-out_infinite]" />
+              <p className="text-2xl text-gray-500">Giỏ hàng của bạn đang trống</p>
+              <Link href="/page/Cours-Filter" className="text-pink-600 hover:text-pink-700 transition-colors">
+                Khám phá các khóa học
+              </Link>
             </div>
           ) : (
             <ul className='divide-y divide-gray-100/80'>
@@ -151,36 +147,37 @@ const Cart = ({ onAction }) => {
           )}
         </div>
 
-        {/* Footer */}
-        <div className='absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-orange-100 p-5 shadow-lg'>
-          <div className='flex justify-between items-center mb-4'>
-            <span className='text-2xl text-gray-800'>Tổng cộng</span>
-            <span className='text-3xl animate-pulse'>{totalPrice.toLocaleString()}VNĐ</span>
-          </div>
-          <div className='space-y-3'>
-            {userData ? (
-              <>
-                <Link href="/page/checkout" className='block transform hover:scale-[1.02] transition-all duration-300'>
-                  <button className='w-full py-3.5 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 hover:from-pink-700 hover:to-pink-700 text-white rounded-xl transition-all duration-300 shadow-lg animate-[pulse_2s_infinite] text-2xl'>
-                    Tiến hành thanh toán
+        {/* Footer - Only show if cart has items */}
+        {cartItems.length > 0 && (
+          <div className='absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-orange-100 p-5 shadow-lg'>
+            <div className='flex justify-between items-center mb-4'>
+              <span className='text-2xl text-gray-800'>Tổng cộng</span>
+              <span className='text-3xl animate-pulse'>{totalPrice.toLocaleString()}VNĐ</span>
+            </div>
+            <div className='space-y-3'>
+              {userData ? (
+                <>
+                  <Link href="/page/checkout" className='block transform hover:scale-[1.02] transition-all duration-300'>
+                    <button className='w-full py-3.5 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 hover:from-pink-700 hover:to-pink-700 text-white rounded-xl transition-all duration-300 shadow-lg animate-[pulse_2s_infinite] text-2xl'>
+                      Tiến hành thanh toán
+                    </button>
+                  </Link>
+                  <button onClick={() => openCart()}
+                    className='w-full py-3.5 border-2 border-orange-500 text-gray-700 hover:bg-pink-50 rounded-xl transition-all duration-300 text-2xl'>
+                    Xem giỏ hàng
+                  </button>
+                </>
+              ) : (
+                <Link href="/page/login" className='block transform hover:scale-[1.02] transition-all duration-300'>
+                  <button className='w-full py-3.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-200'>
+                    Đăng nhập
                   </button>
                 </Link>
-                <button onClick={() => openCart()}
-                  className='w-full py-3.5 border-2 border-orange-500 text-gray-700 hover:bg-pink-50 rounded-xl transition-all duration-300 text-2xl'>
-                  Xem giỏ hàng
-                </button>
-              </>
-            ) : (
-              <Link href="/page/login" className='block transform hover:scale-[1.02] transition-all duration-300'>
-                <button className='w-full py-3.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-200'>
-                  Đăng nhập
-                </button>
-              </Link>
-            )}
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
-      <ToastContainer />
       <style jsx>{`@keyframes slideIn {
   from {
     transform: translateX(100%);

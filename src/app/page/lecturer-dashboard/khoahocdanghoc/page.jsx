@@ -6,6 +6,7 @@ import { GiangvienKhoaHoc, GiangvienKhoaHocDaMua } from "../../../../service/Das
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Product from "../../../component/Card/Product";
+import { RiEmotionSadLine } from "react-icons/ri";
 
 
 
@@ -121,6 +122,11 @@ const Khoahocdanghoc = () => {
             <div key={n} className="h-[400px] bg-[#f0f0f0] rounded-[12px] animate-pulse" />
           ))}
         </div>
+      ) : khoahocdanghoc1.length === 0 ? (
+        <div className="flex flex-col items-center justify-center w-full py-10">
+          <RiEmotionSadLine className="text-6xl text-gray-400 mb-4" />
+          <p className="text-xl text-gray-500">Bạn chưa có khóa học nào đang học</p>
+        </div>
       ) : (
         <div className="flex gap-10 w-full overflow-x-scroll ">
           {khoahocdanghoc1.map((item, index) => (
@@ -184,6 +190,11 @@ const Khoahocdathanhtoan = () => {
             <div key={n} className="skeleton-card animate-pulse h-96 bg-gray-200 rounded-lg" />
           ))}
         </div>
+      ) : coursesInProgress.length === 0 ? (
+        <div className="flex flex-col items-center justify-center w-full py-10">
+          <RiEmotionSadLine className="text-6xl text-gray-400 mb-4" />
+          <p className="text-xl text-gray-500">Bạn chưa có khóa học nào đã thanh toán</p>
+        </div>
       ) : (
         <div className="flex gap-10 w-full overflow-x-scroll">
           {coursesInProgress.map((item, index) => (
@@ -236,6 +247,8 @@ const Khoahocdahoanthanh = () => {
     return 0;
   });
 
+  const filteredCourses = coursesInProgress?.filter((item) => item.khoahocdahoc.length > 0);
+
   return (
     <div className="courses-masonry my-20">
       {isLoading ? (
@@ -244,26 +257,29 @@ const Khoahocdahoanthanh = () => {
             <div key={n} className="skeleton-card animate-pulse h-96 bg-gray-200 rounded-lg" />
           ))}
         </div>
+      ) : filteredCourses.length === 0 ? (
+        <div className="flex flex-col items-center justify-center w-full py-10">
+          <RiEmotionSadLine className="text-6xl text-gray-400 mb-4" />
+          <p className="text-xl text-gray-500">Bạn chưa có khóa học nào đã hoàn thành</p>
+        </div>
       ) : (
         <div className="flex gap-10 w-full overflow-x-scroll">
-          {coursesInProgress
-            ?.filter((item) => item.khoahocdahoc.length > 0)
-            .map((item, index) => (
-              <Product
-                key={index}
-                id={item.khoahocs.id}
-                gia={item.khoahocs.gia}
-                giamgia={item.khoahocs.giamgia}
-                ten={item.khoahocs.ten}
-                hinh={item.khoahocs.hinh}
-                chude={item.chude?.ten}
-                giangvien={item.giangVien?.ten}
-                baihocs={item.baihoc?.length}
-                dangky={item.thanhtoan?.length}
-                danhgia={averageRatings[index]}
-                PhanTram={`${(item.khoahocdahoc.length / item.baihoc.length) * 100}%`}
-              />
-            ))}
+          {filteredCourses.map((item, index) => (
+            <Product
+              key={index}
+              id={item.khoahocs.id}
+              gia={item.khoahocs.gia}
+              giamgia={item.khoahocs.giamgia}
+              ten={item.khoahocs.ten}
+              hinh={item.khoahocs.hinh}
+              chude={item.chude?.ten}
+              giangvien={item.giangVien?.ten}
+              baihocs={item.baihoc?.length}
+              dangky={item.thanhtoan?.length}
+              danhgia={averageRatings[index]}
+              PhanTram={`${(item.khoahocdahoc.length / item.baihoc.length) * 100}%`}
+            />
+          ))}
         </div>
       )}
     </div>

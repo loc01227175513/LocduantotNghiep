@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import Banner from "./Banner/page";
 import Main1 from "./main/main1";
@@ -7,6 +9,17 @@ import Header from "../../component/header/page";
 import Footercomponent from "../../component/footer/page";
 
 export default function Becomeinstructor() {
+    const router = useRouter();
+
+    useEffect(() => {
+        // Kiểm tra xem có data trong localStorage không
+        const userData = localStorage.getItem('data');
+        if (!userData) {
+            // Nếu không có data, chuyển hướng về trang login
+            router.push('/page/login');
+        }
+    }, [router]);
+
     return (
         <>
             <Header />
@@ -26,7 +39,6 @@ export default function Becomeinstructor() {
                 </div>
             </div>
             <Footercomponent />
-           
         </>
     )
 }

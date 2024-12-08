@@ -1,10 +1,37 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Profile, Password, MangXaHoi } from './setting';
-import { FaUser, FaLock, FaShare } from 'react-icons/fa'; // Add icons
+import { FaUser, FaLock, FaShare, FaSignInAlt } from 'react-icons/fa'; // Added FaSignInAlt
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
     const [view, setView] = useState('profile');
+    const [hasUserData, setHasUserData] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        // Check if user data exists in localStorage
+        const userData = localStorage.getItem('data');
+        setHasUserData(!!userData);
+        
+        // Redirect to login if no data
+        if (!userData) {
+            router.push('/page/login'); // Make sure you have the correct login route
+        }
+    }, [router]);
+
+    // If no user data, show login icon/message
+    if (!hasUserData) {
+        return (
+            <div className="col-lg-9 flex items-center justify-center">
+                <div className="text-center p-8">
+                    <FaSignInAlt className="text-6xl text-pink-700 mx-auto mb-4" />
+                    <h2 className="text-2xl font-bold mb-2">Vui lòng đăng nhập</h2>
+                    <p className="text-gray-600">Bạn cần đăng nhập để truy cập trang này</p>
+                </div>
+            </div>
+        );
+    }
 
     const renderView = () => {
         switch (view) {

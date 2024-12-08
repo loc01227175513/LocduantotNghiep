@@ -190,7 +190,7 @@ export default function Page() {
                     referrerPolicy: 'unsafe-url'
                 });
                 if (Array.isArray(response.data.data)) {
-                    const updatedWatchedVideos = { ...watchedVideos };
+                    const updatedWatchedVideos = {};
                     khoahoc.baihocs.forEach((lesson) => {
                         lesson.video.forEach((video) => {
                             const isVideoMatched = response.data.data.some((responseVideo) => {
@@ -212,7 +212,7 @@ export default function Page() {
         };
 
         checkVideoWatched();
-    }, [currentVideoId, khoahoc ]);
+    }, [currentVideoId, khoahoc]);
 
     const formatDuration = (totalSeconds) => {
         const hours = Math.floor(totalSeconds / 3600);

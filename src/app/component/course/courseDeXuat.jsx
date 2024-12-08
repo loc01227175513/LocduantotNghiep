@@ -12,13 +12,13 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 import CardProduct from "../CardProductHome/CardProduct";
 
 const CourseDeXuat = () => {
-    const [khoaHoc, setKhoaHoc] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState("");
+ 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; 
     const [khoaHocDaThanhToan, setKhoaHocDaThanhToan] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [khoaHocDeXuat, setKhoaHocDeXuat] = useState([]);
+    const [allCourse22, setAllCourse22] = useState([]);
     useEffect(() => {
         setIsLoading(true);
         Dashboard()
@@ -32,35 +32,32 @@ const CourseDeXuat = () => {
                 setIsLoading(false);
             });
     }, []);
-
+    console.log(khoaHocDaThanhToan,"khoaHocDaThanhToan");
     useEffect(() => {
         fetch("https://huuphuoc.id.vn/api/allkhoahoc")
             .then((response) => response.json())
             .then((data) => {
-                // Check if we have paid courses data
-                if (khoaHocDaThanhToan?.khoahocs) {
-                    // Get list of categories from paid courses
-                    const paidCourseCategories = khoaHocDaThanhToan.khoahocs.map(
-                        course => course.id_chude
-                    );
+                // Extract subject IDs from purchased courses
+                const CouseChuDe = khoaHocDaThanhToan?.flatMap(course => 
+                    course.khoahocs.map(khoaHoc => khoaHoc.id_chude)
+                ) || []; // Use flatMap to flatten the array
+                console.log(CouseChuDe,"CouseChuDe");
+                
+                // Filter courses based on the extracted subject IDs
+                const recommendedCourses = data.data.filter(course => 
+                    CouseChuDe.includes(course.id_chude) // Only include courses with matching subject IDs
+                );
 
-                    // Filter courses that match the categories of paid courses
-                    const recommendedCourses = data.data.filter(course => 
-                        paidCourseCategories.includes(course.id_chude)
-                    );
-
-                    setKhoaHoc(recommendedCourses);
-                } else {
-                    // If no paid courses, show all courses
-                    setKhoaHoc(data.data || []);
-                }
+                setKhoaHocDeXuat(recommendedCourses);
             })
             .catch((error) => {
                 console.error("Error fetching courses:", error);
                 toast.error("Failed to load courses.");
+                setKhoaHocDeXuat([]);
             });
     }, [khoaHocDaThanhToan]);
-
+    console.log(khoaHocDeXuat,"khoaHocDeXuat");
+    console.log(allCourse22,"allCourse22");
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
         setCurrentPage(1);
@@ -70,17 +67,6 @@ const CourseDeXuat = () => {
         setCurrentPage(page);
     };
 
-    const filteredCourses = selectedCategory
-        ? khoaHoc.filter(
-            (item) => item.theloai === selectedCategory && item.gia === 0
-        )
-        : khoaHoc.filter((item) => item.gia === 0);
-
-    const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
-    const displayedCourses = filteredCourses.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    );
 
     const handleYeuThich = async (id) => {
         try {
@@ -117,6 +103,13 @@ const CourseDeXuat = () => {
         return stars;
     };
 
+    const totalPages = Math.ceil(khoaHocDeXuat.length / itemsPerPage); // Calculate total pages
+
+    // Calculate the current items to display based on pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = khoaHocDeXuat.slice(indexOfFirstItem, indexOfLastItem);
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -146,17 +139,14 @@ const CourseDeXuat = () => {
                                         </p>
                                     </h2>
                                 </div>
-                                <div>
-                                    <Category onCategoryChange={handleCategoryChange} />
-                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
                         <div className="portfolio_wrap">
-                            <div className="filter mt--30 portfolio-feed grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                                {displayedCourses.map((item) => {
+                            <div className="filter mt--30 portfolio-feed grid grid-cols-5 gap-6">
+                                {currentItems.map((item) => {
                                     // Calculate averageRating per course
                                     const averageRating =
                                         item.danhgia && item.danhgia.length > 0

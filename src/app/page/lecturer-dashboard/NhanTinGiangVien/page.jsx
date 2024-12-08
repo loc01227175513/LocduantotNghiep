@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { DanhSachTinNhanGiangVien, GiangVienHientai, ShowAllNguoiDung } from '../../../../service/NhanTin/NhanTin';
 import { motion } from 'framer-motion';
+import { IoChatboxOutline } from 'react-icons/io5';
 
 const NhanTin = () => {
     const [csrfToken, setCsrfToken] = useState('');
@@ -80,80 +81,92 @@ const NhanTin = () => {
 
                     {/* Messages Section */}
                     <section className="p-4 max-w-6xl mx-auto space-y-8">
-                        {nhantin.map((item, index) => {
-                            let messages = [];
-                            try {
-                                messages = JSON.parse(item.noidung);
-                            } catch (e) {
-                                console.error('Error parsing messages:', e);
-                            }
+                        {nhantin.length === 0 ? (
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="flex flex-col items-center justify-center p-12 bg-white rounded-2xl shadow-lg border border-gray-200"
+                            >
+                                <IoChatboxOutline className="w-24 h-24 text-gray-400 mb-4" />
+                                <h3 className="text-xl font-semibold text-gray-600 mb-2">Chưa có tin nhắn nào</h3>
+                                <p className="text-gray-500">Hãy bắt đầu cuộc trò chuyện mới</p>
+                            </motion.div>
+                        ) : (
+                            nhantin.map((item, index) => {
+                                let messages = [];
+                                try {
+                                    messages = JSON.parse(item.noidung);
+                                } catch (e) {
+                                    console.error('Error parsing messages:', e);
+                                }
 
-                            return (
-                                <motion.div
-                                    key={item.id}
-                                    className="bg-white p-8 rounded-2xl 
-                                               shadow-lg
-                                               border border-gray-200
-                                               transition-all duration-500 ease-out"
-                                    initial={{ opacity: 0, y: 50 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{
-                                        duration: 0.8,
-                                        delay: index * 0.15,
-                                        ease: [0.4, 0, 0.2, 1]
-                                    }}
-                                    whileHover={{
-                                        scale: 1.02,
-                                        y: -5
-                                    }}
-                                >
-                                    {/* Header with enhanced styling */}
-                                    <div className="flex justify-between items-center mb-6">
-                                        <p className="text-xl font-bold text-gray-800">
-                                            Mã Tin Nhắn: <span>#{item.id}</span>
-                                        </p>
-                                    </div>
+                                return (
+                                    <motion.div
+                                        key={item.id}
+                                        className="bg-white p-8 rounded-2xl 
+                                                   shadow-lg
+                                                   border border-gray-200
+                                                   transition-all duration-500 ease-out"
+                                        initial={{ opacity: 0, y: 50 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{
+                                            duration: 0.8,
+                                            delay: index * 0.15,
+                                            ease: [0.4, 0, 0.2, 1]
+                                        }}
+                                        whileHover={{
+                                            scale: 1.02,
+                                            y: -5
+                                        }}
+                                    >
+                                        {/* Header with enhanced styling */}
+                                        <div className="flex justify-between items-center mb-6">
+                                            <p className="text-xl font-bold text-gray-800">
+                                                Mã Tin Nhắn: <span>#{item.id}</span>
+                                            </p>
+                                        </div>
 
-                                    {/* Messages with enhanced animation and effects */}
-                                    <div className="flex flex-col space-y-6">
-                                        {messages.map((msg, index) => {
-                                            const isUserSender = msg.sender_type === 'nguoidung';
-                                            const isLecturerSender = msg.sender_type === 'giangvien';
-                                            let msgSenderName = 'Không xác định';
+                                        {/* Messages with enhanced animation and effects */}
+                                        <div className="flex flex-col space-y-6">
+                                            {messages.map((msg, index) => {
+                                                const isUserSender = msg.sender_type === 'nguoidung';
+                                                const isLecturerSender = msg.sender_type === 'giangvien';
+                                                let msgSenderName = 'Không xác định';
 
-                                            if (isUserSender) {
-                                                msgSenderName = nguoiDung.find(nd => nd.id === msg.sender_id)?.ten || 'Người dùng không xác định';
-                                            } else if (isLecturerSender) {
-                                                msgSenderName = giangVien.find(gv => gv.id === msg.sender_id)?.ten || 'Giảng viên không xác định';
-                                            }
+                                                if (isUserSender) {
+                                                    msgSenderName = nguoiDung.find(nd => nd.id === msg.sender_id)?.ten || 'Người dùng không xác định';
+                                                } else if (isLecturerSender) {
+                                                    msgSenderName = giangVien.find(gv => gv.id === msg.sender_id)?.ten || 'Giảng viên không xác định';
+                                                }
 
-                                            return (
-                                                <motion.div
-                                                    key={index}
-                                                    className={`p-5 rounded-2xl max-w-md
-                                                    ${isUserSender
-                                                            ? 'bg-blue-500 text-white self-start ml-2'
-                                                            : isLecturerSender
-                                                                ? 'bg-emerald-500 text-white self-end mr-2'
-                                                                : 'bg-gray-500 text-white'
-                                                        } 
-                                                    shadow-md`}
-                                                    whileHover={{
-                                                        scale: 1.03,
-                                                        rotateX: 5
-                                                    }}
-                                                    transition={{ duration: 0.4 }}
-                                                >
-                                                    <p className="font-bold mb-2">{msgSenderName}</p>
-                                                    <p className="leading-relaxed">{msg.content}</p>
-                                                    <p className="text-sm mt-3 italic opacity-80">{msg.timestamp}</p>
-                                                </motion.div>
-                                            );
-                                        })}
-                                    </div>
-                                </motion.div>
-                            );
-                        })}
+                                                return (
+                                                    <motion.div
+                                                        key={index}
+                                                        className={`p-5 rounded-2xl max-w-md
+                                                        ${isUserSender
+                                                                ? 'bg-blue-500 text-white self-start ml-2'
+                                                                : isLecturerSender
+                                                                    ? 'bg-emerald-500 text-white self-end mr-2'
+                                                                    : 'bg-gray-500 text-white'
+                                                            } 
+                                                        shadow-md`}
+                                                        whileHover={{
+                                                            scale: 1.03,
+                                                            rotateX: 5
+                                                        }}
+                                                        transition={{ duration: 0.4 }}
+                                                    >
+                                                        <p className="font-bold mb-2">{msgSenderName}</p>
+                                                        <p className="leading-relaxed">{msg.content}</p>
+                                                        <p className="text-sm mt-3 italic opacity-80">{msg.timestamp}</p>
+                                                    </motion.div>
+                                                );
+                                            })}
+                                        </div>
+                                    </motion.div>
+                                );
+                            })
+                        )}
                     </section>
 
                     {isAddVisible && (
