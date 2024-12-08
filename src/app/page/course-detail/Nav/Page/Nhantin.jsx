@@ -208,14 +208,14 @@ const handleMessageSubmit = async (e, senderType) => {
         <>
           <div className=" flex h-screen w-[880px]">
                 {/* Enhanced Sidebar */}
-                <aside className="w-1/4 bg-gray-700 p-4 flex flex-col">
+                <aside className="w-1/4 bg-white p-4 flex flex-col">
                     {/* Search and Messages List */}
                     <div className="mb-4">
                         <div className="relative">
                             <input
                                 type="text"
                                 placeholder="Tìm kiếm tin nhắn..."
-                                className="w-full bg-gray-600 text-white px-4 py-2 rounded-lg text-xl border border-2 border-white"
+                                className="w-full bg-white text-gray-800 px-4 py-2 rounded-lg text-xl border  border-gray-300"
                                 style={{fontSize:"14px", borderRadius:"8px"}}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -236,8 +236,8 @@ const handleMessageSubmit = async (e, senderType) => {
                                     onClick={() => handleSelectConversation(item)}
                                     className={`p-3 rounded-lg transition-all duration-200 hover:scale-102 
                                               ${selectedConversation?.id === item.id 
-                                                ? 'bg-blue-600 shadow-lg' 
-                                                : 'bg-gray-600 hover:bg-gray-500'}`}
+                                                ? 'bg-blue-100 shadow-lg' 
+                                                : 'bg-gray-100 hover:bg-gray-200'}`}
                                 >
                                     <div className="flex items-center space-x-3">
                                         <div className="relative">
@@ -253,8 +253,8 @@ const handleMessageSubmit = async (e, senderType) => {
                                             />
                                         </div>
                                         <div className="flex-grow">
-                                            <p className="text-white font-medium">{item.id}</p>
-                                            <p className="text-gray-300 text-sm truncate">
+                                            <p className="text-gray-800 font-medium">{item.id}</p>
+                                            <p className="text-gray-600 text-sm truncate">
                                                 {JSON.parse(item.noidung).slice(-1)[0]?.content || ''}
                                             </p>
                                         </div>
@@ -266,9 +266,9 @@ const handleMessageSubmit = async (e, senderType) => {
                 </aside>
 
                 {/* Enhanced Chat Window */}
-                <main className="flex-grow bg-gray-800 flex flex-col">
+                <main className="flex-grow bg-white flex flex-col">
                     {/* Chat Header */}
-                    <div className="p-4 bg-gray-700 border-b border-gray-600">
+                    <div className="p-4 bg-gray-100 border-b border-gray-200">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
                                 <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
@@ -277,9 +277,9 @@ const handleMessageSubmit = async (e, senderType) => {
                                     </span>
                                 </div>
                                 <div>
-                                    <h2 className="text-white font-semibold text-xl">{giangVien[0]?.ten}</h2>
+                                    <h2 className="text-gray-800 font-semibold text-xl">{giangVien[0]?.ten}</h2>
                                     {typingUsers.length > 0 && (
-                                        <p className="text-gray-400 text-sm animate-pulse">
+                                        <p className="text-gray-500 text-sm animate-pulse">
                                             Đang nhập...
                                         </p>
                                     )}
@@ -315,10 +315,10 @@ const handleMessageSubmit = async (e, senderType) => {
                                             
                                             <div className={`group relative p-3 rounded-lg  
                                                               ${isUserSender 
-                                                                ? 'bg-blue-600 text-white' 
-                                                                : 'bg-gray-600 text-gray-100'}`}
+                                                                ? 'bg-blue-500 text-white' 
+                                                                : 'bg-gray-200 text-gray-800'}`}
                                             >
-                                                <p style={{ color: 'white', fontSize: '15px' }}>{msg.content}</p>
+                                                <p style={{ fontSize: '15px' }}>{msg.content}</p>
                                                 <div className="absolute bottom-0 right-0 transform translate-y-full 
                                                               opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <div className="flex space-x-1 mt-1">
@@ -335,8 +335,8 @@ const handleMessageSubmit = async (e, senderType) => {
                                                 </div>
                                                 
                                                 {messageReactions[msg.id]?.length > 0 && (
-                                                    <div className="absolute -bottom-2 right-2 bg-gray-700 
-                                                                  rounded-full px-2 py-0.5 text-xl" style={{ color: 'white', fontSize: '15px' }}>
+                                                    <div className="absolute -bottom-2 right-2 bg-white 
+                                                                  rounded-full px-2 py-0.5 text-xl shadow-sm" style={{ fontSize: '15px' }}>
                                                         {messageReactions[msg.id].join(' ')}
                                                     </div>
                                                 )}
@@ -347,7 +347,7 @@ const handleMessageSubmit = async (e, senderType) => {
                             })
                         ) : (
                             <div className="flex items-center justify-center h-full">
-                                <p className="text-gray-400 text-xl">
+                                <p className="text-gray-500 text-xl">
                                     Chưa có cuộc trò chuyện. Hãy bắt đầu bằng cách gửi tin nhắn mới!
                                 </p>
                             </div>
@@ -355,22 +355,22 @@ const handleMessageSubmit = async (e, senderType) => {
                     </div>
 
                     {/* Message Input Form */}
-                    <form onSubmit={(e) => handleMessageSubmit(e, 'nguoidung')} className="p-4 bg-gray-700 border-t border-gray-600">
+                    <form onSubmit={(e) => handleMessageSubmit(e, 'nguoidung')} className="p-4 bg-gray-100 border-t border-gray-200">
                         <div className="flex items-center space-x-4">
                             <textarea
                                 name="noidung"
                                 value={userFormData.noidung}
                                 onChange={(e) => setUserFormData(prev => ({ ...prev, noidung: e.target.value }))}
-                                className="flex-grow text-2xl bg-gray-600 text-white rounded-lg px-4 py-2 
-                                         focus:ring-2 focus:ring-blue-500"
+                                className="flex-grow text-2xl bg-white text-gray-800 rounded-lg px-4 py-2 
+                                         focus:ring-2 focus:ring-blue-500 border border-gray-300"
                                 placeholder="Nhập tin nhắn..."
                                 rows="1"
                             />
                             
                             <button
                                 type="submit"
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg 
-                                         hover:bg-blue-700 transform transition-all duration-200 
+                                className="bg-blue-500 w-20 text-white px-4 py-2 rounded-lg 
+                                         hover:bg-blue-600 transform transition-all duration-200 
                                          focus:ring-2 focus:ring-blue-400 text-2xl"
                             >
                                 Gửi

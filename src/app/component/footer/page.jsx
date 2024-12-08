@@ -21,7 +21,7 @@ export default function FooterComponent() {
         <div className="footer-callto-action-area py-16">
           <div className="container mx-auto px-4">
             {/* CTA Section */}
-            <div className="bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 rounded-2xl p-12 relative overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 rounded-2xl p-12 relative overflow-hidden">
               <div className="max-w-2xl relative z-10">
                 <h2 className="text-2xl text-white mb-1">
                   Mở khóa tiềm năng của bạn với

@@ -39,7 +39,7 @@ export default function Myprofilelecturer() {
 
     <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas">
       <div className="right-sidebar-my-profile-dash theiaStickySidebar pt--30">
-        <p className="text-black font-bold text-3xl">Hồ sơ của tôi</p>
+        <p className="text-black font-bold text-3xl ">Hồ sơ của tôi</p>
        <div className="p-4">
        <div className="my-single-portfolio-dashed  mt-6">
           <div className="name">Ngày đăng ký</div>

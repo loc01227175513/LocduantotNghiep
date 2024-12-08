@@ -346,30 +346,19 @@ export default function Homedashboardlecturer() {
 
           <div className="row g-5">
             {cardData.map((card, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="col-lg-4 col-md-6 col-sm-6 col-12"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02 }}
               >
-                <div className="single-dashboard-card">
-                  <motion.div
-                    className="icon"
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{
-                      duration: 0.5,
-                      type: "spring",
-                      stiffness: 100
-                    }}
-                  >
+                <div className="flex flex-col items-center justify-center text-center p-4 border border-gray-200/50 rounded-lg hover:shadow-lg transition-all duration-300">
+                  <div className="icon flex justify-center">
                     {React.createElement(card.icon, {
-                      className: "h-8 w-8",
-                      "aria-hidden": "true"
+                      className: "h-10 w-10 mb-2 text-pink-600",
+                      "aria-hidden": "true", 
+                      strokeWidth: 1.5
                     })}
-                  </motion.div>
-                  <h5 className="title">
+                  </div>
+                  <h5 className="title text-xl">
                     <CountUp
                       end={card.value}
                       duration={2}
@@ -377,9 +366,9 @@ export default function Homedashboardlecturer() {
                       className="counter"
                     />
                   </h5>
-                  <p>{card.label}</p>
+                  <p className="text-xl">{card.label}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
             <div className='flex justify-center'>
               <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê khóa học</p>
@@ -398,7 +387,7 @@ export default function Homedashboardlecturer() {
                   <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
                     <p className='text-xl my-2 font-semibold'>Khóa học có doanh thu cao nhất</p>
                     <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocMaxSotien.ten}</p>
-                    <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toFixed(2)}</p>
+                    <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
                     <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
                   </div>
                 </div>
@@ -913,27 +902,6 @@ const CustomChart = () => {
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
-
-            <filter id="neon-glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-
-            <marker
-              id="arrowUp"
-              viewBox="0 0 10 10"
-              refX="5"
-              refY="5"
-              markerWidth="6"
-              markerHeight="6"
-              orient="auto"
-              className="animate-pulse"
-            >
-              <path d="M 0 7 L 5 2 L 10 7" fill="none" stroke="#22c55e" strokeWidth="2" />
-            </marker>
           </defs>
 
           <CartesianGrid
@@ -968,6 +936,7 @@ const CustomChart = () => {
             strokeWidth={3}
             filter="url(#neon-glow)"
             dot={(props) => {
+              if (!props || typeof props.value === 'undefined') return null;
               const isUp = props.value > (chartData[props.index - 1]?.gia ?? props.value);
               return (
                 <svg
@@ -1001,11 +970,26 @@ const CustomChart = () => {
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              backgroundColor: 'rgba(255, 255, 255, 0.9)', 
               border: '1px solid #4f46e5',
               borderRadius: '8px',
               color: '#000000',
+              padding: '10px'
             }}
+            formatter={(value, name, props) => {
+              if (!props || !props.payload) return [value];
+              const course = props.payload;
+              return [
+                <div key="tooltip" className="tooltip-content">
+                  <div className="font-bold mb-2">{course.ten}</div>
+                  <div>Giá: {value.toLocaleString()} VND</div>
+                  {course.giamgia > 0 && (
+                    <div className="text-red-500">Giảm giá: {course.giamgia}%</div>
+                  )}
+                </div>
+              ];
+            }}
+            labelFormatter={(label) => `Ngày: ${label}`}
             className="animate-tooltip"
           />
         </LineChart>
@@ -1044,6 +1028,10 @@ const CustomChart = () => {
         @keyframes fadeInTooltip {
           0%, 100% { opacity: 0.8; }
           50% { opacity: 1; }
+        }
+
+        .tooltip-content {
+          min-width: 200px;
         }
       `}</style>
     </Box>

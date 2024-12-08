@@ -84,7 +84,15 @@ export default function CardProduct({
                     <div className="rating-and-price">
                         <div className="price-area">
                             {gia === 0 || giamgia === 0 ? (
-                                <div></div>
+                               <>
+                               <div className="price-wrapper flex items-center gap-2">
+                                    <div className="sale-price">
+                                        <p className="text-2xl font-bold m-0">0<span className="text-2xl">VNĐ</span></p>
+                                    </div>
+                                  
+                                </div>
+                               
+                               </>
                             ) : (
                                 <div className="price-wrapper flex items-center gap-2">
                                     <div className="sale-price">

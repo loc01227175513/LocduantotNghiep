@@ -135,7 +135,7 @@ const DropdownMenu = () => {
 
 const Contact = () => {
   return (
-    <div className="header-top-one-wrapper gradient-bg text-white py-3">
+    <div className="header-top-one-wrapper gradient-bg text-white py-3 ">
       <div className="container">
         <div className="header-top-one d-flex justify-content-between align-items-center">
           <div className="left-information">
@@ -203,6 +203,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCoursesMenuOpen, setIsCoursesMenuOpen] = useState(false);
   const [isDashboardMenuOpen, setIsDashboardMenuOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -243,21 +244,16 @@ export default function Header() {
   };
 
   useEffect(() => {
-    let timeoutId;
     const currentDropdown = dropdownRef.current;
 
     const handleClickOutside = (event) => {
       if (currentDropdown && !currentDropdown.contains(event.target)) {
-        timeoutId = setTimeout(() => {
-          setIsOpen(false);
-        }, 4000); // 4 second delay
+        setIsOpen(false);
       }
     };
 
     const handleMouseEnter = () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      // Keep this empty or remove if not needed
     };
 
     if (currentDropdown) {
@@ -270,9 +266,6 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
       if (currentDropdown) {
         currentDropdown.removeEventListener("mouseenter", handleMouseEnter);
-      }
-      if (timeoutId) {
-        clearTimeout(timeoutId);
       }
     };
   }, [dropdownRef, setIsOpen]);
@@ -328,9 +321,12 @@ export default function Header() {
     window.location.href = `/page/Cours-Filter?search=${encodedSearchTerm}`;
   };
 
+  const openSidebar = () => setSidebarOpen(true);
+  const closeSidebar = () => setSidebarOpen(false);
+
   return (
     <>
-      <header className="fixed top-0 w-full header-one header--sticky">
+      <header className="fixed top-0 w-full header-one header--sticky z-[1000] bg-gradient-to-r " >
         {visible && (
           <div className="scroll" onClick={scrollToTop}>
             <i className="bi bi-chevron-up"></i>
@@ -672,7 +668,7 @@ export default function Header() {
                 </div>
 
                 <div className="header-right-area-one">
-                  <div className="actions-area flex items-center gap-3">
+                  <div className="actions-area flex items-center gap-3 pointer-events-auto">
                     {/* Search Button */}
                     <div
                       className="search-btn transition-transform hover:scale-110 lg:block hidden"
@@ -721,7 +717,7 @@ export default function Header() {
                       {/* Notification Dropdown */}
                       <div
                         className="absolute hidden group-hover:block w-80 p-4 bg-white rounded-lg 
-                            shadow-xl hover:shadow-2xl mt-2 right-0 z-[100]
+                            shadow-xl hover:shadow-2xl mt-2 right-0 z-[1003]
                             transform transition-all duration-300 ease-in-out origin-top
                             border border-gray-100 hover:border-blue-200
                             hover:scale-[1.02] opacity-0 group-hover:opacity-100
@@ -771,7 +767,7 @@ export default function Header() {
                   </div>
 
                   {/* Auth Buttons */}
-                  <div className="buttons-area flex items-center gap-2">
+                  <div className="buttons-area flex items-center gap-2 pointer-events-auto">
                     {!hasData ? (
                       <>
                         <Link
@@ -796,7 +792,7 @@ export default function Header() {
                             src={data?.hinh || "/default-avatar.png"}
                             alt="Profile"
                             className="rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all"
-                            onClick={toggleDropdown}
+                            onClick={openSidebar}
                           />
                         </div>
                         <button
@@ -816,12 +812,16 @@ export default function Header() {
           </div>
 
           <div
-            className={`fixed inset-0 h-screen z-[1000] backdrop-blur-sm bg-black/30 transition-all ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-              }`}
+            className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-all h-screen ${
+              sidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+            } z-[1000]`}
+            onClick={closeSidebar}
           >
             <div
-              className={`absolute top-0 right-0 h-full bg-white shadow-2xl transform transition-transform duration-200 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"
-                } w-[400px]`} // Set width to 800px
+              className={`fixed top-0 right-0 h-full w-[400px] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
+                sidebarOpen ? 'translate-x-0' : 'translate-x-full'
+              }`}
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
               <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700">
@@ -829,7 +829,7 @@ export default function Header() {
                   <i className="bi bi-list text-3xl"></i>
                 </h2>
                 <button
-                  onClick={closeHeader2}
+                  onClick={closeSidebar}
                   className="rounded-full p-2 hover:bg-white/20 transition-colors w-10"
                 >
                   <i className="bi bi-x-lg text-2xl text-white"></i>
@@ -932,104 +932,57 @@ export default function Header() {
       </header>
 
       {isMobileMenuOpen && (
-        <div
-          className="lg:hidden fixed top-28 left-0-0 h-full w-80 bg-gradient-to-br from-[#1e3c72] to-[#ff6b6b] z-40 flex flex-col shadow-3xl transform transition-transform duration-300 ease-in-out"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setIsMobileMenuOpen(false);
-            }
-          }}
-        >
-          <nav className="mt-16 p-6 space-y-6 flex flex-col">
-            <Link
-              href="/page/Cours-Filter"
-              className="w-full text-center text-white text-lg font-medium 
-        bg-[#ff6b6b]
-        hover:bg-[#ff6b6b]
-        active:bg-orange-700
-        transition-all duration-300 ease-out
-        rounded-full px-6 py-3.5 sm:py-3
-        shadow-lg hover:shadow-xl
-        transform hover:scale-[1.02] active:scale-[0.98]
-        focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                openSearch();
-              }}
-            >
-              <i className="fas fa-search mr-2"></i>
-              Tìm kiếm
-            </Link>
+        <>
+          {/* Add a backdrop */}
+          <div 
+            className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[1000]"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          
+          {/* Update the sidebar container */}
+          <div
+            className="lg:hidden fixed top-28 left-0 h-full w-80 bg-gradient-to-br from-[#1e3c72] to-[#ff6b6b] z-[1001] flex flex-col shadow-3xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <nav className="mt-16 p-6 space-y-6 flex flex-col">
+              <Link
+                href="/page/Cours-Filter"
+                className="w-full text-center text-white text-lg font-medium 
+                  bg-[#ff6b6b]
+                  hover:bg-[#ff6b6b]
+                  active:bg-orange-700
+                  transition-all duration-300 ease-out
+                  rounded-full px-6 py-3.5 sm:py-3
+                  shadow-lg hover:shadow-xl
+                  transform hover:scale-[1.02] active:scale-[0.98]
+                  focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  openSearch();
+                }}
+              >
+                <i className="fas fa-search mr-2"></i>
+                Tìm kiếm
+              </Link>
 
-            <ul className="flex flex-col space-y-4">
-              <li className="w-full">
-                <Link
-                  href="/"
-                  className="flex items-center space-x-4 text-white hover:text-yellow-300 transition-all py-3 px-4 rounded-lg hover:bg-white/10 active:bg-white/20"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <i className="fas fa-home text-2xl text-white"></i>
-                  <span className="font-semibold text-lg">Trang chủ</span>
-                </Link>
-              </li>
-
-              <li className="w-full">
-                <Link
-                  href="/page/Cours-Filter"
-                  className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <i className="fas fa-list text-xl text-white"></i>
-                  <span className="text-base">Khóa học thể loại</span>
-                </Link>
-              </li>
-
-              <li className="w-full">
-                <Link
-                  href="/page/courseLoTrinh"
-                  className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <i className="fas fa-road text-xl text-white"></i>
-                  <span className="text-base">Lộ trình khóa học</span>
-                </Link>
-              </li>
-
-              <li className="w-full">
-                <Link
-                  href="/page/KhuyenMai"
-                  className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <i className="fas fa-tag text-xl text-white"></i>
-                  <span className="text-base">Ưu đãi</span>
-                </Link>
-              </li>
-
-              <li className="w-full">
-                <Link
-                  href="/page/AllGiangVien"
-                  className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <i className="fas fa-star text-xl text-white"></i>
-                  <span className="text-base">Giảng viên Nổi Bật</span>
-                </Link>
-              </li>
-
-              <li className="w-full">
-                <Link
-                  href="/page/NhanTin"
-                  className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <i className="fas fa-envelope text-xl text-white"></i>
-                  <span className="text-base">Nhắn tin Giảng viên</span>
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
+              {/* Add onClick handlers to all links to close the menu */}
+              <ul className="flex flex-col space-y-4">
+                {menuItems.map((item, index) => (
+                  <li key={index} className="w-full">
+                    <Link
+                      href={item.href}
+                      className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <i className={`${item.icon} text-xl text-white`}></i>
+                      <span className="text-base">{item.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </>
       )}
 
       <Search
@@ -1221,6 +1174,10 @@ export default function Header() {
           .animate-slide-down {
             animation: slide-down 0.3s ease-out;
           }
+
+          .dropdown-menu {
+            z-index: 25;
+          }
         `}</style>
       </div>
     </>
@@ -1264,7 +1221,7 @@ const Search = React.memo(function SearchComponent({ isOpenSearch, closeSearch, 
   return (
     <>
       {isOpenSearch && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 animate-[fadeIn_0.3s_ease-out]">
+        <div className="fixed inset-0 flex items-center justify-center z-[1002] animate-[fadeIn_0.3s_ease-out]">
           <div
             className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 backdrop-blur-md animate-[fadeIn_0.3s_ease-out]"
             onClick={closeSearch}

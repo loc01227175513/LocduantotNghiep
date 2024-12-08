@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id, PhanTram }) {
+export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id}) {
   return (
     <div className="transition flash element-item creative" data-category="transition">
       <div className="rts-single-course">
@@ -10,13 +10,13 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
             <Image src={hinh} alt="course" layout="fill" objectFit="cover" />
             {/* Free course badge */}
             {(gia === 0 || giamgia === 0) && (
-              <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+              <div className="absolute top-3 right-3 bg-red-600 text-white px-3 py-1 rounded-full font-bold text-xl shadow-lg transform -rotate-12 z-10">
                 Miễn Phí
               </div>
             )}
             {/* Discount badge */}
             {giamgia < gia && giamgia !== 0 && (
-              <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+              <div className="absolute top-3 right-3 bg-red-600 text-white px-3 py-1 rounded-full font-bold text-xl shadow-lg transform -rotate-12 z-10">
                 -{Math.round((1 - giamgia / gia) * 100)}% OFF
               </div>
             )}
@@ -24,38 +24,38 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
         </Link>
         <div className="course-card">
           <Link href={`/page/course-detail?id=${id}`} className="title-link block h-[60px]">
-            <p className="title line-clamp-2 text-base overflow-hidden hover:text-blue-600 transition-colors">
+            <p className="line-clamp-2 font-bold text-2xl overflow-hidden hover:text-gray-600 transition-colors">
               {ten}
             </p>
           </Link>
 
           <div className="teacher">
-            <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
+            <i className="bi bi-grid mr-2 text-gray-800 text-xl"></i>
             <span className="text-xl text-gray-800">{chude}</span>
           </div>
-          <div className="flex space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+          <div className="flex space-x-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
             <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
-              <i className="fa-light fa-calendar-lines-pen text-blue-500 text-xl" />
+              <i className="fa-light fa-calendar-lines-pen text-gray-600 text-xl" />
               <div className="flex flex-col">
-                <span className="text-2xl font-bold">
+                <span className="text-xl font-medium">
                   {baihocs}
                   <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">Lessons</span>
                 </span>
               </div>
             </div>
             <div className="flex items-center space-x-2 p-2 rounded-full">
-              <i className="fa-light fa-user-group text-green-500 text-xl" />
+              <i className="fa-light fa-user-group text-gray-600 text-xl" />
               <div className="flex flex-col">
-                <span className="text-2xl font-bold">
+                <span className="text-xl font-medium">
                   {dangky}
                   <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">Students</span>
                 </span>
               </div>
             </div>
-            <div className="rating-area text-yellow-500 text-2xl">
+            <div className="rating-area text-gray-600 text-xl">
               <svg
-                stroke="currentColor"
-                fill="currentColor"
+                stroke="currentColor" 
+                fill="#FFD700"
                 strokeWidth="0"
                 viewBox="0 0 576 512"
                 className="text-yellow-400 w-5 h-5"
@@ -70,15 +70,11 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
             </div>
           </div>
 
-          <div className="progress-wrapper h-1 bg-gray-200 rounded mt-4">
-            <div
-              className="progress-bar h-full bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] rounded transition-width duration-300 ease-in-out"
-              style={{ width: `${PhanTram}%` }}
-            />
-          </div>
+          
+
 
           <button className="download-cert-btn mt-4 w-full py-2 bg-[#ff6b6b] text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-[#1e3c72]">
-            <i className="fas fa-certificate" />
+            <i className="fas fa-certificate px-2" />
             Nhận chứng chỉ ngay
           </button>
 
@@ -88,15 +84,15 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
                 {gia === 0 || giamgia === 0 ? null : (
                   <>
                     <div className="sale-price">
-                      <p className="text-3xl font-bold">
+                      <p className="text-2xl font-bold text-red-600">
                         {giamgia.toLocaleString()}
-                        <span className="text-2xl">VNĐ</span>
+                        <span className="text-xl">VNĐ</span>
                       </p>
                     </div>
                     <div className="original-price">
-                      <p className="text-3xl">
+                      <p className="text-2xl">
                         {gia.toLocaleString()}
-                        <span className="text-2xl">VNĐ</span>
+                        <span className="text-xl">VNĐ</span>
                       </p>
                     </div>
                   </>
@@ -127,7 +123,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
               transition: color 0.2s ease;
             }
             .title:hover {
-              color: #4299e1;
+              color: #4a5568;
             }
             .rating-area {
               display: flex;
@@ -143,10 +139,10 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
             }
             .stars {
               display: flex;
-              color: #ecc94b;
+              color: #4a5568;
             }
             .free-badge {
-              background: -webkit-linear-gradient(315deg, #1e3c72 0%, #ff6b6b 100%);
+              background: #2d3748;
               color: white;
               padding: 5px 20px;
               border-radius: 20px;
@@ -164,19 +160,19 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
               font-size: 0.9rem;
             }
             .sale-price {
-              color: #e53e3e;
+              color: #2d3748;
               font-weight: 600;
               font-size: 1.1rem;
             }
             @keyframes pulse {
               0% {
-                box-shadow: 0 0 0 0 rgba(11, 197, 234, 0.4);
+                box-shadow: 0 0 0 0 rgba(45, 55, 72, 0.4);
               }
               70% {
-                box-shadow: 0 0 0 10px rgba(11, 197, 234, 0);
+                box-shadow: 0 0 0 10px rgba(45, 55, 72, 0);
               }
               100% {
-                box-shadow: 0 0 0 0 rgba(11, 197, 234, 0);
+                box-shadow: 0 0 0 0 rgba(45, 55, 72, 0);
               }
             }
           `}</style>

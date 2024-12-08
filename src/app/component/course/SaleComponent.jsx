@@ -153,8 +153,8 @@ export default function SaleComponent() {
                     <div key={date}
                         className={`time-slot rounded-lg p-4 border cursor-pointer transition-all duration-300 ease-in-out max-w-full
                             ${isActive
-                                ? 'bg-orange-50 border-orange-500 shadow-md'
-                                : 'bg-gray-50 border-gray-200 hover:border-orange-300 hover:bg-orange-50/50'}`}
+                                ? 'bg-pink-50 border-pink-500 shadow-md'
+                                : 'bg-gray-50 border-gray-200 hover:border-pink-500 hover:bg-pink-50/50'}`}
                         onClick={() => {
                             setActiveDate(date);
                             setSelectedSlot(items[0]);
@@ -163,11 +163,11 @@ export default function SaleComponent() {
                             <i className="fas fa-calendar"></i>
                             <span className="overflow-hidden text-ellipsis">{date}</span>
                         </p>
-                        <p className="text-sm text-gray-600 mt-1 overflow-hidden text-ellipsis whitespace-nowrap">
+                        <p className="text-lg text-gray-600 mt-1 overflow-hidden text-ellipsis whitespace-nowrap">
                             {items.length} khuyến mãi
                         </p>
                         <p className={`slot-status mt-1 overflow-hidden text-ellipsis whitespace-nowrap 
-                            ${status === 'Chưa tới' ? 'text-green-500' : 'text-red-500'}`}>
+                            ${status === 'Chưa tới' ? 'text-green-500' : 'text-pink-700'}`}>
                             {status}
                         </p>
                     </div>
@@ -244,18 +244,20 @@ export default function SaleComponent() {
                             </span>
                             <span className=" text-white text-2xl font-semibold">Kết thúc sau</span>
                             <div className="flash-sale-countdown flex items-center space-x-3">
-                                <span className="countdown-box bg-gradient-to-br from-pink-600 to-pink-600 text-white px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.hours}</span>
-                                <span className="countdown-separator font-bold text-white text-2xl">:</span>
-                                <span className="countdown-box bg-gradient-to-br from-pink-600 to-pink-600 text-white px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.minutes}</span>
-                                <span className="countdown-separator font-bold text-white text-2xl">:</span>
-                                <span className="countdown-box bg-gradient-to-br from-pink-600 to-pink-600 text-white px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.seconds}</span>
+                                <span className="countdown-box border-2 border-white text-white  px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.hours}</span>
+                                <span className="countdown-separator font-bold text-white  text-2xl">:</span>
+                                <span className="countdown-box border-2 border-white text-white  px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.minutes}</span>
+                                <span className="countdown-separator font-bold text-white  text-2xl">:</span>
+                                <span className="countdown-box border-2 border-white text-white px-4 py-3 rounded-lg font-mono text-2xl shadow-md">{countdown.seconds}</span>
                             </div>
                         </h2>
                         <button
                             onClick={handleToggleSlots}
-                            className="relative right-0 toggle-slots-btn bg-white text-pink-600 border-2 border-pink-600 hover:bg-pink-600 hover:text-white px-6 py-2.5 rounded-lg transition-all duration-300 font-semibold flex items-center justify-between gap-3 shadow-sm hover:shadow-md w-44"
+                            className="relative right-0 toggle-slots-btn px-6 py-3 rounded-xl transition-all duration-300  justify-center
+          flex items-center gap-2 border border-gray-200
+          bg-gradient-to-r from-blue-900 via-pink-700  to-pink-700 text-white border-transparent shadow-xl shadow-white-200 hover:from-pink-700 hover:to-pink-700  w-[124px] "
                         >
-                            <span>Xem tất cả</span>
+                            <span className=' text-xl  ' style={{fontWeight:"400"}}>Xem tất cả</span>
                             <svg
                                 className={`w-5 h-5 transition-transform duration-300 ${showTimeSlots ? 'rotate-180' : ''}`}
                                 fill="none"
@@ -287,8 +289,8 @@ export default function SaleComponent() {
 
                                         <div>
                                             {item.magiamgia && item.magiamgia.giamgia > 0 && (
-                                                <div className="absolute top-4 right-4 discount-badge bg-gradient-to-r from-red-500 to-orange-500 text-white px-2 py-1 rounded-full text-lg font-bold shadow-lg transform -rotate-12 z-10">
-                                                    -{item.magiamgia.giamgia}%
+                                                <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                                                    -{item.magiamgia.giamgia}% OFF
                                                 </div>
                                             )}
                                             <Link href={`/page/course-detail?id=${item.khoahoc.id}`}>
@@ -311,12 +313,12 @@ export default function SaleComponent() {
                                         </div>
 
                                         <div className="category-product-info mt-2 space-y-2 p-3">
-                                            <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-pink-500 bg-clip-text text-transparent">
+                                            <div className="text-2xl font-bold text-gray-800  ">
                                                 {item.khoahoc.giamgia === 0 ? 'Miễn phí' : `${item.khoahoc.giamgia.toLocaleString()} VNĐ`}
                                             </div>
                                             <div className="relative min-h-[4rem] flex flex-col">
                                                 <div
-                                                    className={`text-xl text-gray-600 font-medium overflow-hidden transition-all duration-300 ${showFullText ? 'max-h-[500px]' : 'max-h-[4rem]'} flex-grow`}
+                                                    className={`text-2xl text-gray-600 font-medium overflow-hidden transition-all duration-300 ${showFullText ? 'max-h-[500px]' : 'max-h-[4rem]'} flex-grow`}
                                                     onMouseEnter={() => setShowFullText(true)}
                                                     onMouseLeave={() => setShowFullText(false)}
                                                 >
@@ -327,9 +329,9 @@ export default function SaleComponent() {
                                                 )}
                                             </div>
                                             {item.magiamgia && item.magiamgia.giamgia > 0 && (
-                                                <div className="mt-2 p-2 bg-orange-50 rounded-lg">
-                                                    <p className="text-xl text-gray-700">Mã giảm giá: <strong className="text-orange-600">{item.magiamgia.maso}</strong></p>
-                                                    <p className="text-base text-gray-500 mt-1">
+                                                <div className="mt-2 p-2 bg-pink-200 rounded-lg pt-2 pb-2">
+                                                    <p className="text-2xl text-gray-700">Mã giảm giá: <strong className="text-pink-700">{item.magiamgia.maso}</strong></p>
+                                                    <p className="text-xl text-gray-500 mt-1">
                                                         Thời gian: {new Date(item.magiamgia.ngaybatdau).toLocaleDateString()} - {new Date(item.magiamgia.ngayketthuc).toLocaleDateString()}
                                                     </p>
                                                 </div>

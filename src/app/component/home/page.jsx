@@ -106,7 +106,7 @@ export default function Homecomponent() {
 
         <div data-aos="zoom-in">
           <div
-            className="why-choose-us bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 bg-choose-us-one bg_image rts-section-gap shape-move"
+            className="why-choose-us bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 bg-choose-us-one bg_image rts-section-gap shape-move"
             data-aos="zoom-in"
           >
             <div className="container">
@@ -218,7 +218,7 @@ export default function Homecomponent() {
                         data-aos="zoom-in"
                         data-aos-delay={index * 100}
                       >
-                        <div className="flex items-center justify-center mx-auto w-24 h-24 rounded-md bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 hover:shadow-lg transition-all duration-300 border border-white">
+                        <div className="flex items-center justify-center mx-auto w-24 h-24 rounded-md   transition-all duration-300  ">
                           <Image
                             width={500}
                             height={300}
@@ -238,7 +238,7 @@ export default function Homecomponent() {
                   <div className="flex flex-row gap-10">
                     <Link
                       href="/page/Cours-Filter"
-                      className="rts-btn hover-effect  bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 border border-white"
+                      className="rts-btn hover-effect  bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 border hover:from-pink-700 hover:to-pink-700 border-white"
                     >
                       <span className="text-white text-xl" style={{ fontWeight: '400' }}>
                         Xem tất cả các khóa học
@@ -247,7 +247,7 @@ export default function Homecomponent() {
                     </Link>
                     <Link
                       href="#khoahocmoi"
-                      className="rts-btn hover-effect border-white  border border-white"
+                      className="rts-btn hover-effect   border border-white"
                     >
                       <span className="text-white text-xl" style={{ fontWeight: '400' }}>
                         Xem các khóa học mới
@@ -340,7 +340,7 @@ export default function Homecomponent() {
         <div data-aos="zoom-in">
           {/* feedback area start */}
           <div className="rts-feedback-area">
-            <div className="rts-feedback-area rts-section-gap bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 shape-move small:mb-16 ">
+            <div className="rts-feedback-area rts-section-gap bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 shape-move small:mb-16 ">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12">

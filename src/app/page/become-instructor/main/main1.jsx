@@ -57,11 +57,11 @@ const BecomeInstructor = () => {
                     <div className="relative rounded-xl overflow-hidden shadow-xl">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10"/>
                         <Image 
-                            width={500} 
-                            height={300}    
+                            width={300}
+                            height={200}    
                             src="https://cdn.vus.edu.vn/webroot/css/images/website/2024/giaovien/ANNE-KENTHILL-ELOISE.webp" 
                             alt="instructor" 
-                            className="w-full object-cover rounded-xl" 
+                            className="w-[300px] h-[200px] object-cover rounded-xl" 
                         />
                     </div>
                 </div>
@@ -114,11 +114,11 @@ const InstructorRules = () => {
                     <div className="relative rounded-xl overflow-hidden shadow-xl transform hover:scale-105 transition-all duration-500">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10"/>
                         <Image 
-                            width={500} 
-                            height={300}    
+                            width={300}
+                            height={200}    
                             src="https://cdn.vus.edu.vn/webroot/css/images/website/2024/giaovien/EMILIE-SLATER.webp" 
                             alt="instructor" 
-                            className="w-full object-cover rounded-xl" 
+                            className="w-[300px] h-[200px] object-cover rounded-xl" 
                         />
                     </div>
                 </div>
@@ -169,15 +169,14 @@ const StartWithCourses = () => {
 
                 {/* Enhanced image section */}
                 <div className="mt-12 flex justify-center">
-                    <div className="relative rounded-xl overflow-hidden shadow-xl group">
-                        <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/50 to-transparent z-10 
-                            opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+                    <div className="relative rounded-xl overflow-hidden shadow-xl transform hover:scale-105 transition-all duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10"/>
                         <Image 
-                            width={500} 
-                            height={300}    
+                            width={300}
+                            height={200}     
                             src="https://cdn.vus.edu.vn/webroot/css/images/website/2024/giaovien/ARMANDO-DE-CRESCENZO.webp" 
                             alt="instructor" 
-                            className="w-full object-cover rounded-xl transform group-hover:scale-105 transition-all duration-500" 
+                            className="w-[300px] h-[200px] object-cover rounded-xl" 
                         />
                     </div>
                 </div>

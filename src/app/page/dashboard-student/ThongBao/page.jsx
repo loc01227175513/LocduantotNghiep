@@ -73,17 +73,6 @@ const Page = () => {
                     </Link>
                   ))}
                 </div>
-
-              </div>
-              {/* Footer */}
-              <div className="mt-4 text-center">
-                <button
-                  type="button"
-                  data-purpose="mark-all-as-read"
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200"
-                >
-                  Đánh dấu tất cả là đã đọc
-                </button>
               </div>
             </div>
           </div>
@@ -102,32 +91,6 @@ const Page = () => {
           <div className="w-full space-y-6" data-module-id="activity-notifications">
             <div className="w-full" data-testid="activity-notifications-container">
               <div className="border-b border-gray-200">
-                <div className="flex mb-4" role="tablist" data-purpose="tab-nav-buttons">
-                  <section aria-label="Điều hướng tab" className="w-full">
-                    <div className="overflow-x-auto px-2" data-purpose="scroll-port" id="scroll-port--13" aria-live="off">
-                      <div data-index="1" className="inline-block">
-                        <div className="px-2">
-                          <button
-                            type="button"
-                            id="tabs--12-tab-1"
-                            aria-selected={activeTab === 'student'}
-                            role="tab"
-                            className={`
-                      px-6 py-3 text-xl font-medium rounded-lg transition-colors
-                      ${activeTab === 'student'
-                                ? 'bg-gray-100 text-gray-900'
-                                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                              }
-                    `}
-                            onClick={() => setActiveTab('student')}
-                          >
-                            <span className="text-lg">Học viên (5)</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                </div>
                 <div className="py-4 text-lg">
                   {renderContent()}
                 </div>

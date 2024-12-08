@@ -35,11 +35,9 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
                 <div className="course-card">
                     <Link
                         href={`/page/course-detail?id=${id}`}
-                        className="title-link min-h-12 sm:min-h-15 flex items-center mb-2 sm:mb-4"
+                        className="title-link min-h-12 sm:min-h-15 flex items-center mb-2 sm:mb-4 group"
                     >
-                        <p className="title line-clamp-2 overflow-hidden text-base sm:text-lg">
-                            {ten}
-                        </p>
+                        <p className="title text-base sm:text-lg truncate group-hover:whitespace-normal group-hover:text-clip">{ten}</p>
                     </Link>
                     <div className="teacher mb-3 sm:mb-6">
                         <i className="bi bi-grid mr-2 sm:mr-3 text-gray-800 text-xl sm:text-2xl"></i>
@@ -58,14 +56,20 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
                                             </p>
                                         </div>
                                         <div className="original-price animate">
-                                            <p className="text-3xl">
+                                            <p className="text-2xl">
                                                 {gia.toLocaleString()}
                                                 <span className="text-2xl ml-2">VNĐ</span>
                                             </p>
                                         </div>
                                     </>
                                 ) : (
-                                    <></>
+                                 <>
+                                  <div className="sale-price animate mb-2">
+                                            <p className="text-3xl font-bold">
+                                               0<span className="text-2xl ">VNĐ</span>
+                                            </p>
+                                        </div>
+                                 </>
                                 )}
                             </div>
                         </div>
@@ -77,13 +81,13 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
                         />
                     </div>
                     {PhanTram == 100 ? (
-                        <button className="download-cert-btn w-full py-3 sm:py-4 bg-[#ff6b6b] text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-[#1e3c72] hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3">
+                        <button className="download-cert-btn w-full py-3 sm:py-4  bg-gradient-to-r from-blue-900 via-pink-700  to-pink-700   text-white rounded-lg transition-all duration-300 ease-in-out hover:from-pink-700 hover:to-pink-700 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3">
                             <i className="fas fa-certificate text-lg sm:text-xl" />
                             <span className="text-base sm:text-lg font-medium">Tải xuống chứng chỉ</span>
                         </button>
                     ) : (
                         <button 
-                            className="download-cert-btn w-full py-3 sm:py-4 bg-[#ff6b6b] text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-[#1e3c72] hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3" 
+                            className="download-cert-btn w-full py-3 sm:py-4  bg-gradient-to-r from-blue-900 via-pink-700  to-pink-700 text-white rounded-lg transition-all duration-300 ease-in-out hover:from-pink-700 hover:to-pink-700 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3" 
                             onClick={() => tieptuchoc(id)}
                         >
                             <i className="fas fa-certificate text-lg sm:text-xl" />

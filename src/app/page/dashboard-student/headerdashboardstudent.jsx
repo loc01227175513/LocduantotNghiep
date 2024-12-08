@@ -386,7 +386,7 @@ const Headerdashboardstudent2 = ({ page }) => {
               className={`single-item ${pagess === 'home' ? 'active' : ''}`}
               onClick={() => click("home")}
             >
-              <i className="fa-light fa-house" />
+              <i className="fa-light fa-house text-2xl" />
               <p>Bảng điều khiển</p>
             </Link>
 
@@ -395,7 +395,7 @@ const Headerdashboardstudent2 = ({ page }) => {
               className={`single-item ${pagess === 'hoso' ? 'active' : ''}`}
               onClick={() => click("hoso")}
             >
-              <i className="fa-regular fa-user" />
+              <i className="fa-regular fa-user text-2xl" />
               <p>Hồ sơ của tôi</p>
             </Link>
 
@@ -404,7 +404,7 @@ const Headerdashboardstudent2 = ({ page }) => {
               className={`single-item ${pagess === 'khoahoc' ? 'active' : ''}`}
               onClick={() => click("khoahoc")}
             >
-              <i className="fa-light fa-graduation-cap" />
+              <i className="fa-light fa-graduation-cap text-2xl" />
               <p>Khóa học đang học</p>
             </Link>
 
@@ -413,7 +413,7 @@ const Headerdashboardstudent2 = ({ page }) => {
               className={`single-item ${pagess === 'lichsudonhang' ? 'active' : ''}`}
               onClick={() => click("lichsudonhang")}
             >
-              <i className="fa-sharp fa-light fa-bag-shopping" />
+              <i className="fa-sharp fa-light fa-bag-shopping text-2xl" />
               <p>Lịch sử đơn hàng</p>
             </Link>
             <Link
@@ -421,7 +421,7 @@ const Headerdashboardstudent2 = ({ page }) => {
               className={`single-item ${pagess === 'khuyenmai' ? 'active' : ''}`}
               onClick={() => click("khuyenmai")}
             >
-              <i className="fa-sharp fa-light fa-bag-shopping" />
+              <i className="fa-sharp fa-light fa-bag-shopping text-2xl" />
               <p>Khuyến mãi</p>
             </Link>
             <Link 
@@ -430,7 +430,7 @@ const Headerdashboardstudent2 = ({ page }) => {
               onClick={() => click("quanlykhoahoc")}
 
             >
-              <i className="fa-light fa-book" />
+              <i className="fa-light fa-book text-2xl" />
               <p>Yêu thích</p>
             </Link>
 
@@ -440,7 +440,7 @@ const Headerdashboardstudent2 = ({ page }) => {
             className={`single-item ${pagess === 'thongbao' ? 'active' : ''}`}
             onClick={() => click("thongbao")}
             >
-              <i className="fa-solid fa-megaphone" />
+              <i className="fa-light fa-megaphone text-2xl" />
               <p>Thông báo</p>
             </Link>
 
@@ -450,7 +450,7 @@ const Headerdashboardstudent2 = ({ page }) => {
           <div className="dashboard-left-single-wrapper bbnone mt--40">
             <h4 className="title mb--5">User</h4>
             <Link href="/page/dashboard-student/setting" className="single-item">
-              <i className="fa-sharp fa-regular fa-gear" />
+              <i className="fa-sharp fa-regular fa-gear text-2xl" />
               <p>Cài đặt</p>
             </Link>
           </div>

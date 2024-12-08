@@ -118,7 +118,9 @@ const NavPhai = ({
   NguoiDung,
   isCourseRegistered,
   isCourseInCart,
-  buttonStates
+  buttonStates,
+  setIsCourseRegistered,
+  setButtonStates
 }) => {
   const LoadingSpinner = () => (
     <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
@@ -128,16 +130,24 @@ const NavPhai = ({
   );
 
   const handleThanhToanKhoaHocFree = async () => {
-    setButtonLoading(prev => ({ ...prev, freeCourse: true }));
+    setButtonStates(prev => ({
+      ...prev,
+      freeCourse: { loading: true, disabled: true }
+    }));
+
     try {
-      await ThanhToanKhoaHocFree(course.id_giangvien);
-      toast.success("Bạn đã Nhận Khóa Học Miễn phí!");
+      await ThanhToanKhoaHocFree(course.id);
+      toast.success("Bạn đã nhận khóa học miễn phí!");
       setIsCourseRegistered(true);
+      router.push(`/page/Study?id=${course.id}`);
     } catch (error) {
       console.error("Error registering free course:", error);
       toast.error("Có lỗi xảy ra khi đăng ký khóa học");
     } finally {
-      setButtonLoading(prev => ({ ...prev, freeCourse: false }));
+      setButtonStates(prev => ({
+        ...prev,
+        freeCourse: { loading: false, disabled: false }
+      }));
     }
   };
 
@@ -176,15 +186,15 @@ const NavPhai = ({
                     <div className="price-area">
                       {course.gia === 0 && course.giamgia === 0 ? (
                         <p className="p-4 text-white font-bold text-2xl text-center w-full">
-                          Miễn ph
+                          Miễn phí
                         </p>
                       ) : (
                         <>
                           <h3 className="title price-current bg-white text-2xl">
-                            {course.giamgia}
+                            {course.giamgia.toLocaleString('vi-VN')}
                             <span className="text-xl">VNĐ</span>
                           </h3>
-                          <span className="price-discount text-2xl text-red-500">
+                          <span className="price-discount text-2xl text-red-500" style={{marginTop: "-10px"}}>
                             -{((course.gia - course.giamgia) / course.gia * 100).toFixed(2)}%
                           </span>
                         </>
@@ -201,22 +211,26 @@ const NavPhai = ({
                           Đi Đến Đăng nhập
                         </button>
                       </Link>
-                    ) : isCourseRegistered || course.gia === 0 || course.giamgia === 0 ? (
+                    ) : isCourseRegistered ? (
                       <Link href={`/page/Study?id=${course.id}`}>
-                        <button 
-                          onClick={handleThanhToanKhoaHocFree}
-                          disabled={buttonStates.freeCourse.disabled}
-                          className={`rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1 
-                            ${buttonStates.freeCourse.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        >
-                          {buttonStates.freeCourse.loading ? (
-                            <span className="flex items-center">
-                              <LoadingSpinner />
-                              Đang xử lý...
-                            </span>
-                          ) : "Đi đến khóa học"}
+                        <button className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1">
+                          Đi đến khóa học
                         </button>
                       </Link>
+                    ) : course.gia === 0 || course.giamgia === 0 ? (
+                      <button 
+                        onClick={handleThanhToanKhoaHocFree}
+                        disabled={buttonStates.freeCourse.disabled}
+                        className={`rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1 
+                          ${buttonStates.freeCourse.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      >
+                        {buttonStates.freeCourse.loading ? (
+                          <span className="flex items-center">
+                            <LoadingSpinner />
+                            Đang xử lý...
+                          </span>
+                        ) : "Nhận khóa học miễn phí"}
+                      </button>
                     ) : isCourseInCart ? (
                       <Link href="/page/cart">
                         <button className="mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1">
@@ -259,32 +273,32 @@ const NavPhai = ({
                     )}
                     <div className="p-1 font-bold text-black what-includes text-left">
                       <span className="m text-left block text-xl text-gray-500">Đảm bảo hoàn lại tiền 30 ngày</span>
-                      <h5 className="text-3xl text-left">Khóa học này bao gồm:</h5>
+                      <h5 className="text-3xl text-left font-bold">Khóa học này bao gồm:</h5>
                       <div className="single-include flex justify-start">
                         <div className="left">
                           <i className="fa-light fa-chart-bar text-2xl mr-3" />
-                          <span className="text-left text-2xl">Cấp độ</span>
+                          <span className="text-left text-2xl font-normal">Cấp độ</span>
                         </div>
                         <div className="right">
-                          <span className="text-left text-2xl">{course.trinhdo}</span>
+                          <span className="text-left text-2xl font-normal">{course.trinhdo}</span>
                         </div>
                       </div>
                       <div className="single-include flex">
                         <div className="left">
                           <i className="fa-light fa-timer text-2xl mr-3" />
-                          <span className="text-left text-2xl">Khoảng thời gian</span>
+                          <span className="text-left text-2xl font-normal">Khoảng thời gian</span>
                         </div>
                         <div className="right">
-                          <span className="text-left text-2xl">{formattedTotalTime}</span>
+                          <span className="text-left text-2xl font-normal">{formattedTotalTime}</span>
                         </div>
                       </div>
                       <div className="single-include flex">
                         <div className="left">
                           <i className="fa-regular fa-floppy-disk text-2xl mr-3" />
-                          <span className="text-left text-2xl">Chủ thể</span>
+                          <span className="text-left text-2xl font-normal">Chủ thể</span>
                         </div>
                         <div className="right">
-                          <span className="text-left text-2xl">{course.chude}</span>
+                          <span className="text-left text-2xl font-normal">{course.chude}</span>
                         </div>
                       </div>
                     </div>
@@ -807,6 +821,8 @@ export default function Coursedetailcomponent() {
           isCourseRegistered={isCourseRegistered}
           isCourseInCart={isCourseInCart}
           buttonStates={buttonStates}
+          setIsCourseRegistered={setIsCourseRegistered}
+          setButtonStates={setButtonStates}
         />
         {/* course details area end */}
         <div className="rts-section-gapBottom rts-feature-course-area">

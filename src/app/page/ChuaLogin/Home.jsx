@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
@@ -52,14 +51,13 @@ const BannerAreaTen = () => {
                 <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay"></div>
             </div>
 
-            <div className="container lg:mt-32 mx-auto px-6 lg:px-8 space-y-20 relative z-10">
-                <div className="grid mt-80 lg:grid-cols-2 gap-16 items-center">
+            <div className="container lg:mt-32 mx-auto px-6 lg:px-8 space-y-20 relative z-10" >
+                <div className="grid mt-80 lg:grid-cols-2 gap-16 items-center" >
                     {/* Left Content */}
                     <div className="space-y-10 order-2 lg:order-1">
-                        <div className="flex items-center space-x-4 animate-fadeIn backdrop-blur-sm bg-white/10 rounded-full py-2 px-4 w-fit">
-                            <Img width={24} height={24} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733238928/11_jyq71p.png"
-                                alt="pre-title" className="w-6 h-6 animate-bounce-slow" />
-                            <span className="text-transparent bg-gradient-to-r text-white bg-clip-text font-medium">
+                        <div className="flex items-center space-x-4 animate-fadeIn backdrop-blur-sm bg-white/10 rounded-full py-2 px-4 w-fit" >
+                            <i className="bi bi-lightbulb text-white text-2xl"></i>
+                            <span className="text-transparent bg-gradient-to-r text-white bg-clip-text font-medium" >
                                 Học cùng chúng tôi
                             </span>
                         </div>
@@ -121,7 +119,7 @@ const BannerAreaTen = () => {
                             group-hover:before:scale-105 group-hover:border-white/20">
 
                                 <Img width={600} height={500}
-                                    src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733241704/05_pkkhfu.png"
+                                    src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733241747/32_inhyjx.png"
                                     alt="banner"
                                     className="w-full h-auto max-w-2xl mx-auto rounded-2xl
                                     transform transition-all duration-700 
@@ -153,8 +151,7 @@ const ServiceArea = () => {
                     referrerPolicy: 'unsafe-url',
                 });
                 const data = await response.json();
-                // Limit to 7 items
-                setDanhMuc(data.data.slice(0, 7));
+                setDanhMuc(data.data.slice(0, 4));
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -164,69 +161,78 @@ const ServiceArea = () => {
 
     return (
         <div className="container">
-            <section className="py-32 bg-gray-50 relative overflow-hidden">
-                {/* Enhanced floating decorations */}
-                <div className="absolute inset-0">
-                    <div className="absolute top-20 left-20 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob"></div>
-                    <div className="absolute top-40 right-20 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-2000"></div>
-                    <div className="absolute -bottom-8 left-40 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-4000"></div>
+            <section className="py-16 relative overflow-hidden">
+                {/* Header Section */}
+                <div className="text-center mb-12">
+                    <div className="inline-flex items-center justify-center gap-4 mb-6">
+                        <div className="relative group">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 rounded-full blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+                            <div className="relative rounded-full p-2">
+                                <Img
+                                    width={50}
+                                    height={50}
+                                    src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733241753/bulb_y2heue.png"
+                                    alt="icon"
+                                    className="object-contain hover:scale-125 transition-transform duration-300"
+                                />
+                            </div>
+                        </div>
+                        <span className="text-black font-bold text-4xl px-6 py-3 rounded-full hover:shadow-lg hover:shadow-pink-500/20 transition-all duration-300">
+                            Danh Mục Khóa Học Nổi Bật
+                        </span>
+                    </div>
                 </div>
 
-                <div className="container mx-auto px-4 relative">
-                    <div className="text-center mb-20 space-y-6">
-                        <div className="inline-flex items-center justify-center gap-4 mb-6">
-                            <div className="relative group">
-                                <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 rounded-full blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
-                                <div className="relative bg-white rounded-full p-2">
-                                    <Img
-                                        width={50}
-                                        height={50}
-                                        src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733241753/bulb_y2heue.png"
-                                        alt="icon"
-                                        className="object-contain hover:scale-125 transition-transform duration-300"
-                                    />
-                                </div>
-                            </div>
-                            <span className="text-white font-bold text-lg bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 px-6 py-3 rounded-full hover:shadow-lg hover:shadow-pink-500/20 transition-all duration-300">
-                                Dịch vụ
-                            </span>
-                        </div>
-
-                        <h2 className="text-5xl font-bold text-gray-900 leading-tight">
-                            Kinh doanh chuyên dụng của chúng tôi
-                            <br />
-                            <span className="bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 bg-clip-text text-transparent">
-                                Khóa học
-                            </span>
-                        </h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {/* TikTok-style Vertical Scroll Container */}
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 h-[210px]  overflow-y-auto custom-scrollbar">
                         {DanhMuc.map((item, index) => (
                             <div
                                 key={index}
-                                className="group bg-white rounded-xl p-6 shadow-lg hover:shadow-xl 
-            transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+                                className="group relative bg-gradient-to-br from-gray-900 via-pink-700 h-[205px] to-gray-600 p-[2px] rounded-2xl transition-all duration-300"
                             >
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0 bg-gradient-to-br from-gray-900 via-pink-700 to-gray-600 rounded-lg p-4 group-hover:shadow-lg transition-all duration-300">
+                                <div className="relative bg-white rounded-2xl p-4 sm:p-6 h-[180px] sm:h-[200px]">
+                                    {/* Category Image */}
+                                    <div className="relative mb-2 sm:mb-4 overflow-hidden rounded-xl aspect-video">
                                         <Img
-                                            width={80}
-                                            height={80}
+                                            width={300}
+                                            height={200}
                                             src={item.hinh}
-                                            alt="service"
-                                            className="object-contain rounded-lg group-hover:scale-110 transition-transform duration-300"
+                                            alt={item.ten}
+                                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                                         />
+                                        {/* Overlay Gradient */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     </div>
-                                    <div>
-                                        <h5 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-pink-700 
-                transition-colors duration-300">
+
+                                    {/* Category Info */}
+                                    <div className="space-y-2 sm:space-y-3">
+                                        <h3 className="text-base sm:text-xl font-bold text-gray-900 group-hover:text-pink-700 transition-colors duration-300 line-clamp-2">
                                             {item.ten}
-                                        </h5>
-                                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm
-                bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white">
-                                            30+ Khóa học
-                                        </span>
+                                        </h3>
+                                        
+                                        {/* Stats Row */}
+                                        <div className="flex items-center justify-between text-xs sm:text-sm text-gray-600">
+                                            <span className="flex items-center gap-1">
+                                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                                </svg>
+                                                30+ Khóa học
+                                            </span>
+                                            <span className="flex items-center gap-1">
+                                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                </svg>
+                                                1.2k Học viên
+                                            </span>
+                                        </div>
+                                      
+                                        <button className="w-full py-1.5 sm:py-2 px-3 sm:px-4 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white rounded-full text-sm sm:text-base font-medium transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25 border border-white">
+                                            <Link href={`/page/login`}>
+                                                Khám phá ngay
+                                            </Link>
+                                        </button>
+                                     
                                     </div>
                                 </div>
                             </div>
@@ -234,6 +240,24 @@ const ServiceArea = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Add custom scrollbar styles */}
+            <style jsx global>{`
+                .custom-scrollbar::-webkit-scrollbar {
+                    width: 6px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                    border-radius: 10px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                    background: linear-gradient(to bottom, #111827, #be185d, #111827);
+                    border-radius: 10px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                    background: linear-gradient(to bottom, #1f2937, #db2777, #1f2937);
+                }
+            `}</style>
         </div>
     );
 };
@@ -265,15 +289,31 @@ const CourseArea = () => {
         };
         fetchCourses();
 
-        // Initialize Swiper
+        // Updated Swiper configuration
         const swiper = new Swiper('.swiper-container', {
-            slidesPerView: 1,
-            spaceBetween: 30,
+            slidesPerView: 2, // Show 2 slides per view
+            spaceBetween: 20, // Space between slides
             loop: true,
             autoplay: {
                 delay: 3000,
                 disableOnInteraction: false,
             },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                // When window width is >= 320px
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                // When window width is >= 768px
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                }
+            }
         });
 
         return () => swiper.destroy();
@@ -315,35 +355,35 @@ const CourseArea = () => {
     };
     return (
         <div className="container">
-            <div className="w-full">
-                <section className="py-20 bg-gray-50 ">
-                    <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+                <section className="py-10 md:py-20 bg-gray-50">
+                    <div className="max-w-8xl mx-auto px-4">
                         {/* Header */}
-                        <div className="flex justify-between items-center mb-16 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 rounded-2xl shadow-2xl p-8 transform hover:scale-[1.02] transition-all duration-300">
-                            <div className="max-w-2xl">
-                                <div className="flex items-center gap-4 mb-6 group">
-                                    <div className="p-4 bg-white/10 backdrop-blur-sm rounded-2xl transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg">
+                        <div className="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-16 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 rounded-2xl shadow-2xl p-4 md:p-8 transform hover:scale-[1.02] transition-all duration-300">
+                            <div className="max-w-2xl mb-6 md:mb-0">
+                                <div className="flex items-center gap-4 mb-4 md:mb-6 group">
+                                    <div className="p-3 md:p-4 bg-white/10 backdrop-blur-sm rounded-2xl transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg">
                                         <Img
                                             width={40}
                                             height={40}
                                             src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733241754/bulb-3_ppeidc.png"
                                             alt="courses icon"
-                                            className="object-contain w-10 h-10 animate-pulse"
+                                            className="object-contain w-8 h-8 md:w-10 md:h-10 animate-pulse"
                                         />
                                     </div>
-                                    <span className="text-white font-bold text-xl tracking-wider animate-fade-in">Khóa học</span>
+                                    <span className="text-white font-bold text-lg md:text-xl tracking-wider animate-fade-in">Khóa học</span>
                                 </div>
-                                <h2 className="text-2xl lg:text-2xl font-extrabold text-white leading-tight mb-4 drop-shadow-2xl">
+                                <h2 className="text-xl md:text-2xl font-extrabold text-white leading-tight mb-4 drop-shadow-2xl">
                                     Khám phá mới và xu hướng
                                 </h2>
                             </div>
                             <Link
                                 href="#"
-                                className="inline-flex items-center gap-3 px-8 py-4 text-white font-bold bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 rounded-full group border border-white/20 hover:border-white/40 shadow-lg hover:shadow-xl"
+                                className="inline-flex items-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 text-white font-bold bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 rounded-full group border border-white/20 hover:border-white/40 shadow-lg hover:shadow-xl"
                             >
-                                <span>Xem tất cả các khóa học</span>
+                                <span className="text-sm md:text-base">Xem tất cả các khóa học</span>
                                 <svg
-                                    className="w-6 h-6 transform transition-all duration-300 group-hover:translate-x-2"
+                                    className="w-5 h-5 md:w-6 md:h-6 transform transition-all duration-300 group-hover:translate-x-2"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -359,91 +399,103 @@ const CourseArea = () => {
                         </div>
 
                         {/* Swiper Container */}
-                        <div className="relative px-4 py-8">
+                        <div className="relative px-2 md:px-4 py-4 md:py-8">
                             <div className="swiper-container overflow-hidden">
                                 <div className="swiper-wrapper">
                                     {KhoaHoc.map((course, index) => (
-                                        <div key={index} className="swiper-slide w-full p-4">
+                                        <div key={index} className="swiper-slide w-full p-2 md:p-4">
                                             <Link href={`/page/course-detail?id=${course.id}`}>
-                                                <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 ease-out transform hover:-translate-y-1 h-[320px] flex overflow-hidden border border-gray-200 hover:border-gray-300">
-                                                    {/* Course Image */}
-                                                    <div className="relative w-1/2">
+                                                <div className="group relative bg-black rounded-2xl overflow-hidden w-[400px] h-[400px] mx-auto hover:scale-[1.02] transition-transform duration-300">
+                                                    {/* Background Video/Image */}
+                                                    <div className="absolute inset-0">
                                                         <Img
-                                                            width={400}
-                                                            height={320}
+                                                            width={100} 
+                                                            height={100}
                                                             src={course.hinh}
                                                             alt={course.ten}
-                                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                                            className="w-full h-full object-cover"
                                                         />
-                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                                        <div className="absolute top-4 left-4 flex gap-2">
-                                                            <span className="bg-[#ff6b6b] text-white px-4 py-1.5 rounded-full text-sm font-medium shadow-lg">
-                                                                {/* Updated color for better visibility */}
-                                                                Phổ biến
-                                                            </span>
-                                                        </div>
+                                                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/90" />
                                                     </div>
 
-                                                    {/* Course Content */}
-                                                    <div className="p-8 w-1/2 flex flex-col justify-between bg-white">
-                                                        <div>
-                                                            <div className="flex justify-between items-center mb-4">
-                                                                <span className="bg-[#fff0f0] text-[#ff6b6b] px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide">
-                                                                    Người bán tốt nhất
-                                                                </span>
+                                                    {/* Content Overlay */}
+                                                    <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                                                        {/* Course Title and Description */}
+                                                        <h3 className="text-xl md:text-2xl font-bold text-white mb-2 line-clamp-2">
+                                                            {course.ten}
+                                                        </h3>
+                                                        
+                                                        <div className="flex items-center gap-2 mb-3">
+                                                            <div className="h-8 w-8 rounded-full overflow-hidden border-2 border-white">
+                                                                <Img
+                                                                    width={32}
+                                                                    height={32}
+                                                                    src={course.hinh}
+                                                                    alt="instructor"
+                                                                    className="w-full h-full object-cover"
+                                                                />
+                                                            </div>
+                                                            <span className="text-white font-medium">{course.giangvien}</span>
+                                                        </div>
 
-                                                                <span className={`text-2xl font-extrabold ${course.giamgia ? 'text-red-600' : 'text-red-600 '}`}>
+                                                        {/* Stats Row */}
+                                                        <div className="flex items-center gap-4 text-white/90 text-sm mb-3">
+                                                            <div className="flex items-center gap-1">
+                                                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                </svg>
+                                                                <span>{getAverageRating(course.danhgia).toFixed(1)}</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-1">
+                                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                                </svg>
+                                                                <span>{course.dangky.length}</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-1">
+                                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                                                </svg>
+                                                                <span>{course.baihocs.length} bài học</span>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Price Tag */}
+                                                        <div className="flex items-center justify-between">
+                                                            <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                                                                <span className="text-white font-bold">
                                                                     {course.giamgia ? (
                                                                         <>
-                                                                            <span className="line-through mr-2 text-gray-500 text-lg">
+                                                                            <span className="line-through text-white/60 mr-2">
                                                                                 {course.gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                                                             </span>
-                                                                            <span className="text-red-600">
+                                                                            <span className="text-red-400">
                                                                                 {course.giamgia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                                                             </span>
                                                                         </>
                                                                     ) : course.gia === 0 ? (
-                                                                        <span className="text-red-600'">Miễn phí</span>
+                                                                        "Miễn phí"
                                                                     ) : (
                                                                         course.gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
                                                                     )}
                                                                 </span>
                                                             </div>
 
-                                                            <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 leading-snug hover:text-[#ff6b6b] transition-colors">
-                                                                {course.ten}
-                                                            </h3>
-
-                                                            <div className="flex items-center justify-between mb-4">
-                                                                <div className="flex items-center gap-2">
-                                                                    <span className="text-gray-600 font-medium truncate">{course.giangvien}</span>
-                                                                </div>
-
-                                                                <span className="flex items-center">
-                                                                    <span className="text-[#ffd230] font-semibold">
-                                                                        {getAverageRating(course.danhgia).toFixed(1)}
-                                                                    </span>
-                                                                    <div className="flex ml-2">
-                                                                        {renderStars(getAverageRating(course.danhgia))}
-                                                                    </div>
-                                                                </span>
-                                                            </div>
+                                                            {/* Action Button */}
+                                                            <button className="bg-gradient-to-r w-40 from-gray-900 via-pink-700 to-gray-600 hover:via-pink-700 text-white px-4 py-2 rounded-full font-medium transform hover:scale-105 transition-all duration-300 border border-white">
+                                                                Xem ngay
+                                                            </button>
                                                         </div>
+                                                    </div>
 
-                                                        <div className="flex items-center justify-between text-gray-500 text-sm font-medium">
-                                                            <div className="flex items-center gap-2 group-hover:text-black transition-colors">
-                                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                                                </svg>
-                                                                <span>{course.baihocs.length} Lessons</span>
-                                                            </div>
-                                                            <div className="flex items-center gap-2 group-hover:text-black transition-colors">
-                                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                                                </svg>
-                                                                <span>{course.dangky.length} Students</span>
-                                                            </div>
-                                                        </div>
+                                                    {/* Floating Badges */}
+                                                    <div className="absolute top-4 right-4 flex flex-col gap-2">
+                                                        <span className="bg-black/75 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium border border-white/20 animate-pulse">
+                                                            🔥 Hot
+                                                        </span>
+                                                        <span className="bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg border border-white">
+                                                            ⭐ Trending
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </Link>
@@ -451,10 +503,61 @@ const CourseArea = () => {
                                     ))}
                                 </div>
                             </div>
+
+                            {/* Add Navigation Arrows */}
+                            <button 
+                                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full 
+                                bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300
+                                border border-white/20 hover:border-white/40 group w-20 h-20
+                                transform -translate-x-1/2 hover:scale-110"
+                                onClick={() => {
+                                    const swiper = document.querySelector('.swiper-container').swiper;
+                                    swiper.slidePrev();
+                                }}
+                            >
+                                <svg 
+                                    className="text-black transform transition-transform group-hover:-translate-x-1" 
+                                    fill="none" 
+                                    stroke="currentColor" 
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path 
+                                        strokeLinecap="round" 
+                                        strokeLinejoin="round" 
+                                        strokeWidth={2} 
+                                        d="M15 19l-7-7 7-7"
+                                    />
+                                </svg>
+                            </button>
+
+                            <button 
+                                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full
+                                bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300
+                                border border-white/20 hover:border-white/40 group w-20 h-20
+                                transform translate-x-1/2 hover:scale-110"
+                                onClick={() => {
+                                    const swiper = document.querySelector('.swiper-container').swiper;
+                                    swiper.slideNext();
+                                }}
+                            >
+                                <svg 
+                                    className=" text-black transform transition-transform group-hover:translate-x-1" 
+                                    fill="none" 
+                                    stroke="currentColor" 
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path 
+                                        strokeLinecap="round" 
+                                        strokeLinejoin="round" 
+                                        strokeWidth={2} 
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </section>
-            </div>
+            
         </div>
     );
 }
@@ -644,18 +747,30 @@ const UpcomingEvents = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
-                        <div className="title-area-center-style">
-                            <div className="pre-title">
-                                <Img
-                                    width={100}
-                                    height={50}
-                                    src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733241704/07_uqfitz.png"
-                                    alt="icon"
-                                />
-                                <span>Sự Kiện Nổi Bật</span>
+                        <div className="text-center mb-20">
+                            <div className="flex items-center justify-center gap-4 mb-6">
+                                <div className="relative group">
+                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 rounded-full blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+                                    <div className="relative rounded-full p-2">
+                                        <Img
+                                            width={50}
+                                            height={50}
+                                            src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733241704/07_uqfitz.png"
+                                            alt="icon"
+                                            className="object-contain hover:scale-125 transition-transform duration-300"
+                                        />
+                                    </div>
+                                </div>
+                                <span className="text-black font-bold text-4xl px-6 py-3 rounded-full hover:shadow-lg hover:shadow-pink-500/20 transition-all duration-300">
+                                    Sự Kiện Nổi Bật
+                                </span>
                             </div>
-                            <h2 className="title">Khám Phá Sự Kiện Đặc Sắc</h2>
-                            <p className="post-title">
+
+                            <h2 className="text-5xl font-bold text-black leading-tight mb-6">
+                                Khám Phá Sự Kiện Đặc Sắc
+                            </h2>
+
+                            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
                                 Khám phá những trải nghiệm độc đáo, kích thích sự tò mò và mở ra cánh cửa tri thức mới
                             </p>
                         </div>
@@ -757,7 +872,7 @@ const FunFacts = () => {
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {/* Fact Card 1 */}
-                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20">
+                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 border border-white/30">
                             <div className="flex justify-center mb-4">
                                 <Img width={80} height={80} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733239744/05_hznj2t.svg"
                                     alt="icon" className="hover:rotate-6 transition-transform" />
@@ -769,7 +884,7 @@ const FunFacts = () => {
                         </div>
 
                         {/* Fact Card 2 */}
-                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20">
+                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 border border-white/30">
                             <div className="flex justify-center mb-4">
                                 <Img width={80} height={80} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733239742/02_nc0mnq.svg"
                                     alt="icon" className="hover:rotate-6 transition-transform" />
@@ -781,7 +896,7 @@ const FunFacts = () => {
                         </div>
 
                         {/* Fact Card 3 */}
-                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20">
+                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 border border-white/30">
                             <div className="flex justify-center mb-4">
                                 <Img width={80} height={80} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733239742/04_tbowfk.svg"
                                     alt="icon" className="hover:rotate-6 transition-transform" />
@@ -793,7 +908,7 @@ const FunFacts = () => {
                         </div>
 
                         {/* Fact Card 4 */}
-                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20">
+                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 border border-white/30">
                             <div className="flex justify-center mb-4">
                                 <Img width={80} height={80} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733239742/06_nubzt8.svg"
                                     alt="icon" className="hover:rotate-6 transition-transform" />
@@ -896,7 +1011,7 @@ const FeedbackArea = () => {
                                                             </div>
                                                             <p className="text-lg italic text-gray-100 mb-4">&quot;{item.noi_dung}&quot;</p>
                                                             <h5 className="text-xl font-bold">{item.nguoi_danh_gia.ten}</h5>
-                                                            <p className="text-pink-300">{item.ngay_danh_gia}</p>
+                                                            <p className="text-pink-300">{item.ngay_danh_gia.split('T')[0]}</p>
                                                         </div>
                                                     </div>
                                                 </div>

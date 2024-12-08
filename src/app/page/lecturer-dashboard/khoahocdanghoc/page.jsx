@@ -93,18 +93,21 @@ const Khoahocdanghoc = () => {
     setIsLoading(true);
     GiangvienKhoaHoc()
       .then((res) => {
-        setKhoahocdanghoc(res.data);
+        setKhoahocdanghoc(res.data || []);
         setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching dashboard data:", error);
         setIsLoading(false);
+        setKhoahocdanghoc([]);
       });
   }, []);
 
   const DanhGiaTrungBinh = khoahocdanghoc1.map((item) => {
-    if (item.danhgia?.length > 0) {
-      const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia), 0);
+    if (!item || !item.danhgia) return 0;
+    
+    if (item.danhgia.length > 0) {
+      const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia || 0), 0);
       return (total / item.danhgia.length);
     }
     return 0;
@@ -121,19 +124,20 @@ const Khoahocdanghoc = () => {
       ) : (
         <div className="flex gap-10 w-full overflow-x-scroll ">
           {khoahocdanghoc1.map((item, index) => (
+            console.log(item,"item"),
             <Product
               key={index}
-              id={item.id}
-              gia={item.gia}
-              giamgia={item.giamgia}
-              ten={item.ten}
-              hinh={item.hinh}
-              chude={item.chuDe?.ten}
-              giangvien={item.giangVien?.ten}
-              baihocs={item.baihoc?.length}
-              dangky={item.ThanhToan?.length}
+              id={item?.id}
+              gia={item?.gia}
+              giamgia={item?.giamgia}
+              ten={item?.ten}
+              hinh={item?.hinh}
+              chude={item?.chuDe?.ten}
+              giangvien={item?.giangVien?.ten}
+              baihocs={item?.baihoc?.length || 0}
+              dangky={item?.ThanhToan?.length || 0}
               danhgia={DanhGiaTrungBinh[index]}
-
+            
             />
           ))}
         </div>

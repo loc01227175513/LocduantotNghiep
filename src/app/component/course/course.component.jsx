@@ -102,7 +102,7 @@ const OutstandingCourse = () => {
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
                       <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg font-bold ">
+                    <span className="text-white  uppercase text-lg font-bold ">
                       Khóa Học 
                     </span>
                   </div>
@@ -275,13 +275,13 @@ const CourseNew = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
                       <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg">
+                    <span className="text-white  uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
@@ -451,13 +451,13 @@ const Courseseal = () => {
         <div className="container px-4 sm:px-6 lg:px-8">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center text-white w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                      <i className="bi bi-lightbulb text-white  text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg">
+                    <span className="text-white  uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
@@ -627,13 +627,13 @@ const Coursefree = () => {
         <div className="container px-4 sm:px-6 lg:px-8">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center text-white w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                      <i className="bi bi-lightbulb text-white  text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg">
+                    <span className="text-white  uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
@@ -768,14 +768,14 @@ const KhoaHocDangHocDay = () => {
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 text-white h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                      <i className="bi bi-lightbulb text-white  text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg">
+                    <span  className="text-white  uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
                   <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    <strong>Các khóa học bạn đang Học</strong>
+                    <strong>Các khóa học bạn đang học</strong>
                     <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
                       Đừng bỏ lỡ cơ hội học tập tốt nhất
                     </p>

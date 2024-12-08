@@ -105,7 +105,7 @@ export default function Khoahocdanghoc() {
             placeholder="Lọc theo trạng thái..."
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-300"
+            className="w-96 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-300 placeholder:text-xl "
           />
         </div>
 

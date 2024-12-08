@@ -279,10 +279,9 @@ export const Profileinsructor = () => {
                     </div>
                 </div>
             ))}
-
-            <div className="courses-grid">
+            <div className="courses-grid bg-white">
                 {data.map((item) => (
-                    <div className="course-card" key={item.id}>
+                    <div className="course-card bg-white shadow-sm hover:shadow-md transition-shadow duration-300" key={item.id}>
                         <Link href={`/page/course-detail?id=${item.id}`}>
                             <div className="course-thumbnail">
                                 <Image
@@ -309,14 +308,14 @@ export const Profileinsructor = () => {
                                     </span>
                                 )}
                             </div>
-                            <div className="course-info">
+                            <div className="course-info bg-white">
                                 <h3 className="course-title">{item.ten}</h3>
                                 <div className="course-meta">
                                     <span className="students-count">
                                         <i className="fa-light fa-users" /> {item.ThanhToan.length}
                                     </span>
-                                    <span className="rating">
-                                        {DanhGia(item.danhgia)} <i className="fa-solid fa-star" />
+                                    <span className="rating text-black">
+                                        {DanhGia(item.danhgia)} <i className="fa-solid fa-star text-yellow-400" />
                                     </span>
                                 </div>
                             </div>

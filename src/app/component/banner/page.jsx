@@ -40,7 +40,7 @@ const Banner = () => {
     );
 
   return (
-    <div className="relative  bg-gradient-to-br from-gray-50 to-white overflow-hidden">
+    <div className="relative  bg-gradient-to-br from-gray-50 to-white overflow-hidden pt-20 pb-20">
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
@@ -64,18 +64,18 @@ const Banner = () => {
           </span>
         </div>
 
-        <p className="text-6xl font-extrabold leading-tight bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 bg-clip-text text-transparent animate-gradient">
+        <p className="text-6xl font-medium pt-2 pb-2 leading-tight bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 bg-clip-text text-transparent animate-gradient">
           {banner.tieude}
         </p>
-        <span className="block text-blue-800 font-bold text-5xl">
+        <span className="block pb-2  pt-2 text-blue-800 font-medium text-5xl">
           Nền tảng học trực tuyến
         </span>
 
-        <p className="text-gray-800 text-2xl max-w-2xl leading-relaxed backdrop-blur-sm mt-3 mb-3">
+        <p className="text-gray-800 text-3xl max-w-2xl leading-relaxed backdrop-blur-sm mt-3 mb-3">
           {banner.mota}
         </p>
 
-        <div className="flex flex-wrap items-center gap-6">
+        <div className="flex flex-wrap items-center gap-6 pt-2">
           <div className="flex items-center space-x-4">
             <div className="flex -space-x-4">
               <div className="flex items-center justify-center w-16 h-16 rounded-full bg-pink-200">

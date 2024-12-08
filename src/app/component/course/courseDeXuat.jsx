@@ -125,13 +125,13 @@ const CourseDeXuat = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
-                            <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+                            <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                                 <div className="title-area-left-style">
                                     <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                                         <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
-                                            <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                                            <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
                                         </div>
-                                        <span className="text-white-500 uppercase text-lg">
+                                        <span className="text-white uppercase text-lg">
                                             Khóa học
                                         </span>
                                     </div>

@@ -52,26 +52,26 @@ const NhanTin = () => {
 
     return (
         <>
-            <div className="overflow-y-scroll col-lg-9 h-lvh bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900 via-gray-900 to-black">
+            <div className="overflow-y-scroll col-lg-9 h-lvh">
                 <div className="right-sidebar-dashboard p-6">
                     {/* Header Section */}
                     <section className="p-6 max-w-6xl mx-auto flex justify-between items-center 
-                          bg-gradient-to-br from-gray-800/80 via-gray-800/40 to-gray-900/60 
-                          rounded-2xl backdrop-blur-xl
-                          shadow-[0_8px_32px_rgb(0,0,0,0.12)] 
-                          border border-emerald-500/20 
+                          bg-white
+                          rounded-2xl
+                          shadow-lg
+                          border border-gray-200
                           mb-8">
                         <div>
-                            <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 to-emerald-400">
+                            <h1 className="text-3xl font-bold text-gray-800">
                                 Quản lý Tin Nhắn
                             </h1>
-                            <p className="text-gray-400 mt-1 text-lg">Danh sách tin nhắn</p>
+                            <p className="text-gray-600 mt-1 text-lg">Danh sách tin nhắn</p>
                         </div>
                         <button
-                            className="relative inline-flex items-center px-6 py-3 font-semibold text-white transition-transform duration-300 
-                                       bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl hover:from-emerald-600 hover:to-teal-600
-                                       focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-gray-900
-                                       transform hover:scale-105 hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]"
+                            className="relative inline-flex items-center w-44 px-6 py-3 font-semibold text-white transition-transform duration-300 
+                                       bg-emerald-500 rounded-xl hover:bg-emerald-600
+                                       focus:ring-2 focus:ring-emerald-400
+                                       transform hover:scale-105"
                             onClick={() => setAddVisible(true)}
                         >
                             <span className="mr-2">+</span> Thêm Tin Nhắn
@@ -91,11 +91,10 @@ const NhanTin = () => {
                             return (
                                 <motion.div
                                     key={item.id}
-                                    className="bg-gradient-to-br from-gray-800/40 via-gray-800/30 to-gray-900/40 p-8 rounded-2xl 
-                                               backdrop-blur-lg shadow-[0_8px_32px_rgba(0,0,0,0.3)] 
-                                               border border-emerald-500/10 hover:border-emerald-500/30
-                                               transition-all duration-500 ease-out
-                                               hover:bg-gradient-to-br hover:from-gray-800/50 hover:via-gray-800/40 hover:to-gray-900/50"
+                                    className="bg-white p-8 rounded-2xl 
+                                               shadow-lg
+                                               border border-gray-200
+                                               transition-all duration-500 ease-out"
                                     initial={{ opacity: 0, y: 50 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{
@@ -105,15 +104,12 @@ const NhanTin = () => {
                                     }}
                                     whileHover={{
                                         scale: 1.02,
-                                        boxShadow: "0px 25px 50px rgba(16, 185, 129, 0.15)",
                                         y: -5
                                     }}
                                 >
                                     {/* Header with enhanced styling */}
                                     <div className="flex justify-between items-center mb-6">
-                                        <p className="text-xl font-bold text-transparent bg-clip-text 
-                                                     bg-gradient-to-r from-emerald-300 via-emerald-200 to-teal-200
-                                                     drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+                                        <p className="text-xl font-bold text-gray-800">
                                             Mã Tin Nhắn: <span>#{item.id}</span>
                                         </p>
                                     </div>
@@ -134,26 +130,23 @@ const NhanTin = () => {
                                             return (
                                                 <motion.div
                                                     key={index}
-                                                    className={`p-5 rounded-2xl max-w-md backdrop-blur-md
+                                                    className={`p-5 rounded-2xl max-w-md
                                                     ${isUserSender
-                                                            ? 'bg-gradient-to-r from-blue-600 to-blue-500 self-start ml-2'
+                                                            ? 'bg-blue-500 text-white self-start ml-2'
                                                             : isLecturerSender
-                                                                ? 'bg-gradient-to-r from-emerald-600 to-teal-500 self-end mr-2'
-                                                                : 'bg-gradient-to-r from-gray-700 to-gray-600'
+                                                                ? 'bg-emerald-500 text-white self-end mr-2'
+                                                                : 'bg-gray-500 text-white'
                                                         } 
-                                                    shadow-lg border border-white/20 hover:border-white/30
-                                                    transform perspective-1000`}
+                                                    shadow-md`}
                                                     whileHover={{
                                                         scale: 1.03,
-                                                        rotateX: 5,
-                                                        boxShadow: "0px 15px 35px rgba(0,0,0,0.3)",
-                                                        filter: "brightness(1.1)"
+                                                        rotateX: 5
                                                     }}
                                                     transition={{ duration: 0.4 }}
                                                 >
-                                                    <p className="text-white font-bold mb-2 drop-shadow-md">{msgSenderName}</p>
-                                                    <p className="text-white/90 leading-relaxed">{msg.content}</p>
-                                                    <p className="text-white/70 text-sm mt-3 italic">{msg.timestamp}</p>
+                                                    <p className="font-bold mb-2">{msgSenderName}</p>
+                                                    <p className="leading-relaxed">{msg.content}</p>
+                                                    <p className="text-sm mt-3 italic opacity-80">{msg.timestamp}</p>
                                                 </motion.div>
                                             );
                                         })}
@@ -253,18 +246,18 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn">
             {/* Animated background with particles */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 animate-gradient">
+            <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-100 animate-gradient">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_50%)] animate-pulse"></div>
             </div>
 
             {/* Enhanced backdrop blur */}
-            <div className="absolute inset-0 backdrop-blur-xl bg-black/40"></div>
+            <div className="absolute inset-0 backdrop-blur-xl bg-white/40"></div>
 
             {/* Modal Container with enhanced floating */}
             <div className="relative z-50 w-full max-w-2xl max-h-full mx-4 animate-float-slow">
                 {/* Modal Content with advanced glassmorphism */}
                 <div className="relative overflow-hidden rounded-3xl
-                              bg-gradient-to-br from-gray-800/80 via-gray-800/70 to-gray-900/80
+                              bg-gradient-to-br from-white/80 via-white/70 to-gray-100/80
                               backdrop-blur-2xl backdrop-saturate-150
                               shadow-[0_0_100px_rgba(16,185,129,0.2)]
                               border border-emerald-500/30
@@ -274,10 +267,10 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-emerald-500/10 animate-shimmer-slow"></div>
 
                     {/* Header with dynamic gradient */}
-                    <div className="relative p-8 border-b border-gray-700/30 
-                                  bg-gradient-to-r from-gray-800/90 via-gray-800/80 to-gray-900/90">
+                    <div className="relative p-8 border-b border-gray-200/30 
+                                  bg-gradient-to-r from-white/90 via-white/80 to-gray-100/90">
                         <h2 className="text-4xl font-bold text-transparent bg-clip-text 
-                                     bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400
+                                     bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-600
                                      animate-shimmer tracking-tight">
                             Thêm Tin Nhắn
                         </h2>
@@ -286,9 +279,9 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
                             <button
                                 className={`group px-8 py-3.5 rounded-2xl font-medium transition-all duration-300
                                           ${activeTab === 'giangvien'
-                                        ? 'bg-gradient-to-r from-emerald-500 to-teal-500 shadow-2xl shadow-emerald-500/30'
-                                        : 'bg-gray-700/40 hover:bg-gray-600/40 border border-gray-600/30'} 
-                                          text-white transform hover:scale-105 hover:shadow-2xl relative overflow-hidden`}
+                                        ? 'bg-gradient-to-r from-emerald-500 to-teal-500 shadow-2xl shadow-emerald-500/30 text-white'
+                                        : 'bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-700'} 
+                                          transform hover:scale-105 hover:shadow-2xl relative overflow-hidden`}
                                 onClick={() => setActiveTab('giangvien')}
                             >
                                 <span className="relative z-10">Giảng viên</span>
@@ -302,23 +295,23 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
                     {activeTab === 'giangvien' && (
                         <form onSubmit={handleLecturerSubmit} className="p-8 space-y-8">
                             <div className="space-y-4 relative">
-                                <label className="block text-emerald-300 font-medium text-lg tracking-wide">
+                                <label className="block text-gray-700 font-medium text-lg tracking-wide">
                                     Người dùng:
                                 </label>
                                 <select
                                     name="id_nguoidung"
                                     value={lecturerFormData.id_nguoidung}
                                     onChange={handleLecturerChange}
-                                    className="w-full bg-gray-700/20 border border-gray-600/30 rounded-2xl p-4
-                                             text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent
-                                             transition-all duration-300 hover:bg-gray-700/30
-                                             shadow-inner shadow-black/20
+                                    className="w-full bg-white border border-gray-200 rounded-2xl p-4
+                                             text-gray-700 focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent
+                                             transition-all duration-300 hover:bg-gray-50
+                                             shadow-inner shadow-black/5
                                              appearance-none cursor-pointer"
                                     required
                                 >
-                                    <option value="" className="bg-gray-800">Chọn người dùng</option>
+                                    <option value="" className="bg-white">Chọn người dùng</option>
                                     {nguoiDung.map((nd) => (
-                                        <option key={nd.id} value={nd.id} className="bg-gray-800">
+                                        <option key={nd.id} value={nd.id} className="bg-white">
                                             {nd.ten}
                                         </option>
                                     ))}
@@ -332,7 +325,7 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
                             </div>
 
                             <div className="space-y-4">
-                                <label className="block text-emerald-300 font-medium text-lg tracking-wide">
+                                <label className="block text-gray-700 font-medium text-lg tracking-wide">
                                     Nội dung:
                                 </label>
                                 <div className="relative z-20">
@@ -340,26 +333,24 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
                                         name="noidung"
                                         value={lecturerFormData.noidung || ''}
                                         onChange={(e) => handleLecturerChange(e)}
-                                        className="w-full bg-gray-700/20 border border-gray-600/30 rounded-2xl p-4
-                   text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent
-                   transition-all duration-300 min-h-[150px] hover:bg-gray-700/30
-                   shadow-inner shadow-black/20 resize-none relative"
+                                        className="w-full bg-white border border-gray-200 rounded-2xl p-4
+                   text-gray-700 focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent
+                   transition-all duration-300 min-h-[150px] hover:bg-gray-50
+                   shadow-inner shadow-black/5 resize-none relative"
                                         style={{ pointerEvents: 'auto', zIndex: 10 }}
                                         required
                                     />
                                 </div>
-
-
                             </div>
 
                             {/* Enhanced Action Buttons */}
-                            <div className="flex justify-end space-x-4 pt-6 border-t border-gray-700/30">
+                            <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200/30">
                                 <button
                                     type="button"
                                     onClick={onClose}
-                                    className="group px-8 py-3.5 rounded-2xl font-medium text-gray-300
-                                             hover:bg-gray-700/40 transition-all duration-300
-                                             border border-gray-600/30 hover:border-gray-500/50
+                                    className="group px-8 py-3.5 rounded-2xl font-medium text-gray-600
+                                             hover:bg-gray-100 transition-all duration-300
+                                             border border-gray-200 hover:border-gray-300
                                              transform hover:scale-105 hover:shadow-lg"
                                 >
                                     Hủy
