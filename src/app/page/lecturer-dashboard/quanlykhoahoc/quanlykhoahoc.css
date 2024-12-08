@@ -1,0 +1,55 @@
+:root{
+    --color-primary:#32ADE6;
+
+}
+
+.addkhoahoc{
+    width: 150px;
+    color: #ff0070;
+    border: 1px solid #ff0070;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; 
+}
+.addkhoahoc:hover{
+    color: white;
+    background-color: #ff0070;
+
+}
+.div-add-khoahoc{
+    margin-top: 16px;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.div-add-khoahoc form button{
+    background-color: #ff0070;
+    border-radius: 5px;
+    margin: 10px;
+    color: white;
+}
+.div-add-khoahoc form button:hover{
+    background-color:rgb(129, 189, 228);
+    margin: 10px;
+}
+.div-add-khoahoc form button:last-child{
+
+    margin: 10px;
+    padding: 3px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.search-input{
+    border-radius: 20px;
+    font-size: 12px;
+    padding: 0 0 0 25px;
+
+}
+.search-icon{
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+}
+.search-input:focus{
+    border: 5px solid red;
+}
