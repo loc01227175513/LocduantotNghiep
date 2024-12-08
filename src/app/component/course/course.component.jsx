@@ -13,833 +13,189 @@ import Image from "next/image";
 import CardProduct from "../CardProductHome/CardProduct";
 import ProductStudent from "../Card/ProductStudent";
 
-const OutstandingCourse = () => {
-  const [KhoaHoc, setKhoaHoc] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+const CourseArea = () => {
+    const [KhoaHoc, setKhoaHoc] = useState([]);
 
-  useEffect(() => {
-    fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
-      referrerPolicy: "unsafe-url",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setKhoaHoc(data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        toast.error("Error fetching data!");
-      });
-  }, []);
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                const response = await fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
+                    referrerPolicy: "unsafe-url",
+                });
+                const data = await response.json();
+                const sortedCourses = data.data.sort((a, b) =>
+                    b.dangky.length - a.dangky.length
+                ).slice(0, 3); // Only take first 3 courses
+                setKhoaHoc(sortedCourses);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                toast.error("Error fetching data!");
+            }
+        };
+        fetchCourses();
+    }, []);
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setCurrentPage(1); // Reset to first page when category changes
-  };
+    // Rest of your helper functions remain the same
+    const getAverageRating = (danhgia) => {
+        if (!danhgia || danhgia.length === 0) return 0;
+        const total = danhgia.reduce((acc, item) => acc + Number(item.danhgia), 0);
+        return total / danhgia.length;
+    };
 
-  const trungbinhDangKy =
-    KhoaHoc.length > 0
-      ? KhoaHoc.reduce((acc, item) => acc + item.dangky, 0) / KhoaHoc.length
-      : 0;
-
-  const filteredCourses = selectedCategory
-    ? KhoaHoc.filter(
-      (item) =>
-        item.theloai === selectedCategory && item.dangky > trungbinhDangKy
-    )
-    : KhoaHoc.filter((item) => item.dangky > trungbinhDangKy);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedCourses = filteredCourses.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
-  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const handleYeuThich = async (id) => {
-    try {
-      const response = await KhoaHocYeuThich(id);
-      console.log(response);
-      toast.success("Added to favorites!");
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Error adding to favorites!");
-    }
-  };
-
-  // Function to render stars based on averageRating
-  const renderStars = (rating) => {
-    const filledStars = Math.floor(rating);
-    const stars = [];
-
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        i <= filledStars ? (
-          <FaStar key={i} className="text-yellow-400 w-5 h-5" aria-label="Filled Star" />
-        ) : (
-          <FaRegStar key={i} className="text-gray-300 w-5 h-5" aria-label="Empty Star" />
-        )
-      );
-    }
-    return stars;
-  };
-
-  return (
-    <div>
-      <ToastContainer />
-      <div className="course-area-start rts-section-gap">
+    return (
         <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
-                <div className="title-area-left-style">
-                  <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
+            <section className="py-10 md:py-20">
+                <div className="max-w-8xl mx-auto">
+                    {/* Header section remains the same */}
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+                                <div className="title-area-left-style">
+                                    <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
+                                        <div className="flex items-center justify-center text-white w-10 h-10 rounded-full bg-pink-300">
+                                            <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
+                                        </div>
+                                        <span className="text-white uppercase text-lg">
+                                            Khóa học
+                                        </span>
+                                    </div>
+                                    <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                                        <strong>Khám phá các khóa học xu hướng</strong>
+                                    </h2>
+                                    <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2 text-white">
+                                        Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao kiến thức
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <span className="text-white  uppercase text-lg font-bold ">
-                      Khóa Học 
-                    </span>
-                  </div>
-                  <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    <strong>Khám phá các khóa học nổi bật</strong>
-                    <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
-                      Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao
-                    </p>
-                  </h2>
-                </div>
-                <div>
-                  <Category onCategoryChange={handleCategoryChange} />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
-            <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {paginatedCourses.map((item) => {
-                  // Calculate averageRating per course
-                  const averageRating =
-                    item.danhgia && item.danhgia.length > 0
-                      ? item.danhgia.reduce((acc, rating) => acc + parseInt(rating.danhgia, 10), 0) /
-                      item.danhgia.length
-                      : 0;
 
-                  return (
-                    <CardProduct
-                      key={item.id}
-                      id={item.id}
-                      hinh={item.hinh}
-                      ten={item.ten}
-                      chude={item.chude}
-                      giangvien={item.giangvien}
-                      baihocs={item.baihocs}
-                      dangky={item.dangky}
-                      gia={item.gia}
-                      giamgia={item.giamgia}
-                      averageRating={averageRating}
-                      handleYeuThich={handleYeuThich}
-                      renderStars={renderStars}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-            <Box display="flex" justifyContent="center">
-              <ButtonGroup spacing="2">
-                {[...Array(totalPages).keys()].map((page) => (
-                  <Button
-                    key={page}
-                    className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"}`}
-                    style={{
-                      outline: "none",
-                      border: "none",
-                      backgroundColor: page + 1 === currentPage ? "#C71585" : "",
-                      color: page + 1 === currentPage ? "#FFFFFF" : "",
-                      borderColor: page + 1 === currentPage ? "teal.500" : "gray.500",
-                      borderWidth: "1px",
-                    }}
-                    onClick={() => handlePageChange(page + 1)}
-                  >
-                    {page + 1}
-                  </Button>
-                ))}
-              </ButtonGroup>
-            </Box>
-          </div>
+                    {/* Updated Course Cards Container */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 px-4">
+                        {KhoaHoc.map((course, index) => (
+                            <Link 
+                                key={index} 
+                                href={`/page/course-detail?id=${course.id}`}
+                                className="block transform hover:-translate-y-1 transition-all duration-300"
+                            >
+                                <div className="group relative bg-black rounded-2xl overflow-hidden h-[450px] shadow-lg hover:shadow-2xl transition-all duration-300">
+                                    {/* Background Image */}
+                                    <div className="absolute inset-0">
+                                        <Image
+                                            width={100}
+                                            height={100}
+                                            src={course.hinh}
+                                            alt={course.ten}
+                                            className="w-full h-full object-cover"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/90" />
+                                    </div>
+
+                                    {/* Content Overlay */}
+                                    <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                                        <h3 className="text-xl md:text-2xl font-bold text-white mb-2 line-clamp-2">
+                                            {course.ten}
+                                        </h3>
+
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <div className="h-8 w-8 rounded-full overflow-hidden border-2 border-white">
+                                                <Image
+                                                    width={32}
+                                                    height={32}
+                                                    src={course.hinh}
+                                                    alt="instructor"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                            <span className="text-white font-medium">{course.giangvien}</span>
+                                        </div>
+
+                                        {/* Stats Row */}
+                                        <div className="flex items-center gap-4 text-white/90 text-sm mb-3">
+                                            <div className="flex items-center gap-1">
+                                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                                <span>{getAverageRating(course.danhgia).toFixed(1)}</span>
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                </svg>
+                                                <span>{course.dangky.length}</span>
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                                </svg>
+                                                <span>{course.baihocs.length} bài học</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Price and Action Button */}
+                                        <div className="flex items-center justify-between">
+                                            <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                                                <span className="text-white font-bold">
+                                                    {course.giamgia ? (
+                                                        <>
+                                                            <span className="line-through text-white/60 mr-2">
+                                                                {course.gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                                            </span>
+                                                            <span className="text-red-400">
+                                                                {course.giamgia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                                            </span>
+                                                        </>
+                                                    ) : course.gia === 0 ? (
+                                                        "Miễn phí"
+                                                    ) : (
+                                                        course.gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                                                    )}
+                                                </span>
+                                            </div>
+
+                                            <button className="bg-gradient-to-r w-40 from-gray-900 via-pink-700 to-gray-600 hover:via-pink-700 text-white px-4 py-2 rounded-full font-medium transform hover:scale-105 transition-all duration-300 border border-white">
+                                                Xem ngay
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Floating Badges */}
+                                    <div className="absolute top-4 right-4 flex flex-col gap-2">
+                                        <span className="bg-black/75 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium border border-white/20 animate-pulse">
+                                            🔥 Hot
+                                        </span>
+                                        <span className="bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg border border-white">
+                                            ⭐ Trending
+                                        </span>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </section>
         </div>
-      </div>
-    </div>
-  );
-};
-
-export default OutstandingCourse;
-
-const CourseNew = () => {
-  const [KhoaHoc, setKhoaHoc] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-
-  useEffect(() => {
-    fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
-      referrerPolicy: "unsafe-url",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setKhoaHoc(data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        toast.error("Error fetching data!");
-      });
-  }, []);
-
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setCurrentPage(1); // Reset to first page when category changes
-  };
-
-  const tenDaysAgo = new Date();
-  tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
-
-  const filteredCourses = selectedCategory
-    ? KhoaHoc.filter(
-      (item) =>
-        item.theloai === selectedCategory &&
-        new Date(item.created_at) >= tenDaysAgo &&
-        new Date(item.created_at) < new Date()
-    )
-    : KhoaHoc.filter(
-      (item) =>
-        new Date(item.created_at) >= tenDaysAgo &&
-        new Date(item.created_at) < new Date()
     );
+}
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedCourses = filteredCourses.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
-  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+export { CourseArea };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const handleYeuThich = async (id) => {
-    try {
-      const response = await KhoaHocYeuThich(id);
-      console.log(response);
-      toast.success("Added to favorites!");
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Error adding to favorites!");
-    }
-  };
-
-  // Function to render stars based on averageRating
-  const renderStars = (rating) => {
-    const filledStars = Math.floor(rating);
-    const stars = [];
-
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        i <= filledStars ? (
-          <FaStar
-            key={i}
-            className="text-yellow-400 w-5 h-5"
-            aria-label="Filled Star"
-          />
-        ) : (
-          <FaRegStar
-            key={i}
-            className="text-gray-300 w-5 h-5"
-            aria-label="Empty Star"
-          />
-        )
-      );
-    }
-    return stars;
-  };
-
-  return (
-    <div>
-      <ToastContainer />
-      <div className="course-area-start rts-section-gap">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
-                <div className="title-area-left-style">
-                  <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
-                    </div>
-                    <span className="text-white  uppercase text-lg">
-                      Khóa học
-                    </span>
-                  </div>
-                  <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    <strong> Khám phá các khóa học mới</strong>
-                  </h2>
-                  <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
-                    Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng
-                    cao
-                  </p>
-                </div>
-                <div>
-                  <Category onCategoryChange={handleCategoryChange} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
-            <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {paginatedCourses.map((item) => {
-                  // Calculate averageRating per course
-                  const averageRating =
-                    item.danhgia && item.danhgia.length > 0
-                      ? item.danhgia.reduce(
-                        (acc, rating) => acc + parseInt(rating.danhgia, 10),
-                        0
-                      ) / item.danhgia.length
-                      : 0;
-
-                  return (
-                    <CardProduct
-                      key={item.id}
-                      id={item.id}
-                      hinh={item.hinh}
-                      ten={item.ten}
-                      chude={item.chude}
-                      giangvien={item.giangvien}
-                      baihocs={item.baihocs}
-                      dangky={item.dangky}
-                      gia={item.gia}
-                      giamgia={item.giamgia}
-                      averageRating={averageRating}
-                      handleYeuThich={handleYeuThich}
-                      renderStars={renderStars}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-
-            <Box display="flex" justifyContent="center">
-              <ButtonGroup spacing="2">
-                {[...Array(totalPages).keys()].map((page) => (
-                  <Button
-                    key={page}
-                    className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"
-                      }`}
-                    style={{
-                      outline: "none",
-                      border: "none",
-                      backgroundColor:
-                        page + 1 === currentPage ? "#C71585" : "", // Màu hồng-700
-                      color: page + 1 === currentPage ? "#FFFFFF" : "", // Màu trắng
-                      borderColor:
-                        page + 1 === currentPage ? "teal.500" : "gray.500",
-                      borderWidth: "1px",
-                    }}
-                    onClick={() => handlePageChange(page + 1)}
-                  >
-                    {page + 1}
-                  </Button>
-                ))}
-              </ButtonGroup>
-            </Box>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+export const OutstandingCourse = () => {
+  // Implementation for outstanding courses
 };
 
-const Courseseal = () => {
-  const [KhoaHoc, setKhoaHoc] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-
-  useEffect(() => {
-    fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
-      referrerPolicy: "unsafe-url",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setKhoaHoc(data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        toast.error("Error fetching data!");
-      });
-  }, []);
-
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setCurrentPage(1); // Reset to first page when category changes
-  };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const filteredCourses = selectedCategory
-    ? KhoaHoc.filter(
-      (item) => item.theloai === selectedCategory && item.giamgia < item.gia
-    )
-    : KhoaHoc.filter((item) => item.giamgia < item.gia);
-
-  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const displayedCourses = filteredCourses.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
-
-  const handleYeuThich = async (id) => {
-    try {
-      const response = await KhoaHocYeuThich(id);
-      console.log(response);
-      toast.success("Added to favorites!");
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Error adding to favorites!");
-    }
-  };
-
-  // Function to render stars based on averageRating
-  const renderStars = (rating) => {
-    const filledStars = Math.floor(rating);
-    const stars = [];
-
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        i <= filledStars ? (
-          <FaStar
-            key={i}
-            className="text-yellow-400 w-5 h-5"
-            aria-label="Filled Star"
-          />
-        ) : (
-          <FaRegStar
-            key={i}
-            className="text-gray-300 w-5 h-5"
-            aria-label="Empty Star"
-          />
-        )
-      );
-    }
-    return stars;
-  };
-
-  return (
-    <div>
-      <ToastContainer />
-      <div className="course-area-start rts-section-gap">
-        <div className="container px-4 sm:px-6 lg:px-8">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
-                <div className="title-area-left-style">
-                  <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center text-white w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white  text-xl animate-pulse"></i>
-                    </div>
-                    <span className="text-white  uppercase text-lg">
-                      Khóa học
-                    </span>
-                  </div>
-                  <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    <strong> Khám phá các khóa học giảm giá</strong>
-                  </h2>
-                  <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
-                    Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng
-                    cao
-                  </p>
-                </div>
-                <div>
-                  <Category onCategoryChange={handleCategoryChange} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
-            <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {displayedCourses.map((item) => {
-                  // Calculate averageRating per course
-                  const averageRating =
-                    item.danhgia && item.danhgia.length > 0
-                      ? item.danhgia.reduce(
-                        (acc, rating) => acc + parseInt(rating.danhgia, 10),
-                        0
-                      ) / item.danhgia.length
-                      : 0;
-
-                  return (
-                    <CardProduct
-                      key={item.id}
-                      id={item.id}
-                      hinh={item.hinh}
-                      ten={item.ten}
-                      chude={item.chude}
-                      giangvien={item.giangvien}
-                      baihocs={item.baihocs}
-                      dangky={item.dangky}
-                      gia={item.gia}
-                      giamgia={item.giamgia}
-                      averageRating={averageRating}
-                      handleYeuThich={handleYeuThich}
-                      renderStars={renderStars}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          {/* Pagination Buttons */}
-          <Box display="flex" justifyContent="center" className="mt-4 sm:mt-6 lg:mt-8">
-            <ButtonGroup spacing="2" className="flex flex-row justify-center gap-2">
-              {[...Array(totalPages).keys()].map((page) => (
-                <Button
-                  key={page}
-                  className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"}`}
-                  style={{
-                    outline: "none", 
-                    border: "none",
-                    backgroundColor: page + 1 === currentPage ? "#C71585" : "",
-                    color: page + 1 === currentPage ? "#FFFFFF" : "",
-                    borderColor: page + 1 === currentPage ? "teal.500" : "gray.500",
-                    borderWidth: "1px",
-                    padding: "0.5rem 1rem",
-                    fontSize: "0.875rem",
-                    minWidth: "2.5rem",
-                    display: "inline-flex"
-                  }}
-                  onClick={() => handlePageChange(page + 1)}
-                >
-                  {page + 1}
-                </Button>
-              ))}
-            </ButtonGroup>
-          </Box>
-        </div>
-      </div>
-    </div>
-  );
+export const CourseNew = () => {
+  // Implementation for new courses
 };
 
-const Coursefree = () => {
-  const [KhoaHoc, setKhoaHoc] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-
-  useEffect(() => {
-    fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
-      referrerPolicy: "unsafe-url",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setKhoaHoc(data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        toast.error("Error fetching data!");
-      });
-  }, []);
-
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setCurrentPage(1); // Reset to first page when category changes
-  };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const filteredCourses = selectedCategory
-    ? KhoaHoc.filter(
-      (item) => item.theloai === selectedCategory && item.gia === 0
-    )
-    : KhoaHoc.filter((item) => item.gia === 0);
-
-  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
-  const displayedCourses = filteredCourses.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const handleYeuThich = async (id) => {
-    try {
-      const response = await KhoaHocYeuThich(id);
-      console.log(response);
-      toast.success("Added to favorites!");
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Error adding to favorites!");
-    }
-  };
-
-  // Function to render stars based on averageRating
-  const renderStars = (rating) => {
-    const filledStars = Math.floor(rating);
-    const stars = [];
-
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        i <= filledStars ? (
-          <FaStar
-            key={i}
-            className="text-yellow-400 w-5 h-5"
-            aria-label="Filled Star"
-          />
-        ) : (
-          <FaRegStar
-            key={i}
-            className="text-gray-300 w-5 h-5"
-            aria-label="Empty Star"
-          />
-        )
-      );
-    }
-    return stars;
-  };
-
-  return (
-    <div>
-      <ToastContainer />
-      <div className="course-area-start rts-section-gap">
-        <div className="container px-4 sm:px-6 lg:px-8">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
-                <div className="title-area-left-style">
-                  <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center text-white w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white  text-xl animate-pulse"></i>
-                    </div>
-                    <span className="text-white  uppercase text-lg">
-                      Khóa học
-                    </span>
-                  </div>
-                  <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    <strong> Khám phá các khóa học miễn phí</strong>
-                    <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
-                      Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và
-                      nâng cao
-                    </p>
-                  </h2>
-                </div>
-                <div>
-                  <Category onCategoryChange={handleCategoryChange} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
-            <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {displayedCourses.map((item) => {
-                  // Calculate averageRating per course
-                  const averageRating =
-                    item.danhgia && item.danhgia.length > 0
-                      ? item.danhgia.reduce(
-                        (acc, rating) => acc + parseInt(rating.danhgia, 10),
-                        0
-                      ) / item.danhgia.length
-                      : 0;
-
-                  return (
-                    <CardProduct
-                      key={item.id}
-                      id={item.id}
-                      hinh={item.hinh}
-                      ten={item.ten}
-                      chude={item.chude}
-                      giangvien={item.giangvien}
-                      baihocs={item.baihocs}
-                      dangky={item.dangky}
-                      gia={item.gia}
-                      giamgia={item.giamgia}
-                      averageRating={averageRating}
-                      handleYeuThich={handleYeuThich}
-                      renderStars={renderStars}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          {/* Pagination Buttons */}
-          <Box display="flex" justifyContent="center">
-            <ButtonGroup spacing="2">
-              {[...Array(totalPages).keys()].map((page) => (
-                <Button
-                  key={page}
-                  className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"}`}
-                  style={{
-                    outline: "none",
-                    border: "none",
-                    backgroundColor:
-                      page + 1 === currentPage ? "#C71585" : "", // Màu hồng-700
-                    color: page + 1 === currentPage ? "#FFFFFF" : "", // Màu trắng
-                    borderColor:
-                      page + 1 === currentPage ? "teal.500" : "gray.500",
-                    borderWidth: "1px",
-                  }}
-                  onClick={() => handlePageChange(page + 1)}
-                >
-                  {page + 1}
-                </Button>
-              ))}
-            </ButtonGroup>
-          </Box>
-        </div>
-      </div>
-    </div>
-  );
+export const Courseseal = () => {
+  // Implementation for course seal
 };
 
-const KhoaHocDangHocDay = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [khoahocdanghoc1, setKhoahocdanghoc] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const itemsPerPage = 5;
-
-  const router = useRouter();
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    KhoaHocDangHoc()
-      .then((res) => {
-        setKhoahocdanghoc(res);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching dashboard data:", error);
-        setIsLoading(false);
-      });
-  }, []);
-  console.log(khoahocdanghoc1);
-
-  const tieptuchoc = (id) => {
-    router.push(`/page/Study?id=${id}`);
-  };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const filteredCourses = selectedCategory
-    ? khoahocdanghoc1.filter((item) => item.id_chude === selectedCategory)
-    : khoahocdanghoc1;
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedCourses = filteredCourses.slice(startIndex, startIndex + itemsPerPage);
-  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
-
-  return (
-    <div>
-      <ToastContainer />
-      <div className="course-area-start rts-section-gap">
-        <div className="container px-4 sm:px-6 lg:px-8">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
-                <div className="title-area-left-style">
-                  <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
-                    <div className="flex items-center justify-center w-10 text-white h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white  text-xl animate-pulse"></i>
-                    </div>
-                    <span  className="text-white  uppercase text-lg">
-                      Khóa học
-                    </span>
-                  </div>
-                  <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    <strong>Các khóa học bạn đang học</strong>
-                    <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
-                      Đừng bỏ lỡ cơ hội học tập tốt nhất
-                    </p>
-                  </h2>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
-            <div className="portfolio_wrap">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt--30">
-                {paginatedCourses.map((item) => {
-                  const averageRating =
-                    item.danhgia && item.danhgia.length > 0
-                      ? item.danhgia.reduce((acc, rating) => acc + parseInt(rating.danhgia, 10), 0) /
-                      item.danhgia.length
-                      : 0;
-
-                  return (
-                    <ProductStudent
-                      key={item.id}
-                      id={item.id}
-                      gia={item.gia}
-                      giamgia={item.giamgia}
-                      ten={item.ten}
-                      hinh={item.hinh}
-                      chude={item.chude}
-                      giangvien={item.giangvien}
-                      baihocs={item.baihoc1?.length}
-                      PhanTram={item.TongTongHoanthanhphantram}
-                      tieptuchoc={tieptuchoc}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-            <Box display="flex" justifyContent="center">
-              <ButtonGroup display="flex" flexDirection="row" spacing="2">
-                {[...Array(totalPages).keys()].map((page) => (
-                  <Button
-                    key={page}
-                    className={`btn ${page + 1 === currentPage ? "btn-primary" : "btn-secondary"}`}
-                    style={{
-                      outline: "none", 
-                      border: "none",
-                      backgroundColor: page + 1 === currentPage ? "#C71585" : "",
-                      color: page + 1 === currentPage ? "#FFFFFF" : "",
-                      borderColor: page + 1 === currentPage ? "teal.500" : "gray.500",
-                      borderWidth: "1px",
-                      display: "inline-flex",
-                      margin: "0 4px"
-                    }}
-                    onClick={() => handlePageChange(page + 1)}
-                  >
-                    {page + 1}
-                  </Button>
-                ))}
-              </ButtonGroup>
-            </Box>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+export const Coursefree = () => {
+  // Implementation for free courses
 };
 
-export { OutstandingCourse, CourseNew, Courseseal, Coursefree, KhoaHocDangHocDay };
+export const KhoaHocDangHocDay = () => {
+  // Implementation for ongoing courses
+};

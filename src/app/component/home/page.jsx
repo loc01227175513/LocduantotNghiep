@@ -13,7 +13,7 @@ import {
 import { KhoaHocDangHoc } from "../../../service/dashbordStuden/Dashboard-service";
 import { Dashboard } from "@/service/dashbordStuden/Dashboard-service";
 import
-SaleComponent
+ SaleComponent
   from "../course/SaleComponent";
 import HorizontalScrollImages from "../course/Slider";
 import { NextCategory } from "../category/category.component";
