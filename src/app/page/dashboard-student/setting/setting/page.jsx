@@ -25,12 +25,12 @@ const Page = () => {
                 background: 'white',
                 borderRadius: '16px',
                 padding: '2rem',
-                boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)',
+                boxShadow: '0 5px 30px rgba(0,0,0,0.05)',
             }}>
                 <h5 className='text-black text-3xl p-3 font-bold'>Cài đặt</h5>
                 <ul className="nav nav-pills mb-4 tab-buttons" style={{
                     gap: '1rem',
-                    borderBottom: '1px solid #e5e7eb',
+                    borderBottom: '1px solid rgb(251, 207, 232)', // pink-200
                     paddingBottom: '1rem',
                 }}>
                     {[
@@ -49,8 +49,18 @@ const Page = () => {
                                     alignItems: 'center',
                                     gap: '0.5rem',
                                     transition: 'all 0.3s ease',
-                                    background: view === tab.id ? ' #32ADE6' : 'transparent',
+                                    background: view === tab.id ? 'rgb(190, 24, 93)' : 'transparent', // pink-700
                                     color: view === tab.id ? 'white' : '#64748b',
+                                }}
+                                onMouseOver={(e) => {
+                                    if (view !== tab.id) {
+                                        e.currentTarget.style.background = 'rgb(251, 207, 232)';
+                                    }
+                                }}
+                                onMouseOut={(e) => {
+                                    if (view !== tab.id) {
+                                        e.currentTarget.style.background = 'transparent';
+                                    }
                                 }}
                                 onClick={() => setView(tab.id)}
                             >

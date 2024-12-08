@@ -193,8 +193,8 @@ export default function Quanlykhoahoc() {
                         </section>
                       </div>
                     </div>
-                    <div className="flex justify-center m-4">
-                      <button className="px-8 w-32 text-xl font-bold text-white rounded-lg bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] hover:from-[#ff6b6b] hover:to-[#1e3c72] transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <div className="flex justify-center m-4 ">
+                      <button className="px-8  text-xl font-medium p-2  border border-white text-white rounded-lg bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 hover:from-pink-700 hover:to-pink-500  transition-all duration-300 transform hover:scale-105 shadow-lg">
                         Xác Nhận
                       </button>
                     </div>

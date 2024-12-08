@@ -397,10 +397,12 @@ function TrangDich() {
                             src={imageUrl}
                             alt="Course preview"
                             className={`
-                              w-full h-auto rounded-lg 
+                              w-full h-[500px] rounded-lg 
                               border-2 border-purple-200/50
                               transition-all duration-700
                               group-hover:scale-110
+                              justify-center
+                              
                               relative z-20
                             `}
                             loading="lazy"

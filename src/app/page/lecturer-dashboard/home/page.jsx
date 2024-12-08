@@ -103,11 +103,12 @@ const KhoaHocDangKyCss = `
   }
 
   .counter {
-    background: linear-gradient(45deg, #2b2d42, #4361ee);
+    background:  black;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: bold;
     font-size: 1.8rem;
+    color: black;
   }
 
   .single-dashboard-card p {
@@ -408,7 +409,7 @@ export default function Homedashboardlecturer() {
               <div className="col-12">
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <h5 className="mb-0 font-bold text-3xl text-gray-800">Các khóa học của tôi</h5>
-                  <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-gradient-to-r from-[#ff6b6b] to-[#ff9a9a] text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl shadow-md">
+                  <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl shadow-md">
                     Xem tất cả
                   </Link>
                 </div>
@@ -432,7 +433,7 @@ export default function Homedashboardlecturer() {
                                     {item.ten}
                                   </h6>
                                   <span
-                                    className={`badge ${item.trangthai === 'Hoàn thành' ? 'bg-green-500 text-white' : item.trangthai === 'notyet' ? 'bg-red-500 text-white' : 'bg-[#ff6b6b] text-white'
+                                    className={`badge ${item.trangthai === 'Hoàn thành' ? 'bg-green-500 text-white' : item.trangthai === 'notyet' ? 'bg-red-500 text-white' : ' text-pink-700'
                                       } text-lg px-4 py-1.5 rounded-full whitespace-nowrap`}
                                   >
                                     {item.trangthai}
@@ -440,32 +441,7 @@ export default function Homedashboardlecturer() {
                                 </div>
                               </div>
 
-                              {/* {Array.isArray(item.giangVien) ? (
-                        item.giangVien.map((gianVien, index) => (
-                          <div key={index} className="flex items-center">
-                            <Image
-                              width={32}
-                              height={32}
-                              className="rounded-full border border-gray-200 object-cover"
-                              src={validImageSrc(gianVien.hinh)}
-                              alt={gianVien.ten || 'Giảng viên'}
-                            />
-                            <span className="text-sm text-gray-600 line-clamp-1 ml-2">
-                              {gianVien.ten || 'Tên giảng viên'}
-                            </span>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="flex items-center">
-                          <Image
-                            width={32}
-                            height={32}
-                            className="rounded-full border border-gray-200 object-cover"
-                            src={validImageSrc(item.giangVien.hinh)}
-                            alt={item.giangVien.ten || 'Giảng viên'}
-                          />
-                        </div>
-                      )} */}
+                             
                             </div>
                           </div>
                         </Link>
@@ -558,24 +534,24 @@ const DoanhThuChart = () => {
   if (loading) {
     return (
       <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#1a202c', borderRadius: '8px' }}>
-        <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
-          Thống Kê Doanh Thu theo Thời Gian
-        </Typography>
-        <Typography sx={{ color: '#ffffff' }}>Loading...</Typography>
+      <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
+        Thống Kê Doanh Thu theo Thời Gian
+      </Typography>
+      <Typography sx={{ color: '#ffffff' }}>Loading...</Typography>
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#1a202c', borderRadius: '8px' }}>
-        <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
-          Thống Kê Doanh Thu theo Thời Gian
-        </Typography>
-        <Typography color="error">{error}</Typography>
-        <button onClick={handleReload} className="mt-4 px-4 py-2 bg-[#ff6b6b] text-white rounded">
-          Reload Data
-        </button>
+      <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#ffffff', borderRadius: '8px' }}>
+      <Typography variant="h6" gutterBottom sx={{ color: '#000000' }}>
+        Thống Kê Doanh Thu theo Thời Gian
+      </Typography>
+      <Typography color="error">{error}</Typography>
+      <button onClick={handleReload} className="mt-4 px-4 py-2 bg-[#000000] text-white rounded">
+        Reload Data
+      </button>
       </Box>
     );
   }

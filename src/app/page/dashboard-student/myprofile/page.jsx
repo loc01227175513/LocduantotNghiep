@@ -37,32 +37,31 @@ export default function Myprofilestudent() {
   console.log(userData);
 
   return (
-    <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas">
+    <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas" style={{fontFamily: 'Helvetica Neue, sans-serif'}}>
       <div className="right-sidebar-my-profile-dash theiaStickySidebar pt--30">
-        <p className="text-black font-bold text-left text-3xl">Hồ sơ của tôi</p>
+        <p className="text-[#222222] font-semibold text-left text-[1.375rem] leading-7 mb-4">Hồ sơ của tôi</p>
        <div className="p-4">
-       <div className="my-single-portfolio-dashed  mt-6">
-          <div className="name">Ngày đăng ký</div>
-          <div className="value "><p className="p-0 m-0 ">{calculateMinutesDifference(userData.created_at)}</p></div>
+       <div className="my-single-portfolio-dashed mt-6">
+          <div className="name text-[#555555] text-xl">Ngày đăng ký</div>
+          <div className="value"><p className="p-0 m-0 text-[#222222] text-xl">{calculateMinutesDifference(userData.created_at)}</p></div>
         </div>
 
-        <div className="my-single-portfolio-dashed ">
-          <div className="name">Tên người dùng:</div>
-          <div className="value"><p>{userData.ten}</p></div>
+        <div className="my-single-portfolio-dashed">
+          <div className="name text-[#555555] text-xl">Tên người dùng:</div>
+          <div className="value"><p className="text-[#222222] text-xl">{userData.ten}</p></div>
         </div>
 
-        <div className="my-single-portfolio-dashed ">
-          <div className="name">E-mail:</div>
-          <div className="value"><p>{userData.email}</p></div>
+        <div className="my-single-portfolio-dashed">
+          <div className="name text-[#555555] text-xl">E-mail:</div>
+          <div className="value"><p className="text-[#222222] text-xl">{userData.email}</p></div>
         </div>
 
-        <div className="my-single-portfolio-dashed ">
-          <div className="name">Số điện thoại:</div>
-          <div className="value"><p>{userData.dienthoai ? userData.dienthoai : "chưa có"}</p></div>
+        <div className="my-single-portfolio-dashed">
+          <div className="name text-[#555555] text-xl">Số điện thoại:</div>
+          <div className="value"><p className="text-[#222222] text-xl">{userData.dienthoai ? userData.dienthoai : "chưa có"}</p></div>
         </div>
        </div>
       </div>
-
     </div>
   );
 }

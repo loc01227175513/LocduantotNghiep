@@ -12,6 +12,50 @@ import { Categoryheader } from "../category/category.component";
 import { LayThongBao } from "@/service/ThongBao/ThongBao";
 import Link from "next/link";
 import { use } from "@/assets/js/plugins/swiper";
+
+const menuItems = [
+  {
+    href: "/",
+    icon: "fas fa-home",
+    label: "Trang chủ"
+  },
+  {
+    href: "/page/Cours-Filter",
+    icon: "fas fa-graduation-cap",
+    label: "Khóa học"
+  },
+  {
+    href: "/page/courseLoTrinh",
+    icon: "fas fa-road",
+    label: "Lộ trình khóa học"
+  },
+  {
+    href: "/page/AllGiangVien",
+    icon: "fas fa-chalkboard-teacher",
+    label: "Giảng viên nổi bật"
+  },
+  {
+    href: "/page/dashboard-student",
+    icon: "fas fa-user-graduate",
+    label: "Trang cá nhân"
+  },
+  {
+    href: "/page/cart",
+    icon: "fas fa-shopping-cart",
+    label: "Giỏ hàng"
+  },
+  {
+    href: "/page/KhuyenMai",
+    icon: "fas fa-gift",
+    label: "Khuyến mãi"
+  },
+  {
+    href: "/page/NhanTin",
+    icon: "fas fa-comments",
+    label: "Nhắn tin"
+  }
+];
+
 const DropdownMenu = () => {
   const [langOpen, setLangOpen] = useState(false);
   const [currencyOpen, setCurrencyOpen] = useState(false);

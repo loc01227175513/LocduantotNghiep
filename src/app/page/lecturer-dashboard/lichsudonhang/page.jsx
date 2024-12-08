@@ -61,8 +61,8 @@ export default function Khoahocdanghoc() {
                   <button
                     className={`px-4 py-1.5 rounded-full text-xl font-medium transition-all duration-200 min-w-[88px] ${
                       selectedTab === "day"
-                        ? "bg-[#ff6b6b] text-white"
-                        : "hover:bg-[#ff6b6b] hover:text-white text-[#161823]"
+                        ? "bg-pink-700 text-white"
+                        : "hover:bg-pink-400 hover:text-white text-[#161823]"
                     }`}
                     onClick={() => handleTabChange("day")}
                   >
@@ -71,8 +71,8 @@ export default function Khoahocdanghoc() {
                   <button
                     className={`px-4 py-1.5 rounded-full text-xl font-medium transition-all duration-200 min-w-[88px] ${
                       selectedTab === "month"
-                        ? "bg-[#ff6b6b] text-white"
-                        : "hover:bg-[#ff6b6b] hover:text-white text-[#161823]"
+                        ? "bg-pink-700 text-white"
+                        : "hover:bg-pink-400 hover:text-white text-[#161823]"
                     }`}
                     onClick={() => handleTabChange("month")}
                   >
@@ -81,8 +81,8 @@ export default function Khoahocdanghoc() {
                   <button
                     className={`px-4 py-1.5 rounded-full text-xl font-medium transition-all duration-200 min-w-[88px] ${
                       selectedTab === "year"
-                        ? "bg-[#ff6b6b] text-white"
-                        : "hover:bg-[#ff6b6b] hover:text-white text-[#161823]"
+                        ? "bg-pink-700 text-white"
+                        : "hover:bg-pink-400 hover:text-white text-[#161823]"
                     }`}
                     onClick={() => handleTabChange("year")}
                   >
@@ -91,8 +91,8 @@ export default function Khoahocdanghoc() {
                   <button
                     className={`px-4 py-1.5 rounded-full text-xl font-medium transition-all duration-200 min-w-[88px] ${
                       selectedTab === "all"
-                        ? "bg-[#ff6b6b] text-white"
-                        : "hover:bg-[#ff6b6b] hover:text-white text-[#161823]"
+                        ? "bg-pink-700 text-white"
+                        : "hover:bg-pink-400 hover:text-white text-[#161823]"
                     }`}
                     onClick={() => handleTabChange("all")}
                   >
@@ -147,6 +147,30 @@ export default function Khoahocdanghoc() {
       </div>
 
       <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+        .table td, 
+        .table th,
+        .badge,
+        .btn,
+        input,
+        h4,
+        button {
+          font-family: 'Roboto', sans-serif;
+        }
+
+        .table td {
+          font-weight: 400;
+        }
+
+        h4 {
+          font-weight: 500;
+        }
+
+        button {
+          font-weight: 400;
+        }
+
         .table td {
           padding: 1rem;
           white-space: normal;

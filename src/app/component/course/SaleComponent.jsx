@@ -304,8 +304,8 @@ export default function SaleComponent() {
                                                 />
                                             </Link>
                                             <div className="bestseller-product-actions mt-2 flex justify-end absolute top-28 right-4">
-                                                <button className="bestseller-icon-favorite text-white hover:text-red-500" onClick={() => handleYeuThich(item.khoahoc.id)}>
-                                                    <span role="img" aria-label="bookmark" className="flex items-center justify-center w-14 h-14 rounded-full bg-transparent border-2  hover:border-red-500">
+                                                <button className="bestseller-icon-favorite text-white hover:text-pink-700 hover:bg-pink-700  hover:rounded-full " onClick={() => handleYeuThich(item.khoahoc.id)}>
+                                                    <span role="img" aria-label="bookmark" className="flex items-center justify-center w-14 h-14 rounded-full  bg-white/15">
                                                         <i className="fa-sharp fa-light fa-bookmark text-lg"></i>
                                                     </span>
                                                 </button>

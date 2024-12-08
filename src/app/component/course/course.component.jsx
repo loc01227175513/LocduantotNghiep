@@ -275,7 +275,7 @@ const CourseNew = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
@@ -451,7 +451,7 @@ const Courseseal = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
@@ -626,7 +626,7 @@ const Coursefree = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="title-between-area bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+              <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
@@ -788,7 +788,7 @@ const KhoaHocDangHocDay = () => {
           </div>
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal chialaiflex">
+              <div className="filter mt--30 portfolio-feed personal chialaiflex grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"> {/* Updated to display 5 items per row */}
                 {paginatedCourses.map((item) => {
                   const averageRating =
                     item.danhgia && item.danhgia.length > 0

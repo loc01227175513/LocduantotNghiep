@@ -52,111 +52,85 @@ export default function Homedashboardstudent() {
   console.log(data);
 
   return (
-    <div className="overflow-y-scroll col-lg-9 h-lvh">
-      <div className="right-sidebar-dashboard">
-        <div className="row g-5">
-          <div className="col-lg-4 col-md-6 col-sm-6 col-12">
-            {/* single dashboard-card */}
-            <div className="single-dashboard-card">
-              <div className="icon w-10" >
-              <i className="fal fa-book-open"  style={{fontSize: "20px"}}/>
-              </div>
-              <h5 className="title">
-                <span className="counter">{data.length}</span>
-              </h5>
-              <p>Các khóa học ghi danh</p>
-            </div>
-            {/* single dashboard-card end */}
+    <div className="p-8 col-lg-9 font-['Helvetica_Neue']">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+        {/* Enrolled Courses Card */}
+        <div className="bg-white p-8 rounded-xl shadow-lg">
+          <div className="flex items-center justify-between mb-4">
+            <i className="fal fa-book-open text-blue-500 text-4xl"/>
+            <h3 className="font-bold text-[24px] tracking-tight">{data.length}</h3>
           </div>
-          <div className="col-lg-4 col-md-6 col-sm-6 col-12">
-            {/* single dashboard-card */}
-            <div className="single-dashboard-card">
-              <div className="icon">
-                <i className="fa-regular fa-graduation-cap "  style={{fontSize: "20px"}}/>
-              </div>
-              <h5 className="title">
-                <span className="counter">
-                  {data.reduce(
-                    (count, item) =>
-                      count +
-                      item.khoahocs.filter(
-                        (khoahoc) => khoahoc.trangthai === "active"
-                      ).length,
-                    0
-                  )}
-                </span>
-              </h5>
-              <p>Các khóa học tích cực</p>
-            </div>
-            {/* single dashboard-card end */}
-          </div>
-          <div className="col-lg-4 col-md-6 col-sm-6 col-12">
-            {/* single dashboard-card */}
-            <div className="single-dashboard-card">
-              <div className="icon">
-                <i className="fa-light fa-trophy" style={{fontSize: "20px"}}/>
-              </div>
-              <h5 className="title">
-                <span className="counter">{khoahocdahoc.length}</span>
-              </h5>
-              <p>Hoàn thành các khóa học</p>
-            </div>
-            {/* single dashboard-card end */}
-          </div>
+          <p className="text-gray-600 text-[14px] font-normal">Khóa học ghi danh</p>
         </div>
-        <div className="row mt--40">
-          <div className="col-lg-12">
-            {/* in progress course area */}
-            <div className="in-progress-course-wrapper title-between-dashboard mb--10">
-              <h5 className="title text-xl" >Các khóa học của tôi</h5>
-              <a href="#" className="more" onClick={(e) => { e.preventDefault(); setShowAll(!showAll); }}>
-                {showAll ? 'Ẩn bớt' : 'Xem tất cả'}
-              </a>
-            </div>
-            {/* in progress course area end */}
-            {/* my course enroll wrapper */}
-            <div className="my-course-enroll-wrapper-board">
-              {/* single course inroll */}
-              <div className="single-course-inroll-board head">
-                <div className="name">
-                  <p> Khóa học của tôi</p>
-                </div>
-                <div className="enroll">
-                  <p> Giảng viên </p>
-                </div>
-                <div className="rating">
-                  <p> Ngày đăng ký </p>
-                </div>
-              </div>
-              {/* single course inroll end */}
-              {/* single course inroll */}
-              {data.slice(0, showAll ? data.length : 4).map((item, itemIndex) => (
-                item.khoahocs.map((khoahoc, khoahocIndex) => (
-                  <div
-                    key={`${itemIndex}-${khoahocIndex}`}
-                    className="single-course-inroll-board"
-                  >
-                    <div className="name">
-                      <p>{khoahoc.ten}</p>
-                    </div>
-                    <div className="enroll">
-                      <p>{khoahoc.tenGiangVien} </p>
-                    </div>
-                    <div className="rating">
-                      <p>{calculateMinutesDifference(khoahoc.
-                        updated_at)
-                      }</p>
-                    </div>
-                  </div>
-                ))
-              ))}
-              {/* single course inroll end */}
-            </div>
-            {/* my course enroll wrapper end */}
+
+        {/* Active Courses Card */}
+        <div className="bg-white p-8 rounded-xl shadow-lg">
+          <div className="flex items-center justify-between mb-4">
+            <i className="fa-regular fa-graduation-cap text-green-500 text-4xl"/>
+            <h3 className="font-bold text-4xl">
+              {data.reduce(
+                (count, item) =>
+                  count +
+                  item.khoahocs.filter(
+                    (khoahoc) => khoahoc.trangthai === "active"
+                  ).length,
+                0
+              )}
+            </h3>
           </div>
+          <p className="text-gray-600 text-[14px] font-normal">Khóa học tích cực</p>
+        </div>
+
+        {/* Completed Courses Card */}
+        <div className="bg-white p-8 rounded-xl shadow-lg">
+          <div className="flex items-center justify-between mb-4">
+            <i className="fa-light fa-trophy text-yellow-500 text-4xl"/>
+            <h3 className="font-bold text-4xl">{khoahocdahoc.length}</h3>
+          </div>
+          <p className="text-gray-600 text-[14px] font-normal">Khóa học hoàn thành</p>
         </div>
       </div>
 
+      {/* Course List */}
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-[20px] font-medium tracking-tight">Các khóa học của tôi</h2>
+          <button 
+            onClick={() => setShowAll(!showAll)}
+            className="px-4 py-2 text-blue-500 w-40 hover:text-blue-700 font-medium text-[14px] hover:bg-blue-50 rounded-lg transition-colors"
+          >
+            {showAll ? 'Ẩn bớt' : 'Xem tất cả'}
+          </button>
+        </div>
+
+        {/* Course Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full table-fixed">
+            <thead>
+              <tr className="border-b-2">
+                <th className="text-left py-5 px-6 w-2/5 text-[16px] font-medium">Khóa học</th>
+                <th className="text-left py-5 px-6 w-2/5 text-[16px] font-medium">Giảng viên</th>
+                <th className="text-left py-5 px-6 w-1/5 text-[16px] font-medium">Ngày đăng ký</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.slice(0, showAll ? data.length : 4).map((item, itemIndex) => (
+                item.khoahocs.map((khoahoc, khoahocIndex) => (
+                  <tr 
+                    key={`${itemIndex}-${khoahocIndex}`} 
+                    className="border-b hover:bg-gray-50 transition-colors"
+                  >
+                    <td className="py-5 px-6 text-[14px]">{khoahoc.ten}</td>
+                    <td className="py-5 px-6 text-[14px]">{khoahoc.tenGiangVien}</td>
+                    <td className="py-5 px-6 text-[14px]">{calculateMinutesDifference(khoahoc.updated_at)}</td>
+                  </tr>
+                ))
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

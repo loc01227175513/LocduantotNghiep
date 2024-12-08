@@ -35,8 +35,8 @@ export default function Homecomponent() {
   useEffect(() => {
     AOS.init({
       duration: 800,
-      once: false, // Animation will repeat on scroll
-      mirror: true, // Elements will animate out while scrolling past them
+      once: true,
+      mirror: false,
       easing: "ease-in-out",
       anchorPlacement: "center-center",
       offset: 100,
@@ -71,43 +71,43 @@ export default function Homecomponent() {
   );
 
   return (
-    <div data-aos="zoom-in" data-aos-offset="200" data-aos-duration="1500">
-      <div className="mt-60 ">
+    <div>
+      <div className="mt-60">
         {isInactiveLongTime ? (
-          <div data-aos="zoom-in">
+          <div data-aos="fade-up">
             <BannerUser />
           </div>
         ) : (
-          <div data-aos="zoom-in">
+          <div data-aos="fade-up">
             <Banner />
           </div>
         )}
-        <div data-aos="zoom-in ">
+        <div data-aos="fade-up">
           <NextCategory />
         </div>
-        <div data-aos="zoom-in ">
+        <div data-aos="fade-up">
           <SaleComponent />
         </div>
         {khoaHocDangHoc1.length ? (
-          <div data-aos="zoom-in">
+          <div data-aos="fade-up">
             <KhoaHocDangHocDay />
           </div>
         ) : null}
         {KhoaHocDaThanhToan.length ? (
-          <div data-aos="zoom-in">
+          <div data-aos="fade-up">
             <CourseDeXuat />
           </div>
         ) : null}
 
 
-        <div data-aos="zoom-in">
+        <div data-aos="fade-up">
           <OutstandingCourse />
         </div>
 
-        <div data-aos="zoom-in">
+        <div data-aos="fade-up">
           <div
             className="why-choose-us bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 bg-choose-us-one bg_image rts-section-gap shape-move"
-            data-aos="zoom-in"
+            data-aos="fade-up"
           >
             <div className="container">
               <div className="row align-items-start">
@@ -215,7 +215,7 @@ export default function Homecomponent() {
                       <div
                         key={index}
                         className="reason-card"
-                        data-aos="zoom-in"
+                        data-aos="fade-up"
                         data-aos-delay={index * 100}
                       >
                         <div className="flex items-center justify-center mx-auto w-24 h-24 rounded-md   transition-all duration-300  ">
@@ -269,13 +269,13 @@ export default function Homecomponent() {
             </div>
           </div>
         </div>
-        <div data-aos="zoom-in" id="khoahocmoi">
+        <div data-aos="fade-up" id="khoahocmoi">
           <CourseNew />
         </div>
-        <div data-aos="zoom-in">
-          <div className="fun-facts-area bg-gradient" data-aos="zoom-in">
+        <div data-aos="fade-up">
+          <div className="fun-facts-area bg-gradient" data-aos="fade-up">
             {/* Each fact item */}
-            <div className="fact-item" data-aos="zoom-in" data-aos-delay="100">
+            <div className="fact-item" data-aos="fade-up" data-aos-delay="100">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12">
@@ -326,18 +326,18 @@ export default function Homecomponent() {
             </div>
           </div>
         </div>
-        <div data-aos="zoom-in">
+        <div data-aos="fade-up">
           <Courseseal />
         </div>
 
-        <div data-aos="zoom-in">
+        <div data-aos="fade-up">
           <Coursefree />
         </div>
         <br />
         <br />
         <br />
         <br />
-        <div data-aos="zoom-in">
+        <div data-aos="fade-up">
           {/* feedback area start */}
           <div className="rts-feedback-area">
             <div className="rts-feedback-area rts-section-gap bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 shape-move small:mb-16 ">
@@ -396,7 +396,7 @@ export default function Homecomponent() {
         <br />
         <br />
         <br />
-        <div data-aos="zoom-in" className="m-10">
+        <div data-aos="fade-up" className="m-10">
           <div className="container">
             <HorizontalScrollImages />
           </div>

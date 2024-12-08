@@ -194,7 +194,7 @@ const NavPhai = ({
                             {course.giamgia.toLocaleString('vi-VN')}
                             <span className="text-xl">VNĐ</span>
                           </h3>
-                          <span className="price-discount text-2xl text-red-500" style={{marginTop: "-10px"}}>
+                          <span className="price-discount text-2xl text-red-500" style={{ marginTop: "-10px" }}>
                             -{((course.gia - course.giamgia) / course.gia * 100).toFixed(2)}%
                           </span>
                         </>
@@ -218,7 +218,7 @@ const NavPhai = ({
                         </button>
                       </Link>
                     ) : course.gia === 0 || course.giamgia === 0 ? (
-                      <button 
+                      <button
                         onClick={handleThanhToanKhoaHocFree}
                         disabled={buttonStates.freeCourse.disabled}
                         className={`rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1 
@@ -241,7 +241,7 @@ const NavPhai = ({
                       <button className="rts-btn">Bản Demo</button>
                     ) : (
                       <>
-                        <button 
+                        <button
                           onClick={handleBuyNow}
                           disabled={buttonStates.buyNow.disabled}
                           className={`rts-btn btn-border text-xl text-pink-700 !border-pink-700 !border-1
@@ -254,7 +254,7 @@ const NavPhai = ({
                             </span>
                           ) : "Mua ngay"}
                         </button>
-                        <button 
+                        <button
                           onClick={handleAddCart}
                           disabled={buttonStates.addCart.disabled}
                           className={`mt-10 flex justify-center text-xl !border-pink-700 !border-1
@@ -391,7 +391,7 @@ export default function Coursedetailcomponent() {
   useEffect(() => {
     const loadCourseDetails = async () => {
       if (!id) return;
-      
+
       setLoading(true);
       try {
         const res = await CourseDetails(id);
@@ -673,7 +673,7 @@ export default function Coursedetailcomponent() {
                     }}
                   >
                     {course.ten}
-                    
+
                   </h1>
                   <div
                     className="rating-area"
@@ -735,8 +735,7 @@ export default function Coursedetailcomponent() {
                       <span style={{ fontSize: "14px" }}>
                         Cập nhật lần cuối:{" "}
                         {course?.created_at &&
-                          `${new Date(course.created_at).getDate()}/${
-                            new Date(course.created_at).getMonth() + 1
+                          `${new Date(course.created_at).getDate()}/${new Date(course.created_at).getMonth() + 1
                           }/${new Date(course.created_at).getFullYear()}`}
                       </span>
                     </div>
@@ -855,11 +854,11 @@ export default function Coursedetailcomponent() {
                     ) : khoahoclienquan?.length > 0 ? (
                       khoahoclienquan.map((course, index) => {
                         if (!course) return null;
-                        
+
                         const averageRating = course.danhgia && course.danhgia.length > 0
-                          ? course.danhgia.reduce((acc, rating) => 
-                              acc + parseInt(rating.danhgia, 10), 0
-                            ) / course.danhgia.length
+                          ? course.danhgia.reduce((acc, rating) =>
+                            acc + parseInt(rating.danhgia, 10), 0
+                          ) / course.danhgia.length
                           : 0;
 
                         return (
@@ -879,9 +878,8 @@ export default function Coursedetailcomponent() {
                                     alt={course?.ten || 'Course thumbnail'}
                                     width={500}
                                     height={300}
-                                    className={`object-cover w-full h-full ${
-                                      imageLoadingStates[course.id] === false ? 'block' : 'hidden'
-                                    }`}
+                                    className={`object-cover w-full h-full ${imageLoadingStates[course.id] === false ? 'block' : 'hidden'
+                                      }`}
                                     onLoad={() => handleImageLoad(course.id)}
                                     onError={() => handleImageLoad(course.id)}
                                     priority={false}
@@ -900,7 +898,7 @@ export default function Coursedetailcomponent() {
                                       {Math.round(
                                         ((course.gia - course.giamgia) /
                                           course.gia) *
-                                          100
+                                        100
                                       )}
                                       %
                                     </span>
@@ -920,7 +918,10 @@ export default function Coursedetailcomponent() {
                                   href={`/page/course-detail?id=${course.id}`}
                                   className="title-link"
                                 >
-                                  <h5 className="title text-2xl font-medium hover:text-primary-600 transition-all duration-300">
+                                  <h5
+                                    className="title text-2xl font-medium hover:text-primary-600 transition-all duration-300 truncate whitespace-nowrap overflow-hidden"
+                                    title={course.ten}
+                                  >
                                     <strong>{course.ten}</strong>
                                   </h5>
                                 </Link>
@@ -978,8 +979,8 @@ export default function Coursedetailcomponent() {
                                   </div>
 
                                   <div className="rating-area text-lg p-2 flex flex-row items-center">
-                                    <FaStar 
-                                      className="text-yellow-400 w-5 h-5" 
+                                    <FaStar
+                                      className="text-yellow-400 w-5 h-5"
                                       aria-label="Rating Star"
                                     />
                                     <span
@@ -993,7 +994,7 @@ export default function Coursedetailcomponent() {
                                 <div className="course-top relative mt-5">
                                   <div className="price">
                                     {course.gia === 0 ||
-                                    course.giamgia === 0 ? (
+                                      course.giamgia === 0 ? (
                                       <span className="text-red-500 font-bold text-2xl">
                                         Miễn Phí
                                       </span>

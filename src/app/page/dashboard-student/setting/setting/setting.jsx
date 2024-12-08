@@ -90,7 +90,7 @@ const Profile = () => {
       background: 'white',
       boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)'
     }}>
-      <h3 className='text-[#32ADE6] font-bold text-3xl'>Cài đặt thông tin</h3>
+      <h3 className='text-black font-bold text-3xl'>Cài đặt thông tin</h3>
 
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
         {formData.hinh && (
@@ -167,22 +167,34 @@ const Profile = () => {
           </div>
         ))}
 
-        <button
-          type="submit"
-          style={{
-            marginTop: '1rem',
-            padding: '0.75rem 1.5rem',
-            background: '#32ADE6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-            fontWeight: '500'
-          }}
-        >
-          Cập nhật thông tin
-        </button>
+<button
+    type="submit"
+    style={{
+        marginTop: '1rem',
+        padding: '0.75rem 1.5rem',
+        background: 'rgb(190, 24, 93)',  // pink-700
+        color: 'white',
+        border: 'none',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        transition: 'all 0.3s ease',
+        fontWeight: '500',
+        '&:hover': {
+            transform: 'translateY(-2px)',
+            boxShadow: '0 4px 12px rgba(190, 24, 93, 0.2)'
+        }
+    }}
+    onMouseOver={(e) => {
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 4px 12px rgba(190, 24, 93, 0.2)';
+    }}
+    onMouseOut={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = 'none';
+    }}
+>
+    Cập nhật thông tin
+</button>
       </form>
       <style jsx>{`
       .profile-form {
@@ -297,7 +309,7 @@ const MangXaHoi = () => {
       background: 'white',
       boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)'
     }}>
-      <h3 className='text-3xl text-[#32ADE6] font-bold'>Mạng xã hội</h3>
+      <h3 className='text-3xl text-black font-bold'>Mạng xã hội</h3>
 
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }} className='mt-4'>
         {Object.entries(socialIcons).map(([platform, { icon, color }]) => (
@@ -373,26 +385,34 @@ const MangXaHoi = () => {
           </div>
         ))}
 
-        <button
-          type="submit"
-          style={{
-            marginTop: '1rem',
-            padding: '1rem 2rem',
-            background: '#32ADE6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontWeight: '500',
-            transition: 'all 0.3s ease',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.5rem'
-          }}
-        >
-          Cập nhật
-        </button>
+<button
+    type="submit"
+    style={{
+        marginTop: '1rem',
+        padding: '1rem 2rem',
+        background: 'rgb(190, 24, 93)', // Changed from #32ADE6 to pink-700
+        color: 'white',
+        border: 'none',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        fontWeight: '500',
+        transition: 'all 0.3s ease',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '0.5rem'
+    }}
+    onMouseOver={(e) => {
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 4px 12px rgba(190, 24, 93, 0.2)';
+    }}
+    onMouseOut={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = 'none';
+    }}
+>
+    Cập nhật
+</button>
       </form>
       <style jsx>{`@keyframes slideIn {
   from {
@@ -474,7 +494,7 @@ const Password = () => {
       background: 'white',
       boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)'
     }}>
-      <h3 className='text-3xl font-bold text-[#32ADE6] flex gap-2'>
+      <h3 className='text-3xl font-bold text-black flex gap-2'>
         <FaLock /> Cài đặt mật khẩu
       </h3>
 
@@ -531,26 +551,34 @@ const Password = () => {
           </div>
         ))}
 
-        <button
-          type="submit"
-          style={{
-            marginTop: '1rem',
-            padding: '0.75rem 1.5rem',
-            background: '#32ADE6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.5rem',
-            fontWeight: '500'
-          }}
-        >
-          <FaLock /> Cập nhật mật khẩu
-        </button>
+<button
+    type="submit"
+    style={{
+        marginTop: '1rem',
+        padding: '0.75rem 1.5rem',
+        background: 'rgb(190, 24, 93)', // Changed to pink-700
+        color: 'white',
+        border: 'none',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        transition: 'all 0.3s ease',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '0.5rem',
+        fontWeight: '500'
+    }}
+    onMouseOver={(e) => {
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 4px 12px rgba(190, 24, 93, 0.2)';
+    }}
+    onMouseOut={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = 'none';
+    }}
+>
+    <FaLock /> Cập nhật mật khẩu
+</button>
       </form>
     </div>
   );

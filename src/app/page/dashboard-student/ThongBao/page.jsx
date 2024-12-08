@@ -87,11 +87,11 @@ const Page = () => {
     <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas">
       <div className="right-sidebar-my-profile-dash theiaStickySidebar pt--30">
         <div className="container mx-auto px-6 py-8 max-w-7xl">
-          <h1 className="text-2xl font-serif font-bold mb-8">Thông báo.</h1>
+          <h1 className="text-2xl font-['Helvetica Neue',Helvetica,Arial,sans-serif] font-bold mb-8">Thông báo</h1>
           <div className="w-full space-y-6" data-module-id="activity-notifications">
             <div className="w-full" data-testid="activity-notifications-container">
               <div className="border-b border-gray-200">
-                <div className="py-4 text-lg">
+                <div className="py-4 text-lg font-['Helvetica Neue',Helvetica,Arial,sans-serif]">
                   {renderContent()}
                 </div>
               </div>

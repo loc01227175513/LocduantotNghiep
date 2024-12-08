@@ -37,19 +37,22 @@ const CourseDeXuat = () => {
         fetch("https://huuphuoc.id.vn/api/allkhoahoc")
             .then((response) => response.json())
             .then((data) => {
-                if (
-                    Array.isArray(khoaHocDaThanhToan) &&
-                    khoaHocDaThanhToan.length > 0 &&
-                    Array.isArray(khoaHocDaThanhToan[0].khoahocs)
-                ) {
-                    const filteredCourses = data.data.filter((course) =>
-                        khoaHocDaThanhToan[0].khoahocs.some(
-                            (item) => item.id_chude === course.id_chude
-                        )
+                // Check if we have paid courses data
+                if (khoaHocDaThanhToan?.khoahocs) {
+                    // Get list of categories from paid courses
+                    const paidCourseCategories = khoaHocDaThanhToan.khoahocs.map(
+                        course => course.id_chude
                     );
-                    setKhoaHoc(filteredCourses);
+
+                    // Filter courses that match the categories of paid courses
+                    const recommendedCourses = data.data.filter(course => 
+                        paidCourseCategories.includes(course.id_chude)
+                    );
+
+                    setKhoaHoc(recommendedCourses);
                 } else {
-                    setKhoaHoc([]);
+                    // If no paid courses, show all courses
+                    setKhoaHoc(data.data || []);
                 }
             })
             .catch((error) => {

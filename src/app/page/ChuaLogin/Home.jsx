@@ -256,7 +256,7 @@ const CourseArea = () => {
                 const data = await response.json();
                 const sortedCourses = data.data.sort((a, b) =>
                     b.dangky.length - a.dangky.length
-                ).slice(0, 4); // Changed to show 4 courses
+                ).slice(0, 6); // Changed to show 6 courses
                 setKhoaHoc(sortedCourses);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -357,7 +357,7 @@ const CourseArea = () => {
                                                         alt={course.ten}
                                                         className="w-full h-full object-cover opacity-75"
                                                     />
-                                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/90" />
+                                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black/90" />
                                                 </div>
 
                                                 {/* Content Overlay */}
@@ -431,7 +431,9 @@ const CourseArea = () => {
 
                                                         {/* Action Button */}
                                                         <button className="bg-gradient-to-r w-40 from-blue-900 via-pink-700 to-pink-700 hover:bg-pink-700 text-xl  text-white px-4 py-2 rounded-full font-medium transform hover:scale-105 transition-all duration-300 border border-white">
-                                                            Xem ngay
+                                                           <Link href={`/page/course-detail?id=${course.id}`}>
+                                                               Xem ngay
+                                                           </Link>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -519,170 +521,137 @@ const CourseArea = () => {
 
 const WhyChooseUs = () => {
     return (
-        <div
-        className="why-choose-us bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 bg-choose-us-one bg_image rts-section-gap shape-move"
-      
-      >
-        <div className="container">
-          <div className="row align-items-start ">
-            <div className="col-lg-5">
-              <div className="why-choose-us-area-image pb--50 ">
-                <Image
-                  width={300} // Thay đổi width thành 300
-                  height={200}
-                  className="one"
-                  src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218768/02_atsgze.jpg"
-                  alt="why-choose"
-                  style={{ height: "500px", width: "270px" }}
-                />
-                <div className="border-img">
-                  <Image
-                    width={400}
-                    height={200}
-                    className="two ml--20"
-                    src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218908/03_grf0on.jpg"
-                    alt="why-choose"
-                    style={{ height: "320px", width: "320px" }}
-                  />
-                </div>
-                <div className="circle-animation">
-                  <Link
-                    className="uni-circle-text uk-visible@m"
-                    href="#view_in_opensea"
-                  >
-                    <svg
-                      className="uni-circle-text-path uk-text-secondary uni-animation-spin"
-                      viewBox="0 0 100 100"
-                      width={150}
-                      height={150}
-                    >
-                      <defs>
-                        <path
-                          id="circle"
-                          d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-                        ></path>
-                      </defs>
-                      <text fontSize="10">
-                        <textPath xlinkHref="#circle">
-                          Nạp kiến thức - tương lai nghìn đô
-                        </textPath>
-                      </text>
-                    </svg>
-                    <i className="fa-regular fa-arrow-up-right" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-7 pl--45 pl_md--15 mt_md--50 pl_sm--15 pt_sm--50 ">
-              <div className="title-area-left-style mb-5">
-                <div className="pre-title d-flex align-items-center mb-3">
-                  <i className="mr-2 bi bi-lightbulb text-white animate-pulse text-xl" style={{ marginRight: "-5px" }}></i>
-                  <span className="text-white font-weight-bold text-xl">
-                    Tại sao chọn chúng tôi
-                  </span>
-                </div>
-                <h2 className="title text-white display-4 mb-4 text-5xl">
-                  Techstudent - Con đường dẫn đến{" "}
-                  <span className="text-white-500 font-medium text-5xl">
-                    sự xuất sắc
-                  </span>
-                </h2>
-                <p className="post-title text-white lead text-2xl">
-                  Chúng tôi đam mê giáo dục và tận tâm cung cấp các nguồn
-                  học tập chất lượng cao cho người học mọi lúc.
-                </p>
-              </div>
-
-              <div className="why-choose-grid flex flex-row flex-wrap gap-10 m-5">
-                {[
-                  {
-                    img: "01_s9m4hw.png",
-                    title: "Chất lượng hàng đầu",
-                    desc: "Đội ngũ giảng viên xuất sắc",
-                  },
-                  {
-                    img: "02_vnmc5y.png",
-                    title: "Học linh hoạt",
-                    desc: "Học mọi lúc, mọi nơi",
-                  },
-                  {
-                    img: "03_gqwcdw.png",
-                    title: "Hỗ trợ 24/7",
-                    desc: "Luôn sẵn sàng giúp đỡ",
-                  },
-                  {
-                    img: "04_zdj1tq.png",
-                    title: "Chứng chỉ giá trị",
-                    desc: "Được công nhận toàn cầu",
-                  },
-                  {
-                    img: "05_qkz8ke.png",
-                    title: "Cộng đồng lớn",
-                    desc: "Kết nối & học hỏi",
-                  },
-                  {
-                    img: "05_qkz8ke.png",
-                    title: "Giá cả hợp lý",
-                    desc: "Phù hợp mọi đối tượng",
-                  },
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    className="reason-card p-5  opacity-1 bg-white/10 rounded-xl"
-                    data-aos="zoom-in"
-                    data-aos-delay={index * 100}
-                    style={{ width: "calc(100% / 3 - 20px)" }}
-                  >
-                    <div className="flex items-center justify-center mx-auto w-24 h-24 rounded-md   transition-all duration-300  ">
-                      <Image
-                        width={500}
-                        height={300}
-                        src={`https://res.cloudinary.com/dnjakwi6l/image/upload/v1728219100/${item.img}`}
-                        alt={item.title}
-                        className="hover-scale p-3"
-                        style={{ width: '65px', height: '65px', backgroundColor: 'transparent' }}
-                      />
+        <div className="why-choose-us bg-gradient-to-r  from-blue-900 via-pink-700 to-pink-700 bg-choose-us-one bg_image rts-section-gap shape-move">
+            <div className="container mx-auto  px-4">
+                <div className="flex flex-col lg:flex-row items-start gap-20">
+                    {/* Left Column - Images */}
+                    <div className="lg:w-5/12">
+                        <div className="relative">
+                            <Image
+                                width={300}
+                                height={500}
+                                className="rounded-xl shadow-lg"
+                                src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218768/02_atsgze.jpg"
+                                alt="why-choose"
+                                style={{ height: "500px", width: "270px" }}
+                            />
+                            <div className="absolute -right-10 bottom-10">
+                                <Image
+                                    width={400}
+                                    height={320}
+                                    className="rounded-xl shadow-lg"
+                                    src="https://res.cloudinary.com/dnjakwi6l/image/upload/v1728218908/03_grf0on.jpg"
+                                    alt="why-choose"
+                                    style={{ height: "320px", width: "320px" }}
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <h4 className="text-white mt-3 mb-2 text-2xl text-center">
-                      <strong>{item.title}</strong>
-                    </h4>
-                    <p className="text-light text-xl text-center">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="flex flex-row gap-10">
-                <Link
-                  href="/page/Cours-Filter"
-                  className="rts-btn hover-effect  bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 border hover:from-pink-700 hover:to-pink-700 border-white"
-                >
-                  <span className="text-white text-xl" style={{ fontWeight: '400' }}>
-                    Xem tất cả các khóa học
-                  </span>
-                  <i className="fas fa-arrow-right ml-2 text-xl text-white"></i>
-                </Link>
-                <Link
-                  href="#khoahocmoi"
-                  className="rts-btn hover-effect   border border-white"
-                >
-                  <span className="text-white text-xl" style={{ fontWeight: '400' }}>
-                    Xem các khóa học mới
-                  </span>
-                  <i className="fas fa-arrow-right ml-2 text-xl text-white"></i>
-                </Link>
-              </div>
+
+                    {/* Right Column - Content */}
+                    <div className="lg:w-7/12 p-10">
+                        <div className="space-y-6">
+                            {/* Header */}
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-2">
+                                    <i className="bi bi-lightbulb text-white animate-pulse text-xl"></i>
+                                    <span className="text-white font-bold text-xl">
+                                        Tại sao chọn chúng tôi
+                                    </span>
+                                </div>
+                                <h2 className="text-white text-5xl font-medium">
+                                    Techstudent - Con đường dẫn đến{" "}
+                                    <span className="font-medium">
+                                        sự xuất sắc
+                                    </span>
+                                </h2>
+                                <p className="text-white text-2xl">
+                                    Chúng tôi đam mê giáo dục và tận tâm cung cấp các nguồn
+                                    học tập chất lượng cao cho người học mọi lúc.
+                                </p>
+                            </div>
+
+                            {/* Grid of Features */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {[
+                                    {
+                                        img: "01_s9m4hw.png",
+                                        title: "Chất lượng hàng đầu",
+                                        desc: "Đội ngũ giảng viên xuất sắc",
+                                    },
+                                    {
+                                        img: "02_vnmc5y.png",
+                                        title: "Học linh hoạt",
+                                        desc: "Học mọi lúc, mọi nơi",
+                                    },
+                                    {
+                                        img: "03_gqwcdw.png",
+                                        title: "Hỗ trợ 24/7",
+                                        desc: "Luôn sẵn sàng giúp đỡ",
+                                    },
+                                    {
+                                        img: "04_zdj1tq.png",
+                                        title: "Chứng chỉ giá trị",
+                                        desc: "Được công nhận toàn cầu",
+                                    },
+                                    {
+                                        img: "05_qkz8ke.png",
+                                        title: "Cộng đồng lớn",
+                                        desc: "Kết nối & học hỏi",
+                                    },
+                                    {
+                                        img: "05_qkz8ke.png",
+                                        title: "Giá cả hợp lý",
+                                        desc: "Phù hợp mọi đối tượng",
+                                    },
+                                ].map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className="bg-white/10 rounded-xl  backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
+                                    >
+                                        <div className="flex flex-col items-center p-10  justify-between flex-wrap">
+                                            <div className=" p-2">
+                                                <Image
+                                                    width={64}
+                                                    height={64}
+                                                    src={`https://res.cloudinary.com/dnjakwi6l/image/upload/v1728219100/${item.img}`}
+                                                    alt={item.title}
+                                                    className="w-full h-full object-contain"
+                                                />
+                                            </div>
+                                            <h4 className="text-white text-xl font-bold mb-2 text-center">
+                                                {item.title}
+                                            </h4>
+                                            <p className="text-gray-200 text-center">
+                                                {item.desc}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="flex flex-wrap gap-4">
+                                <Link
+                                    href="/page/Cours-Filter"
+                                    className="px-6 py-3 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white rounded-full hover:from-pink-700 hover:to-pink-700 transition-all duration-300 flex items-center gap-2"
+                                >
+                                    <span className="text-xl">Xem tất cả các khóa học</span>
+                                    <i className="fas fa-arrow-right"></i>
+                                </Link>
+                                <Link
+                                    href="#khoahocmoi"
+                                    className="px-6 py-3 border border-white text-white rounded-full hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
+                                >
+                                    <span className="text-xl">Xem các khóa học mới</span>
+                                    <i className="fas fa-arrow-right"></i>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div className="shape-image">
-            <div
-              className="shape one"
-              data-speed="0.04"
-              data-revert="true"
-            ></div>
-            <div className="shape two" data-speed="0.04"></div>
-            <div className="shape three" data-speed="0.04"></div>
-          </div>
         </div>
-      </div>
     );
 };
 
@@ -708,37 +677,31 @@ const UpcomingEvents = () => {
     return (
         <div className="up-coming-events rts-section-gap">
             <div className="container">
-                <div className="row">
-                    <div className="col-lg-12">
-                        <div className="text-center mb-20">
-                            <div className="flex items-center justify-center gap-4 mb-6">
-                                <div className="relative group">
-                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-900 via-pink-700 to-gray-600 rounded-full blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
-                                    <div className="relative rounded-full p-2">
-                                        <Img
-                                            width={50}
-                                            height={50}
-                                            src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733241704/07_uqfitz.png"
-                                            alt="icon"
-                                            className="object-contain hover:scale-125 transition-transform duration-300"
-                                        />
+            <div className="row">
+                        <div className="col-lg-12">
+                            <div className="title-between-area bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+                                <div className="title-area-left-style">
+                                    <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
+                                        <div className="flex items-center justify-center text-white w-10 h-10 rounded-full bg-pink-300">
+                                            <i className="bi bi-lightbulb text-white  text-xl animate-pulse"></i>
+                                        </div>
+                                        <span className="text-white  uppercase text-lg">
+                                            Khóa học
+                                        </span>
                                     </div>
+                                    <h2 className="title text-2xl sm:text-3xl lg:text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                                        <strong>     Khám Phá Sự Kiện Đặc Sắc</strong>
+                                        <p className="post-title text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mt-2">
+                                        Khám phá những trải nghiệm độc đáo, kích thích sự tò mò và mở ra cánh cửa tri thức mới
+                                        </p>
+                                    </h2>
                                 </div>
-                                <span className="text-black font-bold text-4xl px-6 py-3 rounded-full hover:shadow-lg hover:shadow-pink-500/20 transition-all duration-300">
-                                    Sự Kiện Nổi Bật
-                                </span>
+                                <div>
+
+                                </div>
                             </div>
-
-                            <h2 className="text-5xl font-bold text-black leading-tight mb-6">
-                                Khám Phá Sự Kiện Đặc Sắc
-                            </h2>
-
-                            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-                                Khám phá những trải nghiệm độc đáo, kích thích sự tò mò và mở ra cánh cửa tri thức mới
-                            </p>
                         </div>
-                    </div>
-                </div>
+                    </div>              
                 <div className="row mt--50">
                     <div className="col-lg-12">
                         <div className="upcoming-events-main-wrapper-1">
@@ -760,7 +723,7 @@ const UpcomingEvents = () => {
                                                 </div>
                                             </div>
                                             <Link href="/page/login">
-                                                <h5 className="title">
+                                                <h5 className="title text-xl">
                                                     {voucher.khoahoc.ten}
                                                 </h5>
                                             </Link>
@@ -830,7 +793,7 @@ const FunFacts = () => {
     const [count3, ref3] = useCountAnimation(44239);
     const [count4, ref4] = useCountAnimation(75992);
     return (
-        <div className="relative py-20 bg-gradient-to-br from-gray-900 via-pink-700 to-gray-600 overflow-hidden">
+        <div className="relative py-20 bg-gradient-to-br from-blue-900 via-pink-700 to-pink-700 overflow-hidden">
             <div className="container mx-auto px-4">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -884,16 +847,6 @@ const FunFacts = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Decorative Shapes */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -left-10 top-10 opacity-20 animate-pulse" data-speed="0.04" data-revert="true">
-                    <Img width={150} height={150} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733238927/04_ennjfn.svg" alt="" />
-                </div>
-                <div className="absolute right-0 bottom-0 opacity-20 animate-pulse" data-speed="0.04">
-                    <Img width={200} height={200} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733238928/11_jyq71p.png" alt="" />
-                </div>
-            </div>
         </div>
     );
 };
@@ -937,7 +890,7 @@ const FeedbackArea = () => {
 
                     {/* Updated Testimonial Slider */}
                     <div className=" mx-auto">
-                        <div className="bg-gradient-to-r from-gray-900 to-pink-800 rounded-2xl p-8 shadow-xl">
+                        <div className="bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 rounded-2xl p-8 shadow-xl">
                             <div className="relative">
                                 {/* Slider Container */}
                                 <div className="overflow-hidden">
@@ -960,7 +913,7 @@ const FeedbackArea = () => {
 
                                                         {/* Content */}
                                                         <div className="flex-1 text-white">
-                                                            <div className="flex mb-4">
+                                                            <div className="flex mb-4 text-xl">
                                                                 {[...Array(5)].map((_, i) => (
                                                                     <svg
                                                                         key={i}
@@ -972,9 +925,9 @@ const FeedbackArea = () => {
                                                                     </svg>
                                                                 ))}
                                                             </div>
-                                                            <p className="text-lg italic text-gray-100 mb-4">&quot;{item.noi_dung}&quot;</p>
+                                                            <p className=" italic text-gray-100 mb-4 text-xl">&quot;{item.noi_dung}&quot;</p>
                                                             <h5 className="text-xl font-bold">{item.nguoi_danh_gia.ten}</h5>
-                                                            <p className="text-pink-300">{item.ngay_danh_gia.split('T')[0]}</p>
+                                                            <p className="text-white">{item.ngay_danh_gia.split('T')[0]}</p>
                                                         </div>
                                                     </div>
                                                 </div>

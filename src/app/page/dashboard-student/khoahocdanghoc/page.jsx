@@ -129,7 +129,7 @@ export default function Khoahoccuatoi() {
     background: linear-gradient(135deg, #ffffff, #f5f7fa);
     border-radius: 15px;
     padding: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 5px 30px rgba(0,0,0,0.05);
   }
 
   .title {

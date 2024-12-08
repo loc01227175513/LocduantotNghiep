@@ -2,18 +2,22 @@
 import React, { useState, useEffect } from "react";
 import { Oder } from "../../../../service/Oder/Oder";
 
+// Add font import
+import { Roboto } from 'next/font/google';
+
 export default function Khoahocdanghoc() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [filter, setFilter] = useState("");
   const [tab, setTab] = useState("today");
   const [date, setDate] = useState("");
+  
   const calculateMinutesDifference =(date) => { 
     const now = new Date(); 
     const pastDate = new Date(date); 
   
     const diffInMs = now.getTime() - pastDate.getTime();
-    
+ 
     const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
   
     if (diffInMinutes > 10080) {
@@ -36,6 +40,7 @@ export default function Khoahocdanghoc() {
       
     });
   }, []);
+
 
   useEffect(() => {
     let newData = data.filter((item) =>
@@ -65,20 +70,22 @@ export default function Khoahocdanghoc() {
   const handleTabChange = (newTab) => {
     setTab(newTab);
   };
+ 
 
   return (
-    <div className="overflow-y-scroll col-lg-9 h-lvh p-4">
+    <div className="overflow-y-scroll col-lg-9 h-lvh p-4 font-[Roboto]">
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <div className="flex justify-between items-center mb-6 ">
+        <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
           {/* Tabs */}
-          <ul className="flex gap-2" role="tablist">
+          <ul className="flex flex-wrap gap-2" role="tablist">
             {['today', 'monthly', 'yearly'].map(tabType => (
               <li key={tabType}>
                 <button
-                  className={`px-6 py-2 rounded-full transition-all ${tab === tabType
-                    ? 'bg-[#32ADE6] text-white shadow-md'
-                    : 'bg-gray-100 hover:bg-gray-200'
-                    }`}
+                  className={`px-6 py-2 rounded-full text-[14px] font-medium transition-all ${
+                    tab === tabType
+                      ? 'bg-pink-700 text-white shadow-md'
+                      : 'bg-gray-100 hover:bg-gray-200'
+                  }`}
                   onClick={() => handleTabChange(tabType)}
                 >
                   {tabType === 'today' && 'Hôm nay'}
@@ -94,7 +101,7 @@ export default function Khoahocdanghoc() {
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-300  w-[100px]"
+            className="px-4 py-2 border rounded-lg text-[14px] focus:ring-2 focus:bg-pink-400 w-[200px]"
           />
         </div>
 
@@ -105,56 +112,57 @@ export default function Khoahocdanghoc() {
             placeholder="Lọc theo trạng thái..."
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="w-96 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-300 placeholder:text-xl "
+            className="w-full md:w-96 px-4 py-2 border rounded-lg text-[14px] focus:ring-2 focus:bg-pink-400 placeholder:text-[14px]"
           />
         </div>
 
-        {/* Table */}
-        <div className="rounded-lg overflow-hidden border">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-4 text-left text-xl font-medium text-black">ID</th>
-                <th className="px-6 py-4 text-left text-xl font-medium text-black">Khóa học</th>
-                <th className="px-6 py-4 text-left text-xl font-medium text-black">Ngày</th>
-                <th className="px-6 py-4 text-left text-xl font-medium text-black">Giá</th>
-                <th className="px-6 py-4 text-left text-xl font-medium text-black">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {filteredData.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4">#{item.id}</td>
-                  <td className="px-6 py-4 font-medium">{item.ten}</td>
-                  <td className="px-6 py-4 text-gray-500">{calculateMinutesDifference(item.created_at)}</td>
-                  <td className="px-6 py-4">${item.tong}</td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xl font-medium 
-                      ${item.trangthai === 'completed'
-                        ? 'status-completed'
-                        : item.trangthai === 'pending'
-                          ? 'status-pending'
-                          : 'status-cancelled'}`}
-                    >
-                      {item.trangthai === 'completed' && (
-                        <i className="fas fa-check-circle text-lg status-icon-completed" />
-                      )}
-                      {item.trangthai === 'pending' && (
-                        <i className="fas fa-clock text-lg status-icon-pending" />
-                      )}
-                      {item.trangthai === 'cancelled' && (
-                        <i className="fas fa-times-circle text-lg status-icon-cancelled" />
-                      )}
-                      <span>{item.trangthai}</span>
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+        {/* New card-based layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredData.map((item) => (
+            <div 
+              key={item.id}
+              className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+            >
+              <div className="p-4">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-[16px] font-medium">#{item.id}</span>
+                  <span className={`px-3 py-1 rounded-full text-[12px] font-medium
+                    ${item.trangthai === 'completed' ? 'bg-green-100 text-green-600' : 
+                      item.trangthai === 'pending' ? 'bg-yellow-100 text-pink-700' : 
+                      ' text-pink-700'}`}>
+                    {item.trangthai}
+                  </span>
+                </div>
 
+                <div className="space-y-2">
+                  <div className="flex items-center text-[14px] text-gray-600">
+                    <i className="far fa-clock mr-2"></i>
+                    <span>{calculateMinutesDifference(item.created_at)}</span>
+                  </div>
+                  <div className="flex items-center text-gray-800">
+                    <i className="fas fa-dollar-sign mr-2"></i>
+                    <span className="text-[18px] font-bold">{item.tong}</span>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <button className="w-full py-2 bg-pink-400 text-white text-[14px] font-medium rounded-lg hover:bg-pink-300 transition-colors duration-300">
+                    Xem chi tiết
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Add empty state */}
+        {filteredData.length === 0 && (
+          <div className="text-center py-12">
+            <i className="fas fa-box-open text-4xl text-gray-300 mb-3"></i>
+            <p className="text-[14px] text-gray-500">Không có đơn hàng nào</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
