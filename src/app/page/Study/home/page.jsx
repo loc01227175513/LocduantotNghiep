@@ -186,7 +186,9 @@ export default function Page() {
             }
 
             try {
-                const response = await Axios.get(`https://huuphuoc.id.vn/api/kiemtravidedahoc`, {
+                const response = await Axios.post(`https://huuphuoc.id.vn/api/kiemtravidedahoc`, {
+                    id_nguoidung: parsedData.id
+                }, {
                     referrerPolicy: 'unsafe-url'
                 });
                 if (Array.isArray(response.data.data)) {
@@ -212,7 +214,7 @@ export default function Page() {
         };
 
         checkVideoWatched();
-    }, [currentVideoId, khoahoc]);
+    }, [currentVideoId, khoahoc, parsedData.id]);
 
     const formatDuration = (totalSeconds) => {
         const hours = Math.floor(totalSeconds / 3600);
