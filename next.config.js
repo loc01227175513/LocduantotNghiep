@@ -16,6 +16,19 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
+  webpack: (config, { dev, isServer }) => {
+    // Only disable source maps in production
+    if (!dev && !isServer) {
+      config.devtool = false;
+    }
+    
+    // Handle source maps properly in development
+    if (dev) {
+      config.devtool = 'eval-source-map';
+    }
+    
+    return config;
+  },
 }
 
 module.exports = nextConfig

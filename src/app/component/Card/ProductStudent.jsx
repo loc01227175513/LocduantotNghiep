@@ -130,7 +130,7 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
             href={`/page/course-detail?id=${id}`}
             className="title-link min-h-12 sm:min-h-15 flex items-center mb-2 sm:mb-4 group"
           >
-            <p className="title text-base sm:text-lg truncate group-hover:whitespace-normal group-hover:text-clip">{ten}</p>
+            <p className="title text-[14px] sm:text-lg truncate group-hover:whitespace-normal group-hover:text-clip">{ten}</p>
           </Link>
           <div className="teacher mb-3 sm:mb-6 flex items-center">
             <i className="bi bi-grid mr-2 sm:mr-3 text-gray-800 text-xl sm:text-2xl"></i>
@@ -195,7 +195,7 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
         }
         .title {
           font-size: 1rem;
-          font-weight: 600;
+          font-weight: 400;
           color: #2d3748;
           transition: color 0.2s ease;
           @media (min-width: 640px) {

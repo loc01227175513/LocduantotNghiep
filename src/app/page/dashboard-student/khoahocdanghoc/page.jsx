@@ -303,7 +303,7 @@ const Khoahocdathanhtoan = () => {
       });
 
   }, []);
-  console.log(data);
+  console.log(data , "data");
 
 
   const tieptuchoc = (id) => {
@@ -341,7 +341,6 @@ const Khoahocdathanhtoan = () => {
                     chude={khoahoc.chuDe}
                     giangvien={khoahoc.giangVien?.ten}
                     baihocs={khoahoc.baihoc1?.length}
-                    PhanTram={Math.round(((khoahoc.gia - khoahoc.giamgia) / khoahoc.gia) * 100)}
                     tieptuchoc={tieptuchoc}
                   />
                 </>
@@ -376,7 +375,7 @@ const Khoahocdahoanthanh = () => {
       });
   }, []);
 
-  console.log(khoahocdahoc);
+  console.log(khoahocdahoc , "khoahocdahoc");
   const tieptuchoc = (id) => {
     router.push(`/page/Study?id=${id}`)
   }
@@ -414,13 +413,6 @@ const Khoahocdahoanthanh = () => {
                     giangvien={item.khoahoc.giangVien?.ten || "Không rõ"}
                     baihocs={item.khoahoc.baihoc?.length || 0}
                     tieptuchoc={tieptuchoc}
-                    PhanTram={
-                      item.khoahoc.gia
-                        ? Math.round(
-                          ((item.khoahoc.gia - item.khoahoc.giamgia) / item.khoahoc.gia) * 100
-                        )
-                        : 0
-                    }
                    
                   />
                 </>

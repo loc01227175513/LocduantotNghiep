@@ -121,11 +121,11 @@ const List = ({ courses }) => {
                       alt={course.ten}
                     />
                     {course.gia === 0 ? (
-                      <div className="absolute top-4 right-4 py-2 px-3 bg-red-500 text-white rounded-full text-xl font-bold transform -rotate-3 translate-x-1 translate-y-1">
+                      <div className="absolute top-4 right-4 px-3 py-1 bg-red-500 text-white rounded-full text-[12px] font-bold transform -rotate-12 translate-x-1 translate-y-1">
                         Miễn Phí
                       </div>
                     ) : course.giamgia > 0 ? (
-                      <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xl font-bold transform -rotate-12 translate-x-1 translate-y-1">
+                      <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-[12px] font-bold transform -rotate-12 translate-x-1 translate-y-1">
                         -{Math.round(((course.gia - course.giamgia) / course.gia) * 100)}%
                       </div>
                     ) : null}
@@ -142,28 +142,28 @@ const List = ({ courses }) => {
                           e.preventDefault();
                           handleYeuThich(course.id);
                         }}
-                        className="p-2 w-14 h-14 border-1 border-white bg-gray-300 hover:bg-orange-600 rounded-full transition-colors"
+                        className="p-2 w-14 h-14 border-1 border-white bg-gray-200 hover:bg-pink-500 rounded-full transition-colors"
                       >
                         <i className="fa-regular fa-bookmark text-xl text-white" />
                       </button>
                     </div>
 
-                    <p className="text-gray-600 text-lg font-medium mt-2">
-                      <i className="fas fa-user-tie mr-2 text-gray-800 text-lg" style={{ fontWeight: "400" }}></i>
+                    <p className="text-gray-600 text-lg font-thin mt-2">
+                      <i className="far fa-user-tie mr-2 text-black text-[12px]" style={{ fontWeight: "400" }}></i>
                       {course.giangvien}
                     </p>
 
-                    <div className="flex items-center text-gray-500 text-lg font-medium my-2">
+                    <div className="flex items-center text-black text-[12px]  my-2">
                       <i className="fa-light fa-calendar-lines-pen mr-2" />
                       <span>{course.baihocs} Bài</span>
                     </div>
-                    <div className="flex items-center text-gray-500 text-lg font-medium my-2">
+                    <div className="flex items-center text-black text-[12px]  my-2">
                       <i className="fa-light fa-user-group mr-2" />
                       <span>{course.dangky} Học viên</span>
                     </div>
 
-                    <div className="flex items-center text-gray-500 text-lg font-medium my-2">
-                      <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
+                    <div className="flex items-center text-black text-[12px] font-extralight my-2">
+                      <i className="bi bi-grid mr-2 text-gray-800 "></i>
                       <span>{course.chude}</span>
                     </div>
 
@@ -190,15 +190,15 @@ const List = ({ courses }) => {
                           <div></div>
                         ) : course.giamgia > 0 ? (
                           <div className="flex items-center gap-2">
-                            <span className="text-gray-500 font-medium line-through text-lg">
+                            <span className="text-gray-500 text-[14px]  line-through">
                               {course.gia.toLocaleString()} VNĐ
                             </span>
-                            <span className="text-lg font-bold text-red-600">
+                            <span className="text-[14px] font-bold text-red-600">
                               {course.giamgia.toLocaleString()} VNĐ
                             </span>
                           </div>
                         ) : (
-                          <span className="font-bold text-black text-lg">
+                          <span className="font-bold text-black text-[14px]">
                             {course.gia.toLocaleString()} VNĐ
                           </span>
                         )}

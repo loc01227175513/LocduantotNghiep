@@ -140,7 +140,7 @@ export default function Page() {
             <div className="rts-course-filter-area">
               {/* Search Filter */}
               <div className="single-filter-left-wrapper">
-                <h6 className="title">
+                <h6 className="title text-[14px]">
                   <i className="fas fa-search" /> Tìm kiếm
                 </h6>
                 <div className="search-filter filter-body">
@@ -260,10 +260,10 @@ export default function Page() {
           <div className="col-lg-9">
             {/* filter top-area  */}
             <div className="filter-small-top-full">
-              <div className="left-filter text-2xl">
+              <div className="left-filter text-[14px]">
                 <span>Sắp xếp theo</span>
                 <select
-                  className="nice-select text-xl text-left"
+                  className="nice-select text-[14px] text-left"
                   name="sort"
                   value={sortBy}
                   onChange={handleSortChange}
@@ -277,7 +277,7 @@ export default function Page() {
                 </select>
               </div>
               <div className="right-filter">
-                <span>
+                <span className='text-[14px]'>
                   Hiển thị {filteredCourses.length} của {courses.length} kết quả
                 </span>
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -290,7 +290,7 @@ export default function Page() {
                       role="tab"
                     >
                       <i className="fa-light fa-grid-2" />
-                      <span className='mx-2'>Lưới</span>
+                      <span className='mx-2 text-[14px]'>Lưới</span>
                     </button>
                   </li>
                   <li className="nav-item" role="presentation">
@@ -302,7 +302,7 @@ export default function Page() {
                       role="tab"
                     >
                       <i className="fa-light fa-list" />
-                      <span className='mx-2'>Danh sách</span>
+                      <span className='mx-2 text-[14px]'>Danh sách</span>
                     </button>
                   </li>
                 </ul>

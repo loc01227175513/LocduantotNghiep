@@ -14,8 +14,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
 import { ShowTracNghiem, ShowCauHoi, GuiCauTraLoi, checkQuizCompletion } from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
 import KetQuaTracNghiem from './ketquatracnghiem';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
+    const router = useRouter();
     const [isYTReady, setIsYTReady] = useState(false);
     const [khoahoc, setKhoahoc] = useState(null);
     const [totalDuration, setTotalDuration] = useState(0);
@@ -35,6 +37,19 @@ export default function Page() {
 
     const id = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('id') : null;
     const parsedData = typeof window !== 'undefined' && window.localStorage ? JSON.parse(localStorage.getItem('data')) : null;
+
+    useEffect(() => {
+        const data = localStorage.getItem('data');
+        if (!data) {
+            router.push('/page/login');
+            return;
+        }
+        const parsedUserData = JSON.parse(data);
+        if (!parsedUserData || !parsedUserData.id) {
+            router.push('/page/login');
+            return;
+        }
+    }, [router]);
 
     useEffect(() => {
         const tag = document.createElement('script');
@@ -181,13 +196,20 @@ export default function Page() {
 
     useEffect(() => {
         const checkVideoWatched = async () => {
+            const data = localStorage.getItem('data');
+            if (!data) {
+                router.push('/page/login');
+                return;
+            }
+
             if (!currentVideoId || !khoahoc) {
                 return;
             }
 
             try {
+                const parsedUserData = JSON.parse(data);
                 const response = await Axios.post(`https://huuphuoc.id.vn/api/kiemtravidedahoc`, {
-                    id_nguoidung: parsedData.id
+                    id_nguoidung: parsedUserData.id
                 }, {
                     referrerPolicy: 'unsafe-url'
                 });
@@ -210,11 +232,14 @@ export default function Page() {
                 }
             } catch (err) {
                 console.error('Error checking video watched status:', err);
+                if (err.message === 'Invalid user data') {
+                    router.push('/page/login');
+                }
             }
         };
 
         checkVideoWatched();
-    }, [currentVideoId, khoahoc, parsedData.id]);
+    }, [currentVideoId, khoahoc, router]);
 
     const formatDuration = (totalSeconds) => {
         const hours = Math.floor(totalSeconds / 3600);
@@ -236,9 +261,14 @@ export default function Page() {
     const handleComent = async (comment, rating) => {
         try {
             const userData = localStorage.getItem('data');
+            if (!userData) {
+                router.push('/page/login');
+                return;
+            }
+
             const parsedData = JSON.parse(userData);
-            if (!parsedData) {
-                alert('User not found. Please log in.');
+            if (!parsedData || !parsedData.id) {
+                router.push('/page/login');
                 return;
             }
 
@@ -259,11 +289,9 @@ export default function Page() {
                 alert('Bình luận thất bại.');
             }
         } catch (err) {
-            if (err.response && err.response.status === 409) {
-                alert('Course is already in the cart.');
-            } else {
-                console.error('Error adding course to cart:', err.response ? err.response.data : err.message);
-                alert('Failed to add course to cart.');
+            console.error('Error adding comment:', err);
+            if (err.message === 'Invalid user data') {
+                router.push('/page/login');
             }
         }
     };
