@@ -87,24 +87,24 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <div className="profile-card">
-        <h3 className="profile-title">Thông tin của bạn</h3>
+        <h3 className="profile-title text-[16px]">Thông tin của bạn</h3>
         <form onSubmit={handleSubmit}>
           <div className="form-grid">
             <div className="form-group">
-              <label htmlFor="ten">Họ tên</label>
-              <input type="text" id="ten" className='' value={formData.ten} onChange={handleChange} />
+              <label htmlFor="ten " className="text-[14px]">Họ tên</label>
+              <input type="text" id="ten" className='text-[14px]' value={formData.ten} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input type="email" id="email" value={formData.email} onChange={handleChange} />
+              <label htmlFor="email" className="text-[14px]">Email</label>
+              <input type="email" id="email" className="text-[14px]" value={formData.email} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label htmlFor="dienthoai">Số điện thoại</label>
-              <input type="text" id="dienthoai" value={formData.dienthoai} onChange={handleChange} />
+              <label htmlFor="dienthoai" className="text-[14px]">Số điện thoại</label>
+              <input type="text" id="dienthoai" className="text-[14px]" value={formData.dienthoai} onChange={handleChange} />
             </div>
             <div className="form-group full-width">
-              <label htmlFor="tieusu">Tiểu sử</label>
-              <textarea id="tieusu" value={formData.tieusu} onChange={handleChange} rows="4" />
+              <label htmlFor="tieusu" className="text-[14px]">Tiểu sử</label>
+              <textarea id="tieusu"   className="text-[14px]" value={formData.tieusu} onChange={handleChange} rows="4" />
             </div>
           </div>
 
@@ -132,7 +132,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-600 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center">
+          <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-700 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center">
             <p className="text-white text-xl font-semibold">Lưu</p>
           </button>
         </form>
@@ -321,7 +321,7 @@ const MangXaHoi = () => {
     <style>{styles}</style>
      <div className="social-profiles-container">
       <div className="social-profile-card">
-        <h3 className="profile-title">Link mạng xã hội</h3>
+        <h3 className="profile-title text-[20px]">Link mạng xã hội</h3>
 
         <form onSubmit={handleSubmit} className="social-form">
           {[
@@ -332,7 +332,7 @@ const MangXaHoi = () => {
             { id: 'github', icon: 'fa-github', label: 'Github', placeholder: 'github.com/username' }
           ].map(platform => (
             <div className="profile-input-group" key={platform.id}>
-              <div className="platform-info">
+              <div className="platform-info text-[16px]">
                 <div className="platform-icon">
                   <i className={`fa-brands ${platform.icon}`} />
                 </div>
@@ -341,7 +341,7 @@ const MangXaHoi = () => {
               <input
                 type="url"
                 id={platform.id}
-                className="social-input placeholder:text-xl text-xl"
+                className="social-input placeholder:text-[14px] text-[14px]"
                 placeholder={`https://${platform.placeholder}`}
                 onChange={handleChange}
                 value={formData[platform.id]}
@@ -350,8 +350,8 @@ const MangXaHoi = () => {
             </div>
           ))}
           
-          <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-600 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center gap-2">
-            <i className="fas fa-save text-white text-xl"></i>
+          <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-700 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center gap-2">
+            <i className="fas fa-save text-white text-[14px]"></i>
             <span className="text-white text-xl font-semibold">Lưu</span>
           </button>
         </form>
@@ -499,32 +499,45 @@ const Password = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.password_confirmation) {
-      toast.error('New password and confirmation do not match');
+      toast.error('Mật khẩu mới và xác nhận không khớp');
       return;
     }
     try {
       await UpdatePassWord(formData);
-      toast.success('Password has been successfully reset');
+      toast.success('Đổi mật khẩu thành công');
     } catch (error) {
-      toast.error('Failed to reset password');
+      toast.error('Đổi mật khẩu thất bại');
       console.error(error);
+    }
+  };
+
+  const getFieldLabel = (field) => {
+    switch(field) {
+      case 'old_password':
+        return 'Mật khẩu cũ';
+      case 'password':
+        return 'Mật khẩu mới';
+      case 'password_confirmation':
+        return 'Xác nhận mật khẩu';
+      default:
+        return field;
     }
   };
 
   return (
     <div className="password-change-container">
       <form onSubmit={handleSubmit} className="password-form">
-        <h2>Đổi mật khẩu</h2>
+        <h2 className='text-[20px] font-medium'>Đổi mật khẩu</h2>
         {Object.keys(formData).map((field) => (
-          <div key={field} className="form-group">
-            <label htmlFor={field}>
-              {field.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+          <div key={field} className="form-group  ">
+            <label htmlFor={field} className='text-[16px]'>
+              {getFieldLabel(field)}
             </label>
             <div className="password-input-wrapper">
               <input
                 id={field}
                 type={showPasswords[field] ? "text" : "password"}
-                placeholder={`Enter ${field.split('_').join(' ')}`}
+                placeholder={`Nhập ${getFieldLabel(field).toLowerCase()}`}
                 value={formData[field]}
                 onChange={handleChange}
                 required
@@ -532,7 +545,7 @@ const Password = () => {
               />
               <button
                 type="button"
-                className="toggle-password"
+                className="toggle-password w-5 h-20"
                 onClick={() => togglePasswordVisibility(field)}
               >
                 {showPasswords[field] ? "🙈" : "👁️"}
@@ -540,8 +553,8 @@ const Password = () => {
             </div>
           </div>
         ))}
-        <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-600 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center">
-          <p className='text-xl text-white'>Đổi mật khẩu</p>   
+        <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-700 hover:bg-pink-600 flex items-center justify-center">
+          <p className='text-[14px] text-white'>Đổi mật khẩu</p>   
         </button>
       </form>
 
@@ -589,9 +602,9 @@ const Password = () => {
         }
 
         .password-input:focus {
-          border-color: #007bff;
+          border-color: #f472b6;
           outline: none;
-          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+          box-shadow: 0 0 0 2px rgba(244, 114, 182, 0.25);
         }
 
         .toggle-password {
@@ -603,24 +616,9 @@ const Password = () => {
           font-size: 1.2rem;
         }
 
-        .submit-button {
-          background: #007bff;
-          color: white;
-          border: none;
-          padding: 1rem;
-          border-radius: 5px;
-          font-size: 1rem;
-          cursor: pointer;
-          transition: background-color 0.3s;
-        }
-
-        .submit-button:hover {
-          background: #0056b3;
-        }
-
         label {
           color: #555;
-          font-weight: 500;
+          font-weight: 400;
         }
       `}</style>
     </div>

@@ -49,32 +49,32 @@ export default function Myprofilelecturer() {
 
     <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas">
       <div className="right-sidebar-my-profile-dash theiaStickySidebar pt--30">
-        <p className="text-black font-bold text-3xl ">Hồ sơ của tôi</p>
+        <p className="text-black font-bold text-[20px] ">Hồ sơ của tôi</p>
        <div className="p-4">
        <div className="my-single-portfolio-dashed  mt-6">
-          <div className="name">Ngày đăng ký</div>
-          <div className="value "><p className="p-0 m-0 ">{calculateMinutesDifference(lecturer.created_at)}</p></div>
+          <div className="name text-[14px]">Ngày đăng ký</div>
+          <div className="value "><p className="p-0 m-0 text-[14px]">{calculateMinutesDifference(lecturer.created_at)}</p></div>
         </div>
 
         <div className="my-single-portfolio-dashed ">
-          <div className="name">Tên người dùng:</div>
-          <div className="value"><p>{lecturer.ten}</p></div>
+          <div className="name text-[14px]">Tên người dùng:</div>
+          <div className="value"><p className="p-0 m-0 text-[14px]">{lecturer.ten}</p></div>
         </div>
 
         <div className="my-single-portfolio-dashed ">
-          <div className="name">E-mail:</div>
-          <div className="value"><p>{lecturer.email}</p></div>
+          <div className="name text-[14px]">E-mail:</div>
+          <div className="value"><p className="p-0 m-0 text-[14px]">{lecturer.email}</p></div>
         </div>
 
         <div className="my-single-portfolio-dashed ">
-          <div className="name">Số điện thoại:</div>
-          <div className="value"><p>{lecturer.dienthoai ? lecturer.dienthoai : "chưa có"}</p></div>
+          <div className="name text-[14px]">Số điện thoại:</div>
+          <div className="value"><p className="p-0 m-0 text-[14px]">{lecturer.dienthoai ? lecturer.dienthoai : "chưa có"}</p></div>
         </div>
 
         <div className="my-single-portfolio-dashed ">
-          <div className="name">Kỹ năng/nghề nghiệp</div>
+          <div className="name text-[14px]">Kỹ năng/nghề nghiệp</div>
           <div className="value">
-              <p>
+              <p className="p-0 m-0 text-[14px]">
               {lecturer.trinhdo?.ten}
 
               </p>
@@ -82,9 +82,9 @@ export default function Myprofilelecturer() {
         </div>
 
         <div className="my-single-portfolio-dashed highlight-border">
-          <div className="name">Tiểu sử</div>
+          <div className="name text-[14px]">Tiểu sử</div>
           <div className="value">
-            <p>
+            <p className="p-0 m-0 text-[14px]">
             {lecturer.tieusu ? lecturer.tieusu : "chưa có"}
             </p>
           </div>

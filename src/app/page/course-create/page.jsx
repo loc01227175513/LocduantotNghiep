@@ -165,19 +165,19 @@ const CourseCreatePage = () => {
                 className="fixed md:relative w-[85vw] md:w-96 h-screen p-6 bg-gradient-to-b from-white to-gray-50 border-r-2 border-gray-100 z-40 overflow-y-auto"
               >
                 <div className="space-y-6">
-                  <h5 className="p-3 mb-4 text-xl font-bold text-gray-800 bg-gray-100 rounded-xl shadow-sm">
+                  <h5 className="p-3 mb-4 text-[16px] font-bold text-gray-800 bg-gray-100 rounded-xl shadow-sm">
                     1. Lên kế hoạch cho khóa học của bạn
                   </h5>
-                  <div className="mb-6">
+                  <div className="mb-6 ">
                     <MenuItem 
                       icon={Users}
-                      text="Người học dự định lên"
+                      text="Người học dự định"
                       onClick={() => setView("Mota")}
                       isActive={view === "Mota"}
                     />
                   </div>
 
-                  <h5 className="p-3 mb-4 text-xl font-bold text-gray-800 bg-gray-100 rounded-xl shadow-sm">
+                  <h5 className="p-3 mb-4 text-[16px] font-bold text-gray-800 bg-gray-100 rounded-xl shadow-sm">
                     2. Tạo nội dung của bạn
                   </h5>
                   <div className="mb-6">
@@ -189,7 +189,7 @@ const CourseCreatePage = () => {
                     />
                   </div>
 
-                  <h5 className="p-3 mb-4 text-xl font-bold text-gray-800 bg-gray-100 rounded-xl shadow-sm">
+                  <h5 className="p-3 mb-4 text-[16px] font-bold text-gray-800 bg-gray-100 rounded-xl shadow-sm">
                     3. Xuất bản khóa học của bạn
                   </h5>
                   <div className="space-y-3">

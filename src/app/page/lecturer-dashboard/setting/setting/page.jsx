@@ -22,7 +22,7 @@ const Page = () => {
     return (
         <div className="col-lg-9 ịadkljas overflow-y-scroll">
             <div className="settings-card">
-                <h3 className="settings-title">Settings</h3>
+                <h3 className="settings-title text-[20px]">Cài đặt</h3>
                 <div className="tabs-container">
                     <ul className="nav nav-pills" role="tablist">
                         <li className="nav-item" role="presentation">
@@ -31,7 +31,7 @@ const Page = () => {
                                 onClick={() => setView('profile')}
                             >
                                 <FaUser className="tab-icon" />
-                                <span>Thông tin</span>
+                                <span className="text-[14px]">Thông tin</span>
                             </button>
                         </li>
                         <li className="nav-item" role="presentation">
@@ -40,7 +40,7 @@ const Page = () => {
                                 onClick={() => setView('password')}
                             >
                                 <FaLock className="tab-icon" />
-                                <span>Mật khẩu</span>
+                                <span className="text-[14px]">Mật khẩu</span>
                             </button>
                         </li>
                         <li className="nav-item" role="presentation">
@@ -49,7 +49,7 @@ const Page = () => {
                                 onClick={() => setView('social')}
                             >
                                 <FaShare className="tab-icon" />
-                                <span>Mạng xã hội</span>
+                                <span className="text-[14px]">Mạng xã hội</span>
                             </button>
                         </li>
                     </ul>
@@ -97,14 +97,14 @@ const Page = () => {
                 }
 
                 .tab-button:hover {
-                    color: #3182ce;
-                    background: #ebf8ff;
+                    color: rgb(190, 24, 93);
+                    background: #fdf2f8;
                     border-radius: 8px;
                 }
 
                 .tab-button.active {
-                    color: #3182ce;
-                    border-bottom: 2px solid #3182ce;
+                    color: rgb(190, 24, 93);
+                    border-bottom: 2px solid rgb(190, 24, 93);
                 }
 
                 .tab-icon {

@@ -42,7 +42,7 @@ export default function Page() {
   return (
     <div className="p-10 bg-gradient-to-r relative from-sky-50/80 to-blue-50/80 rounded-2xl transition-all duration-500 ease-in-out">
       <header className="mb-8">
-        <h2 className="text-3xl bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent text-center font-semibold tracking-wide">
+        <h2 className="text-[16px] bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent text-center font-semibold tracking-wide">
           Mẫu chứng chỉ
         </h2>
       </header>
@@ -62,7 +62,7 @@ export default function Page() {
               onClick={() => handleViewChange(tab)}
             >
               <i className="fa-sharp fa-light fa-pager mb-2 text-xl" />
-              <span className="text-xl font-medium">
+              <span className="text-[14px] font-medium">
                 {tab === "Landscape" ? "Phong cảnh" : "Chân dung"}
               </span>
             </button>

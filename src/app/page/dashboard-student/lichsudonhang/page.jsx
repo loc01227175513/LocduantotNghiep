@@ -166,7 +166,7 @@ console.log(orderDetails);
                   </div>
                   <div className="flex items-center text-gray-800">
                     
-                    <span className="text-[18px] ">{item.tong}VNĐ</span>
+                    <span className="text-[18px] ">{item.tong.toLocaleString()}VNĐ</span>
                    
                   </div>
                 </div>

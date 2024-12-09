@@ -240,32 +240,32 @@ function TrangDich() {
         <div className="max-w-4xl p-8 mx-auto bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-100"
             style={{ animation: "float 6s ease-in-out infinite" }}>
             <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-500  to-sky-400 bg-300% animate-shimmer"
+                <h1 className="text-[16px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-500  to-sky-400 bg-300% animate-shimmer"
                     style={{ animation: "shimmer 8s linear infinite" }}>
                   Tạo khóa học của bạn
                 </h1>
-                <p className="mt-3 text-gray-600 text-lg">
+                <p className="mt-3 text-gray-600 text-[14px]">
                     Làm cho khóa học của bạn nổi bật và tiếp cận nhiều sinh viên hơn trên Udemy
                 </p>
             </div>
 
             <form className="space-y-8" onSubmit={handleSubmit}>
                 <div className="transition-all duration-200 hover:transform hover:scale-[1.01]">
-                    <label className="block text-xl font-semibold text-gray-700 mb-2">Course Title</label>
+                    <label className="block text-[14px] font-semibold text-gray-700 mb-2">Tên khóa học</label>
                     <input
                         type="text"
                         name="ten"
-                        className="placeholder:text-xl block w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                        className="placeholder:text-[14px] text-[14px] block w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                         placeholder="Nhập tiêu đề thu hút sự chú ý"
                         value={formData.ten}
                         onChange={handleInputChange}
                     />
                 </div>
                 <div>
-                    <label className="block text-xl font-medium text-gray-700">Mô tả khóa học</label>
+                    <label className="block text-[14px] font-medium text-gray-700">Mô tả khóa học</label>
                     <textarea
                         name="mota"
-                        className="placeholder:text-xl block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                        className="placeholder:text-[14px] text-[14px] block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
                         placeholder="Nhập mô tả khóa học của bạn"
                         value={formData.mota}
                         onChange={handleInputChange}
@@ -274,10 +274,10 @@ function TrangDich() {
 
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                     <div className="group">
-                        <label className="block text-xl font-semibold text-gray-700 mb-2">Level</label>
+                        <label className="block text-[14px] font-semibold text-gray-700 mb-2">Cấp độ</label>
                         <select
                             name="trinhdo"
-                            className="block w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg group-hover:border-purple-300 focus:ring-2 focus:ring-purple-500 transition-all duration-200"
+                            className="block w-full text-[14px] p-3 text-gray-700 bg-white border border-gray-200 rounded-lg group-hover:border-purple-300 focus:ring-2 focus:ring-purple-500 transition-all duration-200"
                             value={formData.trinhdo}
                             onChange={handleInputChange}
                         >
@@ -289,14 +289,14 @@ function TrangDich() {
                         </select>
                     </div>
                     <div className="group">
-                        <label className="block text-xl font-semibold text-gray-700 mb-2">Loại</label>
+                        <label className="block text-[14px] font-semibold text-gray-700 mb-2">Loại</label>
                         <select
                             name="id_theloai"
-                            className="block w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg group-hover:border-purple-300 focus:ring-2 focus:ring-purple-500 transition-all duration-200"
+                            className="block w-full text-[14px] p-3 text-gray-700 bg-white border border-gray-200 rounded-lg group-hover:border-purple-300 focus:ring-2 focus:ring-purple-500 transition-all duration-200"
                             value={category}
                             onChange={handleCategoryChange}
                         >
-                            <option value="">-- Chọn mc thể loại --</option>
+                            <option value="">-- Chọn thể loại --</option>
                             {categories
                                 .filter(cat => cat.theloaicons && cat.theloaicons.length > 0)
                                 .map(cat => (
@@ -331,10 +331,10 @@ function TrangDich() {
                 )}
 
                 <div>
-                    <label className="block text-xl font-medium text-gray-700">Search Topics</label>
+                    <label className="block text-[14px] font-medium text-gray-700">Tìm kiếm chủ đề</label>
                     <input
                         type="text"
-                        className="placeholder:text-xl block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                        className="placeholder:text-[14px] text-[14px] block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
                         placeholder="Tìm kiếm các chủ đề"
                         value={searchTerm}
                         onChange={handleSearchChange}
@@ -355,7 +355,7 @@ function TrangDich() {
                 )}
 
                 <div className="mt-8">
-                    <label className="block text-xl font-semibold text-gray-700 mb-2">Course Image</label>
+                    <label className="block text-[14px] font-semibold text-gray-700 mb-2">Hình ảnh khóa học</label>
                     <div className="flex items-center justify-center w-full">
                         <label className="flex flex-col w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-all duration-200">
                             <div className="flex flex-col items-center justify-center pt-7">
@@ -370,7 +370,7 @@ function TrangDich() {
                     <button 
                         type="button"
                         onClick={handleSearchImage} 
-                        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
+                        className="mt-2 text-[14px] bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
                     >
                         Tìm ảnh trên mạng
                     </button>
@@ -417,7 +417,7 @@ function TrangDich() {
                 </div>
 
                 <button type="submit"
-                    className="w-full py-4 text-lg font-medium text-white bg-gradient-to-r from-sky-500 to-sky-300 rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2"
+                    className="w-full py-4 text-[14px] font-medium text-white bg-gradient-to-r from-sky-500 to-sky-300 rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2"
                     style={{ animation: "pulse 2s infinite" }}>
                    Tạo khóa học
                 </button>

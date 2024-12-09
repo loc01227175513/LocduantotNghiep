@@ -74,7 +74,7 @@ export const Profileinsructor = () => {
     }, [followStatusChanged]);
     console.log(follow, "follow");
 
-
+    console.log(data, "data");
     const TongBaiHoc = data
         .map((item) => item.baihoc.length)
         .reduce((a, b) => a + b, 0);
@@ -219,6 +219,11 @@ export const Profileinsructor = () => {
             draggable
             pauseOnHover
             theme="colored"
+            closeButton={({ closeToast }) => (
+                <button onClick={closeToast} className="w-10 h-10 flex items-center justify-center">
+                    <i className="fas fa-times text-lg"></i>
+                </button>
+            )}
         />
 
         <div className="container">
@@ -230,57 +235,61 @@ export const Profileinsructor = () => {
             ) : (
                 <>
                     {data.slice(0, 1).map((item) => (
-                        <div className="profile-header " key={item.giangVien.id}>
-                            <div className="profile-cover-image mt-52">
-                                <div className="profile-info-overlay  ">
+                        <div className="profile-header" key={item.giangVien.id}>
+                            <div className="profile-cover-image bg-gradient-to-r from-blue-900 to-pink-700 via-pink-700 mt-52 p-8 relative">
+                                <div className="profile-info-overlay max-w-4xl mx-auto relative z-10">
                                     <div className="flex justify-center items-center">
-                                        <Image 
-                                            width={120} 
+                                        <Image
+                                            width={120}
                                             height={120}
                                             src={item.giangVien.hinh}
                                             alt="profile"
-                                            className="avatar-image rounded-full h-40 w-40"
+                                            className="avatar-image rounded-full h-40 w-40 object-cover"
                                         />
                                     </div>
-                                    <h1 className="profile-name text-white">{item.giangVien.ten}</h1>
-                                    <p className="profile-username text-white">@{item.giangVien.ten.toLowerCase().replace(/\s+/g, '')}</p>
-                                    
-                                    <div className="profile-stats">
-                                        <div className="stat-item">
-                                            <span className="stat-value text-white">{TongBaiHoc}</span>
-                                            <span className="stat-label text-white">Bài học</span>
+                                    <div className="text-center mt-4">
+                                        <h1 className="profile-name text-white text-[20px]">{item.giangVien.ten}</h1>
+                                        <p className="profile-username text-white text-[14px] mt-1">@{item.giangVien.ten.toLowerCase().replace(/\s+/g, '')}</p>
+                                    </div>
+
+                                    <div className="profile-stats flex justify-center gap-12 mt-6">
+                                        <div className="stat-item text-center">
+                                            <span className="stat-value text-white text-[14px] block">{TongBaiHoc}</span>
+                                            <span className="stat-label text-white text-[14px] block mt-1">Bài học</span>
                                         </div>
-                                        <div className="stat-item">
-                                            <span className="stat-value text-white">{TongHocVien}</span>
-                                            <span className="stat-label text-white">Học viên</span>
+                                        <div className="stat-item text-center">
+                                            <span className="stat-value text-white text-[14px] block">{TongHocVien}</span>
+                                            <span className="stat-label text-white text-[14px] block mt-1">Học viên</span>
                                         </div>
-                                        <div className="stat-item">
-                                            <span className="stat-value text-white">{overallAverageRating()}</span>
-                                            <span className="stat-label text-white">Đánh giá</span>
+                                        <div className="stat-item text-center">
+                                            <span className="stat-value text-white text-[14px] block">{overallAverageRating()}</span>
+                                            <span className="stat-label text-white text-[14px] block mt-1">Đánh giá</span>
                                         </div>
                                     </div>
 
-                                    <button
-                                        onClick={follow ? handleUnfollow : handleFollow}
-                                        className={`follow-button ${follow ? 'following' : ''} w-80`}
-                                        disabled={isLoading}
-                                    >
-                                        {isLoading ? (
-                                            <span>Đang xử lý...</span>
-                                        ) : (
-                                            follow ? 'Đang Follow' : 'Follow'
-                                        )}
-                                    </button>
+                                    <div className="flex justify-center mt-6">
+                                        <button
+                                            onClick={follow ? handleUnfollow : handleFollow}
+                                            className={`follow-button ${follow ? 'following' : ''} w-80 text-[14px]`}
+                                            disabled={isLoading}
+                                        >
+                                            {isLoading ? (
+                                                <span>Đang xử lý...</span>
+                                            ) : (
+                                                follow ? 'Đang Follow' : 'Follow'
+                                            )}
+                                        </button>
+                                    </div>
 
-                                    <div className="social-links">
+                                    <div className="social-links flex justify-center gap-4 mt-6">
                                         {item.giangVien.MangXaHoi.map((social) => (
-                                            <a href={social.url} key={social.id} className="social-icon">
+                                            <a href={social.url} key={social.id} className="social-icon text-white hover:text-gray-200">
                                                 <i className={`fa-brands fa-${social.nentang}`} />
                                             </a>
                                         ))}
                                     </div>
 
-                                    <div className="bio-text text-white">
+                                    <div className="bio-text text-white text-[14px] text-center mt-6 max-w-2xl mx-auto px-4">
                                         {item.giangVien.tieusu}
                                     </div>
                                 </div>
@@ -290,45 +299,110 @@ export const Profileinsructor = () => {
                     <div className="courses-grid bg-white">
                         {data.length > 0 ? (
                             data.map((item) => (
-                                <div className="course-card bg-white shadow-sm hover:shadow-md transition-shadow duration-300" key={item.id}>
-                                    <Link href={`/page/course-detail?id=${item.id}`}>
-                                        <div className="course-thumbnail">
-                                            <Image
-                                                width={300}
-                                                height={300}
-                                                src={item.hinh}
-                                                alt="course"
-                                                className="thumbnail-image w-full h-full"
-                                            />
-                                            <button
-                                                className="like-button"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    handleYeuThich(item.id);
-                                                }}
-                                            >
-                                                <i className={`fa-${item.isLiked ? 'solid' : 'regular'} fa-heart`} />
-                                            </button>
-                                            {(item.gia === 0 || item.giamgia === 0) ? (
-                                                <span className="price-tag free text-white" style={{ background: '#fe2c55' }}>Miễn phí</span>
-                                            ) : (
-                                                <span className="price-tag discount">
-                                                    -{Math.round(((item.gia - item.giamgia) / item.gia) * 100)}%
-                                                </span>
-                                            )}
+                                <div key={item.id} className="transition flash element-item creative">
+                                    <div className="rts-single-course">
+                                        <Link
+                                            href={`/page/course-detail?id=${item.id}`}
+                                            className="thumbnail relative"
+                                        >
+                                            <div className="relative w-full h-[170px]">
+                                                <Image
+                                                    src={item.hinh}
+                                                    alt={item.ten || 'Course thumbnail'}
+                                                    width={500}
+                                                    height={300}
+                                                    className="object-cover w-full h-full"
+                                                    priority={false}
+                                                    quality={75}
+                                                    unoptimized={true}
+                                                />
+                                            </div>
+                                            <div className="course-tags">
+                                                {item.gia === 0 ? (
+                                                    <span className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                                                        Miễn phí
+                                                    </span>
+                                                ) : item.giamgia > 0 ? (
+                                                    <span className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                                                        -{Math.round(((item.gia - item.giamgia) / item.gia) * 100)}% OFF
+                                                    </span>
+                                                ) : null}
+                                            </div>
+                                        </Link>
+                                        <div
+                                            className="save-icon"
+                                            onClick={() => handleYeuThich(item.id)}
+                                        >
+                                            <i className="fa-sharp fa-light fa-bookmark text-lg" />
                                         </div>
-                                        <div className="course-info bg-white">
-                                            <h3 className="course-title">{item.ten}</h3>
-                                            <div className="course-meta">
-                                                <span className="students-count">
-                                                    <i className="fa-light fa-users" /> {item.ThanhToan.length}
-                                                </span>
-                                                <span className="rating text-black">
-                                                    {DanhGia(item.danhgia)} <i className="fa-solid fa-star text-yellow-400" />
-                                                </span>
+                                        <div className="course-card p-4 bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-xl">
+                                            <Link
+                                                href={`/page/course-detail?id=${item.id}`}
+                                                className="title-link"
+                                            >
+                                                <h5
+                                                    className="title text-2xl font-medium hover:text-primary-600 transition-all duration-300 truncate whitespace-nowrap overflow-hidden"
+                                                    title={item.ten}
+                                                >
+                                                    <strong>{item.ten}</strong>
+                                                </h5>
+                                            </Link>
+
+                                            <div className="flex flex-row space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 mt-4">
+                                                <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
+                                                    <i className="fa-light fa-calendar-lines-pen text-gray-600 text-lg" />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-lg" style={{ fontWeight: "400" }}>
+                                                            {item.baihoc.length}
+                                                            <span className="text-lg text-gray-600 uppercase tracking-wider pl-1">
+                                                                Bài
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center space-x-2 p-2 rounded-full">
+                                                    <i className="fa-light fa-user-group text-gray-600 text-xl" />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-lg" style={{ fontWeight: "400" }}>
+                                                            {item.ThanhToan.length}
+                                                            <span className="text-lg text-gray-600 uppercase tracking-wider pl-1">
+                                                                Học viên
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="rating-area text-lg p-2 flex flex-row items-center">
+                                                    <i className="fa-solid fa-star text-yellow-400" />
+                                                    <span className="rating-number ml-1 text-xl" style={{ fontWeight: "400" }}>
+                                                        {DanhGia(item.danhgia)}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="course-top relative mt-5">
+                                                <div className="price">
+                                                    {item.gia === 0 || item.giamgia === 0 ? (
+                                                        <span className="text-red-500 font-bold text-2xl">
+                                                            0 VNĐ
+                                                        </span>
+                                                    ) : (
+                                                        <div className="flex items-center">
+                                                            <span className="text-red-500 font-bold text-2xl mr-3">
+                                                                {item.giamgia.toLocaleString('vi-VN')}
+                                                                <span className="text-xl">VNĐ</span>
+                                                            </span>
+                                                            <span className="line-through text-gray-500 text-2xl">
+                                                                {item.gia.toLocaleString('vi-VN')}
+                                                                <span className="text-xl">VNĐ</span>
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </div>
                                 </div>
                             ))
                         ) : (
@@ -357,19 +431,14 @@ export const Profileinsructor = () => {
 
             .profile-cover-image {
                 position: relative;
-                height: 400px;
-                background: linear-gradient(to right, #1a1a1a, #d63384, #4a5568);
+                min-height: fit-content;
                 border-radius: 8px;
-                overflow: hidden;
+                overflow: visible;
             }
 
             .profile-info-overlay {
-                position: absolute;
-                top:0px;
-                left: 0;
-                right: 0;
+                position: relative;
                 padding: 40px;
-               
                 text-align: center;
             }
 

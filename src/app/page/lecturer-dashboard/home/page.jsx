@@ -363,7 +363,7 @@ export default function Homedashboardlecturer() {
                       size: "2.5em"
                     })}
                   </div>
-                  <h5 className="title text-xl">
+                  <h5 className="title text-[20px]">
                     <CountUp
                       end={card.value}
                       duration={2}
@@ -371,12 +371,12 @@ export default function Homedashboardlecturer() {
                       className="counter"
                     />
                   </h5>
-                  <p className="text-xl">{card.label}</p>
+                  <p className="text-[16px]">{card.label}</p>
                 </div>
               </div>
             ))}
             <div className='flex justify-center'>
-              <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê khóa học</p>
+              <p className='font-bold text-black text-[20px] mt-8 p-0'>Thống kê khóa học</p>
             </div>
             <div className='flex'>
               <CustomChart />
@@ -384,22 +384,22 @@ export default function Homedashboardlecturer() {
                 <div className="ml-4 h-full flex flex-col gap-4">
                   <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
                     <div className="flex items-center justify-center gap-2 mb-2">
-                      <FaTrophy className="text-[#ff6b6b] w-6 h-6" />
-                      <p className='text-xl font-semibold'>Khóa học bán chạy nhất</p>
+                      <FaTrophy className="text-pink-700 w-6 h-6" />
+                      <p className='text-[16px] font-semibold'>Khóa học bán chạy nhất</p>
                     </div>
                     <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocbanchay.ten}</p>
-                    <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocbanchay.ThanhToan.length}</p>
-                    <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
+                    <p className='text-5xl my-2 text-pink-700'>{khoahocbanchay.ThanhToan.length}</p>
+                    <p className='text-black text-[16px] my-2 font-medium'>Học sinh</p>
                   </div>
 
                   <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
                     <div className="flex items-center justify-center gap-2 mb-2">
-                      <FaMoneyBill className="text-[#ff6b6b] w-6 h-6" />
+                      <FaMoneyBill className="text-pink-700 w-6 h-6" />
                       <p className='text-xl font-semibold'>Khóa học có doanh thu cao nhất</p>
                     </div>
                     <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocMaxSotien.ten}</p>
-                    <p className='text-5xl my-2 text-[#ff6b6b]'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
-                    <p className='text-black text-lg my-2 font-medium'>Học sinh</p>
+                    <p className='text-5xl my-2 text-pink-700'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toLocaleString('vi-VN')  }VNĐ</p>
+        
                   </div>
                 </div>
               </div>
@@ -421,8 +421,8 @@ export default function Homedashboardlecturer() {
             <div className="row">
               <div className="col-12">
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                  <h5 className="mb-0 font-bold text-3xl text-gray-800">Các khóa học của tôi</h5>
-                  <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl shadow-md">
+                  <h5 className="mb-0 font-bold text-[20px] text-gray-800">Các khóa học của tôi</h5>
+                  <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-gradient-to-r bg-pink-700 text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl shadow-md">
                     Xem tất cả
                   </Link>
                 </div>
@@ -443,12 +443,12 @@ export default function Homedashboardlecturer() {
                               <div className="flex-1 p-6 flex flex-col justify-between gap-4">
                                 <div className="space-y-4">
                                   <div className="flex justify-between items-start gap-3">
-                                    <h6 className="card-title font-medium text-xl line-clamp-2 leading-tight max-w-[70%] text-gray-800 h-12 overflow-hidden">
+                                    <h6 className="card-title font-medium text-[14px] line-clamp-2 leading-tight max-w-[70%] text-gray-800  overflow-hidden">
                                       {item.ten}
                                     </h6>
                                     <span
                                       className={`badge ${item.trangthai === 'Hoàn thành' ? 'bg-green-500 text-white' : item.trangthai === 'notyet' ? 'bg-red-500 text-white' : ' text-pink-700'
-                                        } text-lg px-4 py-1.5 rounded-full whitespace-nowrap`}
+                                        } text-[14px] px-4 py-1.5 rounded-full whitespace-nowrap`}
                                     >
                                       {item.trangthai}
                                     </span>
@@ -584,7 +584,7 @@ const DoanhThuChart = () => {
         Thống Kê Doanh Thu theo Thời Gian
       </Typography>
       <Typography color="error">{error}</Typography>
-      <button onClick={handleReload} className="mt-4 px-4 py-2 bg-[#000000] text-white rounded">
+      <button onClick={handleReload} className="mt-4 px-4 py-2 bg-pink-700 text-white rounded">
         Reload Data
       </button>
       </Box>
@@ -598,7 +598,7 @@ const DoanhThuChart = () => {
           Thống Kê Doanh Thu theo Thời Gian
         </Typography>
         <Typography sx={{ color: '#ffffff' }}>No data available.</Typography>
-        <button onClick={handleReload} className="mt-4 px-4 py-2  bg-[#ff6b6b] text-white rounded">
+        <button onClick={handleReload} className="mt-4 px-4 py-2  bg-pink-700  text-white rounded">
           Reload Data
         </button>
       </Box>
@@ -629,7 +629,7 @@ const DoanhThuChart = () => {
           }
         }}
       >
-        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-gradient-to-r from-[#ff6b6b] to-[#ff9a9a] text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-pink-700  text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
           Reload Data
         </button>
         <motion.div
@@ -673,18 +673,19 @@ const DoanhThuChart = () => {
             displayEmpty
             sx={{
               width: '200px',
-              backgroundColor: '#ff6b6b',
+              backgroundColor: 'rgb(190, 24, 93)',
               color: '#ffffff',
               '& .MuiSelect-icon': { color: '#ffffff' },
-              '& .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' },
-              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#ff6b6b' },
+              '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgb(190, 24, 93)' },
+              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'rgb(190, 24, 93)' },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'rgb(190, 24, 93)' },
             }}
             MenuProps={{
               PaperProps: {
                 sx: {
-                  backgroundColor: '#ff6b6b',
+                  backgroundColor: 'rgb(190, 24, 93)',
                   color: '#ffffff',
+                
                 },
               },
             }}
@@ -871,7 +872,7 @@ const CustomChart = () => {
       sx={{ width: '70%' }}
       className="p-4 bg-gradient-to-r from-[#f3f4f6] to-[#e2e8f0] backdrop-blur rounded-lg h-[400px] transform transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] duration-500"
     >
-      <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-gradient-to-r from-[#ff6b6b] to-[#ff9a9a] text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+      <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-pink-700  text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
         Reload Data
       </button>
       <motion.div

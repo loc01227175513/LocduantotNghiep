@@ -2,7 +2,6 @@ import { Providers } from './providers'
 import { Fonts } from './components/common/Fonts'
 import { Analytics } from './components/common/Analytics'
 import localFont from 'next/font/local'
-import Script from 'next/script'
 
 // CSS imports
 import '../assets/css/plugins/fontawesome-6.css'
@@ -34,7 +33,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <Fonts />
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>

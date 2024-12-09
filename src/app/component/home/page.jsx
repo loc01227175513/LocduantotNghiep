@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import dynamic from 'next/dynamic';
 import Counter from "./Counter";
 
 import { Commenthome } from "../comment/comment";
@@ -21,48 +22,99 @@ import Banner from "../banner/page";
 import BannerUser from "../BannerUser/page";
 import Image from "next/image";
 import CourseDeXuat from "../../component/course/courseDeXuat";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import Link from "next/link";
 
-// Initialize AOS in useEffect
+// Remove the direct AOS import and make it fully dynamic
+const AOS = dynamic(() => import('aos').then((module) => {
+  // Import CSS inside the dynamic import
+  import('aos/dist/aos.css');
+  return module.default;
+}), {
+  ssr: false
+});
 
 export default function Homecomponent() {
   const [khoaHocDangHoc1, setKhoaHocDangHoc] = useState([]);
-  const NguoiDungString = typeof window !== 'undefined' ? localStorage.getItem('data') : null;
-  const NguoiDung = NguoiDungString ? JSON.parse(NguoiDungString) : {};
+  const [NguoiDung, setNguoiDung] = useState({});
   const [KhoaHocDaThanhToan, setKhoaHocDaThanhToan] = useState([]);
+  const [isClient, setIsClient] = useState(false);
+
+  // Check if we're on client side
   useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-      mirror: false,
-      easing: "ease-in-out",
-      anchorPlacement: "center-center",
-      offset: 100,
-    });
-  }, []);
-  useEffect(() => {
-    const fetchData = async () => {
+    setIsClient(true);
+    
+    // Initialize AOS safely
+    const initAOS = async () => {
       try {
-        const data = await KhoaHocDangHoc();
-        setKhoaHocDangHoc(data);
+        const AOS = await import('aos');
+        AOS.default.init({
+          duration: 800,
+          once: true,
+          mirror: false,
+          easing: "ease-in-out",
+          anchorPlacement: "center-center",
+          offset: 100,
+        });
       } catch (error) {
-        console.log("Failed to fetch courses", error);
+        console.error('Error initializing AOS:', error);
       }
     };
-    fetchData();
-  }, []);
-  useEffect(() => {
-    Dashboard()
-      .then((res) => {
-        setKhoaHocDaThanhToan(res.data);
 
-      })
-      .catch((error) => {
-        console.error("Error fetching dashboard data:", error);
-      });
+    initAOS();
   }, []);
+
+  // Handle localStorage
+  useEffect(() => {
+    if (isClient) {
+      const NguoiDungString = localStorage.getItem('data');
+      if (NguoiDungString) {
+        try {
+          setNguoiDung(JSON.parse(NguoiDungString));
+        } catch (error) {
+          console.error('Error parsing user data:', error);
+        }
+      }
+    }
+  }, [isClient]);
+
+  // Fetch courses
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!isClient) return;
+      
+      try {
+        const data = await KhoaHocDangHoc();
+        setKhoaHocDangHoc(data || []);
+      } catch (error) {
+        console.log("Failed to fetch courses", error);
+        setKhoaHocDangHoc([]);
+      }
+    };
+
+    fetchData();
+  }, [isClient]);
+
+  // Fetch dashboard data
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      if (!isClient) return;
+
+      try {
+        const res = await Dashboard();
+        setKhoaHocDaThanhToan(res?.data || []);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+        setKhoaHocDaThanhToan([]);
+      }
+    };
+
+    fetchDashboard();
+  }, [isClient]);
+
+  // Only render content when on client side
+  if (!isClient) {
+    return <div>Loading...</div>; // Or any loading indicator
+  }
 
   return (
     <div>

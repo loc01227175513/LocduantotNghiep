@@ -179,7 +179,7 @@ function TrangGiaKhoaHoc() {
                 <svg className="w-8 h-8 text-sky-500 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-sky-400">
+                <span className="bg-clip-text text-[16px] text-transparent bg-gradient-to-r from-sky-500 to-sky-400">
                     Giá cả khóa học
                 </span>
             </h2>
@@ -192,10 +192,10 @@ function TrangGiaKhoaHoc() {
                             className="animate-pulse" />
                     </svg>
                     <div>
-                        <h3 className="font-bold text-yellow-800">Hoàn thành ứng dụng cao cấp của bạn</h3>
-                        <p className="text-yellow-700">Đặt giá của bạn sau khi phê duyệt phương thức xuất chi</p>
+                        <h3 className="font-bold text-yellow-800 text-[14px]">Hoàn thành ứng dụng cao cấp của bạn</h3>
+                        <p className="text-yellow-700 text-[14px]">Đặt giá của bạn sau khi phê duyệt phương thức xuất chi</p>
                         <a href="/instructor/user/edit-instructor-info/"
-                            className="inline-flex items-center mt-2  hover:text-indigo-800 font-semibold transition-colors group">
+                            className="inline-flex items-center mt-2 text-[14px] hover:text-indigo-800 font-semibold transition-colors group">
                             Hoàn thành ứng dụng
                             <svg className="w-5 h-5 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -212,16 +212,16 @@ function TrangGiaKhoaHoc() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                             d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <h3 className="text-xl font-bold text-gray-800">Đặt giá khóa học của bạn</h3>
+                    <h3 className="text-[14px] font-bold text-gray-800">Đặt giá khóa học của bạn</h3>
                 </div>
-                <p className="mb-6 text-gray-600 text-xl leading-relaxed">
+                <p className="mb-6 text-gray-600 text-[14px] leading-relaxed">
                     Chọn tiền tệ ưu tiên và cấp giá của bạn.Các khóa học miễn phí phải dưới 2 giờ trong tổng chiều dài.
                     Các khóa học kiểm tra thực hành không thể được cung cấp miễn phí.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="group">
-                        <label htmlFor="currency" className="block mb-2 font-semibold text-gray-700 flex items-center">
+                        <label htmlFor="currency" className="block mb-2 text-[14px] font-semibold text-gray-700 flex items-center">
                             <svg className="w-5 h-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                     d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -233,7 +233,7 @@ function TrangGiaKhoaHoc() {
                             value={currency}
                             onChange={handleCurrencyChange}
                             className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg 
-                                 focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+                                 focus:ring-2 text-[14px] focus:ring-indigo-500 focus:border-transparent
                                  transition-all duration-200 hover:bg-gray-100">
                             {currencies.map((cur) => (
                                 <option key={cur} value={cur.toLowerCase()}>{cur}</option>
@@ -242,7 +242,7 @@ function TrangGiaKhoaHoc() {
                     </div>
 
                     <div className="group">
-                        <label htmlFor="price-tier" className="block mb-2 font-semibold text-gray-700 flex items-center">
+                        <label htmlFor="price-tier" className="block text-[14px] mb-2 font-semibold text-gray-700 flex items-center">
                             <svg className="w-5 h-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                     d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -254,7 +254,7 @@ function TrangGiaKhoaHoc() {
                             value={priceTier}
                             onChange={handlePriceTierChange}
                             className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg
-                                 focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+                                 focus:ring-2 text-[14px] focus:ring-indigo-500 focus:border-transparent
                                  transition-all duration-200 hover:bg-gray-100">
                             <option value="">Select a tier</option>
                             {priceTiers[currency].map((tier) => (
@@ -266,7 +266,7 @@ function TrangGiaKhoaHoc() {
                     </div>
 
                     <div className="group">
-                        <label htmlFor="discount" className="block mb-2 font-semibold text-gray-700 flex items-center">
+                        <label htmlFor="discount" className="block text-[14px] mb-2 font-semibold text-gray-700 flex items-center">
                             <svg className="w-5 h-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                     d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -278,7 +278,7 @@ function TrangGiaKhoaHoc() {
                             value={discount}
                             onChange={handleDiscountChange}
                             disabled={priceTier === '0'}
-                            className="w-full p-3 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg
+                            className="w-full p-3 text-[14px] text-gray-700 bg-gray-50 border border-gray-200 rounded-lg
                                  focus:ring-2 focus:ring-indigo-500 focus:border-transparent
                                  transition-all duration-200 hover:bg-gray-100
                                  disabled:opacity-50 disabled:cursor-not-allowed">
@@ -293,7 +293,7 @@ function TrangGiaKhoaHoc() {
                         type="submit"
                         disabled={isSaveDisabled}
                         className={`w-full p-3 mt-6 text-white font-semibold rounded-lg
-                          bg-gradient-to-r from-sky-500 to-sky-400
+                          bg-gradient-to-r from-sky-500 to-sky-400 text-[14px]
                           hover:from-sky-500 hover:to-sky-400
                           focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
                           transition-all duration-200 flex items-center justify-center

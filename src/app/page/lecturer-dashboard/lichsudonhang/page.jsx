@@ -60,40 +60,40 @@ export default function Khoahocdanghoc() {
               <div className="flex items-center gap-4">
                 <div className="flex gap-2 overflow-x-auto no-scrollbar">
                   <button
-                    className={`px-4 py-1.5 rounded-full text-xl font-medium transition-all duration-200 min-w-[88px] ${
+                    className={`px-4 py-1.5 rounded-full text-[14px] font-medium transition-all duration-200  h-[25px] w-[100px] ${
                       selectedTab === "day"
                         ? "bg-pink-700 text-white"
-                        : "hover:bg-pink-400 hover:text-white text-[#161823]"
+                        : "hover:bg-pink-700 hover:text-white text-[#161823]"
                     }`}
                     onClick={() => handleTabChange("day")}
                   >
                     Hôm nay
                   </button>
                   <button
-                    className={`px-4 py-1.5 rounded-full text-xl font-medium transition-all duration-200 min-w-[88px] ${
+                    className={`px-4 py-1.5 rounded-full text-[14px] font-medium transition-all duration-200 h-[25px] w-[100px] ${
                       selectedTab === "month"
                         ? "bg-pink-700 text-white"
-                        : "hover:bg-pink-400 hover:text-white text-[#161823]"
+                        : "hover:bg-pink-700 hover:text-white text-[#161823]"
                     }`}
                     onClick={() => handleTabChange("month")}
                   >
                     Tháng này
                   </button>
                   <button
-                    className={`px-4 py-1.5 rounded-full text-xl font-medium transition-all duration-200 min-w-[88px] ${
+                    className={`px-4 py-1.5 rounded-full text-[14px] font-medium transition-all duration-200 h-[25px] w-[100px] ${
                       selectedTab === "year"
                         ? "bg-pink-700 text-white"
-                        : "hover:bg-pink-400 hover:text-white text-[#161823]"
+                        : "hover:bg-pink-700 hover:text-white text-[#161823]"
                     }`}
                     onClick={() => handleTabChange("year")}
                   >
                     Năm nay
                   </button>
                   <button
-                    className={`px-4 py-1.5 rounded-full text-xl font-medium transition-all duration-200 min-w-[88px] ${
+                    className={`px-4 py-1.5 rounded-full text-[14px] font-medium transition-all duration-200 h-[25px] w-[100px] ${
                       selectedTab === "all"
                         ? "bg-pink-700 text-white"
-                        : "hover:bg-pink-400 hover:text-white text-[#161823]"
+                        : "hover:bg-pink-700 hover:text-white text-[#161823]"
                     }`}
                     onClick={() => handleTabChange("all")}
                   >
@@ -105,34 +105,34 @@ export default function Khoahocdanghoc() {
                   type="date"
                   value={selectedDate}
                   onChange={handleDateChange}
-                  className="px-3 py-1.5 w-32 h-10 rounded-lg border border-[#1618231f] text-xl focus:outline-none focus:border-[#16182333] transition-colors min-w-[140px]"
+                  className="px-3 py-1.5 w-32 h-10 rounded-lg border border-[#1618231f] text-[14px] focus:outline-none focus:border-[#16182333] transition-colors min-w-[140px]"
                 />
               </div>
             </div>
           </div>
 
-          <h4 className="mb-4 text-xl">Lịch sử đơn hàng</h4>
+          <h4 className="mb-4 text-[20px] font-bold">Lịch sử đơn hàng</h4>
            
          <div className="table-responsive">
             {tabFilteredLecturer && tabFilteredLecturer.length > 0 ? (
               <table className="table table-hover">
                 <thead>
                   <tr className="table-light">
-                    <th className="p-3 text-left text-xl">ID đơn hàng</th>
-                    <th className="p-3 text-left text-xl">Tên khóa học</th>
-                    <th className="p-3 text-left text-xl">Ngày</th>
-                    <th className="p-3 text-left text-xl">Giá</th>
-                    <th className="p-3 text-left text-xl">Trạng thái</th>
+                    <th className="p-3 text-left text-[14px] font-normal">ID đơn hàng</th>
+                    <th className="p-3 text-left text-[14px] font-normal">Tên khóa học</th>
+                    <th className="p-3 text-left text-[14px] font-normal">Ngày</th>
+                    <th className="p-3 text-left text-[14px] font-normal">Giá</th>
+                    <th className="p-3 text-left text-[14px] font-normal">Trạng thái</th>
                   </tr>
                 </thead>
                 <tbody>
                   {tabFilteredLecturer.map((item) => (
                     <tr key={item.id}>
-                      <td className="p-3 align-middle text-left text-xl"># {item.id}</td>
-                      <td className="p-3 align-middle text-break text-left text-xl">{item.khoahocs.ten}</td>
-                      <td className="p-3 align-middle text-left text-xl">{new Date(item.updated_at).toLocaleDateString("vi-VN")}</td>
-                      <td className="p-3 align-middle text-left text-xl">{item.gia === 0 ? 'Miễn phí' : new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.gia)}</td>
-                      <td className="p-3 align-middle text-left text-xl">
+                      <td className="p-3 align-middle text-left text-[14px]"># {item.id}</td>
+                      <td className="p-3 align-middle text-break text-left text-[14px]">{item.khoahocs.ten}</td>
+                      <td className="p-3 align-middle text-left text-[14px]">{new Date(item.updated_at).toLocaleDateString("vi-VN")}</td>
+                      <td className="p-3 align-middle text-left text-[14px]">{item.gia === 0 ? 'Miễn phí' : new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.gia)}</td>
+                      <td className="p-3 align-middle text-left text-[14px]">
                         <span className={`badge rounded-pill ${
                           item.trangthai === 'Đã Thanh Toán' ? 'bg-danger' : 
                           item.trangthai === 'Đang xử lý' ? 'bg-warning' : 'bg-secondary'

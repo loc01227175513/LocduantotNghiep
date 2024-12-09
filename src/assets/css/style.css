@@ -26733,7 +26733,7 @@ edit .quantity-edit button {
   border: none;
   margin: 0 0;
   color: #110C2D;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 28px;
@@ -26741,7 +26741,7 @@ edit .quantity-edit button {
 .exrolled-course-wrapper-dashed .nav-tabs li button.active {
   border-bottom: 3px solid #be185d;
   color: #be185d;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 28px;

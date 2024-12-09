@@ -210,12 +210,15 @@ const CouponForm = () => {
           color="gray.700"
           textAlign="center"
           fontWeight="extrabold"
+          className="text-[16px]"
+          
         >
           Mã Giảm Giá Khóa Học
         </Heading>
         <Box mb={8} px={6} bg="gray.100" p={6} rounded="xl">
           <SimpleGrid columns={{ base: 1, md: 4 }} spacing={4}>
             <Select
+              className="text-[14px]"
               placeholder="Lọc theo % giảm giá"
               variant="filled"
               bg="white"
@@ -421,6 +424,7 @@ const CouponForm = () => {
               width={100}
               px={8}
               shadow="md"
+              
             >
               Xuất bản
               <i className="fa-light fa-arrow-right ml-2" />

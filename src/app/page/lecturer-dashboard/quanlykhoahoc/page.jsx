@@ -113,7 +113,7 @@ export default function Quanlykhoahoc() {
               <div className="hover:cursor-pointer">
                 <div className="addkhoahoc" onClick={() => openformaddlesson()}>
                   <i className="bi bi-plus-square text-2xl"></i>
-                  <span className="mx-2 text-2xl">Thêm khóa học</span> 
+                  <span className="mx-2 text-[16px]">Thêm khóa học</span> 
                 </div>
               </div>
             )}
@@ -132,18 +132,18 @@ export default function Quanlykhoahoc() {
               <div className="div-add-khoahoc">
                 <div className="">
                   <div className="p-4 ">
-                    <p className="text-3xl font-bold ">Thêm khóa học</p>
+                    <p className="text-[20px] font-bold ">Thêm khóa học</p>
                   </div>
                   <form onSubmit={handleAddCourse}>
                     <div className="p-4 ">
-                      <p className="my-2 font-semibold text-2xl">Tên khóa học</p>
+                      <p className="my-2 font-semibold text-[16px]">Tên khóa học</p>
                       <span className="rounded-xl">
                         <input
                           type="text"
                           value={tieude}
                           onChange={(e) => setTieude(e.target.value)}
                           placeholder="Nhập tên khóa học"
-                          className="w-full p-2 border placeholder:text-xl text-xl"
+                          className="w-full p-2 border placeholder:text-[14px] text-[14px] rounded-xl"
                         />
                       </span>
                     </div>
@@ -151,13 +151,13 @@ export default function Quanlykhoahoc() {
                     <div className="p-4 ">
                       <div className="flex justify-between">
                         <section>
-                          <label className="text-2xl my-2 font-semibold">Thể loại</label>
+                          <label className="text-[16px] my-2 font-semibold">Thể loại</label>
                           <select
-                            className="text-xl"
+                            className="text-[14px]"
                             id="category-select"
                             onChange={(e) => setSelectedCategory(e.target.value)}
                           >
-                            <option value="" className="text-xl font-semibold">Chọn thể loại</option>
+                            <option value="" className="text-[14px] font-semibold">Chọn thể loại</option>
                             {chude &&
                               chude.map((chudeItem) =>
                                 chudeItem.theloaicons.map((theloaiItem) => (
@@ -172,9 +172,9 @@ export default function Quanlykhoahoc() {
                           </select>
                         </section>
                         <section>
-                          <label className="text-2xl my-2 font-semibold">Chủ đề</label>
+                          <label className="text-[16px] my-2 font-semibold">Chủ đề</label>
                           <select
-                            className="text-xl"
+                            className="text-[14px]"
                             id="course-select"
                             onChange={(e) => setSelectedChude(e.target.value)}
                           >
@@ -194,7 +194,7 @@ export default function Quanlykhoahoc() {
                       </div>
                     </div>
                     <div className="flex justify-center m-4 ">
-                      <button className="px-8  text-xl font-medium p-2  border border-white text-white rounded-lg bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 hover:from-pink-700 hover:to-pink-500  transition-all duration-300 transform hover:scale-105 shadow-lg">
+                      <button className="px-8  text-[14px] font-medium p-2  border border-white text-white rounded-lg bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 hover:from-pink-700 hover:to-pink-500  transition-all duration-300 transform hover:scale-105 shadow-lg">
                         Xác Nhận
                       </button>
                     </div>
@@ -208,12 +208,12 @@ export default function Quanlykhoahoc() {
                 <select
                   id="course-select"
                   onChange={(e) => setSelectedStatus(e.target.value)}
-                  className="custom-select text-2xl"
+                  className="custom-select text-[14px]"
                 >
-                    <option value="" className="font-bold text-2xl">Tất cả khóa học</option>
-                    <option value="active" className="text-2xl">Đang phát hành</option>
-                    <option value="Notyet" className="text-2xl">Bản Nháp</option>
-                    <option value="Pending" className="text-2xl">Đã hoàn thành</option>
+                    <option value="" className="font-bold text-[14px]">Tất cả khóa học</option>
+                    <option value="active" className="text-[14px]">Đang phát hành</option>
+                    <option value="Notyet" className="text-[14px]">Bản Nháp</option>
+                    <option value="Pending" className="text-[14px]">Đã hoàn thành</option>
                 </select>
               </section>
               <form className="search-form my-4">
@@ -222,7 +222,7 @@ export default function Quanlykhoahoc() {
                   <input
                     type="pk"
                     placeholder="Tìm kiếm khóa học..."
-                    className="search-input h-10 border text-xl placeholder:text-xl"
+                    className="search-input h-10 border text-[14px] placeholder:text-[14px]"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -267,7 +267,7 @@ export default function Quanlykhoahoc() {
                       </Link>
 
                       <div className="information-progress-course pt-2">
-                        <h5 className="text-3xl">{item.ten}</h5>
+                        <h5 className="text-[16px]">{item.ten}</h5>
                         <div className="progress-wrapper-lesson-compleate mt-4">
                           <div className="progress">
                             <div
@@ -279,7 +279,7 @@ export default function Quanlykhoahoc() {
                               aria-valuemax={100}
                             ></div>
                           </div>
-                          <div className="end text-2xl">
+                          <div className="end text-[14px]">
                             <span>{Number(widthPercentage).toFixed(0)}% Hoàn thành</span>
                           </div>
                         </div>

@@ -543,6 +543,7 @@ const Password = () => {
                 style={{
                   position: 'absolute',
                   right: '0.75rem',
+                  width: '40px',
                   top: '50%',
                   transform: 'translateY(-50%)',
                   background: 'none',

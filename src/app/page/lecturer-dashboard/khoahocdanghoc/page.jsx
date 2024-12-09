@@ -31,7 +31,7 @@ export default function Khoahoccuatoi() {
   return (
     <div className="overflow-y-scroll col-lg-9 ịadkljas">
       <div className="exrolled-course-wrapper-dashed">
-        <p className="text-black text-3xl font-bold">Khóa học của tôi</p>
+        <p className="text-black text-[20px]  font-bold">Khóa học của tôi</p>
 
         <ul className="nav nav-tabs custom-tabs" id="myTab" role="tablist">
           {[

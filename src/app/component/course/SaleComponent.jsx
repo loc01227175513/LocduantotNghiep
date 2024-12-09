@@ -5,6 +5,16 @@ import { TatCaKhuyenMaiKhoaHoc } from '../../../service/khuyenmai/khuyenmai';
 import { toast } from 'react-toastify';
 import { KhoaHocYeuThich } from "../../../service/YeuThich/YeuThich";
 import Link from 'next/link';
+
+const toastConfig = {
+    position: "bottom-right",
+    closeButton: (
+        <div className="w-10 h-10 flex items-center justify-center">
+            <i className="fas fa-times"></i>
+        </div>
+    )
+};
+
 export default function SaleComponent() {
     const [showTimeSlots, setShowTimeSlots] = useState(false);
     const [KhuyenMai, setKhuyenMai] = useState([]);
@@ -58,7 +68,7 @@ export default function SaleComponent() {
                 }
             } catch (error) {
                 console.error('Fetch error:', error);
-                toast.error("Failed to fetch vouchers.");
+                toast.error("Failed to fetch vouchers.", toastConfig);
             } finally {
                 setLoading(false);
             }
@@ -224,10 +234,10 @@ export default function SaleComponent() {
         try {
             const response = await KhoaHocYeuThich(id);
             console.log(response);
-            toast.success("Added to favorites!");
+            toast.success("Added to favorites!", toastConfig);
         } catch (error) {
             console.error("Error:", error);
-            toast.error("Error adding to favorites!");
+            toast.error("Error adding to favorites!", toastConfig);
         }
     };
 

@@ -167,19 +167,19 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
                   </span>
                   <div className="flex space-x-2">
                     <button
-                      className="px-3 py-1 text-sm w-36 text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
+                      className="px-3 py-1 text-[14px] w-36 text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
                       onClick={() => handleDeleteQuizItem(quiz.id_baihoc, item.id_baitracnghiem)}
                     >
                       Xóa
                     </button>
                     <button
-                      className="px-3 py-1 text-sm w-36 text-blue-600 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors"
+                      className="px-3 py-1 text-[14px] w-60 text-blue-600 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors"
                       onClick={() => openModal(quiz.id_baihoc, item.id_baitracnghiem)}
                     >
                       Thêm câu hỏi
                     </button>
                     <button
-                      className="px-3 py-1 text-sm w-36  text-green-600 bg-green-100 rounded-full hover:bg-green-200 transition-colors"
+                      className="px-3 py-1 text-[14px] w-60  text-green-600 bg-green-100 rounded-full hover:bg-green-200 transition-colors"
                       onClick={() => toggleShowQuestions(item.id_baitracnghiem, quiz.id_baihoc)}
                     >
                       {quizQuestions[item.id_baitracnghiem] ? 'Ẩn câu hỏi' : 'Hiện câu hỏi'}
@@ -212,19 +212,19 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
           <div className="p-5 bg-white rounded-lg relative">
             <button
               onClick={() => setIsQuestionModalOpen(false)}
-              className="absolute top-2 right-2 p-2 text-gray-500 hover:text-gray-700"
+              className="absolute top-0 right-2  text-[30px] w-10 h-10 text-gray-500 hover:text-gray-700"
             >
               &times;
             </button>
-            <h2 className="mb-4 text-xl text-black">Nhập câu hỏi trắc nghiệm mới</h2>
+            <h2 className="mb-4 text-[14px]  text-black">Nhập câu hỏi trắc nghiệm mới</h2>
             {questions.map((question, qIndex) => (
               <div key={qIndex} className="mb-6">
-                <div className="font-medium text-gray-700 mb-2">Câu hỏi số {qIndex + 1}</div>
+                <div className="font-medium text-[14px]  text-gray-700 mb-2">Câu hỏi số {qIndex + 1}</div>
                 <input
                   type="text"
                   value={question.title}
                   onChange={(e) => handleQuestionChange(qIndex, 'title', e.target.value)}
-                  className="w-full p-2 border border-black"
+                  className="w-full p-2 text-[14px] placeholder:text-[14px] border border-black"
                   placeholder={`Nhập câu hỏi số ${qIndex + 1}`}
                 />
                 {question.answers.map((answer, aIndex) => (
@@ -233,18 +233,18 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
                       type="text"
                       value={answer.text}
                       onChange={(e) => handleAnswerChange(qIndex, aIndex, 'text', e.target.value)}
-                      className="w-full p-2 border border-black"
+                      className="w-full p-2 text-[14px] placeholder:text-[14px] border  border-black"
                       placeholder={`Nhập câu trả lời số ${aIndex + 1}`}
                     />
                     <button
                       onClick={() => handleRemoveAnswer(qIndex, aIndex)}
-                      className="px-4 py-1 mt-2 text-white bg-red-500 rounded-lg"
+                      className="px-4 py-1 mt-2 text-[14px] text-white bg-red-500 rounded-lg"
                     >
                       Xóa câu trả lời
                     </button>
                     <button
                       onClick={() => handleCorrectAnswer(qIndex, aIndex)}
-                      className={`px-4 py-1 mt-2 ml-2 rounded-lg ${answer.is_correct === 1 ? 'bg-green-500 text-white' : 'bg-gray-200 text-black'}`}
+                      className={`px-4 py-1 mt-2 ml-2 text-[14px] rounded-lg ${answer.is_correct === 1 ? 'bg-green-500 text-white' : 'bg-gray-200 text-black'}`}
                     >
                       {answer.is_correct === 1 ? 'Đáp án đúng' : 'Chọn đáp án đúng'}
                     </button>
@@ -252,12 +252,12 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
                 ))}
                 <button
                   onClick={() => handleAddAnswer(qIndex)}
-                  className="px-4 py-2 mt-4 text-white bg-green-500 rounded-lg"
+                  className="px-4 py-2 mt-4 text-[14px] text-white bg-green-500 rounded-lg"
                 >
                   + Thêm câu trả lời
                 </button>
                 {qIndex < questions.length - 1 && (
-                  <div className="border-b border-gray-300 mt-4"></div>
+                  <div className="border-b text-[14px] border-gray-300 mt-4"></div>
                 )}
               </div>
             ))}
@@ -270,13 +270,13 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
             <div className="flex justify-end mt-4">
               <button
                 onClick={() => setIsQuestionModalOpen(false)}
-                className="p-2 mr-2 bg-gray-300 rounded"
+                className="p-2 mr-2 text-[14px] bg-gray-300 rounded"
               >
                 Hủy
               </button>
               <button
                 onClick={handleAddQuestion}
-                className="p-2 text-white bg-blue-500 rounded"
+                className="p-2 text-[14px] text-white bg-blue-500 rounded"
               >
                 Thêm
               </button>
@@ -289,29 +289,28 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
           <div className="p-5 bg-white rounded-lg relative w-[80%] h-[80%]">
             <button
               onClick={() => setShowQuestionsModal(false)}
-              className="absolute top-2 right-2  w-20 h-20  text-gray-500 hover:text-gray-700 border border-gray-500 rounded-full "
-              style={{ fontSize: '2rem' }}
+              className="absolute top-2 right-2 w-10 h-10 flex items-center justify-center text-[24px] text-gray-500 hover:text-gray-700 bg-white hover:bg-gray-100 border border-gray-300 rounded-full shadow-sm transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
             >
               &times;
             </button>
-            <h2 className="mb-4 text-xl text-black">Danh sách câu hỏi</h2>
+            <h2 className="mb-4 text-[14px]  text-black">Danh sách câu hỏi</h2>
             <div className="overflow-y-auto h-full">
               {currentQuestions.questions.map((question, qIndex) => (
-                <div key={qIndex} className="p-2 border border-gray-300 rounded mb-4 bg-gray-100">
+                <div key={qIndex} className="p-2 border text-[14px] border-gray-300 rounded mb-4 bg-gray-100">
                   {Array.isArray(question.cau_hoi) && question.cau_hoi.map((hoi, hoiIndex) => (
                     <div key={hoiIndex} className="mb-4">
-                      <div className="flex justify-between items-center font-medium text-gray-800 mb-2 text-2xl">
+                      <div className="flex justify-between items-center font-medium text-gray-800 mb-2 text-[14px]">
                         {qIndex + 1}.{hoiIndex + 1} {hoi}
                         <button
                           onClick={() => handleDeleteQuestion(currentQuestions.BaihocidNe, currentQuestions.quizId, hoiIndex)}
-                          className="px-3 py-1 text-sm w-20 text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
+                          className="px-3 py-1 text-[14px] w-20 text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
                         >
                           Xóa
                         </button>
                       </div>
-                      <div className="text-gray-600 ml-4">
+                      <div className="text-gray-600 text-[14px] ml-4">
                         {Array.isArray(question.cau_traloi) && question.cau_traloi[hoiIndex] && question.cau_traloi[hoiIndex].map((answer, aIndex) => (
-                          <div key={answer.stt} className="ml-2 text-xl">
+                          <div key={answer.stt} className="ml-2 text-[14px]">
                             {aIndex + 1}. {answer.text} {answer.is_correct === 1 ? '(Đúng)' : ''}
                           </div>
                         ))}
@@ -516,23 +515,23 @@ if(trolai){
   };
   return (
     <div className="p-6 bg-white rounded-lg shadow-md max-w-full mx-auto">
-      <h2 className="text-2xl font-semibold mb-4 text-center">Tìm kiếm Video Khoá Học</h2>
+      <h2 className="text-[16px] font-semibold mb-4 text-center">Tìm kiếm Video Khoá Học</h2>
       <button
         type="button"
         onClick={() => setTrolai(true)}
-        className="bg-sky-500 hover:bg-sky-700 w-52 mb-2 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
+        className="bg-sky-500 hover:bg-sky-700 w-52 mb-2 text-[14px] text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
       >
         Trở lại
       </button>
       <button
         type="button"
         onClick={() => setShowUrlList(!showUrlList)}
-        className="bg-green-500 hover:bg-green-700 w-52 mb-2 ml-2 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
+        className="bg-green-500 hover:bg-green-700 text-[14px] w-72 mb-2 ml-2 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
       >
         {showUrlList ? 'Ẩn Danh Sách URL' : 'Hiện Danh Sách URL'}
       </button>
       {showUrlList && <DanhSachURL urls={urls} onClose={() => setShowUrlList(false)} handleDeleteUrl={handleDeleteUrl} />}
-      <div className="search-container flex items-center space-x-2 mb-6 text-xl">
+      <div className="search-container flex items-center space-x-2 mb-6 text-[14px] placeholder:text-[14px]">
         <input
           type="text"
           value={query}
@@ -547,7 +546,7 @@ if(trolai){
         />
         <button
           onClick={searchYouTube}
-          className={`bg-blue-500 hover:bg-blue-700 w-32 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`bg-sky-500 hover:bg-sky-700 w-40 text-[14px] text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={loading}
         >
           {loading ? 'Đang tìm kiếm...' : 'Tìm kiếm'}
@@ -723,7 +722,7 @@ const NoiDungBaiHoc = ({
       <div className="flex gap-4 mb-4">
         <button
           onClick={() => setLayvideoKhoaHoc(true)}
-          className="bg-blue-600 hover:bg-blue-700 w-60 text-white font-bold py-2.5 px-6 rounded-md  transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2"
+          className="bg-blue-600 hover:bg-blue-700 w-[178px] text-white font-bold py-2.5 px-6 rounded-md  transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 text-[14px]"
         >
           <i className="fas fa-video"></i>
           Lấy video khoá học
@@ -731,7 +730,7 @@ const NoiDungBaiHoc = ({
         <button
           type="button" 
           onClick={() => setShowUrlList(!showUrlList)}
-          className="bg-green-500 hover:bg-green-700 w-60 text-white font-bold py-2.5 px-6 rounded-md transition-colors duration-300"
+          className="bg-green-500 hover:bg-green-700 w-[178px]  text-white font-bold py-2.5 px-6 rounded-md transition-colors duration-300 text-[14px]"
         >
           {showUrlList ? 'Ẩn Danh Sách URL' : 'Hiện Danh Sách URL'}
         </button>
@@ -763,26 +762,26 @@ const NoiDungBaiHoc = ({
                           className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-blue-700"
                           {...provided.dragHandleProps}
                         >
-                          <span className="font-semibold text-white text-2xl">{item.name}</span>
+                          <span className="font-semibold text-white text-[14px]">{item.name}</span>
                           <div className="flex space-x-3">
                             <button
                               onClick={() => {
                                 setIsSubModalOpen(true);
                                 setCurrentItemId(item.id);
                               }}
-                              className="px-3 py-1.5 text-sm w-40 font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-colors"
+                              className="px-3 py-1.5 text-[14px] w-60 font-medium text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-colors"
                             >
                               + Thêm Sub Item
                             </button>
                             <button
                               onClick={() => handleExpandLesson(item.id)}
-                              className="px-3 py-1.5 text-sm font-medium  w-24 text-white bg-blue-500 rounded-full hover:bg-blue-400 transition-colors"
+                              className="px-3 py-1.5 text-[14px] font-medium  w-40 text-white bg-blue-500 rounded-full hover:bg-blue-400 transition-colors"
                             >
                               Mở rộng
                             </button>
                             <button
                               onClick={() => handleRemoveItem(item.id)}
-                              className="px-3 py-1.5 text-sm font-medium w-24 text-white bg-red-500 rounded-full hover:bg-red-400 transition-colors"
+                              className="px-3 py-1.5 text-[14px] font-medium w-40 text-white bg-red-500 rounded-full hover:bg-red-400 transition-colors"
                             >
                               Xóa
                             </button>
@@ -791,7 +790,7 @@ const NoiDungBaiHoc = ({
                                 setIsQuestionModalOpen(true);
                                 setCurrentItemId(item.id);
                               }}
-                              className="px-3 py-1.5 w-40  text-sm font-medium text-green-600 bg-white rounded-full hover:bg-green-50 transition-colors"
+                              className="px-3 py-1.5 w-60  text-[14px] font-medium text-green-600 bg-white rounded-full hover:bg-green-50 transition-colors"
                             >
                               + Thêm trắc nghiệm
                             </button>
@@ -825,13 +824,13 @@ const NoiDungBaiHoc = ({
                                                 setIsContentModalOpen(true);
                                                 setCurrentSubItemId(subItem.id);
                                               }}
-                                              className="px-3 py-1 w-24 text-sm text-yellow-600 bg-yellow-100 rounded-full hover:bg-yellow-200 transition-colors"
+                                              className="px-3 py-1 w-40 text-[12px] text-yellow-600 bg-yellow-100 rounded-full hover:bg-yellow-200 transition-colors"
                                             >
                                               Nội Dung
                                             </button>
                                             <button
                                               onClick={() => handleRemoveSubItem(item.id, subItem.id)}
-                                              className="px-3 py-1 w-24  text-sm text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
+                                              className="px-3 py-1 w-40  text-[14px] text-red-600 bg-red-100 rounded-full hover:bg-red-200 transition-colors"
                                             >
                                               Xóa
                                             </button>
@@ -856,31 +855,31 @@ const NoiDungBaiHoc = ({
             {provided.placeholder}
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-6 py-3 mt-6 text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full font-medium hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-sm hover:shadow focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+              className="px-6 py-3 mt-6 text-[14px] text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full font-medium hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-sm hover:shadow focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
             >
               + Thêm Phần Mới
             </button>
             {isModalOpen && (
               <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
                 <div className="p-5 bg-white rounded-lg">
-                  <h2 className="mb-4 text-xl text-black">Nhập tên phần mới</h2>
+                  <h2 className="mb-4 text-[14px]  text-black">Nhập tên phần mới</h2>
                   <input
                     type="text"
                     value={newItemName}
                     onChange={(e) => setNewItemName(e.target.value)}
-                    className="w-full p-2 bg-red-500 border border-black"
+                    className="w-full  p-2 text-[14px] placeholder:text-[14px] bg-red-500 border border-black"
                     placeholder="Tên phần"
                   />
                   <div className="flex justify-end mt-4">
                     <button
                       onClick={() => setIsModalOpen(false)}
-                      className="p-2 mr-2 bg-gray-300 rounded"
+                      className="p-2 mr-2 bg-gray-300 rounded text-[14px]"
                     >
                       Hủy
                     </button>
                     <button
                       onClick={handleAddItem}
-                      className="p-2 text-white bg-blue-500 rounded"
+                      className="p-2 text-white bg-blue-500 rounded text-[14px]"
                     >
                       Thêm
                     </button>
@@ -892,24 +891,24 @@ const NoiDungBaiHoc = ({
             {isSubModalOpen && (
               <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
                 <div className="p-5 bg-white rounded-lg">
-                  <h2 className="mb-4 text-xl text-black">Nhập tên Sub Item mới</h2>
+                  <h2 className="mb-4 text-[14px]  text-black">Nhập tên Sub Item mới</h2>
                   <input
                     type="text"
                     value={newSubItemName}
                     onChange={(e) => setNewSubItemName(e.target.value)}
-                    className="w-full p-2 bg-red-500 border border-black"
+                    className="w-full p-2 text-[14px] placeholder:text-[14px] bg-red-500 border border-black"
                     placeholder="Tên Sub Item"
                   />
                   <div className="flex justify-end mt-4">
                     <button
                       onClick={() => setIsSubModalOpen(false)}
-                      className="p-2 mr-2 bg-gray-300 rounded"
+                      className="p-2 mr-2 bg-gray-300 rounded text-[14px]"
                     >
                       Hủy
                     </button>
                     <button
                       onClick={() => handleAddSubItem(currentItemId)}
-                      className="p-2 text-white bg-blue-500 rounded"
+                      className="p-2 text-[14px] text-white bg-blue-500 rounded"
                     >
                       Thêm
                     </button>
@@ -921,7 +920,7 @@ const NoiDungBaiHoc = ({
             {isContentModalOpen && (
               <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
                 <div className="p-5 bg-white rounded-lg">
-                  <h2 className="mb-4 text-xl text-black">Nhập URL nội dung mới</h2>
+                  <h2 className="mb-4 text-[14px] text-black">Nhập URL nội dung mới</h2>
                   <input
                     type="text"
                     value={newContentUrl}
@@ -963,30 +962,30 @@ const NoiDungBaiHoc = ({
             {isQuestionModalOpen && (
               <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 modal">
                 <div className="p-5 bg-white rounded-lg">
-                  <h2 className="mb-4 text-xl text-black">Nhập câu hỏi trắc nghiệm mới</h2>
+                  <h2 className="mb-4 text-[14px]  text-black">Nhập câu hỏi trắc nghiệm mới</h2>
                   <input
                     type="text"
                     value={newQuestionTitle}
                     onChange={(e) => setNewQuestionTitle(e.target.value)}
-                    className="w-full p-2 bg-red-500 border text-xl "
+                    className="w-full p-2 text-[14px] placeholder:text-[14px] bg-red-500 border text-xl "
                     placeholder="Tiêu đề"
                   />
                   <textarea
                     value={newQuestionDescription}
                     onChange={(e) => setNewQuestionDescription(e.target.value)}
-                    className="w-full p-2 mt-2 border text-xl "
+                    className="w-full p-2 mt-2 border text-[14px] placeholder:text-[14px] "
                     placeholder="Mô tả"
                   />
                   <div className="flex justify-end mt-4">
                     <button
                       onClick={() => setIsQuestionModalOpen(false)}
-                      className="p-2 mr-2 bg-gray-300 rounded"
+                      className="p-2 mr-2 bg-gray-300 rounded text-[14px]"
                     >
                       Hủy
                     </button>
                     <button
                       onClick={() => handleAddQuestion(currentItemId)}
-                      className="p-2 text-white bg-blue-500 rounded"
+                      className="p-2 text-[14px] text-white bg-blue-500 rounded"
                     >
                       Thêm
                     </button>
