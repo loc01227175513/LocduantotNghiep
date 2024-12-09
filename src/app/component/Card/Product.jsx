@@ -43,7 +43,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
               <div className="flex flex-col">
                 <span className="text-xl font-medium">
                   {baihocs}
-                  <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">Lessons</span>
+                  <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">Bài</span>
                 </span>
               </div>
             </div>
@@ -52,7 +52,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
               <div className="flex flex-col">
                 <span className="text-xl font-medium">
                   {dangky}
-                  <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">Students</span>
+                  <span className="text-sm text-gray-600 uppercase tracking-wider pl-2">Học viên</span>
                 </span>
               </div>
             </div>

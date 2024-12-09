@@ -31,9 +31,9 @@ export default function Khoahoccuatoi() {
   return (
     <div className="overflow-y-scroll col-lg-9 ">
       <div className="exrolled-course-wrapper-dashed">
-        <p className="text-black text-3xl font-bold">khóa học của tôi</p>
+        <p className="text-black text-[20px] font-bold">Khóa học của tôi</p>
 
-        <ul className="nav nav-tabs custom-tabs" id="myTab" role="tablist">
+        <ul className="nav nav-tabs custom-tabs " id="myTab" role="tablist">
           {[
             { id: 1, label: 'Khóa học đang học', target: 'home' },
             { id: 2, label: 'Khóa học đã thanh toán', target: 'profile' },
@@ -43,7 +43,7 @@ export default function Khoahoccuatoi() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`nav-link ${page === tab.id ? 'active' : ''}`}
+                className={`nav-link text-xl ${page === tab.id ? 'active' : ''} ` }
                 onClick={() => switchTab(tab.id)}
                 data-bs-toggle="tab"
                 data-bs-target={`#${tab.target}`}
@@ -55,11 +55,11 @@ export default function Khoahoccuatoi() {
           ))}
         </ul>
 
-        <div className="tab-content mt--30" id="myTabContent">
+        <div className="tab-content mt--30 " id="myTabContent">
           <AnimatePresence mode="wait">
             <motion.div
               key={page}
-              initial="enter"
+              initial="enter" 
               animate="center"
               exit="exit"
               variants={tabVariants}
@@ -111,7 +111,7 @@ export default function Khoahoccuatoi() {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.8rem;
+    font-size: 16px;
     margin-bottom: 25px;
     font-weight: 700;
   }

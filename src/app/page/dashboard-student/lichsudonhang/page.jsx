@@ -98,7 +98,7 @@ export default function Khoahocdanghoc() {
   };
 console.log(orderDetails);
   return (
-    <div className="overflow-y-scroll col-lg-9 h-lvh p-4 font-[Roboto]">
+    <div className="overflow-y-scroll col-lg-9 h-lvh p-4">
       <div className="bg-white rounded-lg shadow-sm p-6">
         <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
           {/* Tabs */}
@@ -106,7 +106,7 @@ console.log(orderDetails);
             {['today', 'monthly', 'yearly'].map(tabType => (
               <li key={tabType}>
                 <button
-                  className={`px-6 py-2 rounded-full text-[14px] font-medium transition-all ${
+                  className={`px-6 py-2 rounded-full text-[14px] transition-all ${
                     tab === tabType
                       ? 'bg-pink-700 text-white shadow-md'
                       : 'bg-gray-100 hover:bg-gray-200'
@@ -150,7 +150,7 @@ console.log(orderDetails);
             >
               <div className="p-4">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-[16px] font-medium">#{item.id}</span>
+                  <span className="text-[16px] ">#{item.id}</span>
                   <span className={`px-3 py-1 rounded-full text-[12px] font-medium
                     ${item.trangthai === 'completed' ? 'bg-green-100 text-green-600' : 
                       item.trangthai === 'pending' ? 'bg-yellow-100 text-pink-700' : 
@@ -165,15 +165,16 @@ console.log(orderDetails);
                     <span>{calculateMinutesDifference(item.created_at)}</span>
                   </div>
                   <div className="flex items-center text-gray-800">
-                    <i className="fas fa-dollar-sign mr-2"></i>
-                    <span className="text-[18px] font-bold">{item.tong}</span>
+                    
+                    <span className="text-[18px] ">{item.tong}VNĐ</span>
+                   
                   </div>
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-100">
                   <button 
                     onClick={() => handleViewDetails(item.id)}
-                    className="w-full py-2 bg-pink-400 text-white text-[14px] font-medium rounded-lg hover:bg-pink-300 transition-colors duration-300"
+                    className="w-full py-2 bg-pink-700 text-white text-[14px]  rounded-lg hover:bg-pink-300 transition-colors duration-300"
                   >
                     Xem chi tiết
                   </button>

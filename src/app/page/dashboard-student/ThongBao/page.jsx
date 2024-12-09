@@ -78,7 +78,7 @@ const Page = () => {
                 ) : (
                   <div className="flex flex-col items-center justify-center p-8 bg-white rounded shadow">
                     <FaBell className="text-gray-400 text-5xl mb-4" />
-                    <p className="text-gray-500 text-lg">Không có thông báo nào</p>
+                    <p className="text-gray-500 text-xl">Không có thông báo nào</p>
                   </div>
                 )}
               </div>

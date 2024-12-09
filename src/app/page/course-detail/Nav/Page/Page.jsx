@@ -110,21 +110,21 @@ export default function Page({ course, formattedTotalTime }) {
               variants={itemVariants}
               whileHover={{ 
                 scale: 1.05,
-                boxShadow: "0 0 8px rgb(59, 130, 246)",
+                boxShadow: "0 0 8px rgb(236, 72, 153)",
                 transition: { duration: 0.2 }
               }}
               whileTap={{ scale: 0.95 }}
               className={`flex-1 text-center py-3 relative ${
                 page === value
-                  ? 'bg-blue-500 text-white'
-                  : 'text-gray-700 hover:bg-blue-50'
+                  ? 'bg-pink-700 text-white'
+                  : 'text-gray-700 hover:bg-pink-50'
               } transition-all duration-200 ease-in-out rounded-md mx-1 text-2xl `}
               onClick={() => handlePageChange(value)}
             >
               {label}
               {page === value && (
                 <motion.div
-                  className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"
+                  className="absolute bottom-0 left-0 w-full h-0.5 bg-pink-700"
                   layoutId="underline"
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />

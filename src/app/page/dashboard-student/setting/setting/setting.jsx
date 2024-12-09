@@ -108,6 +108,7 @@ const Profile = () => {
                 borderRadius: '50%',
                 objectFit: 'cover',
                 border: '4px solid #2563eb',
+                fontSize: '1.4rem',
                 transition: 'transform 0.3s ease',
                 cursor: 'pointer'
               }}
@@ -120,7 +121,7 @@ const Profile = () => {
             display: 'block',
             marginBottom: '0.5rem',
             color: '#64748b',
-            fontSize: '1.2rem'
+            fontSize: '1.5rem'
           }}>Hình đại diện</label>
           <input
             type="file"
@@ -130,6 +131,7 @@ const Profile = () => {
               width: '100%',
               padding: '0.75rem',
               border: '2px dashed #e5e7eb',
+              fontSize: '1.4rem',
               borderRadius: '8px',
               cursor: 'pointer'
             }}
@@ -144,7 +146,7 @@ const Profile = () => {
                 display: 'block',
                 marginBottom: '0.5rem',
                 color: '#64748b',
-                fontSize: '1.2rem'
+                fontSize: '1.5rem'
               }}
             >
               {field === 'ten' ? 'Tên' : field === 'dienthoai' ? 'Điện thoại' : 'Email'}
@@ -158,6 +160,7 @@ const Profile = () => {
               style={{
                 width: '100%',
                 padding: '0.75rem',
+                fontSize: '1.4rem',
                 borderRadius: '8px',
                 border: '1px solid #e5e7eb',
                 transition: 'all 0.3s ease',
@@ -179,6 +182,7 @@ const Profile = () => {
         cursor: 'pointer',
         transition: 'all 0.3s ease',
         fontWeight: '500',
+        fontSize: '1.4rem',
         '&:hover': {
             transform: 'translateY(-2px)',
             boxShadow: '0 4px 12px rgba(190, 24, 93, 0.2)'
@@ -319,6 +323,7 @@ const MangXaHoi = () => {
             padding: '1rem',
             borderRadius: '12px',
             border: '1px solid #e5e7eb',
+            fontSize: '1.4rem',
             transition: 'all 0.3s ease',
             ':hover': {
               borderColor: color,
@@ -341,7 +346,7 @@ const MangXaHoi = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.2rem'
+                fontSize: '1.5rem'
               }}>
                 {icon}
               </div>
@@ -394,6 +399,7 @@ const MangXaHoi = () => {
         color: 'white',
         border: 'none',
         borderRadius: '8px',
+        fontSize: '1.4rem',
         cursor: 'pointer',
         fontWeight: '500',
         transition: 'all 0.3s ease',
@@ -498,7 +504,7 @@ const Password = () => {
         <FaLock /> Cài đặt mật khẩu
       </h3>
 
-      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}  className='mt-4'>
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' ,  fontSize: '1.4rem', }}  className='mt-4'>
         {['old_password', 'password', 'password_confirmation'].map((field) => (
           <div key={field} style={{ position: 'relative' }}>
             <label
@@ -507,7 +513,7 @@ const Password = () => {
                 display: 'block',
                 marginBottom: '0.5rem',
                 color: '#64748b',
-                fontSize: '1.2rem'
+                fontSize: '1.5rem'
               }}
             >
               {field === 'old_password' ? 'Mật khẩu hiện tại' :
@@ -527,6 +533,7 @@ const Password = () => {
                   borderRadius: '8px',
                   border: '1px solid #e5e7eb',
                   transition: 'all 0.3s ease',
+                  fontSize: '1.4rem',
                   outline: 'none'
                 }}
               />
@@ -542,6 +549,7 @@ const Password = () => {
                   border: 'none',
                   color: '#64748b',
                   cursor: 'pointer',
+                  fontSize: '1.4rem',
                   padding: '0.25rem'
                 }}
               >

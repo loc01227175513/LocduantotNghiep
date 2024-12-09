@@ -85,7 +85,7 @@ const NhanTin = ({ course }) => {
         };
         
         trackPresence();
-        const interval = setInterval(trackPresence, 30000);
+        const interval = setInterval(trackPresence, 10000);
         return () => clearInterval(interval);
     }, [nguoiDung]);
 
@@ -289,7 +289,7 @@ const handleMessageSubmit = async (e, senderType) => {
                     </div>
 
                     {/* Chat Messages */}
-                    <div className="flex-grow overflow-y-auto p-4 space-y-3">
+                    <div className="flex-grow overflow-y-auto p-4 space-y-3 h-[500px]">
                         {selectedConversation ? (
                             JSON.parse(selectedConversation.noidung).map((msg, index, array) => {
                                 const isUserSender = msg.sender_type === 'nguoidung';

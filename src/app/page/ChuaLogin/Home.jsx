@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { TatCaKhuyenMaiKhoaHoc } from '../../../service/khuyenmai/khuyenmai';
 import HorizontalScrollImages from "@/app/component/course/Slider";
 import Image from 'next/image';
-
+import Counter from "@/app/component/home/Counter";
 const Home = () => {
     return (
         <>
@@ -18,7 +18,7 @@ const Home = () => {
             <UpcomingEvents />
             <FunFacts />
             <FeedbackArea />
-            <div className='container'>
+            <div className='container my-20'>
                 <HorizontalScrollImages />
             </div>
 
@@ -357,7 +357,7 @@ const CourseArea = () => {
                                                         alt={course.ten}
                                                         className="w-full h-full object-cover opacity-75"
                                                     />
-                                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black/90" />
+                                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/90" />
                                                 </div>
 
                                                 {/* Content Overlay */}
@@ -713,17 +713,17 @@ const UpcomingEvents = () => {
                                         </Link>
                                         <div className="information">
                                             <div className="date-details">
-                                                <div className="date">
-                                                    <i className="fa-thin fa-calendar-days" />
+                                                <div className="date"> 
+                                                    <i className="fa-thin fa-calendar-days "  style={{marginRight: "-6px"}} />
                                                     <p>Bắt đầu: {new Date(voucher.magiamgia.ngaybatdau).toLocaleDateString()}</p>
                                                 </div>
                                                 <div className="date">
-                                                    <i className="fa-thin fa-calendar-days" />
+                                                    <i className="fa-thin fa-calendar-days" style={{marginRight: "-6px"}}  />
                                                     <p>Kết thúc: {new Date(voucher.magiamgia.ngayketthuc).toLocaleDateString()}</p>
                                                 </div>
                                             </div>
                                             <Link href="/page/login">
-                                                <h5 className="title text-xl">
+                                                <h5 className="title text-2xl">
                                                     {voucher.khoahoc.ten}
                                                 </h5>
                                             </Link>
@@ -731,7 +731,7 @@ const UpcomingEvents = () => {
                                     </div>
                                     <Link
                                         href="/page/login"
-                                        className="rts-btn btn-primary with-arrow"
+                                        className="rts-btn text-xl bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white hover:from-pink-700 hover:to-pink-700 with-arrow"
                                     >
                                         Nhận vé <i className="fa-light fa-arrow-right" />
                                     </Link>
@@ -745,109 +745,179 @@ const UpcomingEvents = () => {
     );
 };
 
-const useCountAnimation = (end, duration = 2000) => {
-    const [count, setCount] = useState(0);
-    const countRef = useRef(null);
-
-    const animateCount = useCallback(() => {
-        const start = 0;
-        const steps = 60;
-        const stepTime = Math.floor(duration / steps);
-        let current = start;
-
-        const timer = setInterval(() => {
-            current += Math.ceil((end - start) / steps);
-            if (current >= end) {
-                setCount(end);
-                clearInterval(timer);
-            } else {
-                setCount(current);
-            }
-        }, stepTime);
-    }, [end, duration]);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    animateCount();
-                }
-            },
-            { threshold: 0.5 }
-        );
-
-        if (countRef.current) {
-            observer.observe(countRef.current);
-        }
-
-        return () => observer.disconnect();
-    }, [end, animateCount]);
-
-    return [count, countRef];
-};
 
 
 const FunFacts = () => {
-    const [count1, ref1] = useCountAnimation(65972);
-    const [count2, ref2] = useCountAnimation(5321);
-    const [count3, ref3] = useCountAnimation(44239);
-    const [count4, ref4] = useCountAnimation(75992);
+ 
     return (
-        <div className="relative py-20 bg-gradient-to-br from-blue-900 via-pink-700 to-pink-700 overflow-hidden">
-            <div className="container mx-auto px-4">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {/* Fact Card 1 */}
-                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 border border-white/30">
-                            <div className="flex justify-center mb-4">
-                                <Img width={80} height={80} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733239744/05_hznj2t.svg"
-                                    alt="icon" className="hover:rotate-6 transition-transform" />
-                            </div>
-                            <h5 className="text-4xl font-bold text-white text-center mb-2">
-                                <span ref={ref1} className="counter">{count1.toLocaleString()}</span>
-                            </h5>
-                            <p className="text-gray-200 text-center text-lg font-medium">Học sinh ghi danh</p>
-                        </div>
-
-                        {/* Fact Card 2 */}
-                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 border border-white/30">
-                            <div className="flex justify-center mb-4">
-                                <Img width={80} height={80} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733239742/02_nc0mnq.svg"
-                                    alt="icon" className="hover:rotate-6 transition-transform" />
-                            </div>
-                            <h5 className="text-4xl font-bold text-white text-center mb-2">
-                                <span ref={ref2} className="counter">{count2.toLocaleString()}</span>
-                            </h5>
-                            <p className="text-gray-200 text-center text-lg font-medium">Hoàn thành các khóa học</p>
-                        </div>
-
-                        {/* Fact Card 3 */}
-                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 border border-white/30">
-                            <div className="flex justify-center mb-4">
-                                <Img width={80} height={80} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733239742/04_tbowfk.svg"
-                                    alt="icon" className="hover:rotate-6 transition-transform" />
-                            </div>
-                            <h5 className="text-4xl font-bold text-white text-center mb-2">
-                                <span ref={ref3} className="counter">{count3.toLocaleString()}</span>
-                            </h5>
-                            <p className="text-gray-200 text-center text-lg font-medium">Người học tích cực</p>
-                        </div>
-
-                        {/* Fact Card 4 */}
-                        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-6 transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 border border-white/30">
-                            <div className="flex justify-center mb-4">
-                                <Img width={80} height={80} src="https://res.cloudinary.com/dxqoaj2jt/image/upload/v1733239742/06_nubzt8.svg"
-                                    alt="icon" className="hover:rotate-6 transition-transform" />
-                            </div>
-                            <h5 className="text-4xl font-bold text-white text-center mb-2">
-                                <span ref={ref4} className="counter">{count4.toLocaleString()}</span>
-                            </h5>
-                            <p className="text-gray-200 text-center text-lg font-medium">Tổng số tuyển sinh</p>
-                        </div>
+        <div className="fun-facts-area bg-gradient" data-aos="fade-up">
+        {/* Each fact item */}
+        <div className="fact-item" data-aos="fade-up" data-aos-delay="100">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="fun-facts-wrapper d-flex flex-wrap justify-content-around">
+                  <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.2s">
+                    <div className="icon-wrapper mb-3">
+                      <i className="fas fa-user-graduate fa-3x text-primary"></i>
                     </div>
+                    <h2 className="counter-value mb-2">
+                      <Counter target={872} />+
+                    </h2>
+                    <p className="text-xl">Tổng Học Viên Đăng Ký</p>
+                  </div>
+
+                  <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.4s">
+                    <div className="icon-wrapper mb-3">
+                      <i className="fas fa-graduation-cap fa-2x text-success"></i>
+                    </div>
+                    <h2 className="counter-value mb-2">
+                      <Counter target={221} />+
+                    </h2>
+                    <p className="text-xl">Học Viên Tốt Nghiệp</p>
+                  </div>
+
+                  <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.6s">
+                    <div className="icon-wrapper mb-3">
+                      <i className="fas fa-users fa-2x text-info"></i>
+                    </div>
+                    <h2 className="counter-value mb-2">
+                      <Counter target={639} />+
+                    </h2>
+                    <p className="text-xl">Học Viên Đang Học</p>
+                  </div>
+
+                  <div className="fact-item text-center wow fadeInUp" data-wow-delay="0.8s">
+                    <div className="icon-wrapper mb-3">
+                      <i className="fas fa-star fa-2x text-warning"></i>
+                    </div>
+                    <h2 className="counter-value mb-2">
+                      <Counter target={792} />+
+                    </h2>
+                    <p className="text-xl">Đánh Giá Tích Cực</p>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+        <style jsx>{`
+          [data-aos] {
+            pointer-events: none;
+          }
+          [data-aos].aos-animate {
+            pointer-events: auto;
+          }
+
+          /* Optional: Add custom transitions */
+          [data-aos="custom-fade"] {
+            opacity: 0;
+            transition-property: opacity, transform;
+
+            &.aos-animate {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
+          /* Optional: Add scroll-based parallax effect */
+          .parallax {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+
+          @media (prefers-reduced-motion: no-preference) {
+            .parallax {
+              transform: translateY(var(--parallax-y, 0));
+            }
+          }
+          .fun-facts-area {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+          }
+
+          .fact-item {
+            padding: 2rem;
+            transition: all 0.3s ease;
+          }
+
+          .fact-item:hover {
+            transform: translateY(-5px);
+          }
+
+          .icon-wrapper {
+            height: 70px;
+            width: 70px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          }
+
+          .counter-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d3748;
+          }
+
+          .fact-label {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin: 0;
+          }
+          .why-choose-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+          }
+
+          .reason-card {
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+          }
+
+          .reason-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+          }
+
+          .hover-scale {
+            transition: transform 0.3s ease;
+          }
+
+          .hover-scale:hover {
+            transform: scale(1.05);
+          }
+
+          .animate-pulse {
+            animation: pulse 1s infinite;
+          }
+
+          .hover-effect {
+            transition: all 0.3s ease;
+          }
+
+          .hover-effect:hover {
+            transform: translateX(10px);
+          }
+
+          @keyframes pulse {
+            0% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0.5;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+        `}</style>
+      </div>
     );
 };
 
@@ -899,7 +969,7 @@ const FeedbackArea = () => {
                                         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                                     >
                                         {danhGia.map((item, index) => (
-                                            <div key={index} className="w-full flex-shrink-0">
+                                            <div key={index} className="w-full flex-shrink-0 mt-3 mx-3">
                                                 <div className="bg-white/5 backdrop-blur-lg rounded-xl p-6 hover:bg-white/10 transition">
                                                     <div className="flex flex-col md:flex-row gap-6 items-center">
                                                         {/* Profile Image */}
@@ -913,19 +983,20 @@ const FeedbackArea = () => {
 
                                                         {/* Content */}
                                                         <div className="flex-1 text-white">
-                                                            <div className="flex mb-4 text-xl">
+                                                            <div className="flex mb-4  text-2xl">
                                                                 {[...Array(5)].map((_, i) => (
                                                                     <svg
                                                                         key={i}
-                                                                        className={`w-5 h-5 ${i < parseInt(item.so_sao) ? 'text-yellow-400' : 'text-gray-400'}`}
+                                                                        className={`w-8 h-8 ${i < parseInt(item.so_sao) ? 'text-yellow-400' : 'text-gray-400'}`}
                                                                         fill="currentColor"
                                                                         viewBox="0 0 20 20"
+                                                                        style={{marginRight: "-2px"}}
                                                                     >
                                                                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                                                     </svg>
                                                                 ))}
                                                             </div>
-                                                            <p className=" italic text-gray-100 mb-4 text-xl">&quot;{item.noi_dung}&quot;</p>
+                                                            <p className=" italic text-gray-100 mb-4 text-2xl">&quot;{item.noi_dung}&quot;</p>
                                                             <h5 className="text-xl font-bold">{item.nguoi_danh_gia.ten}</h5>
                                                             <p className="text-white">{item.ngay_danh_gia.split('T')[0]}</p>
                                                         </div>

@@ -52,7 +52,7 @@ export default function Homedashboardstudent() {
   console.log(data);
 
   return (
-    <div className="p-8 col-lg-9 font-['Helvetica_Neue']">
+    <div className="p-8 col-lg-9">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
         {/* Enrolled Courses Card */}
@@ -61,7 +61,7 @@ export default function Homedashboardstudent() {
             <i className="fal fa-book-open text-blue-500 text-4xl"/>
             <h3 className="font-bold text-[24px] tracking-tight">{data.length}</h3>
           </div>
-          <p className="text-gray-600 text-[14px] font-normal">Khóa học ghi danh</p>
+          <p className="text-gray-600 text-[15px] ">Khóa học ghi danh</p>
         </div>
 
         {/* Active Courses Card */}
@@ -79,7 +79,7 @@ export default function Homedashboardstudent() {
               )}
             </h3>
           </div>
-          <p className="text-gray-600 text-[14px] font-normal">Khóa học tích cực</p>
+          <p className="text-gray-600 text-[15px] ">Khóa học tích cực</p>
         </div>
 
         {/* Completed Courses Card */}
@@ -88,7 +88,7 @@ export default function Homedashboardstudent() {
             <i className="fa-light fa-trophy text-yellow-500 text-4xl"/>
             <h3 className="font-bold text-4xl">{khoahocdahoc.length}</h3>
           </div>
-          <p className="text-gray-600 text-[14px] font-normal">Khóa học hoàn thành</p>
+          <p className="text-gray-600 text-[15px] ">Khóa học hoàn thành</p>
         </div>
       </div>
 
@@ -99,7 +99,7 @@ export default function Homedashboardstudent() {
           {data.length > 0 && (
             <button 
               onClick={() => setShowAll(!showAll)}
-              className="px-4 py-2 text-blue-500 w-40 hover:text-blue-700 font-medium text-[14px] hover:bg-blue-50 rounded-lg transition-colors"
+              className="px-4 py-2 text-pink-700 w-60 hover:text-pink-700 font-medium text-[15px] hover:bg-pink-100  rounded-lg transition-colors"
             >
               {showAll ? 'Ẩn bớt' : 'Xem tất cả'}
             </button>
@@ -128,9 +128,9 @@ export default function Homedashboardstudent() {
                       key={`${itemIndex}-${khoahocIndex}`} 
                       className="border-b hover:bg-gray-50 transition-colors"
                     >
-                      <td className="py-5 px-6 text-[14px]">{khoahoc.ten}</td>
-                      <td className="py-5 px-6 text-[14px]">{khoahoc.tenGiangVien}</td>
-                      <td className="py-5 px-6 text-[14px]">{calculateMinutesDifference(khoahoc.updated_at)}</td>
+                      <td className="py-5 px-6 text-[15px]">{khoahoc.ten}</td>
+                      <td className="py-5 px-6 text-[15px]">{khoahoc.tenGiangVien}</td>
+                      <td className="py-5 px-6 text-[15px]">{calculateMinutesDifference(khoahoc.updated_at)}</td>
                     </tr>
                   ))
                 ))}

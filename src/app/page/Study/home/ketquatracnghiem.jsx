@@ -188,14 +188,14 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
         <div className="flex-grow lg:pr-8">
             <div className="bg-gray-100 min-h-screen flex flex-col items-center p-6">
                 <header className="bg-red-100 text-red-800 p-4 rounded-lg shadow-md w-full mb-6">
-                    <h1 className="text-xl font-bold">Kết quả bài trắc nghiệm</h1>
+                    <h1 className="text-3xl font-bold">Kết quả bài trắc nghiệm</h1>
                     {quizDetails.tieu_de && (
-                        <p className="text-lg mt-2">Tiêu đề: {quizDetails.tieu_de}</p>
+                        <p className="text-2xl mt-2">Tiêu đề: {quizDetails.tieu_de}</p>
                     )}
                     {quizDetails.mota && (
-                        <p className="text-lg mt-2">Mô tả: {quizDetails.mota}</p>
+                        <p className="text-2xl mt-2">Mô tả: {quizDetails.mota}</p>
                     )}
-                    <p className="text-xl mt-4">
+                    <p className="text-2xl mt-4">
                         Bạn đã trả lời đúng{" "}
                         <span className="font-semibold">
                             {questionResults.filter((result) => result.isCorrect).length}/
@@ -215,7 +215,7 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
                                         : "border-red-600 bg-red-100"
                                     }`}
                             >
-                                <h2 className="font-bold mb-2">
+                                <h2 className="font-bold mb-2 text-3xl">
                                     Câu hỏi {index + 1}: {result.question}
                                 </h2>
                                 <ul className="list-disc pl-6 space-y-2">
@@ -227,7 +227,7 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
                                                     : answer.stt === result.userAnswer
                                                         ? "text-red-600"
                                                         : ""
-                                                }`}
+                                                } text-2xl`}
                                         >
                                             {answer.text}
                                         </li>
@@ -241,13 +241,13 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
                 <footer className="flex justify-between items-center w-full mt-6">
                     <button
                         onClick={() => window.location.reload()}
-                        className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 text-xl"
+                        className="bg-gray-200 text-gray-800 px-4 py-2 rounded text-2xl hover:bg-gray-300"
                     >
                         Tiếp tục
                     </button>
                     <button
                         onClick={() => setShowTracNghiem(true)}
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-xl"
+                        className="bg-pink-700 text-white px-4 py-2 rounded text-2xl hover:bg-pink-600"
                     >
                         Thử làm lại trắc nghiệm
                     </button>

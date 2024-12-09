@@ -244,7 +244,7 @@ const NavPhai = ({
                         <button
                           onClick={handleBuyNow}
                           disabled={buttonStates.buyNow.disabled}
-                          className={`rts-btn btn-border text-xl text-pink-700 !border-pink-700 !border-1
+                          className={`rts-btn btn-border text-xl bg-gradient-to-r from-pink-700 via-pink-700 to-pink-700 text-white !border-pink-700 !border-1
                             ${buttonStates.buyNow.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
                           {buttonStates.buyNow.loading ? (
@@ -257,8 +257,9 @@ const NavPhai = ({
                         <button
                           onClick={handleAddCart}
                           disabled={buttonStates.addCart.disabled}
-                          className={`mt-10 flex justify-center text-xl !border-pink-700 !border-1
+                          className={`  flex justify-center text-xl !border-pink-700 !border-1
                             ${buttonStates.addCart.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            style={{ marginTop: "-20px" }}
                         >
                           <span className="rts-btn btn-border text-pink-700">
                             {buttonStates.addCart.loading ? (
@@ -900,7 +901,7 @@ export default function Coursedetailcomponent() {
                                           course.gia) *
                                         100
                                       )}
-                                      %
+                                      % OFF
                                     </span>
                                   ) : null}
                                 </div>
@@ -972,7 +973,7 @@ export default function Coursedetailcomponent() {
                                           className="text-lg text-gray-600 uppercase tracking-wider pl-1"
                                           style={{ fontWeight: "400" }}
                                         >
-                                          Students
+                                          Học viên
                                         </span>
                                       </span>
                                     </div>
@@ -996,16 +997,16 @@ export default function Coursedetailcomponent() {
                                     {course.gia === 0 ||
                                       course.giamgia === 0 ? (
                                       <span className="text-red-500 font-bold text-2xl">
-                                        Miễn Phí
+                                       0VNĐ
                                       </span>
                                     ) : (
                                       <div className="flex items-center">
                                         <span className="text-red-500 font-bold text-2xl mr-3">
-                                          {course.giamgia.toLocaleString('vi-VN')}{" "}
+                                          {course.giamgia.toLocaleString('vi-VN')}  
                                           <span className="text-xl">VNĐ</span>
                                         </span>
                                         <span className="line-through text-gray-500 text-2xl">
-                                          {course.gia.toLocaleString('vi-VN')}{" "}
+                                          {course.gia.toLocaleString('vi-VN')}
                                           <span className="text-xl">VNĐ</span>
                                         </span>
                                       </div>

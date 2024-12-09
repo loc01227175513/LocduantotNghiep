@@ -14,7 +14,7 @@ import CardProduct from "../CardProductHome/CardProduct";
 const CourseDeXuat = () => {
  
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5; 
+    const itemsPerPage = 5  ; 
     const [khoaHocDaThanhToan, setKhoaHocDaThanhToan] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [khoaHocDeXuat, setKhoaHocDeXuat] = useState([]);
@@ -144,8 +144,8 @@ const CourseDeXuat = () => {
                     </div>
 
                     <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
-                        <div className="portfolio_wrap">
-                            <div className="filter mt--30 portfolio-feed grid grid-cols-5 gap-6">
+            <div className="portfolio_wrap">
+              <div className="filter mt--30 portfolio-feed personal chialaiflex">
                                 {currentItems.map((item) => {
                                     // Calculate averageRating per course
                                     const averageRating =

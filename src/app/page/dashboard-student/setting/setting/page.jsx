@@ -54,7 +54,7 @@ const Page = () => {
                 padding: '2rem',
                 boxShadow: '0 5px 30px rgba(0,0,0,0.05)',
             }}>
-                <h5 className='text-black text-3xl p-3 font-bold'>Cài đặt</h5>
+                <h5 className='text-black text-[20px] p-3 font-bold'>Cài đặt</h5>
                 <ul className="nav nav-pills mb-4 tab-buttons" style={{
                     gap: '1rem',
                     borderBottom: '1px solid rgb(251, 207, 232)', // pink-200

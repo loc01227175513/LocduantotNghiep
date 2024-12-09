@@ -313,6 +313,7 @@ export default function Homedashboardlecturer() {
 
   const khoahocdadangky = khoahoc.length;
   const khoahocdahoanthanh = khoahoc.filter((item) => item.trangthai === "Progress").length;
+  console.log(khoahoc);
   const khoahoctamdung = khoahoc.filter((item) => item.trangthai === "Notyet").length;
   const khoahocdanghoc = khoahocdamua.length;
   const tongdoanhthu = doanhthu.tongdoanhthu || 0;

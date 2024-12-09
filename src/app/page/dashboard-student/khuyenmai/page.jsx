@@ -38,7 +38,7 @@ export default function VoucherPage() {
 
   if (isLoading) {
     return (
-      <div className="overflow-y-scroll col-lg-9 h-lvh font-['Roboto',sans-serif]">
+      <div className="overflow-y-scroll col-lg-9 h-lvh">
         <Toaster position="top-right" />
         <div className="flex items-center justify-center h-full">
           <div className="text-xl text-gray-500">Đang tải...</div>
@@ -48,28 +48,28 @@ export default function VoucherPage() {
   }
 
   return (
-    <div className="overflow-y-scroll col-lg-9 h-lvh font-['Roboto',sans-serif]">
+    <div className="overflow-y-scroll  col-lg-9 h-lvh  ">
       <Toaster position="top-right" />
       <div className="exrolled-course-wrapper-dashed">
         <div className="voucher-page container">
          
-          <div className="voucher-list flex flex-wrap gap-4 justify-start">
+          <div className="voucher-list flex flex-wrap gap-4 justify-start rounded-md ">
             {vouchers.length > 0 ? (
               vouchers.map((item) =>(
-                <div key={item.magiamgia.maso} className="border-[1px] border-pink-700 bg-[#fff4f4] rounded-sm p-3 shadow-sm">
-                  <div className="text-black text-2xl font-medium text-center mb-2 uppercase">
+                <div key={item.magiamgia.maso} className="border-[1px] border-pink-700  rounded-md  shadow-sm pt-4 pb-4 pl-10 pr-10 ">
+                  <div className="text-gray-700 text-2xl font-medium text-center mb-2 uppercase">
                     Giảm ngay
                   </div>
                   
                   <div className="flex">
-                    <div className="w-[150px] h-[150px] flex flex-col items-center justify-center bg-pink-700 rounded-sm">
-                      <p className="text-6xl font-bold text-white leading-none">{item.magiamgia.giamgia}%</p>
+                    <div className="w-[100px] h-[100px] flex flex-col items-center justify-center bg-pink-700 rounded-md ">
+                      <p className="text-6xl  text-white leading-none">{item.magiamgia.giamgia}%</p>
                       <p className="text-white text-xl mt-2">Mã: <span className="font-medium">{item.magiamgia.maso}</span></p>
                     </div>
                     
-                    <div className="flex flex-col justify-center ml-3">
-                      <p className="text-[#000000] text-xl font-medium">Từ: {item.magiamgia.ngaybatdau}</p>
-                      <p className="text-[#000000] text-xl font-medium">Đến: {item.magiamgia.ngayketthuc}</p>
+                    <div className="flex flex-col justify-center pl-5 ">
+                      <p className="text-gray-700 text-[14px] font-medium">Từ: {item.magiamgia.ngaybatdau}</p>
+                      <p className="text-gray-700 text-[14px] font-medium">Đến: {item.magiamgia.ngayketthuc}</p>
                       <p className="text-[#757575] text-xl font-medium mt-1">Số lượng: {item.magiamgia.sudunghientai}</p>
                     </div>
                   </div>

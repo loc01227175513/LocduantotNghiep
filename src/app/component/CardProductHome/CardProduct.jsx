@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FaStar, FaRegStar } from "react-icons/fa"; // Import star icons
 export default function CardProduct({
     id,
     hinh,
@@ -17,7 +18,7 @@ export default function CardProduct({
     renderStars
 }) {
     // Inside component:
-   
+
 
     return (
         <div className="transition flash element-item creative" data-category="transition" key={id}>
@@ -42,59 +43,84 @@ export default function CardProduct({
                 </div>
                 <div className="course-card">
                     <Link href={`/page/course-detail?id=${id}`} className="title-link flex items-center">
-                        <p className="title line-clamp-1" 
-                           style={{ fontWeight: "600", height: "24px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
-                           title={ten}>
-                            {ten}
-                        </p>
+                            <p className="title text-base sm:text-lg truncate group-hover:whitespace-normal group-hover:text-clip"
+                                style={{ fontWeight: "600", minHeight: "24px" }}
+                                title={ten}>
+                                {ten}
+                            </p>
                     </Link>
-                    <div className="teacher">
+                    <div className="teacher flex items-center">
                         <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
-                        <span className="text-xl text-gray-800" style={{ fontWeight: "400" }}>{chude}</span>
+                        <span className="text-xl text-gray-800 truncate hover:whitespace-normal hover:text-clip" style={{ fontWeight: "400" }}>{chude}</span>
                     </div>
 
                     <p className="teacher">
                         <i className="fas fa-user-tie mr-2 text-gray-800 text-xl" style={{ fontWeight: "400" }}></i>
                         <span className="text-xl text-gray-800" style={{ fontWeight: "400" }}>{giangvien}</span>
                     </p>
-                    <div className="flex space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-                        <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
-                            <i className="fa-light fa-calendar-lines-pen text-gray-600 text-lg" />
-                            <div className="flex flex-col">
-                                <span className="text-lg font-bold" style={{ fontWeight: "400" }}>
-                                    {baihocs}
-                                    <span className="text-lg text-gray-600 uppercase tracking-wider pl-1" style={{ fontWeight: "400" }}>Bài</span>
-                                </span>
-                            </div>
-                        </div>
 
-                        <div className="flex items-center space-x-2 p-2 rounded-full">
-                            <i className="fa-light fa-user-group text-gray-600 text-xl" />
-                            <div className="flex flex-col">
-                                <span className="text-lg font-bold" style={{ fontWeight: "400" }}>
-                                    {dangky}
-                                    <span className="text-lg text-gray-600 uppercase tracking-wider pl-1" style={{ fontWeight: "400" }}>Students</span>
-                                </span>
-                            </div>
-                        </div>
+                    <div className="flex flex-row space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+                                  <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
+                                    <i className="fa-light fa-calendar-lines-pen text-gray-600 text-lg" />
+                                    <div className="flex flex-col">
+                                      <span
+                                        className="text-lg font-bold"
+                                        style={{ fontWeight: "400" }}
+                                      >
+                                        {baihocs}
+                                        <span
+                                          className="text-lg text-gray-600 uppercase tracking-wider pl-1"
+                                          style={{ fontWeight: "400" }}
+                                        >
+                                          Bài
+                                        </span>
+                                      </span>
+                                    </div>
+                                  </div>
 
-                        <div className="rating-area text-yellow-500 text-lg flex items-center">
-                            {renderStars(parseFloat(averageRating))}
-                            <span className="rating-number ml-1 text-xl" style={{ fontWeight: "400" }}>{averageRating}</span>
-                        </div>
-                    </div>
+                                  <div className="flex items-center space-x-2 p-2 rounded-full">
+                                    <i className="fa-light fa-user-group text-gray-600 text-xl" />
+                                    <div className="flex flex-row items-center">
+                                      <span className="text-lg font-bold mr-1" style={{ fontWeight: "400" }}>
+                                        {dangky}
+                                      </span>
+                                      <span className=" text-lg" style={{ fontWeight: "400" }}>
+                                        HỌC VIÊN
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div className=" text-lg  flex flex-row items-center">
+                                    <FaStar
+                                      className="text-yellow-400 w-5 h-5"
+                                      aria-label="Rating Star"
+                                    />
+                                    <span
+                                      className="rating-number ml-1 text-xl"
+                                      style={{ fontWeight: "400" }}
+                                    >
+                                      {averageRating.toFixed(1)}
+                                    </span>
+                                  </div>
+                                </div>
+
+
+
+
+
+
                     <div className="rating-and-price">
                         <div className="price-area">
                             {gia === 0 || giamgia === 0 ? (
-                               <>
-                               <div className="price-wrapper flex items-center gap-2">
-                                    <div className="sale-price">
-                                        <p className="text-2xl font-bold m-0">0<span className="text-2xl">VNĐ</span></p>
+                                <>
+                                    <div className="price-wrapper flex items-center gap-2">
+                                        <div className="sale-price">
+                                            <p className="text-2xl font-bold m-0">0<span className="text-2xl">VNĐ</span></p>
+                                        </div>
+
                                     </div>
-                                  
-                                </div>
-                               
-                               </>
+
+                                </>
                             ) : (
                                 <div className="price-wrapper flex items-center gap-2">
                                     <div className="sale-price">

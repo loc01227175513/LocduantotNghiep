@@ -18669,7 +18669,7 @@ nav ul li a {
 }
 
 .rts-single-course {
-  width: 261px;
+  width: 237px;
   height: max-content;
   border-radius: 6px;
   border: 1px solid #be185d2b;
@@ -26733,7 +26733,7 @@ edit .quantity-edit button {
   border: none;
   margin: 0 0;
   color: #110C2D;
-  font-size: 18px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 28px;
@@ -26741,7 +26741,7 @@ edit .quantity-edit button {
 .exrolled-course-wrapper-dashed .nav-tabs li button.active {
   border-bottom: 3px solid #be185d;
   color: #be185d;
-  font-size: 18px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 28px;
@@ -27665,7 +27665,7 @@ body {
 }
 .settings-wrapper-dashed .tab-buttons li button {
   color: #737477;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 26px;

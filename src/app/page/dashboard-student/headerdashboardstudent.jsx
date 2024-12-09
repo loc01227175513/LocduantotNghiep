@@ -94,7 +94,7 @@ const Headerdashboardstudent1 = () => {
     <>
       <ToastContainer />
       <div className="col-lg-12">
-        <div className="dashboard-banner-area-start bg_image student-dashboard" style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <div className="bg-gradient-to-r from-blue-900 to-pink-700 via-pink-700" style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <div className="author-profile-image-and-name" style={{
             textAlign: 'center',
             background: 'linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%)',

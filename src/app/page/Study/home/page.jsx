@@ -438,12 +438,12 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                         {!convideo && conbaihoc && (
                             <motion.div>
                                 {baihoctieptheo && (
-                                    <div>
-                                        <button onClick={() => handleClick(videotieptheo.url_link, videotieptheo.id, baihoctieptheo.ten, videotieptheo.ten)} className='bg-[#ff6b6b] p-3 text-xl rounded-lg text-white hover:bg-pink-700 '
+                                    <div className="flex justify-center w-[150px]" >
+                                        <button onClick={() => handleClick(videotieptheo.url_link, videotieptheo.id, baihoctieptheo.ten, videotieptheo.ten)} className='bg-pink-700 p-3 text-xl rounded-lg text-white hover:bg-pink-700 '
                                             onMouseEnter={() => handleVideoHover(videotieptheo)}
                                             onMouseLeave={() => setPreviewVideo(null)}
                                         >
-                                            bài học tiếp theo : {baihoctieptheo.ten}
+                                            Bài học tiếp theo <i className="bi bi-skip-forward-fill mx-2"></i>
                                         </button>
                                     </div>
                                 )}
@@ -452,12 +452,14 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                         {convideo && conbaihoc && (
                             <motion.div>
                                 {videotieptheo && (
-                                    <div>
-                                        <button onClick={() => handleClick(videotieptheo.url_link, videotieptheo.id, baihoctieptheo.ten, videotieptheo.ten)} className='bg-[#ff6b6b] p-3 text-xl rounded-lg text-white hover:bg-pink-700'
+                                    <div className="flex justify-center w-[150px]" >
+                                        <button onClick={() => handleClick(videotieptheo.url_link, videotieptheo.id, baihoctieptheo.ten, videotieptheo.ten)} className='bg-pink-700  p-3 text-xl rounded-lg text-white hover:bg-pink-700'
                                             onMouseEnter={() => handleVideoHover(videotieptheo)}
                                             onMouseLeave={() => setPreviewVideo(null)}
                                         >
-                                            video tiếp theo : {videotieptheo.ten}
+                                            
+                                            
+                                            Video tiếp theo <i className="bi bi-skip-forward-fill mx-2" ></i>
                                         </button>
                                     </div>
                                 )}
@@ -696,7 +698,7 @@ const StarRating = ({ rating }) => (
                 className="relative"
             >
                 <svg
-                    className={`h-6 w-6 transform transition-all duration-200
+                    className={`h-8 w-8 transform transition-all duration-200
                         ${index < rating
                             ? 'drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]'
                             : 'fill-gray-300 group-hover:fill-gray-400'}`}
@@ -716,7 +718,7 @@ const StarRating = ({ rating }) => (
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
                 <span className="absolute -top-8 left-1/2 -translate-x-1/2 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-300 
                     bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
                     {index + 1} {index === 0 ? 'Star' : 'Stars'}
                 </span>
@@ -725,7 +727,7 @@ const StarRating = ({ rating }) => (
         <motion.div
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            className="ml-2 text-sm font-medium text-gray-600"
+            className="ml-2 text-2xl font-medium text-gray-600  "
         >
             {rating}/5
         </motion.div>
@@ -774,7 +776,7 @@ const CommentList = ({ comments }) => {
                     stiffness: 260,
                     damping: 20
                 }}
-                className="text-center py-8 px-4 bg-gray-50 rounded-lg mt-4"
+                className="text-center py-8 px-4  bg-gray-50 rounded-lg mt-4"
             >
                 <motion.img
                     src="/empty-comments.svg"
@@ -790,7 +792,7 @@ const CommentList = ({ comments }) => {
                         repeatType: "reverse"
                     }}
                 />
-                <p className="text-gray-500 font-medium">Chưa có bình luận nào.</p>
+                <p className="text-gray-500 font-medium text-xl">Chưa có bình luận nào.</p>
             </motion.div>
         );
     }
@@ -831,7 +833,7 @@ const CommentList = ({ comments }) => {
                                 {comment.user?.charAt(0).toUpperCase()}
                             </motion.div>
                             <div>
-                                <span className="font-semibold text-gray-800">{comment.user}</span>
+                                <span className="font-semibold text-gray-800 text-xl">{comment.user}</span>
                                 <p className="text-xs text-gray-500">
                                     {comment.date && formatTimeAgo(new Date(comment.date))}
                                 </p>
@@ -840,40 +842,14 @@ const CommentList = ({ comments }) => {
                         <StarRating rating={comment.rating} />
                     </motion.div>
                     <motion.p
-                        className="text-gray-700 leading-relaxed"
+                        className="text-gray-700 leading-relaxed text-2xl"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.2 }}
                     >
                         {comment.comment}
                     </motion.p>
-                    <motion.div
-                        className="mt-4 flex items-center space-x-4 text-sm"
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                    >
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center space-x-2 text-gray-500 hover:text-indigo-600 transition-colors"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-                            </svg>
-                            <span>Hữu ích</span>
-                        </motion.button>
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center space-x-2 text-gray-500 hover:text-indigo-600 transition-colors"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                            </svg>
-                            <span>Trả lời</span>
-                        </motion.button>
-                    </motion.div>
+                   
                 </motion.div>
             ))}
         </motion.div>
@@ -959,7 +935,7 @@ const AnimatedDisclosure = ({ title, isOpen, onToggle, content }) => (
                             initial={{ y: 10 }}
                             animate={{ y: 0 }}
                             transition={{ duration: 0.4, delay: 0.1 }}
-                            className='text-xl'
+                            className='text-2xl'
                         >
                             {content}
                         </motion.div>
@@ -983,7 +959,7 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
         >
-            <label htmlFor="comment" className="block text-xl font-medium text-gray-700">
+            <label htmlFor="comment" className="block text-2xl font-medium text-gray-700">
                 Điền bình luận
             </label>
             <motion.textarea
@@ -993,7 +969,7 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
                 rows="4"
                 whileFocus={{ scale: 1.01 }}
                 className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm 
-                    focus:border-indigo-500 focus:ring-indigo-500 p-2 transition-all duration-200
+                    focus:border-indigo-500 focus:ring-indigo-500 p-2 transition-all duration-200 placeholder:text-xl text-2xl
                     hover:border-indigo-300"
                 required
                 disabled={isSubmitting}
@@ -1005,7 +981,7 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
         >
-            <label htmlFor="rating" className="block text-xl font-medium text-gray-700">
+            <label htmlFor="rating" className="block text-2xl font-medium text-gray-700">
                 Đánh giá
             </label>
             <motion.div
@@ -1021,7 +997,7 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
                     <i
                         key={num}
                         onClick={() => handleClickrating(num)}
-                        className={`bi ${rating >= num ? 'bi-star-fill text-yellow-500' : 'bi-star text-gray-400'} mr-2 cursor-pointer`}
+                        className={`bi ${rating >= num ? 'bi-star-fill text-yellow-500' : 'bi-star text-gray-400'} mr-2 cursor-pointer `}
                         style={{ fontSize: '20px' }}
                     ></i>
                 ))}
@@ -1035,7 +1011,7 @@ const CommentForm = ({ comment, rating, isSubmitting, onCommentChange, onRatingC
             whileTap={{ scale: 0.98 }}
             className={`w-full inline-flex justify-center items-center px-4 py-3 
                 border border-transparent rounded-md shadow-sm text-2xl font-medium text-white 
-                ${isSubmitting ? 'bg-indigo-400' : 'bg-[#ff6b6b] hover:bg-pink-700'}
+                ${isSubmitting ? 'bg-indigo-400' : 'bg-pink-700 hover:bg-pink-700'}
                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
                 transition-all duration-200`}
         >
@@ -1190,7 +1166,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick, setShowBaiQuiz, setI
                                                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 font-semibold">
                                                         {index + 1}
                                                     </span>
-                                                    <span className="font-medium text-gray-900">{lesson.ten}</span>
+                                                    <span className="font-medium text-2xl text-gray-900">{lesson.ten}</span>
                                                 </div>
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-xl text-gray-500">
@@ -1230,7 +1206,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick, setShowBaiQuiz, setI
                                                                     </div>
                                                                     <div className="ml-3 flex-1">
                                                                         <div className="flex justify-between">
-                                                                            <span className={`text-xl font-semibold ${isWatched ? 'text-gray-500' : 'text-gray-900'}`}>
+                                                                            <span className={`text-2xl font-semibold ${isWatched ? 'text-gray-500' : 'text-gray-900'}`}>
                                                                                 {video.ten}
                                                                             </span>
                                                                             <span className="text-xl text-gray-500">{video.thoiluong}</span>
@@ -1254,7 +1230,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick, setShowBaiQuiz, setI
                                                                         <h3 className="flow-root">
                                                                             <Disclosure.Button className="flex w-full justify-between items-center px-6 py-4 text-left text-gray-500">
                                                                                 <div className='flex items-center'>
-                                                                                    <i className="bi bi-pen-fill mr-2 text-xl"></i> bài quiz
+                                                                                    <i className="bi bi-pen-fill mr-2 text-2xl"></i> Bài quiz
                                                                                     {/* Show checkmark if quiz is active */}
                                                                                     {quizStatus[lesson.id] === 'Active' && (
                                                                                         <CheckIcon className="h-5 w-5 text-green-500 ml-2" />
@@ -1273,9 +1249,9 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick, setShowBaiQuiz, setI
                                                                                 >
                                                                                     {baiTracNghiem.noidung.map((baiTracNghiem1, idx) => (
                                                                                         <div key={idx}>
-                                                                                            <p className='text-xl font-normal text-[#ff6b6b]'>{baiTracNghiem1.tieu_de}</p>
+                                                                                            <p className='text-xl font-normal text-pink-700'>{baiTracNghiem1.tieu_de}</p>
                                                                                             <div>
-                                                                                                <p className='text-xl font-normal text-gray-500 indent-2'>
+                                                                                                <p className='text-2xl font-normal text-gray-500 indent-2'>
                                                                                                     {baiTracNghiem1.noidung}
                                                                                                 </p>
                                                                                                 <button
@@ -1284,7 +1260,7 @@ const BaiHocDeHoc = ({ khoahoc, watchedVideos, handleClick, setShowBaiQuiz, setI
                                                                                                         setIdBaihoc(baiTracNghiem.id_baihoc);
                                                                                                         setIdTracNghiem(baiTracNghiem1.id_baitracnghiem);
                                                                                                     }}
-                                                                                                    className='bg-[#ff6b6b] mt-2 p-2 text-xl text-white font-normal rounded-lg hover:bg-pink-600'
+                                                                                                    className='bg-pink-700 mt-2 p-2 text-2xl text-white font-normal rounded-lg hover:bg-pink-600'
                                                                                                 >
                                                                                                     Làm
                                                                                                 </button>
@@ -1431,7 +1407,7 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
         }
 
         const isCorrect = question.answers[selectedAnswerIndex].isCorrect;
-        setFeedback(isCorrect ? "Đúng rồi!" : "Sai rồi! Thử lại nhé.");
+        setFeedback(isCorrect ? "Đúng rồi! 🎉" : "Sai rồi! Hãy thử lại nhé 💪");
 
         setCheckedAnswers((prev) => ({
             ...prev,
@@ -1469,11 +1445,11 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
 
     return (
         <div className="flex-grow lg:pr-8">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Bài Trắc Nghiệm</h2>
+            <h2 className="text-3xl font-bold mb-6 text-gray-800">Bài Trắc Nghiệm</h2>
             <div className="space-y-8">
                 {cauhois[currentQuestionIndex] && (
                     <form className="quiz-question shadow-md p-6 rounded-lg border border-gray-200 bg-white">
-                        <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                        <h3 className="text-3xl font-semibold text-gray-700 mb-4">
                             Câu hỏi {currentQuestionIndex + 1}: {cauhois[currentQuestionIndex].question}
                         </h3>
                         <ul role="group" className="space-y-4">
@@ -1482,13 +1458,13 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
                                     <label className="flex items-center space-x-3 cursor-pointer">
                                         <input
                                             type="radio"
-                                            name={`answer-${currentQuestionIndex}`}
+                                            name={`answer-${currentQuestionIndex}`} 
                                             checked={selectedAnswers[currentQuestionIndex] === answerIndex}
                                             onChange={() => handleAnswerSelect(currentQuestionIndex, answerIndex)}
                                             className="hidden"
                                         />
                                         <span
-                                            className={`w-5 h-5 border rounded-full flex justify-center items-center ${selectedAnswers[currentQuestionIndex] === answerIndex
+                                            className={`w-5 h-5 border rounded-full flex justify-center  items-center ${selectedAnswers[currentQuestionIndex] === answerIndex
                                                 ? "border-primary"
                                                 : "border-gray-300"
                                                 }`}
@@ -1497,7 +1473,7 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
                                                 <span className="w-2.5 h-2.5 bg-primary rounded-full"></span>
                                             )}
                                         </span>
-                                        <span className="text-gray-600">{answer.text}</span>
+                                        <span className="text-gray-600 text-3xl">{answer.text}</span>
                                     </label>
                                 </li>
                             ))}
@@ -1507,19 +1483,19 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
             </div>
 
             {notification && (
-                <div className="fixed top-0 left-0 right-0 bg-yellow-500 text-white p-4 text-center">
+                <div className="fixed top-0 left-0 right-0 bg-yellow-500 text-white p-4 text-center text-2xl">
                     {notification}
                 </div>
             )}
 
-            <div className="fixed bottom-0 left-0 right-0 bg-white shadow-md p-4 flex justify-between items-center">
-                <div className="w-full flex justify-center">
-                    {feedback && <p className="text-lg text-gray-800">{feedback}</p>}
+            <div className=" bottom-0 left-0 right-0   p-4 flex justify-between items-center">
+                <div className="w-full flex justify-center text-2xl">
+                    {feedback && <p className="text-3xl text-gray-800">{feedback}</p>}
                 </div>
                 {!checkedAnswers[currentQuestionIndex] && (
                     <button
                         type="button"
-                        className="px-4 py-2 bg-primary w-40 text-white rounded-md hover:bg-primary-dark"
+                        className="px-4 py-2 bg-pink-700 w-60 text-2xl justify-center items-center text-white rounded-md hover:bg-pink-600"
                         onClick={handleCheckAnswer}
                     >
                         Kiểm tra đáp án
@@ -1537,7 +1513,7 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
                 {currentQuestionIndex === cauhois.length - 1 && checkedAnswers[currentQuestionIndex] && (
                     <button
                         type="button"
-                        className="px-4 py-2 w-40 bg-primary text-white rounded-md hover:bg-primary-dark"
+                        className="px-4 py-2 w-60 bg-pink-700 text-2xl text-white rounded-md hover:bg-pink-600"
                         onClick={handleSubmit}
                     >
                         Xem kết quả

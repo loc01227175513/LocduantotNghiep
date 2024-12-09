@@ -129,8 +129,8 @@ export default function VoucherPage() {
                             </h4>
                             <div className="flex flex-col items-center justify-center py-16">
                                 <MdFavoriteBorder className="text-6xl text-gray-400 mb-4" />
-                                <p className="text-lg text-gray-500 mb-2">Bạn chưa có khóa học yêu thích nào</p>
-                                <p className="text-sm text-gray-400">Hãy thêm các khóa học bạn quan tâm vào danh sách yêu thích</p>
+                                <p className="text-2xl  text-gray-500 mb-2">Bạn chưa có khóa học yêu thích nào</p>
+                                <p className="text-xl text-gray-400">Hãy thêm các khóa học bạn quan tâm vào danh sách yêu thích</p>
                             </div>
                         </div>
                     </div>
@@ -197,11 +197,11 @@ export default function VoucherPage() {
                                                 {/* Stats */}
                                                 <div className="flex gap-4 text-[rgba(0,0,0,.65)] mb-4 text-[15px]">
                                                     <span className="flex items-center gap-1">
-                                                        <i className="far fa-book-open"></i>
+                                                        <i className="far fa-book-open pr-2"></i>
                                                         {item.baihoc.length || 0} Bài học
                                                     </span>
                                                     <span className="flex items-center gap-1">
-                                                        <i className="far fa-users"></i>
+                                                        <i className="far fa-users pr-2"></i>
                                                         {item.thanhtoan.length || 0} Học viên
                                                     </span>
                                                 </div>
@@ -220,7 +220,7 @@ export default function VoucherPage() {
                                                     </div>
                                                     <Link 
                                                         href={`/page/course-detail?id=${item.khoahoc.id}`}
-                                                        className="px-6 py-2 bg-pink-700 text-white rounded-sm hover:bg-pink-400 transition-colors text-[15px]"
+                                                        className="px-6 py-2 bg-pink-700 text-white rounded-full hover:bg-pink-400 transition-colors text-[15px]"
                                                     >
                                                         Xem Chi Tiết
                                                     </Link>

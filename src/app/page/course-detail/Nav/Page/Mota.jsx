@@ -345,7 +345,7 @@ export default function Mota({ course }) {
                                 className="text-lg text-gray-600 uppercase tracking-wider pl-1"
                                 style={{ fontWeight: "400" }}
                               >
-                                Students
+                                Học viên
                               </span>
                             </span>
                           </div>

@@ -8,7 +8,7 @@ import { calc } from "@chakra-ui/react";
 
 function VoucherCard({ maso, giamgia, gia, hinh, hansudung, onSave, isSaved, isSaving }) {
     return (
-        <div className="flex h-[180px] bg-white rounded-lg overflow-hidden w-[221.25px] max-w-sm relative border shadow-sm shadow-[#1e3c72] m-2" style={{ width: '221.25px' }}>
+        <div className="flex h-[180px] rounded-lg bg-white overflow-hidden w-[221.25px] max-w-sm relative border shadow-sm shadow-[#1e3c72] m-2" style={{ width: '221.25px' }}>
             <div className="w-1/3 relative overflow-hidden">
                 <Image
                     width={150}
