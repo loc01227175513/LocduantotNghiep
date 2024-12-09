@@ -1,10 +1,104 @@
+'use client'
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ChungChi, LayChungChi } from "@/service/ChungChi/ChungChi";
+
 export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id, PhanTram, tieptuchoc }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  return (
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+
+  const handleCertificateDownload = async (id) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // Lấy thông tin chứng chỉ của khóa học
+      const chungChiKhoaHoc = await LayChungChi({
+        id_khoahoc: id
+      });
+      console.log("ChungChiKhoaHoc", chungChiKhoaHoc);
+      if (!chungChiKhoaHoc?.id_chungchi) {
+        setError('Không tìm thấy chứng chỉ cho khóa học này');
+        return;
+      }
+
+      // Lấy danh sách tất cả chứng chỉ
+      const danhSachChungChi = await ChungChi();
+      console.log("DanhSachChungChi", danhSachChungChi);
+      // Tìm chứng chỉ khớp với id_chungchi
+      const chungChiTimThay = danhSachChungChi.data.find(
+        item => item.id === chungChiKhoaHoc.id_chungchi
+      );
+      console.log("chungChiTimThay", chungChiTimThay);
+
+      if (chungChiTimThay?.giaychungnhan) {
+        try {
+          setIsLoading(true);
+          
+          // Tạo thẻ a và thiết lập thuộc tính để tải xuống
+          const link = document.createElement('a');
+          link.href = chungChiTimThay.giaychungnhan;
+          link.download = `chung-chi-${ten.replace(/\s+/g, '-')}.jpg`; // Tên file khi tải về
+          
+          // Thực hiện click để tải
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+        } catch (downloadError) {
+          setError('Không thể tải xuống chứng chỉ. Vui lòng thử lại sau.');
+          console.error('Lỗi khi tải xuống:', downloadError);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setError('Không tìm thấy mẫu chứng chỉ phù hợp');
+      }
+
+    } catch (error) {
+      setError('Có lỗi xảy ra khi tải chứng chỉ');
+      console.error('Lỗi khi tải chứng chỉ:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const renderActionButton = (id) => {
+    if (PhanTram === 100) {
+      return (
+        <div>
+          <button 
+            onClick={() => handleCertificateDownload(id)}
+            className="download-cert-btn w-full py-3 sm:py-4 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white rounded-lg transition-all duration-300 ease-in-out hover:from-pink-700 hover:to-pink-700 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3"
+            disabled={isLoading}
+          >
+            <i className="fas fa-certificate text-lg sm:text-xl" />
+            <span className="text-base sm:text-lg font-medium">
+              {isLoading ? 'Đang tải...' : 'Tải xuống chứng chỉ'}
+            </span>
+          </button>
+          {error && (
+            <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <button
+        className="download-cert-btn w-full py-3 sm:py-4 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white rounded-lg transition-all duration-300 ease-in-out hover:from-pink-700 hover:to-pink-700 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3"
+        onClick={() => tieptuchoc(id)}
+      >
+        <i className="fas fa-certificate text-lg sm:text-xl" />
+        <span className="text-base sm:text-lg font-medium">Tiếp tục học</span>
+      </button>
+    );
+  };
+
+  return (
     <div
       className="transition flash element-item creative p-2 sm:p-3"
       data-category="transition"
@@ -19,7 +113,6 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
               objectFit="cover"
               className="transition-transform duration-300 hover:scale-105"
             />
-            {/* Badge styling improved */}
             {(gia === 0 || giamgia === 0) && (
               <div className="absolute top-3 right-3 bg-red-500 text-white px-4 py-2 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10 backdrop-blur-sm bg-opacity-90">
                 Miễn Phí
@@ -80,20 +173,7 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
               style={{ width: `${PhanTram}%` }}
             />
           </div>
-          {PhanTram == 100 ? (
-            <button className="download-cert-btn w-full py-3 sm:py-4  bg-gradient-to-r from-blue-900 via-pink-700  to-pink-700   text-white rounded-lg transition-all duration-300 ease-in-out hover:from-pink-700 hover:to-pink-700 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3">
-              <i className="fas fa-certificate text-lg sm:text-xl" />
-              <span className="text-base sm:text-lg font-medium">Tải xuống chứng chỉ</span>
-            </button>
-          ) : (
-            <button
-              className="download-cert-btn w-full py-3 sm:py-4  bg-gradient-to-r from-blue-900 via-pink-700  to-pink-700 text-white rounded-lg transition-all duration-300 ease-in-out hover:from-pink-700 hover:to-pink-700 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3"
-              onClick={() => tieptuchoc(id)}
-            >
-              <i className="fas fa-certificate text-lg sm:text-xl" />
-              <span className="text-base sm:text-lg font-medium">Tiếp tục học</span>
-            </button>
-          )}
+          {renderActionButton(id)}
 
           <style jsx>{`
         .course-card {
@@ -182,6 +262,5 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
         </div>
       </div>
     </div>
-
   );
 }

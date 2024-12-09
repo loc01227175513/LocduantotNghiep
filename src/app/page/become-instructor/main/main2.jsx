@@ -103,14 +103,14 @@ export default function Main2() {
                                         { name: 'passwordConfirm', type: 'password', icon: '🔐', placeholder: 'Xác nhận mật khẩu' }
                                     ].map((field) => (
                                         <div key={field.name} className="relative group">
-                                            <span className="absolute left-3 top-3.5 text-gray-400">{field.icon}</span>
+                                            <span className="absolute left-3 top-10 text-gray-400 ">{field.icon}</span>
                                             <input
                                                 type={field.type}
                                                 name={field.name}
                                                 placeholder={field.placeholder}
                                                 value={formData[field.name]}
                                                 onChange={handleChange}
-                                                className="w-full p-3 pl-10 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+                                                className="w-full pl-5 pt-2 pb-2   bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
                                             />
                                         </div>
                                     ))}

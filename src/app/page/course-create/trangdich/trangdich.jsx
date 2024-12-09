@@ -312,7 +312,7 @@ function TrangDich() {
                         <label className="block text-xl font-medium text-gray-700">Chọn chuyên ngành</label>
                         <select
                             name="id_theloaicon"
-                            className="block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                            className="block w-full p-2 mt-1 text-[14px] text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
                             value={subCategory}
                             onChange={(e) => {
                                 setSubCategory(e.target.value);

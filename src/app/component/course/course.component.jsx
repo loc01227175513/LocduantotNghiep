@@ -100,15 +100,15 @@ const OutstandingCourse = () => {
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                      <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg">
+                    <span className="text-white uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
                   <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     <strong>Khám phá các khóa học nổi bật</strong>
-                    <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                    <p className="post-title text-white text-xl max-w-2xl leading-relaxed mt-2">
                       Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng cao
                     </p>
                   </h2>
@@ -279,16 +279,16 @@ const CourseNew = () => {
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                      <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg">
+                    <span className="text-white uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
                   <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     <strong> Khám phá các khóa học mới</strong>
                   </h2>
-                  <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                  <p className="post-title text-white text-xl max-w-2xl leading-relaxed mt-2">
                     Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng
                     cao
                   </p>
@@ -455,16 +455,16 @@ const Courseseal = () => {
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                      <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg">
+                    <span className="text-white uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
                   <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     <strong> Khám phá các khóa học giảm giá</strong>
                   </h2>
-                  <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                  <p className="post-title text-white text-xl max-w-2xl leading-relaxed mt-2">
                     Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và nâng
                     cao
                   </p>
@@ -630,15 +630,15 @@ const Coursefree = () => {
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                      <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg">
+                    <span className="text-white uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
                   <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     <strong> Khám phá các khóa học miễn phí</strong>
-                    <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                    <p className="post-title text-white text-xl max-w-2xl leading-relaxed mt-2">
                       Bạn sẽ tìm thấy thứ gì đó khơi dậy sự tò mò của bạn và
                       nâng cao
                     </p>
@@ -770,15 +770,15 @@ const KhoaHocDangHocDay = () => {
                 <div className="title-area-left-style">
                   <div className="pre-title flex items-center mb-4 space-x-2 animate-fade-in">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-300">
-                      <i className="bi bi-lightbulb text-white-500 text-xl animate-pulse"></i>
+                      <i className="bi bi-lightbulb text-white text-xl animate-pulse"></i>
                     </div>
-                    <span className="text-white-500 uppercase text-lg">
+                    <span className="text-white uppercase text-lg">
                       Khóa học
                     </span>
                   </div>
                   <h2 className="title text-4xl font-medium mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    <strong>Các khóa học bạn đang Học</strong>
-                    <p className="post-title text-white-500 text-xl max-w-2xl leading-relaxed mt-2">
+                    <strong>Các khóa học bạn đang học</strong>
+                    <p className="post-title text-white text-xl max-w-2xl leading-relaxed mt-2">
                       Đừng bỏ lỡ cơ hội học tập tốt nhất
                     </p>
                   </h2>

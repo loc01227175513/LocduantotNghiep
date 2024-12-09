@@ -45,3 +45,24 @@ export const ChonChungChi = async (id) => {
     throw error;
   }
 };
+export const LayChungChi = async ({ id_khoahoc }) => {
+  try {
+    const response = await fetch('https://huuphuoc.id.vn/api/LayChungChi', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id_khoahoc }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(`Lỗi khi tải chứng chỉ: ${error.message}`);
+  }
+};
+
