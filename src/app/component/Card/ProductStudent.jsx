@@ -111,7 +111,7 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
               alt={ten}
               layout="fill"
               objectFit="cover"
-              className="transition-transform duration-300 hover:scale-105"
+              className="transition-transform duration-300 hover:scale-105 object-cover"
             />
             {(gia === 0 || giamgia === 0) && (
               <div className="absolute top-3 right-3 bg-red-500 text-white px-4 py-2 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10 backdrop-blur-sm bg-opacity-90">

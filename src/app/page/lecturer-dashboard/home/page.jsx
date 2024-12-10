@@ -604,7 +604,7 @@ const DoanhThuChart = () => {
           Thống Kê Doanh Thu theo Thời Gian
         </Typography>
         <Typography color="error">{error}</Typography>
-        <button onClick={handleReload} className="mt-4 px-4 py-2 bg-pink-700 text-white rounded">
+        <button onClick={handleReload} className="mt-4 px-4 py-2 text-[14px] bg-pink-700 text-white rounded">
           Tải lại
         </button>
       </Box>
@@ -618,7 +618,7 @@ const DoanhThuChart = () => {
           Thống Kê Doanh Thu theo Thời Gian
         </Typography>
         <Typography sx={{ color: '#ffffff' }}>No data available.</Typography>
-        <button onClick={handleReload} className="mt-4 px-4 py-2  bg-pink-700  text-white rounded">
+        <button onClick={handleReload} className="mt-4 px-4 py-2 text-[14px] bg-pink-700  text-white rounded">
           Tải lại
         </button>
       </Box>
@@ -649,7 +649,7 @@ const DoanhThuChart = () => {
           }
         }}
       >
-        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 text-[1.3rem] bg-pink-700  text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 text-[14px] bg-pink-700  text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
           Tải lại
         </button>
         <motion.div
@@ -900,7 +900,7 @@ const CustomChart = () => {
       sx={{ width: '70%' }}
       className="p-4 bg-gradient-to-r from-[#f3f4f6] to-[#e2e8f0] backdrop-blur rounded-lg h-[400px] transform transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] duration-500"
     >
-      <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-pink-700  text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+      <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 text-[14px] bg-pink-700  text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
         Tải lại
       </button>
       <motion.div

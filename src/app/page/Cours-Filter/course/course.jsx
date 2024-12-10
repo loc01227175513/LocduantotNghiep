@@ -54,7 +54,7 @@ const Grid = ({ courses }) => {
   };
 
   return (
-    <div className="flex flex-wrap flex-row justify-start items-start gap-5">
+    <div className="flex flex-wrap flex-row justify-start items-start gap-20">
       {courses.map((course) => {
         const averageRating =
           course.danhgia && course.danhgia.length > 0
@@ -112,7 +112,7 @@ const List = ({ courses }) => {
           <div className="relative" key={course.id}>
             <Link href={`/page/course-detail?id=${course.id}`}>
               <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
-                <div className="flex flex-col md:flex-row">
+                <div className="flex flex-row md:flex-row">
                   {/* Image Section */}
                   <div className="relative w-full md:w-1/3">
                     <Image

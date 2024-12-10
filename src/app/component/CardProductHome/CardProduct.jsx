@@ -24,7 +24,7 @@ export default function CardProduct({
         <div className="transition flash element-item creative" data-category="transition" key={id}>
             <div className="rts-single-course">
                 <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative">
-                    <Image width={500} height={300} src={hinh} alt="course" style={{ height: "170px" }} />
+                    <Image width={500} height={300} src={hinh} alt="course" style={{ height: "170px" , objectFit: "cover" }} />
                     {/* Free course badge */}
                     {(gia === 0 || giamgia === 0) && (
                         <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">

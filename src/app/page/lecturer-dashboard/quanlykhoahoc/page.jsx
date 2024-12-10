@@ -151,13 +151,13 @@ export default function Quanlykhoahoc() {
                     <div className="p-4 ">
                       <div className="flex justify-between">
                         <section>
-                          <label className="text-[16px] my-2 font-semibold">Thể loại</label>
+                          <label className="text-[16px] my-2 font-medium">Thể loại</label>
                           <select
                             className="text-[14px]"
                             id="category-select"
                             onChange={(e) => setSelectedCategory(e.target.value)}
                           >
-                            <option value="" className="text-[14px] font-semibold">Chọn thể loại</option>
+                            <option value="" className="text-[14px] font-medium">Chọn thể loại</option>
                             {chude &&
                               chude.map((chudeItem) =>
                                 chudeItem.theloaicons.map((theloaiItem) => (
@@ -172,7 +172,7 @@ export default function Quanlykhoahoc() {
                           </select>
                         </section>
                         <section>
-                          <label className="text-[16px] my-2 font-semibold">Chủ đề</label>
+                          <label className="text-[16px] my-2 font-medium ">Chủ đề</label>
                           <select
                             className="text-[14px]"
                             id="course-select"
@@ -193,11 +193,11 @@ export default function Quanlykhoahoc() {
                         </section>
                       </div>
                     </div>
-                    <div className="flex justify-center m-4 ">
-                      <button className="px-8  text-[14px] font-medium p-2  border border-white text-white rounded-lg bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 hover:from-pink-700 hover:to-pink-500  transition-all duration-300 transform hover:scale-105 shadow-lg">
-                        Xác Nhận
+                    <div className="flex justify-center m-4  ">
+                      <button className="px-8 text-[14px] my-3 font-medium p-2 border border-white text-white rounded-lg bg-pink-700 hover:bg-pink-800 shadow-lg">
+                        Xác nhận
                       </button>
-                    </div>
+</div>
                   </form>
                 </div>
               </div>

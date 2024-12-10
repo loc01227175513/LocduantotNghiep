@@ -58,9 +58,9 @@ export default function Khoahocdanghoc() {
           <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <div className="flex flex-col gap-4 w-full">
               <div className="flex items-center gap-4">
-                <div className="flex gap-2 overflow-x-auto no-scrollbar">
+                <div className="flex justify-center gap-2 overflow-x-auto no-scrollbar ">
                   <button
-                    className={`px-4 py-1.5 rounded-full text-[14px] font-medium transition-all duration-200  h-[25px] w-[100px] ${
+                    className={`  rounded-md text-[14px]  transition-all duration-200  h-[25px] w-[100px] ${
                       selectedTab === "day"
                         ? "bg-pink-700 text-white"
                         : "hover:bg-pink-700 hover:text-white text-[#161823]"
@@ -70,7 +70,7 @@ export default function Khoahocdanghoc() {
                     Hôm nay
                   </button>
                   <button
-                    className={`px-4 py-1.5 rounded-full text-[14px] font-medium transition-all duration-200 h-[25px] w-[100px] ${
+                    className={` rounded-md text-[14px]  transition-all duration-200 h-[25px] w-[100px] ${
                       selectedTab === "month"
                         ? "bg-pink-700 text-white"
                         : "hover:bg-pink-700 hover:text-white text-[#161823]"
@@ -80,7 +80,7 @@ export default function Khoahocdanghoc() {
                     Tháng này
                   </button>
                   <button
-                    className={`px-4 py-1.5 rounded-full text-[14px] font-medium transition-all duration-200 h-[25px] w-[100px] ${
+                    className={`  rounded-md text-[14px]  transition-all duration-200 h-[25px] w-[100px] ${
                       selectedTab === "year"
                         ? "bg-pink-700 text-white"
                         : "hover:bg-pink-700 hover:text-white text-[#161823]"
@@ -90,7 +90,7 @@ export default function Khoahocdanghoc() {
                     Năm nay
                   </button>
                   <button
-                    className={`px-4 py-1.5 rounded-full text-[14px] font-medium transition-all duration-200 h-[25px] w-[100px] ${
+                    className={`  rounded-md   text-[14px]  transition-all duration-200 h-[25px] w-[100px] ${
                       selectedTab === "all"
                         ? "bg-pink-700 text-white"
                         : "hover:bg-pink-700 hover:text-white text-[#161823]"
@@ -105,7 +105,7 @@ export default function Khoahocdanghoc() {
                   type="date"
                   value={selectedDate}
                   onChange={handleDateChange}
-                  className="px-3 py-1.5 w-32 h-10 rounded-lg border border-[#1618231f] text-[14px] focus:outline-none focus:border-[#16182333] transition-colors min-w-[140px]"
+                  className="px-3  w-32 h-10 rounded-lg border border-[#1618231f] text-[14px] focus:outline-none focus:border-[#16182333] transition-colors min-w-[140px]"
                 />
               </div>
             </div>

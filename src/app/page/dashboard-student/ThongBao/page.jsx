@@ -93,7 +93,7 @@ const Page = () => {
   return (
     <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas">
       <div className="right-sidebar-my-profile-dash theiaStickySidebar pt--30">
-        <div className="container mx-auto px-6 py-8 max-w-7xl">
+        <div className=" px-6 py-8">
           <h1 className="text-[20px]   font-bold mb-8">Thông báo</h1>
           <div className="w-full space-y-6" data-module-id="activity-notifications">
             <div className="w-full" data-testid="activity-notifications-container">

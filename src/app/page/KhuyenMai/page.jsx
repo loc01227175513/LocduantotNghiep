@@ -9,7 +9,7 @@ export default function Page() {
     <>
       <Header />
 
-      <div className=" w-screen mt-80">
+      <div className=" w-screen h-screen ">
         <VoucherShop />
       </div>
       <Footercomponent />

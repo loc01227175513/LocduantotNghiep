@@ -106,7 +106,7 @@ console.log(orderDetails);
             {['today', 'monthly', 'yearly'].map(tabType => (
               <li key={tabType}>
                 <button
-                  className={`px-6 py-2 rounded-full text-[14px] transition-all ${
+                  className={`px-6 py-2 rounded-md text-[14px] transition-all ${
                     tab === tabType
                       ? 'bg-pink-700 text-white shadow-md'
                       : 'bg-gray-100 hover:bg-gray-200'
@@ -151,7 +151,7 @@ console.log(orderDetails);
               <div className="p-4">
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-[16px] ">#{item.id}</span>
-                  <span className={`px-3 py-1 rounded-full text-[12px] font-medium
+                  <span className={`px-3 py-1 rounded-md text-[12px] font-medium
                     ${item.trangthai === 'completed' ? 'bg-green-100 text-green-600' : 
                       item.trangthai === 'pending' ? 'bg-yellow-100 text-pink-700' : 
                       ' text-pink-700'}`}>

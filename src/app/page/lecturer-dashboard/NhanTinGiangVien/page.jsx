@@ -56,7 +56,7 @@ const NhanTin = () => {
             <div className="overflow-y-scroll col-lg-9 h-lvh">
                 <div className="right-sidebar-dashboard p-6">
                     {/* Header Section */}
-                    <section className="p-6 max-w-6xl mx-auto flex justify-between items-center 
+                    <section className="p-6  mx-auto flex justify-between items-center 
                           bg-white
                           rounded-2xl
                           shadow-lg
@@ -80,7 +80,7 @@ const NhanTin = () => {
                     </section>
 
                     {/* Messages Section */}
-                    <section className="p-4 max-w-6xl mx-auto space-y-8">
+                    <section className="p-4  mx-auto space-y-8">
                         {nhantin.length === 0 ? (
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
