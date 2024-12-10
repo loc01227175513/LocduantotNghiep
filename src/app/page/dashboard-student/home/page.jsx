@@ -27,22 +27,28 @@ export default function Homedashboardstudent() {
       return `${diffInMinutes} phút trước`;
     }
   
-    return `${diffInMinutes} phút trư���c`;
+    return `${diffInMinutes} phút trước`;
   }
   useEffect(() => {
-    Promise.all([Dashboard(), KhoaHocDaHoc()])
+    setLoading(true);
+    Promise.all([
+      Dashboard().catch(() => ({ data: [] })),
+      KhoaHocDaHoc().catch(() => ({ data: [] }))
+    ])
       .then(([dashboardRes, khoahocRes]) => {
-        setData(dashboardRes.data);
-        setKhoahocdahoc(khoahocRes.data);
+        setData(dashboardRes.data || []);
+        setKhoahocdahoc(khoahocRes.data || []);
       })
       .catch((error) => {
         console.error("Error fetching dashboard data:", error);
+        setData([]);
+        setKhoahocdahoc([]);
       })
       .finally(() => {
         setLoading(false);
       });
   }, []);
-
+  console.log(data);
   if (loading) {
     return <div>Loading...</div>;
   }

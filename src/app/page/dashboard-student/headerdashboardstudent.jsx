@@ -45,26 +45,43 @@ const Headerdashboardstudent1 = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+      setError(null);  // Reset error state
       try {
-        const [userResponse, coursesResponse, completedResponse, followingResponse] = await Promise.all([
+        const [userResponse, coursesResponse, completedResponse, followingResponse] = await Promise.allSettled([
           user(),
           KhoaHocDangHoc(),
           KhoaHocDaHoanThanh(),
           DanhSachTheoDoi()
         ]);
-
-        setNguoiDung(userResponse.data);
-        setKhoaHocDaHoc(coursesResponse);
-        setKhoaHocDaHoanThanh(completedResponse.data);
-        setTheoDoi(followingResponse);
+  
+        // Check and set data for each response
+        if (userResponse.status === 'fulfilled') {
+          setNguoiDung(userResponse.value.data);
+        }
+  
+        if (coursesResponse.status === 'fulfilled') {
+          setKhoaHocDaHoc(coursesResponse.value);
+        } else {
+          console.error('Course fetch failed:', coursesResponse.reason);
+          setError('Could not load courses');
+        }
+  
+        if (completedResponse.status === 'fulfilled') {
+          setKhoaHocDaHoanThanh(completedResponse.value.data);
+        }
+  
+        if (followingResponse.status === 'fulfilled') {
+          setTheoDoi(followingResponse.value);
+        }
       
       } catch (error) {
-       console.log(error);
+        console.error('Fetch data error:', error);
+        setError('An error occurred while loading data');
       } finally {
         setIsLoading(false);
       }
     };
-
+  
     fetchData();
   }, []);
 

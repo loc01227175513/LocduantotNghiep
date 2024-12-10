@@ -357,28 +357,41 @@ const Khoahocdathanhtoan = () => {
 const Khoahocdahoanthanh = () => {
   const [khoahocdahoc, setKhoahocdahoc] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
+    setError(null);
 
     KhoaHocDaHoc()
       .then((res) => {
-        setKhoahocdahoc(res.data);
+        setKhoahocdahoc(res.data || []);
         setIsLoading(false);
-
       })
       .catch((error) => {
-        console.error("Error fetching dashboard data:", error);
+        console.error("Error fetching completed courses:", error);
+        setError(error.message);
         setIsLoading(false);
-
       });
   }, []);
 
-  console.log(khoahocdahoc , "khoahocdahoc");
   const tieptuchoc = (id) => {
-    router.push(`/page/Study?id=${id}`)
+    router.push(`/page/Study?id=${id}`);
+  };
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full py-10">
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p className="mt-4 text-lg text-gray-600">Đã xảy ra lỗi khi tải khóa học</p>
+        <p className="mt-2 text-sm text-gray-500">{error}</p>
+      </div>
+    );
   }
+
   return (
     <div className="courses-masonry">
       {isLoading ? (

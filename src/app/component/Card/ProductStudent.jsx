@@ -132,11 +132,11 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
           >
             <p className="title text-[14px] sm:text-lg truncate group-hover:whitespace-normal group-hover:text-clip">{ten}</p>
           </Link>
-          <div className="teacher mb-3 sm:mb-6 flex items-center">
+          <div className="teacher my-2   flex items-center">
             <i className="bi bi-grid mr-2 sm:mr-3 text-gray-800 text-xl sm:text-2xl"></i>
             <span className="text-lg sm:text-xl truncate hover:whitespace-normal hover:text-clip text-gray-800">{chude}</span>
           </div>
-          <div className="rating-and-price">
+          <div className="">
             <div className="price-area">
               <div
                 className={`price-wrapper ${isExpanded ? 'expanded' : ''} flex flex-row items-center flex-wrap gap-2`}
@@ -144,7 +144,7 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
               >
                 {gia !== 0 && giamgia !== 0 && gia !== giamgia ? (
                   <>
-                    <div className="sale-price animate">
+                    <div className="sale-price my-2 animate">
                       <p className="text-[14px] md:text-3xl font-bold flex items-baseline">
                         {giamgia.toLocaleString()}
                         <span className="text-lg md:text-xl ml-1">VNĐ</span>
@@ -158,8 +158,8 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
                     </div>
                   </>
                 ) : (
-                  <div className="sale-price animate">
-                    <p className="text-[14px] md:text-3xl font-bold flex items-baseline">
+                  <div className="sale-price  my-2  animate">
+                    <p className="text-[14px] mb-2 md:text-3xl font-bold flex items-baseline">
                       {gia === 0 ? "0" : gia.toLocaleString()}
                       <span className="text-lg md:text-xl ml-1">VNĐ</span>
                     </p>
@@ -171,13 +171,14 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
 
 
 
-
+      {PhanTram >= 0 && (
           <div className="progress-wrapper h-2 bg-gray-200 rounded-full mb-6 overflow-hidden">
-            <div
-              className="progress-bar h-full bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] rounded-full transition-all duration-500 ease-out"
-              style={{ width: `${PhanTram}%` }}
-            />
-          </div>
+              <div
+                className="progress-bar h-full bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] rounded-full transition-all duration-500 ease-out"
+                style={{ width: `${PhanTram}%` }}
+              />
+          </div>  
+      )}
           {renderActionButton(id)}
 
           <style jsx>{`
