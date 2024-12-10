@@ -12,7 +12,7 @@ import Image from "next/image";
 
 
 
-const RenderQuizItems = ({ quizItems, subItemsLength }) => {
+const RenderQuizItems = ({ quizItems, subItemsLength ,handleExpandLesson}) => {
   const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
   const [questions, setQuestions] = useState([{ title: '', answers: [{ text: '', is_correct: 0 }] }]);
   const [BaihocidNe, setBaihocidNe] = useState(null);
@@ -88,6 +88,7 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
     const newQuestions = [...questions];
     newQuestions[qIndex].answers.splice(aIndex, 1);
     setQuestions(newQuestions);
+    handleExpandLesson(BaihocidNe);
   };
 
   const handleCorrectAnswer = (qIndex, aIndex) => {
@@ -105,8 +106,9 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
         id_baihoc: id_baihoc,
         id_baitracnghiem: id_baitracnghiem,
       });
-      window.location.reload(); // Reload the page after successful deletion
+      handleExpandLesson(id_baihoc);
     } catch (error) {
+      handleExpandLesson(id_baihoc);
       console.error('Error deleting quiz item:', error);
     }
   };
@@ -136,9 +138,10 @@ const RenderQuizItems = ({ quizItems, subItemsLength }) => {
   const handleDeleteQuestion = async (BaihocidNe, quizId, hoiIndex) => {
     try {
       await XoaCauHoi({ BaihocidNe, quizId, hoiIndex });
-      window.location.reload(); // Reload the page after successful deletion
+      setShowQuestionsModal(false);
+      handleExpandLesson(BaihocidNe);
     } catch (error) {
-      console.error('Error deleting question:', error);
+      handleExpandLesson(BaihocidNe);
     }
   };
 
@@ -696,14 +699,17 @@ const NoiDungBaiHoc = ({
           tieu_de: newQuestionTitle,
           mo_ta: newQuestionDescription,
         });
-        window.location.reload(); // Reload the page after successful addition
+        handleExpandLesson(itemId);
+        setIsQuestionModalOpen(false);
       } catch (error) {
-        window.location.reload();
+        setIsQuestionModalOpen(false);
+        handleExpandLesson(itemId);
       }
     } else {
-      window.location.reload();
+      handleExpandLesson(itemId);
+      setIsQuestionModalOpen(false);
     }
-  }, [newQuestionTitle, newQuestionDescription]);
+  }, [newQuestionTitle, newQuestionDescription, handleExpandLesson]);
 
   useEffect(() => {
     // Load URLs from localStorage on component mount
@@ -780,7 +786,7 @@ const NoiDungBaiHoc = ({
                               }}
                               className="px-3 py-1.5 text-[14px] w-60  text-black bg-white rounded-md hover:bg-pink-50 transition-colors"
                             >
-                              + Thêm Sub Item
+                              + Thêm video
                             </button>
 
 
@@ -847,7 +853,7 @@ const NoiDungBaiHoc = ({
                                   )
                                 )}
                                 {provided.placeholder}
-                                <RenderQuizItems quizItems={questionData[item.id]} subItemsLength={item.subItems.length} />
+                                <RenderQuizItems quizItems={questionData[item.id]} subItemsLength={item.subItems.length} handleExpandLesson={handleExpandLesson} />
                               </div>
                             )}
                           </Droppable>
@@ -1035,6 +1041,7 @@ const BaiHoc = () => {
       console.log("id:", idFromUrl);
     }
   }, []);
+
   //lay danh sach bai hoc
   useEffect(() => {
     const fetchLessons = async () => {
@@ -1059,13 +1066,58 @@ const BaiHoc = () => {
           );
           setHighestId(maxId);
         } catch (error) {
-          console.error("Error fetching lessons:", error);
-        }
+          console.log(error);
+        } 
       }
     };
 
     fetchLessons();
   }, [id]);
+  const fetchSubItems = useCallback(async (id_baihoc) => {
+    try {
+      const response = await Axios.post(
+        "https://huuphuoc.id.vn/api/ShowSubBaiHoc",
+        {
+          id_baihoc: id_baihoc,
+        },
+        {
+          referrerPolicy: 'unsafe-url'
+        }
+      );
+
+      const subItems = response.data.data.map((subItem) => ({
+        id: subItem.id,
+        name: subItem.ten,
+      }));
+
+      setItems(
+        items.map((item) => {
+          if (item && item.id === id_baihoc) {
+            return {
+              ...item,
+              subItems: subItems,
+            };
+          }
+          return item;
+        })
+      );
+    } catch (error) {
+      console.error("Error fetching sub items:", error);
+    }
+  }, [items]);
+  const handleExpandLesson = useCallback(async (itemId) => {
+    const data = await ShowTracNghiem({ id_baihoc: itemId });
+    setQuestionData((prevData) => ({
+      ...prevData,
+      [itemId]: data,
+    }));
+    setExpandedLessons((prevExpandedLessons) => ({
+      ...prevExpandedLessons,
+      [itemId]: true,
+    }));
+    setExpandedLessonId(itemId);
+    fetchSubItems(itemId);
+  }, [fetchSubItems ]);
   //cap nhat thu tu bai hoc
   const updateLessonOrder = useCallback(async (reorderedItems) => {
     try {
@@ -1084,7 +1136,7 @@ const BaiHoc = () => {
         { baihocs: lessons },
         { referrerPolicy: 'unsafe-url' }
       );
-
+      handleExpandLesson(id);
       console.log("Cập nhật thứ tự thành công!");
     } catch (error) {
       if (error.response) {
@@ -1093,7 +1145,7 @@ const BaiHoc = () => {
         console.error("Error updating lesson order:", error);
       }
     }
-  }, [id]);
+  }, [id, handleExpandLesson]);
   //cap nhat thu tu sub item
   const updateSubItemOrder = useCallback(async (parentId, container) => {
     try {
@@ -1112,19 +1164,22 @@ const BaiHoc = () => {
         { videos: orderedSubItems },
         { referrerPolicy: 'unsafe-url' }
       );
-
+      handleExpandLesson(parentId);
       console.log("Update successful!");
     } catch (error) {
       if (error.response) {
+        handleExpandLesson(parentId);
         console.error("Error Status:", error.response.status);
         console.error("Error Data:", error.response.data);
       } else if (error.request) {
+        handleExpandLesson(parentId);
         console.error("No response received:", error.request);
       } else {
+        handleExpandLesson(parentId);
         console.error("Request setup error:", error.message);
       }
     }
-  }, [items]);
+  }, [items, handleExpandLesson]);
   //cap nhat sub item sau khi di chuyen
   const updateSubItemParent = useCallback(async (subItemId, newParentId) => {
     try {
@@ -1154,7 +1209,7 @@ const BaiHoc = () => {
           }
           return item;
         });
-
+        handleExpandLesson(newParentId);
         console.log("Updated items:", updatedItems);
         return updatedItems;
       });
@@ -1165,12 +1220,13 @@ const BaiHoc = () => {
       } else {
         console.error("Container not found for parentId:", newParentId);
       }
-
+      handleExpandLesson(newParentId);
       console.log("Sub item đã được di chuyển thành công");
     } catch (error) {
+      handleExpandLesson(newParentId);
       console.error("Error moving sub item:", error);
     }
-  }, [updateSubItemOrder]);
+  }, [updateSubItemOrder, handleExpandLesson]);
 
   const handleMoveSubItem = (subItemId, sourceParentId, targetParentId) => {
     setItems(prevItems => {
@@ -1199,9 +1255,11 @@ const BaiHoc = () => {
           return { ...item, subItems: updatedTargetSubItems };
         }
         return item;
+
       });
     });
   };
+ 
   //di chuyen sub item
   const moveSubItem = useCallback(async (subItemId, sourceParentId, targetParentId, container) => {
     try {
@@ -1240,14 +1298,14 @@ const BaiHoc = () => {
           return item;
         });
       });
-
+      handleExpandLesson(targetParentId);
       await updateSubItemOrder(targetParentId, container);
 
       console.log("Sub item moved successfully");
     } catch (error) {
       console.error("Error moving sub item:", error);
     }
-  }, [updateSubItemOrder]);
+  }, [updateSubItemOrder, handleExpandLesson]);
   //drag and drop
   useEffect(() => {
     const sortables = document.querySelectorAll(".nested-sortable");
@@ -1272,6 +1330,7 @@ const BaiHoc = () => {
             }
           } else {
             try {
+              handleExpandLesson(newParentId);
               await updateSubItemOrder(newParentId, event.to);
             } catch (error) {
               console.error("Error updating sub-item order:", error);
@@ -1293,19 +1352,23 @@ const BaiHoc = () => {
           setItems(reorderedItems);
 
           try {
+            handleExpandLesson(id);
             await updateLessonOrder(reorderedItems);
           } catch (error) {
+            handleExpandLesson(id);
             console.error("Error updating lesson order:", error);
           }
         },
       });
+      handleExpandLesson(id);
       sortableInstances.push(mainSortable);
     }
 
     return () => {
+      handleExpandLesson(id);
       sortableInstances.forEach((instance) => instance.destroy());
     };
-  }, [items, updateLessonOrder, updateSubItemOrder, moveSubItem]);
+  }, [items, updateLessonOrder, updateSubItemOrder, moveSubItem, handleExpandLesson, id]);
   //xoa sub item
   const handleRemoveSubItem = useCallback(async (itemId, subItemId) => {
     try {
@@ -1327,14 +1390,18 @@ const BaiHoc = () => {
             return item;
           })
         );
+        handleExpandLesson(oldParentId);
+
         console.log("Sub-item đã được xóa thành công");
       } else {
+        handleExpandLesson(oldParentId);
         console.error("Failed to delete sub-item:", response.statusText);
       }
     } catch (error) {
+      handleExpandLesson(oldParentId);
       console.error("Error deleting sub-item:", error);
     }
-  }, [setItems]);
+  }, [setItems, handleExpandLesson]);
   //xoa bai hoc
   const handleRemoveItem = useCallback(async (itemId) => {
     if (!itemId) return;
@@ -1355,16 +1422,23 @@ const BaiHoc = () => {
 
       if (response.status === 200) {
         setItems((prevItems) =>
-          prevItems.filter((item) => item && item.id !== itemId)
+          prevItems.filter((item) =>
+            
+            item && item.id !== itemId
+
+          )
         );
+        handleExpandLesson(id);
         console.log("Bài học đã được xóa thành công");
       } else {
+        handleExpandLesson(id);
         console.error("Failed to delete lesson:", response.statusText);
       }
     } catch (error) {
+      handleExpandLesson(id);
       console.error("Error deleting lesson:", error);
     }
-  }, [items]);
+  }, [items, handleExpandLesson, id]);
   //them bai hoc
   const addLessonToCourse = useCallback(async (lessonName) => {
     if (id) {
@@ -1379,11 +1453,14 @@ const BaiHoc = () => {
             referrerPolicy: 'unsafe-url'
           }
         );
-      } catch (error) {
+      } catch (error) { 
+        handleExpandLesson(id);
         console.error("Error adding lesson:", error);
       }
     }
-  }, [id]);
+  }, [id, handleExpandLesson]);
+
+
 
   const handleAddItem = useCallback(async () => {
     if (newItemName.trim()) {
@@ -1402,7 +1479,7 @@ const BaiHoc = () => {
           window.location.reload();
         }
       } catch (error) {
-        console.error("Error adding lesson:", error);
+        window.location.reload();
       }
     }
   }, [items, newItemName, highestId, addLessonToCourse]);
@@ -1433,66 +1510,25 @@ const BaiHoc = () => {
                 ],
               };
             }
+            handleExpandLesson(itemId);
             return item;
           })
         );
+        handleExpandLesson(itemId);
         setNewSubItemName("");
         setIsSubModalOpen(false);
       } catch (error) {
+        handleExpandLesson(itemId);
         console.error("Error adding sub item:", error);
       }
     }
-  }, [items, newSubItemName]);
+  }, [items, newSubItemName, handleExpandLesson]);
 
 
   //show sub item
-  const fetchSubItems = useCallback(async (id_baihoc) => {
-    try {
-      const response = await Axios.post(
-        "https://huuphuoc.id.vn/api/ShowSubBaiHoc",
-        {
-          id_baihoc: id_baihoc,
-        },
-        {
-          referrerPolicy: 'unsafe-url'
-        }
-      );
-
-      const subItems = response.data.data.map((subItem) => ({
-        id: subItem.id,
-        name: subItem.ten,
-      }));
-
-      setItems(
-        items.map((item) => {
-          if (item && item.id === id_baihoc) {
-            return {
-              ...item,
-              subItems: subItems,
-            };
-          }
-          return item;
-        })
-      );
-    } catch (error) {
-      console.error("Error fetching sub items:", error);
-    }
-  }, [items]);
 
 
-  const handleExpandLesson = useCallback(async (itemId) => {
-    const data = await ShowTracNghiem({ id_baihoc: itemId });
-    setQuestionData((prevData) => ({
-      ...prevData,
-      [itemId]: data,
-    }));
-    setExpandedLessons((prevExpandedLessons) => ({
-      ...prevExpandedLessons,
-      [itemId]: true,
-    }));
-    setExpandedLessonId(itemId);
-    fetchSubItems(itemId);
-  }, [fetchSubItems]);
+
 
 
 
