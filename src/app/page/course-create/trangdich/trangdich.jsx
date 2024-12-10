@@ -240,7 +240,7 @@ function TrangDich() {
         <div className="max-w-4xl p-8 mx-auto bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-100"
             style={{ animation: "float 6s ease-in-out infinite" }}>
             <div className="text-center mb-8">
-                <h1 className="text-[16px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-500  to-sky-400 bg-300% animate-shimmer"
+                <h1 className="text-[16px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500  to-pink-400 bg-300% animate-shimmer"
                     style={{ animation: "shimmer 8s linear infinite" }}>
                   Tạo khóa học của bạn
                 </h1>
@@ -251,18 +251,21 @@ function TrangDich() {
 
             <form className="space-y-8" onSubmit={handleSubmit}>
                 <div className="transition-all duration-200 hover:transform hover:scale-[1.01]">
-                    <label className="block text-[14px] font-semibold text-gray-700 mb-2">Tên khóa học</label>
+                    <label className="block text-[14px] font-thin text-gray-700 mb-2">Tên khóa học</label>
                     <input
                         type="text"
                         name="ten"
-                        className="placeholder:text-[14px] text-[14px] block w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                        className="placeholder:text-[14px] text-[14px]   block w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                         placeholder="Nhập tiêu đề thu hút sự chú ý"
                         value={formData.ten}
                         onChange={handleInputChange}
+                        style={{
+                          fontSize: '14px',
+                        }}
                     />
                 </div>
                 <div>
-                    <label className="block text-[14px] font-medium text-gray-700">Mô tả khóa học</label>
+                    <label className="block text-[14px] font-thin text-gray-700">Mô tả khóa học</label>
                     <textarea
                         name="mota"
                         className="placeholder:text-[14px] text-[14px] block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -274,7 +277,7 @@ function TrangDich() {
 
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                     <div className="group">
-                        <label className="block text-[14px] font-semibold text-gray-700 mb-2">Cấp độ</label>
+                        <label className="block text-[14px] font-thin text-gray-700 mb-2">Cấp độ</label>
                         <select
                             name="trinhdo"
                             className="block w-full text-[14px] p-3 text-gray-700 bg-white border border-gray-200 rounded-lg group-hover:border-purple-300 focus:ring-2 focus:ring-purple-500 transition-all duration-200"
@@ -289,7 +292,7 @@ function TrangDich() {
                         </select>
                     </div>
                     <div className="group">
-                        <label className="block text-[14px] font-semibold text-gray-700 mb-2">Loại</label>
+                        <label className="block text-[14px] font-thin text-gray-700 mb-2">Loại</label>
                         <select
                             name="id_theloai"
                             className="block w-full text-[14px] p-3 text-gray-700 bg-white border border-gray-200 rounded-lg group-hover:border-purple-300 focus:ring-2 focus:ring-purple-500 transition-all duration-200"
@@ -331,10 +334,10 @@ function TrangDich() {
                 )}
 
                 <div>
-                    <label className="block text-[14px] font-medium text-gray-700">Tìm kiếm chủ đề</label>
+                    <label className="block text-[14px] font-thin text-gray-700">Tìm kiếm chủ đề</label>
                     <input
                         type="text"
-                        className="placeholder:text-[14px] text-[14px] block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                        className="placeholder:text-[14px] placeholder:font-thin text-[14px] block w-full p-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
                         placeholder="Tìm kiếm các chủ đề"
                         value={searchTerm}
                         onChange={handleSearchChange}
@@ -355,7 +358,7 @@ function TrangDich() {
                 )}
 
                 <div className="mt-8">
-                    <label className="block text-[14px] font-semibold text-gray-700 mb-2">Hình ảnh khóa học</label>
+                    <label className="block text-[14px] font-thin text-gray-700 mb-2">Hình ảnh khóa học</label>
                     <div className="flex items-center justify-center w-full">
                         <label className="flex flex-col w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-all duration-200">
                             <div className="flex flex-col items-center justify-center pt-7">
@@ -370,7 +373,7 @@ function TrangDich() {
                     <button 
                         type="button"
                         onClick={handleSearchImage} 
-                        className="mt-2 text-[14px] bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
+                        className="mt-2 text-[12px] font-medium border border-gray-700 hover:bg-pink-700 hover:text-white text-gray-700  py-2 px-4 rounded-md transition-colors duration-300"
                     >
                         Tìm ảnh trên mạng
                     </button>
@@ -393,11 +396,11 @@ function TrangDich() {
                             animation: "float 6s ease-in-out infinite, fadeScale 0.8s ease-out"
                           }}
                         >
-                          <Image width={100} height={50} 
+                          <Image width={50} height={50} 
                             src={imageUrl}
                             alt="Course preview"
                             className={`
-                              w-full h-[500px] rounded-lg 
+                              w-full h-[300px] rounded-lg 
                               border-2 border-purple-200/50
                               transition-all duration-700
                               group-hover:scale-110
@@ -417,8 +420,8 @@ function TrangDich() {
                 </div>
 
                 <button type="submit"
-                    className="w-full py-4 text-[14px] font-medium text-white bg-gradient-to-r from-sky-500 to-sky-300 rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2"
-                    style={{ animation: "pulse 2s infinite" }}>
+                    className="w-full py-4 text-[14px] font-medium text-white bg-pink-600 hover:bg-pink-700 rounded-lg hover:opacity-90  focus:ring-pink-600 "
+                    >
                    Tạo khóa học
                 </button>
             </form>

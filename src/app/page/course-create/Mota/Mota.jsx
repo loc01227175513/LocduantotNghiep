@@ -156,7 +156,7 @@ function Mota() {
   shadow-[0_20px_70px_-15px_rgba(0,0,0,0.3)]
   border border-white/20 rounded-2xl
   transform transition-all duration-300">
-  <h1 className="mb-6 text-[16px] font-bold bg-gradient-to-r from-sky-500 to-sky-400
+  <h1 className="mb-6 text-[16px] font-bold bg-gradient-to-r from-pink-700 to-pink-500
     bg-clip-text text-transparent">
     Người học dự định
   </h1>
@@ -175,7 +175,7 @@ function Mota() {
       {hocSinhInputs.map((input, index) => (
         <div
           key={index}
-          className="relative mb-4 group animate-[slideIn_0.3s_ease-out] border-1 rounded-md text-xl border-sky-500/90 pl-4"
+          className="relative mb-4 group animate-[slideIn_0.3s_ease-out] border-1 rounded-md text-xl border-pink-500/90 pl-4"
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
@@ -242,8 +242,8 @@ function Mota() {
       <div className="mt-6">
       <button
   onClick={() => handleAddInput(hocSinhInputs, setHocSinhInputs)}
-  className="group px-6 py-3 font-semibold text-sky-500
-    border border-sky-500
+  className="group px-6 py-3 font-semibold text-pink-500
+    border border-pink-500
     rounded-xl shadow-md  text-[14px]
     flex items-center gap-2"
 >
@@ -260,10 +260,10 @@ function Mota() {
         <button
       onClick={handleSubmit}
       className="px-8 py-3 font-semibold text-white
-        bg-gradient-to-r from-sky-500 to-sky-400
+        bg-gradient-to-r from-pink-700 to-pink-500
         rounded-xl shadow-md
         border border-sky-500
-        hover:shadow-lg hover:from-sky-500 hover:to-blue-400
+        hover:shadow-lg hover:from-pink-700 hover:to-pink-500 
         active:to-green-800
         flex items-center gap-2 text-xl"
     >

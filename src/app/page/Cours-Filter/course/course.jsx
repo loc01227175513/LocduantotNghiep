@@ -5,6 +5,7 @@ import { KhoaHocYeuThich } from "../../../../service/YeuThich/YeuThich";
 import CardProduct from "@/app/component/CardProductHome/CardProduct";
 import Image from 'next/image';
 import { FaStar, FaRegStar } from "react-icons/fa";
+import { calc } from "@chakra-ui/react";
 
 
 const Grid = ({ courses }) => {
@@ -53,7 +54,7 @@ const Grid = ({ courses }) => {
   };
 
   return (
-    <div className="row ">
+    <div className="flex flex-wrap flex-row justify-start items-start gap-5">
       {courses.map((course) => {
         const averageRating =
           course.danhgia && course.danhgia.length > 0
@@ -61,7 +62,7 @@ const Grid = ({ courses }) => {
             : 0;
         return (
 
-          <div className="col-lg-4 col-md-6 col-sm-12 col-12" key={course.id}>
+          <div key={course.id} style={{width: "210px", marginBottom:"-105px"}}>
             <CardProduct
               id={course.id}
               hinh={course.hinh}
@@ -148,26 +149,26 @@ const List = ({ courses }) => {
                       </button>
                     </div>
 
-                    <p className="text-gray-600 text-lg font-thin mt-2">
-                      <i className="far fa-user-tie mr-2 text-black text-[12px]" style={{ fontWeight: "400" }}></i>
+                    <p className="text-gray-600 text-[14px] font-thin mt-2">
+                      <i className="far fa-user-tie mr-2 text-black text-[14px]" style={{ fontWeight: "400" }}></i>
                       {course.giangvien}
                     </p>
 
-                    <div className="flex items-center text-black text-[12px]  my-2">
+                    <div className="flex items-center text-black text-[14px]  my-2">
                       <i className="fa-light fa-calendar-lines-pen mr-2 text-[12px]" />
                       <span>{course.baihocs} Bài</span>
                     </div>
-                    <div className="flex items-center text-black text-[12px]  my-2">
+                    <div className="flex items-center text-black text-[14px]  my-2">
                       <i className="fa-light fa-user-group mr-2 text-[12px]" />
                       <span>{course.dangky} Học viên</span>
                     </div>
 
-                    <div className="flex items-center text-black text-[12px] font-extralight my-2">
+                    <div className="flex items-center text-black text-[14px] font-extralight my-2">
                       <i className="bi bi-grid mr-2 text-gray-800 text-[12px] "></i>
                       <span>{course.chude}</span>
                     </div>
 
-                    <div className="flex justify-between items-center mt-4">
+                    <div className="flex justify-between items-center mt-4 text-14px">
                       <div className="flex items-center gap-2 text-lg">
                         <span className="font-bold text-gray-900">
                           {DanhGiaTrungBinh(course.danhgia)}

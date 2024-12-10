@@ -10,14 +10,15 @@ const ImageComponent = ({ type, chungchi, onSelect }) => {
   };
 
   return (
-    <div className="p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <>
+ 
+      <div className="flex flex-row flex-wrap  justify-start items-start  gap-20">
         {chungchi
           .filter((item) => item.loai === type.toLowerCase())
           .map((item, index) => (
             <div
               key={index}
-              className="transform transition-all duration-300 hover:scale-105"
+              className="transform transition-all duration-300 hover:scale-105 w-[180px]"
               style={{ "--index": index }}
             >
               <div className="relative group">
@@ -59,7 +60,7 @@ const ImageComponent = ({ type, chungchi, onSelect }) => {
                         <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
                         </svg>
-                        <p className="text-xl font-medium text-gray-800">Click to select</p>
+                        <p className="text-xl font-medium text-gray-800"> Chọn mẫu chứng chỉ</p>
                       </div>
                     </div>
 
@@ -111,7 +112,8 @@ const ImageComponent = ({ type, chungchi, onSelect }) => {
           animation: ripple 0.6s linear;
         }
       `}</style>
-    </div>
+  
+   </>
   );
 };
 

@@ -74,7 +74,7 @@ const CourseCreatePage = () => {
         flex items-center w-full p-3 mb-2 rounded-lg
         transition-all duration-200 ease-in-out group
         ${isActive 
-          ? 'bg-gradient-to-r from-[#32ADE6] to-[#4299e1] text-white shadow-lg'
+          ? 'bg-gradient-to-r from-pink-500 to-pink-600 text-white shadow-lg'
           : 'hover:bg-gray-50 text-gray-700 hover:shadow-md'
         }
       `}
@@ -95,14 +95,14 @@ const CourseCreatePage = () => {
             w-5 h-5
             ${isActive 
               ? 'text-white' 
-              : 'text-blue-500 group-hover:text-blue-600'
+              : 'text-pink-500 group-hover:text-pink-600'
             }
           `}
         />
       </motion.div>
       <span className={`
         text-xl font-medium
-        ${isActive ? 'text-white' : 'group-hover:text-blue-600'}
+        ${isActive ? 'text-white' : 'group-hover:text-pink-600'}
       `}>
         {text}
       </span>
@@ -192,7 +192,7 @@ const CourseCreatePage = () => {
                   <h5 className="p-3 mb-4 text-[16px] font-bold text-gray-800 bg-gray-100 rounded-xl shadow-sm">
                     3. Xuất bản khóa học của bạn
                   </h5>
-                  <div className="space-y-3">
+                  <div className="space-y-3 ">
                     <MenuItem 
                       icon={Video}
                       text="Trang đích của khóa học"
@@ -217,21 +217,16 @@ const CourseCreatePage = () => {
                       onClick={() => setView("KhuyenMai")}
                       isActive={view === "KhuyenMai"}
                     />
-                    <MenuItem 
-                      icon={MessageCircle}
-                      text="Tin nhắn khóa học"
-                      onClick={() => {}}
-                      isActive={false}
-                    />
+                   
                   </div>
-
+                  <hr className="border-gray-200" />
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="mt-8 w-full py-4 text-lg font-bold text-white rounded-xl bg-gradient-to-r from-[#32ADE6] to-blue-600 shadow-lg hover:shadow-xl transition-all duration-300"
+                    className=" w-full  py-4 text-[14px] font-medium text-white rounded-xl bg-gradient-to-r from-pink-500 to-pink-600 shadow-lg hover:shadow-xl transition-all duration-300"
                     onClick={handleSubmit}
                   >
-                    Submit for Review
+                     Gữi khóa học để xem xét
                   </motion.button>
 
                   <div className="mt-4 text-center mb-20 md:mb-0">

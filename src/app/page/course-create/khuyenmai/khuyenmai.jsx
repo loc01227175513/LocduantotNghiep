@@ -202,6 +202,7 @@ const CouponForm = () => {
         bg="gray.50"
         position="relative"
         overflowY="auto"
+       
       >
         <Heading
           as="h2"
@@ -211,7 +212,7 @@ const CouponForm = () => {
           textAlign="center"
           fontWeight="extrabold"
           className="text-[16px]"
-          
+
         >
           Mã Giảm Giá Khóa Học
         </Heading>
@@ -223,6 +224,13 @@ const CouponForm = () => {
               variant="filled"
               bg="white"
               _hover={{ bg: "gray.50" }}
+              style={{
+                padding: "5px 0 ",
+                color: "black",
+                fontSize: "14px",
+                height: "40px",
+                paddingLeft: "10px",
+              }}
             >
               <option value="">All</option>
               <option value="10">10% or more</option>
@@ -236,6 +244,13 @@ const CouponForm = () => {
               mb={4}
               bg="white"
               _hover={{ bg: "gray.50" }}
+              style={{
+                padding: "5px 0 ",
+                color: "black",
+                fontSize: "14px",
+                height: "40px",
+                paddingLeft: "10px",
+              }}
             >
               <option value="">All</option>
               <option value="100">100 or more</option>
@@ -250,13 +265,29 @@ const CouponForm = () => {
               mb={4}
               bg="white"
               _hover={{ bg: "gray.50" }}
+              style={{
+                padding: "5px 0 ",
+                color: "black",
+                fontSize: "14px",
+                height: "40px",
+                padding: "0 10px",
+              }}
             />
             <Checkbox
               isChecked={bestPromotionFilter}
               onChange={(e) => setBestPromotionFilter(e.target.checked)}
               mb={4}
+              style={{
+                padding: "5px 0 ",
+                color: "black",
+                fontSize: "16px",
+                height: "40px",
+                paddingLeft: "10px",
+
+
+              }}
             >
-              Chỉ hiển thị khuyến mãi tốt nhất (&gt;= 50%)
+              <span className="text-[14px]"> Chỉ hiển thị khuyến mãi tốt nhất (&gt;= 50%)</span>
             </Checkbox>
           </SimpleGrid>
         </Box>
@@ -270,6 +301,7 @@ const CouponForm = () => {
             columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
             spacing={8}
             px={6}
+            
           >
             {filteredData.map((coupon) => (
               <MotionBox
@@ -283,13 +315,15 @@ const CouponForm = () => {
                 exit={{ opacity: 0, scale: 0.8 }}
                 bg="white"
                 boxShadow="md"
+                border="1px solid"
+                borderColor="pink.500"
                 rounded="2xl"
                 p={6}
                 position="relative"
                 onClick={() => handleCardClick(coupon.id)}
                 cursor="pointer"
-                border="1px solid"
-                borderColor={selectedCoupon === coupon.id ? "primary" : "gray.200"}
+      
+
                 transition={{
                   layout: { duration: 0.3 },
                   opacity: { duration: 0.2 }
@@ -341,7 +375,7 @@ const CouponForm = () => {
                       </Icon>
                       <Badge
                         colorScheme={coupon.giamgia >= 50 ? "purple" : "primary"}
-                        fontSize="lg"
+                        fontSize="2xl"
                         px={3}
                         py={1}
                         rounded="lg"
@@ -349,14 +383,14 @@ const CouponForm = () => {
                         -{coupon.giamgia}%
                       </Badge>
                     </HStack>
-                    <Text fontSize="sm" color="gray.500">{coupon.maso}</Text>
+                    <Text fontSize="2xl" color="gray.500">{coupon.maso}</Text>
                   </HStack>
 
                   <Divider />
 
                   <VStack spacing={3} align="stretch">
                     <Stat>
-                      <StatLabel>
+                      <HStack spacing={4} align="center">
                         <HStack>
                           <Icon
                             as={motion.div}
@@ -367,10 +401,9 @@ const CouponForm = () => {
                           >
                             <BiUser size="20px" />
                           </Icon>
-                          <Text>Lượt sử dụng</Text>
+                          <Text>Lượt sử dụng:</Text>
                         </HStack>
-                      </StatLabel>
-                      <StatNumber>
+
                         <HStack>
                           <Icon
                             as={motion.div}
@@ -380,9 +413,9 @@ const CouponForm = () => {
                           >
                             <BiTrendingUp size="16px" />
                           </Icon>
-                          <Text>{coupon.luotsudung}/{coupon.sudunghientai}</Text>
+                          <Text color="pink.700"> {coupon.luotsudung} / {coupon.sudunghientai}</Text>
                         </HStack>
-                      </StatNumber>
+                      </HStack>
                     </Stat>
 
                     <HStack spacing={2}>
@@ -395,7 +428,7 @@ const CouponForm = () => {
                       >
                         <BiTime size="20px" />
                       </Icon>
-                      <Text fontSize="sm">{coupon.ngaybatdau} - {coupon.ngayketthuc}</Text>
+                      <Text fontSize="xl">{coupon.ngaybatdau} - {coupon.ngayketthuc}</Text>
                     </HStack>
                   </VStack>
                 </VStack>
@@ -417,17 +450,21 @@ const CouponForm = () => {
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              bg="primary"
+              bg="pink.500"
               color="white"
               size="lg"
               onClick={handlePublicClick}
               width={100}
               px={8}
               shadow="md"
-              
+              style={{
+               fontSize: "14px",
+               fontWeight: "normal",
+              }}
+
             >
               Xuất bản
-              <i className="fa-light fa-arrow-right ml-2" />
+              <i className="fa-light fa-arrow-right ml-2 " style={{fontSize: "12px"}} />
             </Button>
           </div>
         </Box>

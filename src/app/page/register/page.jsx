@@ -98,7 +98,7 @@ export default function Page() {
                   className="title"
                   variants={itemVariants}
                 >
-                  Đăng ký vào tài khoản của bạn 👋
+                  Đăng ký vào tài khoản 👋
                 </motion.h4>
 
                 <Formik
@@ -114,7 +114,7 @@ export default function Page() {
                           id="ten"
                           name="ten"
                           type="text"
-                          placeholder="Enter Your Name"
+                          placeholder=" Nhập Tên của bạn"
                           aria-label="Name"
                           style={{ fontSize: "15px" }}
                         />
@@ -131,7 +131,7 @@ export default function Page() {
                           id="email"
                           name="email"
                           type="email"
-                          placeholder="Enter Your Email"
+                          placeholder="Nhập Email của bạn"
                           aria-label="Email"
                           style={{ fontSize: "15px" }}
                         />
@@ -148,7 +148,7 @@ export default function Page() {
                           id="dienthoai"
                           name="dienthoai"
                           type="text"
-                          placeholder="Enter Your Phone Number"
+                          placeholder="Nhập Số Điện Thoại của bạn"
                           aria-label="Phone"
                           style={{ fontSize: "15px" }}
                         />
@@ -165,7 +165,7 @@ export default function Page() {
                           id="matkhau"
                           name="matkhau"
                           type="password"
-                          placeholder="Password"
+                          placeholder="Mật khẩu"
                           aria-label="Password"
                           style={{ fontSize: "15px" }}
                         />
@@ -182,7 +182,7 @@ export default function Page() {
                           id="repassword"
                           name="repassword"
                           type="password"
-                          placeholder="Re Password"
+                          placeholder="Nhập Lại Mật khẩu"
                           aria-label="Confirm Password"
                           style={{ fontSize: "15px" }}
                         />

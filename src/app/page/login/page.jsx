@@ -186,7 +186,7 @@ export default function Login() {
                       className="title"
                       variants={itemVariants}
                     >
-                      Đăng nhập vào tài khoản của bạn 👋
+                      Đăng nhập vào tài khoản 👋
                     </motion.h4>
 
                     {/* <div className="social-login mb-4">
@@ -277,7 +277,7 @@ export default function Login() {
                                 <label htmlFor="rememberMe">Nhớ tài khoản</label>
                               </div>
                             </div>
-                            <a href="/page/ForgotPassword" className="forgot-password text-lg">
+                            <a href="/page/ForgotPassword" className="forgot-password text-[14px]">
                               Quên mật khẩu?
                             </a>
                           </motion.div>
@@ -290,7 +290,7 @@ export default function Login() {
                             style={{
                               backgroundColor: "#4285f4", // Primary color for the button
                               color: "#fff", // White text for contrast
-                              borderRadius: "25px", // Rounded button
+                              borderRadius: "5px", // Rounded button
                               padding: "10px 0", // Padding for button
                               transition: "background-color 0.3s ease" // Smooth transition
                             }}

@@ -8,7 +8,7 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { motion } from "framer-motion";
-
+import { IoMdArrowBack } from "react-icons/io";
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const initialValues = { email: "", password: "", rememberMe: false };
@@ -65,9 +65,13 @@ export default function Login() {
           overflowY: "scroll"
         }}
       >
-        <div className="container">
+        <div className="container relative">
+  
+    
           <div className="row g-0">
+            
             <div className="col-lg-6" style={{ marginTop: 150 }}>
+              
               <motion.div
                 className="login-page-form-area"
                 style={{
@@ -79,7 +83,7 @@ export default function Login() {
                   border: "1px solid rgba(255, 255, 255, 0.18)"
                 }}
               >
-                <h4 className="title">Nhập Email Đổi Mật Khẩu👋</h4>
+                <h4 className="title">Nhập email đổi mật khẩu👋</h4>
                 <Formik
                   initialValues={initialValues}
                   validationSchema={validationSchema}
@@ -93,22 +97,23 @@ export default function Login() {
                           id="email"
                           name="email"
                           type="email"
-                          placeholder="Enter Your Email"
+                          placeholder="Nhập email của bạn"
+                          className="placeholder:text-[14px] text-[14px] border-none bg-gray-100 w-full p-2 rounded-md"
                         />
                         <ErrorMessage
                           name="email"
                           component="div"
-                          className="text-xl text-orange-500 bg-none  border-none mt-2" // Updated class names for better visibility
+                          className="text-xl text-pink-700 bg-none  border-none mt-2" // Updated class names for better visibility
                           style={{ padding: "0.5rem", borderRadius: "5px" }} // Added inline styles for better appearance
                         />
                       </div>
 
                       <button
                         type="submit"
-                        className="rts-btn btn-primary"
+                        className="rts-btn btn-primary text-[14px]"
                         disabled={isSubmitting}
                       >
-                        Gữi Email
+                        Gửi Email
                       </button>
                     </Form>
                   )}

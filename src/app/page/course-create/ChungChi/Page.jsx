@@ -40,29 +40,29 @@ export default function Page() {
   };
 
   return (
-    <div className="p-10 bg-gradient-to-r relative from-sky-50/80 to-blue-50/80 rounded-2xl transition-all duration-500 ease-in-out">
+    <div className="p-10 bg-gradient-to-r relative   from-sky-50/80 to-blue-50/80 rounded-2xl transition-all duration-500 ease-in-out">
       <header className="mb-8">
-        <h2 className="text-[16px] bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent text-center font-semibold tracking-wide">
+        <h2 className="text-[16px] bg-gradient-to-r from-pink-600 to-pink-600 bg-clip-text text-transparent text-center font-semibold tracking-wide">
           Mẫu chứng chỉ
         </h2>
       </header>
 
-      <section className="tabs max-w-6xl mx-auto">
-        <div className="tab-list mb-6 flex justify-center gap-6">
+      <section className="tabs   mx-auto">
+        <div className="tab-list  mb-6 flex justify-center gap-6">
           {["Landscape", "Portrait"].map((tab) => (
             <button
               key={tab}
-              className={`tab rounded-xl font-medium transition-all duration-300 flex flex-col items-center justify-center
-                w-32 h-24 backdrop-blur-sm
+              className={`tab flex flex-row w-60  rounded-xl py-3  transition-all duration-300  items-center justify-center
+                 backdrop-blur-sm
                 ${
                   view === tab
-                    ? "bg-sky-500/90 text-white scale-105"
-                    : "bg-white/60 text-sky-700 hover:bg-sky-400/80 hover:text-white"
+                    ? "bg-pink-500/90 text-white scale-105"
+                    : "bg-white/60 text-pink-700 hover:bg-pink-400/80 hover:text-white"
                 }`}
               onClick={() => handleViewChange(tab)}
             >
-              <i className="fa-sharp fa-light fa-pager mb-2 text-xl" />
-              <span className="text-[14px] font-medium">
+              <i className="fa-sharp fa-light fa-pager mr-3  text-xl" />
+              <span className="text-[14px] ">
                 {tab === "Landscape" ? "Phong cảnh" : "Chân dung"}
               </span>
             </button>
@@ -82,21 +82,21 @@ export default function Page() {
           </div>
         </div>
       </section>
-
-        <section className="actions mt-8 w-[100px] flex justify-end">
+<div className="flex justify-end">
+        <section className="actions mt-8 w-[100px] ">
         <button
-          className="btn px-6 py-3 rounded-xl font-medium transition-all duration-300 
-            bg-gradient-to-r from-sky-500 to-blue-500 text-white
-            hover:from-sky-600 hover:to-blue-600
+          className="btn px-6   py-3 rounded-xl font-medium transition-all duration-300 
+            bg-gradient-to-r from-pink-500 to-pink-500 text-white
+            hover:from-pink-600 hover:to-pink-600
             disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handlePublish}
           disabled={!selectedId}
         >
-          Publish
+          Xuất bản
           <i className="fa-light fa-arrow-right ml-2" />
         </button>
       </section>
-
+</div>
     </div>
   );
 }
