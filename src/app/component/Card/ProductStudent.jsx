@@ -38,17 +38,17 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
       if (chungChiTimThay?.giaychungnhan) {
         try {
           setIsLoading(true);
-          
+
           // Tạo thẻ a và thiết lập thuộc tính để tải xuống
           const link = document.createElement('a');
           link.href = chungChiTimThay.giaychungnhan;
           link.download = `chung-chi-${ten.replace(/\s+/g, '-')}.jpg`; // Tên file khi tải về
-          
+
           // Thực hiện click để tải
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-          
+
         } catch (downloadError) {
           setError('Không thể tải xuống chứng chỉ. Vui lòng thử lại sau.');
           console.error('Lỗi khi tải xuống:', downloadError);
@@ -70,7 +70,7 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
     if (PhanTram === 100) {
       return (
         <div>
-          <button 
+          <button
             onClick={() => handleCertificateDownload(id)}
             className="download-cert-btn w-full py-3 sm:py-4 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white rounded-lg transition-all duration-300 ease-in-out hover:from-pink-700 hover:to-pink-700 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3"
             disabled={isLoading}
@@ -136,37 +136,42 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
             <i className="bi bi-grid mr-2 sm:mr-3 text-gray-800 text-xl sm:text-2xl"></i>
             <span className="text-lg sm:text-xl truncate hover:whitespace-normal hover:text-clip text-gray-800">{chude}</span>
           </div>
-          <div className="rating-and-price ">
+          <div className="rating-and-price">
             <div className="price-area">
-              <div className={`price-wrapper ${isExpanded ? 'expanded' : ''}`}
-                onClick={() => setIsExpanded(!isExpanded)}>
+              <div
+                className={`price-wrapper ${isExpanded ? 'expanded' : ''} flex flex-row items-center flex-wrap gap-2`}
+                onClick={() => setIsExpanded(!isExpanded)}
+              >
                 {gia !== 0 && giamgia !== 0 && gia !== giamgia ? (
                   <>
-                    <div className="sale-price animate mb-2">
-                      <p className="text-3xl font-bold">
+                    <div className="sale-price animate">
+                      <p className="text-[14px] md:text-3xl font-bold flex items-baseline">
                         {giamgia.toLocaleString()}
-                        <span className="text-2xl ml-2">VNĐ</span>
+                        <span className="text-lg md:text-xl ml-1">VNĐ</span>
                       </p>
                     </div>
                     <div className="original-price animate">
-                      <p className="text-2xl">
+                      <p className="text-[14px] md:text-xl text-gray-500 line-through flex items-baseline">
                         {gia.toLocaleString()}
-                        <span className="text-2xl ml-2">VNĐ</span>
+                        <span className="text-base md:text-lg ml-1">VNĐ</span>
                       </p>
                     </div>
                   </>
                 ) : (
-                  <>
-                    <div className="sale-price animate mb-2">
-                      <p className="text-3xl font-bold">
-                        0<span className="text-2xl ">VNĐ</span>
-                      </p>
-                    </div>
-                  </>
+                  <div className="sale-price animate">
+                    <p className="text-[14px] md:text-3xl font-bold flex items-baseline">
+                      {gia === 0 ? "0" : gia.toLocaleString()}
+                      <span className="text-lg md:text-xl ml-1">VNĐ</span>
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
           </div>
+
+
+
+
           <div className="progress-wrapper h-2 bg-gray-200 rounded-full mb-6 overflow-hidden">
             <div
               className="progress-bar h-full bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] rounded-full transition-all duration-500 ease-out"

@@ -43,11 +43,11 @@ export default function CardProduct({
                 </div>
                 <div className="course-card">
                     <Link href={`/page/course-detail?id=${id}`} className="title-link flex items-center">
-                            <p className="title text-base sm:text-lg truncate group-hover:whitespace-normal group-hover:text-clip"
-                                style={{ fontWeight: "600", minHeight: "24px" }}
-                                title={ten}>
-                                {ten}
-                            </p>
+                        <p className="title text-base sm:text-lg truncate group-hover:whitespace-normal group-hover:text-clip"
+                            style={{ fontWeight: "600", minHeight: "24px" }}
+                            title={ten}>
+                            {ten}
+                        </p>
                     </Link>
                     <div className="teacher flex items-center">
                         <i className="bi bi-grid mr-2 text-gray-800 text-2xl"></i>
@@ -60,49 +60,49 @@ export default function CardProduct({
                     </p>
 
                     <div className="flex flex-row space-x-4 bg-gradient-to-r from-gray-50 to-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
-                                  <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
-                                    <i className="fa-light fa-calendar-lines-pen text-gray-600 text-lg" />
-                                    <div className="flex flex-col">
-                                      <span
-                                        className="text-lg font-bold"
-                                        style={{ fontWeight: "400" }}
-                                      >
-                                        {baihocs}
-                                        <span
-                                          className="text-lg text-gray-600 uppercase tracking-wider pl-1"
-                                          style={{ fontWeight: "400" }}
-                                        >
-                                          Bài
-                                        </span>
-                                      </span>
-                                    </div>
-                                  </div>
-
-                                  <div className="flex items-center space-x-2 p-2 rounded-full">
-                                    <i className="fa-light fa-user-group text-gray-600 text-xl" />
-                                    <div className="flex flex-row items-center">
-                                      <span className="text-lg font-bold mr-1" style={{ fontWeight: "400" }}>
-                                        {dangky}
-                                      </span>
-                                      <span className=" text-lg" style={{ fontWeight: "400" }}>
-                                        HỌC VIÊN
-                                      </span>
-                                    </div>
-                                  </div>
-
-                                  <div className=" text-lg  flex flex-row items-center">
-                                    <FaStar
-                                      className="text-yellow-400 w-5 h-5"
-                                      aria-label="Rating Star"
-                                    />
+                        <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">
+                            <i className="fa-light fa-calendar-lines-pen text-gray-600 text-lg" />
+                            <div className="flex flex-col">
+                                <span
+                                    className="text-lg font-bold"
+                                    style={{ fontWeight: "400" }}
+                                >
+                                    {baihocs}
                                     <span
-                                      className="rating-number ml-1 text-xl"
-                                      style={{ fontWeight: "400" }}
+                                        className="text-lg text-gray-600 uppercase tracking-wider pl-1"
+                                        style={{ fontWeight: "400" }}
                                     >
-                                      {averageRating.toFixed(1)}
+                                        Bài
                                     </span>
-                                  </div>
-                                </div>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center space-x-2 p-2 rounded-full">
+                            <i className="fa-light fa-user-group text-gray-600 text-xl" />
+                            <div className="flex flex-row items-center">
+                                <span className="text-lg font-bold mr-1" style={{ fontWeight: "400" }}>
+                                    {dangky}
+                                </span>
+                                <span className=" text-lg" style={{ fontWeight: "400" }}>
+                                    HỌC VIÊN
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className=" text-lg  flex flex-row items-center">
+                            <FaStar
+                                className="text-yellow-400 w-5 h-5"
+                                aria-label="Rating Star"
+                            />
+                            <span
+                                className="rating-number ml-1 text-xl"
+                                style={{ fontWeight: "400" }}
+                            >
+                                {averageRating.toFixed(1)}
+                            </span>
+                        </div>
+                    </div>
 
 
 

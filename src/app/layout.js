@@ -2,6 +2,8 @@ import { Providers } from './providers'
 import { Fonts } from './components/common/Fonts'
 import { Analytics } from './components/common/Analytics'
 import localFont from 'next/font/local'
+import ClientWrapper from './components/ClientWrapper'
+import LayoutContent from './components/LayoutContent'
 
 // CSS imports
 import '../assets/css/plugins/fontawesome-6.css'
@@ -37,7 +39,11 @@ export default function RootLayout({ children }) {
       <Fonts />
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
-          {children}
+          <ClientWrapper>
+            <LayoutContent>
+              {children}
+            </LayoutContent>
+          </ClientWrapper>
         </Providers>
         <Analytics />
       </body>

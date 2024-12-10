@@ -359,16 +359,16 @@ export default function Homedashboardlecturer() {
                 <div className="flex flex-col items-center justify-center text-center p-4 border border-gray-200/50 rounded-lg hover:shadow-lg transition-all duration-300">
                   <div className="icon flex justify-center">
                     {React.createElement(card.icon, {
-                      className: "h-10 w-10 mb-2 text-pink-600",
+                      className: "h-10 w-10 mb-2 text-gray-700",
                       size: "2.5em"
                     })}
                   </div>
-                  <h5 className="title text-[20px]">
+                  <h5 className="title text-[20px] " >
                     <CountUp
                       end={card.value}
                       duration={2}
                       separator=","
-                      className="counter"
+                      className="counter text-gray-700 text-[20px]" style={{ fontWeight: "normal" }}
                     />
                   </h5>
                   <p className="text-[16px]">{card.label}</p>
@@ -385,9 +385,9 @@ export default function Homedashboardlecturer() {
                   <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
                     <div className="flex items-center justify-center gap-2 mb-2">
                       <FaTrophy className="text-pink-700 w-6 h-6" />
-                      <p className='text-[16px] font-semibold'>Khóa học bán chạy nhất</p>
+                      <p className='text-[18px] font-semibold'>Khóa học bán chạy nhất</p>
                     </div>
-                    <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocbanchay.ten}</p>
+                    <p className='   text-[20px]   my-2'>{khoahocbanchay.ten}</p>
                     <p className='text-5xl my-2 text-pink-700'>{khoahocbanchay.ThanhToan.length}</p>
                     <p className='text-black text-[16px] my-2 font-medium'>Học sinh</p>
                   </div>
@@ -395,19 +395,19 @@ export default function Homedashboardlecturer() {
                   <div className="flex-1 text-center bg-gray-100 rounded-lg transform transition-transform duration-300 hover:scale-105 w-[309.875px] h-[192.5px] flex flex-col justify-center">
                     <div className="flex items-center justify-center gap-2 mb-2">
                       <FaMoneyBill className="text-pink-700 w-6 h-6" />
-                      <p className='text-xl font-semibold'>Khóa học có doanh thu cao nhất</p>
+                      <p className='text-[18px] font-semibold'>Khóa học có doanh thu cao nhất</p>
                     </div>
-                    <p className='text-[#1e3c72] text-2xl font-bold my-2'>{khoahocMaxSotien.ten}</p>
-                    <p className='text-5xl my-2 text-pink-700'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toLocaleString('vi-VN')  }VNĐ</p>
-        
+                    <p className=' text-[20px] my-2'>{khoahocMaxSotien.ten}</p>
+                    <p className='text-5xl my-2 text-pink-700'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toLocaleString('vi-VN')}VNĐ</p>
+
                   </div>
                 </div>
               </div>
             </div>
             <div className="mt-5">
               <div className='flex justify-center items-center gap-2'>
-                <FaChartPie className="text-pink-600 w-8 h-8" />
-                <p className='font-bold text-black text-3xl mt-8 p-0'>Thống kê Doanh Thu</p>
+
+                <p className='font-bold text-black text-[20px] mt-8 p-0'>Thống kê Doanh Thu</p>
               </div>
               <div className='mt-10'>
                 {data?.giangvien && (
@@ -422,7 +422,7 @@ export default function Homedashboardlecturer() {
               <div className="col-12">
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <h5 className="mb-0 font-bold text-[20px] text-gray-800">Các khóa học của tôi</h5>
-                  <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-gradient-to-r bg-pink-700 text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl shadow-md">
+                  <Link href={'/page/lecturer-dashboard/quanlykhoahoc'} className="btn bg-gradient-to-r px-10 py-3 text-[13px] bg-pink-700 text-white rounded-lg btn-sm hover:scale-105 transition-transform text-2xl shadow-md">
                     Xem tất cả
                   </Link>
                 </div>
@@ -447,15 +447,35 @@ export default function Homedashboardlecturer() {
                                       {item.ten}
                                     </h6>
                                     <span
-                                      className={`badge ${item.trangthai === 'Hoàn thành' ? 'bg-green-500 text-white' : item.trangthai === 'notyet' ? 'bg-red-500 text-white' : ' text-pink-700'
-                                        } text-[14px] px-4 py-1.5 rounded-full whitespace-nowrap`}
+                                      className={`badge text-[14px] px-4 py-1.5 rounded-full whitespace-nowrap ${item.trangthai === 'Progress'
+                                          ? 'bg-green-500 text-white'
+                                          : item.trangthai === 'Notyet' || item.trangthai === 'notyet'
+                                            ? 'text-pink-700 '
+                                            : 'text-pink-700'
+                                        }`}
                                     >
-                                      {item.trangthai}
+                                      {(() => {
+                                        switch (item.trangthai) {
+                                          case 'active':
+                                            return 'Đang phát hành';
+                                          case 'Pending':
+                                            return 'Đang đợi phê duyệt';
+                                          case 'Notyet':
+                                          case 'notyet':
+                                            return 'Chưa phát hành';
+                                          case 'Decline':
+                                            return 'Từ chối';
+                                          case 'Progress':
+                                            return 'Đã hoàn thành';
+                                          default:
+                                            return 'Chưa hoàn thành';
+                                        }
+                                      })()}
                                     </span>
                                   </div>
                                 </div>
 
-                               
+
                               </div>
                             </div>
                           </Link>
@@ -468,8 +488,8 @@ export default function Homedashboardlecturer() {
                     <FaExclamationTriangle className="text-yellow-500 w-16 h-16 mb-4" />
                     <p className="text-xl text-gray-600 font-medium mb-2">Chưa có khóa học nào</p>
                     <p className="text-gray-500 mb-4">Hãy bắt đầu tạo khóa học đầu tiên của bạn</p>
-                    <Link 
-                      href="/page/lecturer-dashboard/quanlykhoahoc" 
+                    <Link
+                      href="/page/lecturer-dashboard/quanlykhoahoc"
                       className="px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors duration-300"
                     >
                       Tạo khóa học
@@ -495,7 +515,7 @@ const DoanhThuChart = () => {
 
   const fetchDoanhThu = async (giangvienId) => {
     if (!giangvienId) return;
-    
+
     setLoading(true);
     setError(null);
 
@@ -514,7 +534,7 @@ const DoanhThuChart = () => {
       }
 
       const result = await response.json();
-      
+
       let transformedData;
       if (Array.isArray(result.data)) {
         transformedData = result.data;
@@ -569,10 +589,10 @@ const DoanhThuChart = () => {
   if (loading) {
     return (
       <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#1a202c', borderRadius: '8px' }}>
-      <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
-        Thống Kê Doanh Thu theo Thời Gian
-      </Typography>
-      <Typography sx={{ color: '#ffffff' }}>Loading...</Typography>
+        <Typography variant="h6" gutterBottom sx={{ color: '#ffffff' }}>
+          Thống Kê Doanh Thu theo Thời Gian
+        </Typography>
+        <Typography sx={{ color: '#ffffff' }}>Loading...</Typography>
       </Box>
     );
   }
@@ -580,13 +600,13 @@ const DoanhThuChart = () => {
   if (error) {
     return (
       <Box sx={{ width: '100%', padding: '20px', backgroundColor: '#ffffff', borderRadius: '8px' }}>
-      <Typography variant="h6" gutterBottom sx={{ color: '#000000' }}>
-        Thống Kê Doanh Thu theo Thời Gian
-      </Typography>
-      <Typography color="error">{error}</Typography>
-      <button onClick={handleReload} className="mt-4 px-4 py-2 bg-pink-700 text-white rounded">
-        Reload Data
-      </button>
+        <Typography variant="h6" gutterBottom sx={{ color: '#000000' }}>
+          Thống Kê Doanh Thu theo Thời Gian
+        </Typography>
+        <Typography color="error">{error}</Typography>
+        <button onClick={handleReload} className="mt-4 px-4 py-2 bg-pink-700 text-white rounded">
+          Tải lại
+        </button>
       </Box>
     );
   }
@@ -599,7 +619,7 @@ const DoanhThuChart = () => {
         </Typography>
         <Typography sx={{ color: '#ffffff' }}>No data available.</Typography>
         <button onClick={handleReload} className="mt-4 px-4 py-2  bg-pink-700  text-white rounded">
-          Reload Data
+          Tải lại
         </button>
       </Box>
     );
@@ -629,8 +649,8 @@ const DoanhThuChart = () => {
           }
         }}
       >
-        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-pink-700  text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-          Reload Data
+        <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 text-[1.3rem] bg-pink-700  text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          Tải lại
         </button>
         <motion.div
           initial={{ x: -20 }}
@@ -641,11 +661,11 @@ const DoanhThuChart = () => {
             variant="h6"
             gutterBottom
             sx={{
-              background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+              background: 'black',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              fontWeight: 'bold',
-              fontSize: '1.5rem', // Increased font size for emphasis
+              padding: '10px 0 10px 0',
+              fontSize: '1.8rem', // Increased font size for emphasis
             }}
           >
             Thống Kê Doanh Thu theo Thời Gian
@@ -655,13 +675,13 @@ const DoanhThuChart = () => {
         <Box sx={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
           {[
             { label: 'Tổng Doanh Thu', value: totalRevenue.toLocaleString() },
-            { label: 'Doanh Thu Trung Bình', value: averageRevenue },
+            { label: 'Doanh Thu Trung Bình', value: (averageRevenue || 0).toLocaleString() },
             { label: 'Doanh Thu Tối Đa', value: maxRevenue.toLocaleString() },
             { label: 'Doanh Thu Tối Thiểu', value: minRevenue.toLocaleString() },
           ].map((item, index) => (
             <Box key={index} sx={{ textAlign: 'center' }}>
-              <Typography variant="subtitle1" sx={{ color: '#000000', fontWeight: '600' }}>{item.label}</Typography>
-              <Typography variant="h6" sx={{ color: '#000000', fontWeight: '700' }}>{item.value} VND</Typography>
+              <Typography variant="subtitle1" sx={{ color: '#000000', fontWeight: '200', fontSize: '1.4rem' }}>{item.label}</Typography>
+              <Typography variant="h6" sx={{ color: '#000000', fontWeight: '200', fontSize: '1.4rem' }}>{item.value} VND</Typography>
             </Box>
           ))}
         </Box>
@@ -673,25 +693,26 @@ const DoanhThuChart = () => {
             displayEmpty
             sx={{
               width: '200px',
-              backgroundColor: 'rgb(190, 24, 93)',
-              color: '#ffffff',
-              '& .MuiSelect-icon': { color: '#ffffff' },
-              '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgb(190, 24, 93)' },
-              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'rgb(190, 24, 93)' },
+              backgroundColor: '',
+              fontSize: '1.3rem',
+              color: '#000000',
+              '& .MuiSelect-icon': { color: '#000000' },
+              '& .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
+              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#000000' },
               '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'rgb(190, 24, 93)' },
             }}
             MenuProps={{
               PaperProps: {
                 sx: {
-                  backgroundColor: 'rgb(190, 24, 93)',
-                  color: '#ffffff',
-                
+                  backgroundColor: '',
+                  fontSize: '1.3rem',
+                  color: '#00000'
                 },
               },
             }}
           >
-            <MenuItem value="tongdoanhthu">Tổng Doanh Thu</MenuItem>
-            <MenuItem value="sodukhadung">Số Dư Khả Dụng</MenuItem>
+            <MenuItem value="tongdoanhthu" className="text-[1.3rem]"  >Tổng Doanh Thu</MenuItem>
+            <MenuItem value="sodukhadung" className="text-[1.3rem]" >Số Dư Khả Dụng</MenuItem>
           </Select>
         </Box>
 
@@ -756,7 +777,7 @@ const DoanhThuChart = () => {
               wrapperStyle={{
                 color: '#000000',
                 padding: '20px',
-                fontWeight: 'bold'
+                fontSize: '1.4rem',
               }}
             />
 
@@ -781,6 +802,13 @@ const DoanhThuChart = () => {
               animationDuration={2000}
               animationEasing="ease-out"
               filter="url(#glow)"
+              sx={{
+                stroke: '#000000',
+                strokeWidth: 4,
+                strokeOpacity: 1,
+                strokeLinecap: 'round',
+                strokeLinejoin: 'round'
+              }}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -873,7 +901,7 @@ const CustomChart = () => {
       className="p-4 bg-gradient-to-r from-[#f3f4f6] to-[#e2e8f0] backdrop-blur rounded-lg h-[400px] transform transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] duration-500"
     >
       <button onClick={handleReload} className="mb-4 w-60 px-4 py-2 bg-pink-700  text-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        Reload Data
+        Tải lại
       </button>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -944,7 +972,7 @@ const CustomChart = () => {
           <Line
             type="monotone"
             dataKey="gia"
-            stroke="#4f46e5"
+            stroke="#be185d"
             strokeWidth={3}
             filter="url(#neon-glow)"
             dot={(props) => {
@@ -982,7 +1010,7 @@ const CustomChart = () => {
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
               border: '1px solid #4f46e5',
               borderRadius: '8px',
               color: '#000000',
@@ -993,10 +1021,10 @@ const CustomChart = () => {
               const course = props.payload;
               return [
                 <div key="tooltip" className="tooltip-content">
-                  <div className="font-bold mb-2">{course.ten}</div>
-                  <div>Giá: {value.toLocaleString()} VND</div>
+                  <div className=" mb-2 text-[14px] text-gray-700">{course.ten}</div>
+                  <div className="text-[14px] text-gray-700 line-through">Giá: {value.toLocaleString()} VND</div>
                   {course.giamgia > 0 && (
-                    <div className="text-red-500">Giảm giá: {course.giamgia}%</div>
+                    <div className="text-red-500 text-[14px]">Giảm giá: {course.giamgia.toLocaleString()} VND</div>
                   )}
                 </div>
               ];

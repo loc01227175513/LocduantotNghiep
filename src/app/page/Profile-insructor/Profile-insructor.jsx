@@ -208,24 +208,7 @@ export const Profileinsructor = () => {
     };
 
     return (<>
-        <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-            closeButton={({ closeToast }) => (
-                <button onClick={closeToast} className="w-10 h-10 flex items-center justify-center">
-                    <i className="fas fa-times text-lg"></i>
-                </button>
-            )}
-        />
-
+    
         <div className="container">
             {data.length === 0 ? (
                 <div className="flex flex-col items-center justify-center min-h-screen">
@@ -408,7 +391,7 @@ export const Profileinsructor = () => {
                         ) : (
                             <div className="flex flex-col items-center justify-center w-full p-8">
                                 <FaRegSadTear className="text-4xl text-gray-400 mb-2" />
-                                <p className="text-gray-500">Không có khóa học nào</p>
+                                <p className="text-gray-500">Không có khóa h���c nào</p>
                             </div>
                         )}
                     </div>

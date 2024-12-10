@@ -52,21 +52,21 @@ export default function VoucherPage() {
       <Toaster position="top-right" />
       <div className="exrolled-course-wrapper-dashed">
         <div className="voucher-page container">
-         
+
           <div className="voucher-list flex flex-wrap gap-4 justify-start rounded-md ">
             {vouchers.length > 0 ? (
-              vouchers.map((item) =>(
+              vouchers.map((item) => (
                 <div key={item.magiamgia.maso} className="border-[1px] border-pink-700  rounded-md  shadow-sm pt-4 pb-4 pl-10 pr-10 ">
                   <div className="text-gray-700 text-2xl font-medium text-center mb-2 uppercase">
                     Giảm ngay
                   </div>
-                  
+
                   <div className="flex">
                     <div className="w-[100px] h-[100px] flex flex-col items-center justify-center bg-pink-700 rounded-md ">
                       <p className="text-6xl  text-white leading-none">{item.magiamgia.giamgia}%</p>
                       <p className="text-white text-xl mt-2">Mã: <span className="font-medium">{item.magiamgia.maso}</span></p>
                     </div>
-                    
+
                     <div className="flex flex-col justify-center pl-5 ">
                       <p className="text-gray-700 text-[14px] font-medium">Từ: {item.magiamgia.ngaybatdau}</p>
                       <p className="text-gray-700 text-[14px] font-medium">Đến: {item.magiamgia.ngayketthuc}</p>

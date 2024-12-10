@@ -77,7 +77,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
           
 
 
-          <button className="download-cert-btn mt-4 w-full py-2 bg-[#ff6b6b] text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-[#1e3c72]">
+          <button className="download-cert-btn mt-4 w-full py-2 bg-pink-700 text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-pink-800">
             <i className="fas fa-certificate px-2" />
             Nhận chứng chỉ ngay
           </button>

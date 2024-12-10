@@ -208,9 +208,9 @@ export default function Quanlykhoahoc() {
                 <select
                   id="course-select"
                   onChange={(e) => setSelectedStatus(e.target.value)}
-                  className="custom-select text-[14px]"
+                  className="custom-select text-[14px] p-3"
                 >
-                    <option value="" className="font-bold text-[14px]">Tất cả khóa học</option>
+                    <option value="" className=" text-[14px] ">Tất cả khóa học</option>
                     <option value="active" className="text-[14px]">Đang phát hành</option>
                     <option value="Notyet" className="text-[14px]">Bản Nháp</option>
                     <option value="Pending" className="text-[14px]">Đã hoàn thành</option>
@@ -222,7 +222,7 @@ export default function Quanlykhoahoc() {
                   <input
                     type="pk"
                     placeholder="Tìm kiếm khóa học..."
-                    className="search-input h-10 border text-[14px] placeholder:text-[14px]"
+                    className="search-input h-14 border text-[14px] placeholder:text-[14px]"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />

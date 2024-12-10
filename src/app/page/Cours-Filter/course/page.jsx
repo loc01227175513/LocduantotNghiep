@@ -289,7 +289,7 @@ export default function Page() {
                       type="button"
                       role="tab"
                     >
-                      <i className="fa-light fa-grid-2" />
+                      <i className="fa-light fa-grid-2 text-[14px]" />
                       <span className='mx-2 text-[14px]'>Lưới</span>
                     </button>
                   </li>
@@ -301,7 +301,7 @@ export default function Page() {
                       type="button"
                       role="tab"
                     >
-                      <i className="fa-light fa-list" />
+                      <i className="fa-light fa-list text-[14px]" />
                       <span className='mx-2 text-[14px]'>Danh sách</span>
                     </button>
                   </li>

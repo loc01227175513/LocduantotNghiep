@@ -1,77 +1,71 @@
-"use client";
-"use strict";
-import React, { useState, useEffect } from "react";
-import { user } from "../../../../service/User/user";
-import { FaUserCircle } from "react-icons/fa";
+'use client'
 
-export default function Myprofilestudent() {
-  const [userData, setUserData] = useState(null);
+import React, { useState, useEffect } from "react"
+import { user } from "../../../../service/User/user"
+import { FaUserCircle } from "react-icons/fa"
+
+export default function MyProfileStudent() {
+  const [userData, setUserData] = useState(null)
+
   const calculateMinutesDifference = (date) => {
-    const now = new Date();
-    const pastDate = new Date(date);
-
-    const diffInMs = now.getTime() - pastDate.getTime();
-
-    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+    const now = new Date()
+    const pastDate = new Date(date)
+    const diffInMs = now.getTime() - pastDate.getTime()
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60))
 
     if (diffInMinutes > 10080) {
-      return date.split("T")[0];
+      return date.split("T")[0]
     } else if (diffInMinutes > 1440) {
-      return `${Math.floor(diffInMinutes / 1440)} ngày trước`;
+      return `${Math.floor(diffInMinutes / 1440)} ngày trước`
     } else if (diffInMinutes >= 60) {
-      return `${Math.floor(diffInMinutes / 60)} giờ trước`;
-    } else if (diffInMinutes < 60) {
-      return `${diffInMinutes} phút trước`;
+      return `${Math.floor(diffInMinutes / 60)} giờ trước`
+    } else {
+      return `${diffInMinutes} phút trước`
     }
-
-    return `${diffInMinutes} phút trước`;
   }
+
   useEffect(() => {
     user().then((data) => {
-      setUserData(data.data);
-    });
-  }, []);
+      setUserData(data.data)
+    })
+  }, [])
 
   if (!userData) {
     return (
-      <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas" style={{ fontFamily: 'Helvetica Neue, sans-serif' }}>
-        <div className="right-sidebar-my-profile-dash theiaStickySidebar pt--30">
-          <div className="flex flex-col items-center justify-center ">
+      <div className="col-lg-9 overflow-y-scroll font-sans">
+        <div className="pt-8">
+          <div className="flex flex-col items-center justify-center">
             <FaUserCircle className="text-gray-300 text-9xl mb-4" />
-            <div className="text-gray-500 text-[15px]">Đang tải thông tin...</div>
+            <div className="text-gray-500 text-xl">Đang tải thông tin...</div>
           </div>
         </div>
       </div>
-    );
+    )
   }
-  console.log(userData);
 
   return (
-    <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas" style={{ fontFamily: 'Helvetica Neue, sans-serif' }}>
-      <div className="right-sidebar-my-profile-dash theiaStickySidebar pt--30">
-        <p className="text-[#222222] font-semibold text-left text-[20px] leading-7 mb-4">Hồ sơ của tôi</p>
-        <div className="p-4">
-          <div className="my-single-portfolio-dashed mt-6">
-            <div className="name text-[#555555] text-[15px]">Ngày đăng ký</div>
-            <div className="value"><p className="p-0 m-0 text-[#222222] text-[15px]">{calculateMinutesDifference(userData.created_at)}</p></div>
-          </div>
-
-          <div className="my-single-portfolio-dashed">
-            <div className="name text-[#555555] text-[15px]">Tên người dùng:</div>
-            <div className="value"><p className="text-[#222222] text-[15px]">{userData.ten}</p></div>
-          </div>
-
-          <div className="my-single-portfolio-dashed">
-            <div className="name text-[#555555] text-[15px]">E-mail:</div>
-            <div className="value"><p className="text-[#222222] text-[15px]">{userData.email}</p></div>
-          </div>
-
-          <div className="my-single-portfolio-dashed">
-            <div className="name text-[#555555] text-[15px]">Số điện thoại:</div>
-            <div className="value"><p className="text-[#222222] text-[15px]">{userData.dienthoai ? userData.dienthoai : "chưa có"}</p></div>
+    <div className="col-lg-9 overflow-y-scroll font-sans">
+      <div className="pt-8">
+        <h2 className="text-[20px]   font-semibold text-gray-800 mb-4">Hồ sơ của tôi</h2>
+        <div className="bg-white shadow rounded-lg p-6">
+          <div className="space-y-4">
+            <ProfileItem label="Ngày đăng ký" value={calculateMinutesDifference(userData.created_at)} />
+            <ProfileItem label="Tên người dùng" value={userData.ten} />
+            <ProfileItem label="E-mail" value={userData.email} />
+            <ProfileItem label="Số điện thoại" value={userData.dienthoai || "Chưa có"} />
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
+
+function ProfileItem({ label, value }) {
+  return (
+    <div className="flex justify-between border-b border-gray-200 py-2">
+      <span className="text-gray-600 text-[14px]">{label}:</span>
+      <span className="text-gray-800 text-[14px] font-medium">{value}</span>
+    </div>
+  )
+}
+

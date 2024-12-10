@@ -42,7 +42,7 @@ const Profile = () => {
 
   const fetchUserData = async () => {
     try {
-      const userData = await ShowUser(); 
+      const userData = await ShowUser();
       console.log(userData);
       setFormData({
         ten: userData.data.ten || '',
@@ -92,45 +92,56 @@ const Profile = () => {
           <div className="form-grid">
             <div className="form-group">
               <label htmlFor="ten " className="text-[14px]">Họ tên</label>
-              <input type="text" id="ten" className='text-[14px]' value={formData.ten} onChange={handleChange} />
+              <input type="text" id="ten" className='text-[16px] placeholder:text-[15px]' value={formData.ten} onChange={handleChange} style={{ fontSize: '16px' }} />
+            </div>
+            <div className="form-group">
+              <div className="image-upload-section  flex flex-row gap-4">
+     
+                  <div className="image-preview rounded-lg">
+                    {formData.hinh ? (
+                      <Image
+                        width={100}
+                        height={100}
+                        src={formData.hinh}
+                        alt="Profile"
+                        className="preview-image "
+                      />
+                    ) : (
+                      <div className="placeholder-image">
+                        <span>Upload Image</span>
+                      </div>
+                    )}
+                  </div>
+          
+                  <div className="upload-controls">
+                    <label htmlFor="hinh" className="bg-white text-[14px] border-1 border-pink-700 hover:bg-pink-300 text-pink-800 font-medium py-2 px-4 rounded-lg cursor-pointer transition-colors duration-300 inline-block">
+                      Chọn hình ảnh
+                      <input type="file" id="hinh" onChange={handleChange} hidden />
+                    </label>
+                  </div>
+            
+
+
+              </div>
+            </div>
+            <div className="form-group ">
+              <label htmlFor="dienthoai" className="text-[14px]">Số điện thoại</label>
+              <input type="text" id="dienthoai" className="text-[16px] placeholder:text-[15px]" value={formData.dienthoai} onChange={handleChange} style={{ fontSize: '16px' }} />
+
             </div>
             <div className="form-group">
               <label htmlFor="email" className="text-[14px]">Email</label>
-              <input type="email" id="email" className="text-[14px]" value={formData.email} onChange={handleChange} />
+              <input type="email" id="email" className="text-[16px] placeholder:text-[15px]" value={formData.email} onChange={handleChange} style={{ fontSize: '16px' }} />
             </div>
-            <div className="form-group">
-              <label htmlFor="dienthoai" className="text-[14px]">Số điện thoại</label>
-              <input type="text" id="dienthoai" className="text-[14px]" value={formData.dienthoai} onChange={handleChange} />
-            </div>
+
             <div className="form-group full-width">
               <label htmlFor="tieusu" className="text-[14px]">Tiểu sử</label>
-              <textarea id="tieusu"   className="text-[14px]" value={formData.tieusu} onChange={handleChange} rows="4" />
+              <textarea id="tieusu" className="text-[16px] placeholder:text-[15px]" value={formData.tieusu} onChange={handleChange} rows="4" style={{ fontSize: '16px' }} />
             </div>
+
           </div>
 
-          <div className="image-upload-section">
-            <div className="image-preview">
-              {formData.hinh ? (
-                <Image
-                  width={200}
-                  height={200}
-                  src={formData.hinh}
-                  alt="Profile"
-                  className="preview-image"
-                />
-              ) : (
-                <div className="placeholder-image">
-                  <span>Upload Image</span>
-                </div>
-              )}
-            </div>
-            <div className="upload-controls">
-              <label htmlFor="hinh" className="bg-pink-200 hover:bg-pink-300 text-pink-800 font-medium py-2 px-4 rounded-lg cursor-pointer transition-colors duration-300 inline-block">
-                Chọn hình ảnh
-                <input type="file" id="hinh" onChange={handleChange} hidden />
-              </label>
-            </div>
-          </div>
+
 
           <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-700 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center">
             <p className="text-white text-xl font-semibold">Lưu</p>
@@ -207,8 +218,8 @@ const Profile = () => {
 
         .image-preview {
           width: 200px;
-          height: 200px;
-          border-radius: 50%;
+          height: 100px;
+      
           overflow: hidden;
           background: #f7fafc;
           display: flex;
@@ -218,8 +229,8 @@ const Profile = () => {
         }
 
         .preview-image {
-          width: 100%;
-          height: 100%;
+          width: 100px;
+          height: 100px;
           object-fit: cover;
         }
 
@@ -317,48 +328,49 @@ const MangXaHoi = () => {
   };
 
   return (
-    <>  
-    <style>{styles}</style>
-     <div className="social-profiles-container">
-      <div className="social-profile-card">
-        <h3 className="profile-title text-[20px]">Link mạng xã hội</h3>
+    <>
+      <style>{styles}</style>
+      <div className="social-profiles-container">
+        <div className="social-profile-card">
+          <h3 className="profile-title text-[20px]">Link mạng xã hội</h3>
 
-        <form onSubmit={handleSubmit} className="social-form">
-          {[
-            { id: 'facebook', icon: 'fa-facebook-f', label: 'Facebook', placeholder: 'facebook.com/username' },
-            { id: 'skype', icon: 'fa-skype', label: 'Skype', placeholder: 'skype.com/username' },
-            { id: 'linkedin', icon: 'fa-linkedin', label: 'LinkedIn', placeholder: 'linkedin.com/in/username' },
-            { id: 'pinterest', icon: 'fa-pinterest', label: 'Pinterest', placeholder: 'pinterest.com/username' },
-            { id: 'github', icon: 'fa-github', label: 'Github', placeholder: 'github.com/username' }
-          ].map(platform => (
-            <div className="profile-input-group" key={platform.id}>
-              <div className="platform-info text-[16px]">
-                <div className="platform-icon">
-                  <i className={`fa-brands ${platform.icon}`} />
+          <form onSubmit={handleSubmit} className="social-form">
+            {[
+              { id: 'facebook', icon: 'fa-facebook-f', label: 'Facebook', placeholder: 'facebook.com/username' },
+              { id: 'skype', icon: 'fa-skype', label: 'Skype', placeholder: 'skype.com/username' },
+              { id: 'linkedin', icon: 'fa-linkedin', label: 'LinkedIn', placeholder: 'linkedin.com/in/username' },
+              { id: 'pinterest', icon: 'fa-pinterest', label: 'Pinterest', placeholder: 'pinterest.com/username' },
+              { id: 'github', icon: 'fa-github', label: 'Github', placeholder: 'github.com/username' }
+            ].map(platform => (
+              <div className="profile-input-group" key={platform.id}>
+                <div className="platform-info text-[16px]">
+                  <div className="platform-icon">
+                    <i className={`fa-brands ${platform.icon}`} />
+                  </div>
+                  <span className="platform-label">{platform.label}</span>
                 </div>
-                <span className="platform-label">{platform.label}</span>
+                <input
+                  type="url"
+                  id={platform.id}
+                  className="social-input placeholder:text-[14px] text-[14px]"
+                  style={{ fontSize: '14px' }}
+                  placeholder={`https://${platform.placeholder}`}
+                  onChange={handleChange}
+                  value={formData[platform.id]}
+
+                />
               </div>
-              <input
-                type="url"
-                id={platform.id}
-                className="social-input placeholder:text-[14px] text-[14px]"
-                placeholder={`https://${platform.placeholder}`}
-                onChange={handleChange}
-                value={formData[platform.id]}
-                
-              />
-            </div>
-          ))}
-          
-          <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-700 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center gap-2">
-            <i className="fas fa-save text-white text-[14px]"></i>
-            <span className="text-white text-xl font-semibold">Lưu</span>
-          </button>
-        </form>
+            ))}
+
+            <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-700 hover:bg-pink-700 transition-colors duration-300 flex items-center justify-center gap-2">
+              <i className="fas fa-save text-white text-[14px]"></i>
+              <span className="text-white text-xl font-semibold">Lưu</span>
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
     </>
- 
+
   );
 };
 
@@ -468,7 +480,7 @@ const styles = `
 .submit-button i {
   font-size: 1.1rem;
 }`;
-   
+
 
 
 
@@ -512,7 +524,7 @@ const Password = () => {
   };
 
   const getFieldLabel = (field) => {
-    switch(field) {
+    switch (field) {
       case 'old_password':
         return 'Mật khẩu cũ';
       case 'password':
@@ -554,7 +566,7 @@ const Password = () => {
           </div>
         ))}
         <button type="submit" className="w-full py-3 px-6 rounded-lg bg-pink-700 hover:bg-pink-600 flex items-center justify-center">
-          <p className='text-[14px] text-white'>Đổi mật khẩu</p>   
+          <p className='text-[14px] text-white'>Đổi mật khẩu</p>
         </button>
       </form>
 

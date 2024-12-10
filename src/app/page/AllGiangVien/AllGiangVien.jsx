@@ -91,7 +91,7 @@ export const AllGiangVien = () => {
                                     variants={item}
                                     className="group relative bg-gray-900 rounded-lg overflow-hidden hover:scale-[1.02] transition-all duration-300"
                                 >
-                                    <div className="relative h-[200px]">
+                                    <div className="relative h-[260px]">
                                         <Link href={`/page/Profile-insructor?id=${instructor.id}`}>
                                             <Image
                                                 fill

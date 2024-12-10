@@ -267,7 +267,7 @@ export default function SaleComponent() {
           flex items-center gap-2 border border-gray-200
           bg-gradient-to-r from-blue-900 via-pink-700  to-pink-700 text-white border-transparent shadow-xl shadow-white-200 hover:from-pink-700 hover:to-pink-700  w-[124px] "
                         >
-                            <span className=' text-xl  ' style={{fontWeight:"400"}}>Xem tất cả</span>
+                            <span className=' text-xl  ' style={{ fontWeight: "400" }}>Xem tất cả</span>
                             <svg
                                 className={`w-5 h-5 transition-transform duration-300 ${showTimeSlots ? 'rotate-180' : ''}`}
                                 fill="none"
@@ -339,13 +339,17 @@ export default function SaleComponent() {
                                                 )}
                                             </div>
                                             {item.magiamgia && item.magiamgia.giamgia > 0 && (
-                                                <div className="mt-2 p-2 bg-pink-200 rounded-lg pt-2 pb-2">
-                                                    <p className="text-2xl text-gray-700">Mã giảm giá: <strong className="text-pink-700">{item.magiamgia.maso}</strong></p>
-                                                    <p className="text-xl text-gray-500 mt-1">
+                                                <div className="mt-2 p-3 bg-pink-50 rounded-lg border border-pink-500">
+                                                    <p className="text-[14px] text-gray-800">
+                                                        Mã giảm giá: <strong className="text-pink-700 ">{item.magiamgia.maso}</strong>
+                                                    </p>
+                                                    <p className="text-[12px] text-gray-600 mt-1">
                                                         Thời gian: {new Date(item.magiamgia.ngaybatdau).toLocaleDateString()} - {new Date(item.magiamgia.ngayketthuc).toLocaleDateString()}
                                                     </p>
                                                 </div>
                                             )}
+
+
                                         </div>
                                     </div>
                                 </div>

@@ -154,16 +154,16 @@ const List = ({ courses }) => {
                     </p>
 
                     <div className="flex items-center text-black text-[12px]  my-2">
-                      <i className="fa-light fa-calendar-lines-pen mr-2" />
+                      <i className="fa-light fa-calendar-lines-pen mr-2 text-[12px]" />
                       <span>{course.baihocs} Bài</span>
                     </div>
                     <div className="flex items-center text-black text-[12px]  my-2">
-                      <i className="fa-light fa-user-group mr-2" />
+                      <i className="fa-light fa-user-group mr-2 text-[12px]" />
                       <span>{course.dangky} Học viên</span>
                     </div>
 
                     <div className="flex items-center text-black text-[12px] font-extralight my-2">
-                      <i className="bi bi-grid mr-2 text-gray-800 "></i>
+                      <i className="bi bi-grid mr-2 text-gray-800 text-[12px] "></i>
                       <span>{course.chude}</span>
                     </div>
 
@@ -190,12 +190,13 @@ const List = ({ courses }) => {
                           <div></div>
                         ) : course.giamgia > 0 ? (
                           <div className="flex items-center gap-2">
-                            <span className="text-gray-500 text-[14px]  line-through">
-                              {course.gia.toLocaleString()} VNĐ
-                            </span>
                             <span className="text-[14px] font-bold text-red-600">
                               {course.giamgia.toLocaleString()} VNĐ
                             </span>
+                            <span className="text-gray-500 text-[14px]  line-through">
+                              {course.gia.toLocaleString()} VNĐ
+                            </span>
+
                           </div>
                         ) : (
                           <span className="font-bold text-black text-[14px]">

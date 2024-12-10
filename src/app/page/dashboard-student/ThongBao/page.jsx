@@ -54,12 +54,12 @@ const Page = () => {
                             >
                               <span>
                                 {item.giangvien.ten} đã thực hiện một thông báo:{' '}
-                                <span className="font-medium text-gray-700">
+                                <span className="font-medium text-[14px] text-gray-700">
                                   {item.noidung.mota}
                                 </span>
                               </span>
                             </a>
-                            <div className="text-sm text-gray-500">{item.thoigiangui}</div>
+                            <div className="text-[12px] text-gray-500">{item.thoigiangui}</div>
                           </div>
                           <div className="flex items-center">
                             <button
@@ -94,11 +94,11 @@ const Page = () => {
     <div className="col-lg-9 rts-sticky-column-item overflow-y-scroll ịadkljas">
       <div className="right-sidebar-my-profile-dash theiaStickySidebar pt--30">
         <div className="container mx-auto px-6 py-8 max-w-7xl">
-          <h1 className="text-2xl font-['Helvetica Neue',Helvetica,Arial,sans-serif] font-bold mb-8">Thông báo</h1>
+          <h1 className="text-[20px]   font-bold mb-8">Thông báo</h1>
           <div className="w-full space-y-6" data-module-id="activity-notifications">
             <div className="w-full" data-testid="activity-notifications-container">
               <div className="border-b border-gray-200">
-                <div className="py-4 text-lg font-['Helvetica Neue',Helvetica,Arial,sans-serif]">
+                <div className="py-4 text-[16px] ">
                   {renderContent()}
                 </div>
               </div>
