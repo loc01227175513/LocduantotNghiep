@@ -1,7 +1,7 @@
 export const LayThongBao = async () => {
     const userData = localStorage.getItem('data');
     const user = JSON.parse(userData);
-    const url = `https://huuphuoc.id.vn/api/Nhanthongbao?id_nguoidung=${user.id}`;
+    const url = `https://huuphuoc.id.vn/api/Nhanthongbao/${user.id}`;
   
     const response = await fetch(url, {
       method: 'get',
@@ -18,7 +18,7 @@ export const LayThongBao = async () => {
     const data = await response.json();
     
     // Process the data as needed
-    return data.map(notification => {
+    return data.data.map(notification => {
         const content = JSON.parse(notification.noidung);
         return {
             ...notification,

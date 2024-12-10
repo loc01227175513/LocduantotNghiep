@@ -14,6 +14,7 @@ const Page = () => {
         setThongBao(res);
       });
     }, []);
+    
   const renderContent = () => {
   
     console.log(ThongBao, "ssss");

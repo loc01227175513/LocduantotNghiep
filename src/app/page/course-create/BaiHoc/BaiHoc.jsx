@@ -1205,6 +1205,7 @@ const BaiHoc = () => {
 
             return { ...item, subItems: [...item.subItems, movedSubItem] };
           } else if (item.subItems.some((sub) => sub.id === subItemId)) {
+            
             return { ...item, subItems: item.subItems.filter((sub) => sub.id !== subItemId) };
           }
           return item;
@@ -1218,6 +1219,7 @@ const BaiHoc = () => {
       if (container) {
         await updateSubItemOrder(newParentId, container);
       } else {
+        handleExpandLesson(newParentId);
         console.error("Container not found for parentId:", newParentId);
       }
       handleExpandLesson(newParentId);
