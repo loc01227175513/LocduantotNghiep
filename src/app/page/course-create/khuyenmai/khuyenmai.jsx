@@ -206,13 +206,12 @@ const CouponForm = () => {
       >
         <Heading
           as="h2"
-          size="xl"
+        
           mb={8}
           color="gray.700"
           textAlign="center"
-          fontWeight="extrabold"
-          className="text-[16px]"
-
+         style={{fontSize: "18px", color: "gray.700", textAlign: "center"}}
+       
         >
           Mã Giảm Giá Khóa Học
         </Heading>

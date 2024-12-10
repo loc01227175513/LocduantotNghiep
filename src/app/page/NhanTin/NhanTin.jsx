@@ -1,5 +1,7 @@
 // FILE: NhanTin.jsx
 "use client";
+import { useRouter } from "next/navigation";
+
 import React, { useState, useEffect ,useRef} from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +16,13 @@ const NhanTin = () => {
     const [isAddVisible, setAddVisible] = useState(false);
     const [selectedConversation, setSelectedConversation] = useState(null); // Added state
     const [message, setMessage] = useState(''); 
+    const router = useRouter();
+    useEffect(() =>{
+        const user = localStorage.getItem('data');
+        if(!user){
+            router.push('/page/login')
+        }
+    })
     const fetchMessages = () => {
         DanhSachTinNhan()
             .then((data) => {
@@ -29,6 +38,7 @@ const NhanTin = () => {
         const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
         if (token) setCsrfToken(token);
     }, []);
+
 
     useEffect(() => {
         fetchMessages();
@@ -129,7 +139,7 @@ const NhanTin = () => {
 
     return (
         <>
-            <div className="flex h-screen bg-gray-900">
+            <div className="flex  bg-gray-900" style={{ height: 'calc(100vh - 200px)' }}>
                 {/* Sidebar */}
                 <div className="w-80 border-r border-gray-800 overflow-y-auto">
                     <div className="p-4">
@@ -141,7 +151,7 @@ const NhanTin = () => {
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                             </svg>
-                            <span>Tin nhắn mới</span>
+                            <span className='text-xl'>Tin nhắn mới</span>
                         </button>
                     </div>
 
@@ -162,7 +172,7 @@ const NhanTin = () => {
                                         <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900"></span>
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-white font-medium truncate">{item.giangvien.ten}</p>
+                                        <p className="text-white font-medium truncate text-xl">{item.giangvien.ten}</p>
                                         <p className="text-gray-400 text-sm truncate">Nhấp để xem chi tiết</p>
                                     </div>
                                 </div>
@@ -237,7 +247,7 @@ const NhanTin = () => {
                 placeholder="Nhập tin nhắn..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="flex-1 bg-gray-700 text-white rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-colors"
+                className="flex-1 bg-gray-700 text-white rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-colors placeholder:text-xl"
             />
 
             {/* Send Button */}
@@ -471,10 +481,10 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
 
 
     return (
-<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 mt-60">
-    <div className="relative w-[95vw] h-[90vh] bg-gray-900 rounded-lg shadow-2xl overflow-y-auto mt-20">
+<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 mt-14">
+    <div className="relative w-[80vw]  bg-gray-900 rounded-lg shadow-2xl  mt-20" style={{ height: 'calc(100vh - 200px)' }}>
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-900 to-blue-800 p-4 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-blue-900 to-blue-800 p-4 flex items-center justify-between fixed w-[80vw] z-50">
             <h2 className="text-white text-xl font-semibold">Tin nhắn mới</h2>
             <button onClick={onClose} className="text-white w-10 hover:bg-blue-700 rounded-full p-2">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -484,7 +494,7 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
         </div>
 
         {/* Message Area */}
-        <div className="flex h-full bg-gray-800">
+        <div className="flex bg-gray-800 mt-20 ">
             {/* Left Sidebar */}
             <div className="w-1/4 border-r border-gray-700 bg-gray-900">
                 <div className="p-4">
@@ -500,7 +510,7 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
                     </div>
                 </div>
 
-                <div className="overflow-y-auto h-full">
+                <div className="overflow-y-auto  bg-gray-900"  style={{ height: 'calc(100vh - 300px)' }}>
                     {giangVien.map((gv) => (
                         <div
                             key={gv.id}
@@ -520,8 +530,8 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
             </div>
 
             {/* Right Message Area */}
-            <div className="flex-1 flex flex-col bg-gray-900">
-                <div className="flex-1 p-4 overflow-y-auto">
+            <div className="flex-1 flex flex-col bg-gray-900 relative">
+                <div className="flex-1 p-4 overflow-y-scroll ">
                     <div className="flex flex-col space-y-2">
                         {userFormData.noidung && (
                             <div className="flex justify-end">
@@ -535,7 +545,7 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
                 </div>
 
                 {/* Input Area */}
-                <form onSubmit={handleUserSubmit} className="p-4 bg-gray-900 border-t border-gray-700">
+                <form onSubmit={handleUserSubmit} className="p-4 bg-gray-900 border-t border-gray-700 absolute bottom-0 w-full">
                     <div className="flex items-end space-x-2">
                         <div className="flex-1">
                             <textarea

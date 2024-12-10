@@ -42,7 +42,7 @@ export default function Page() {
   return (
     <div className="p-10 bg-gradient-to-r relative   from-sky-50/80 to-blue-50/80 rounded-2xl transition-all duration-500 ease-in-out">
       <header className="mb-8">
-        <h2 className="text-[16px] bg-gradient-to-r from-pink-600 to-pink-600 bg-clip-text text-transparent text-center font-semibold tracking-wide">
+        <h2 className="text-[18px] font-bold  text-gray-700 bg-300% animate-shimmer text-center">
           Mẫu chứng chỉ
         </h2>
       </header>

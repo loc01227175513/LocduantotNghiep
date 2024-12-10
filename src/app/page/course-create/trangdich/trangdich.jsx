@@ -240,7 +240,7 @@ function TrangDich() {
         <div className="max-w-4xl p-8 mx-auto bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-100"
             style={{ animation: "float 6s ease-in-out infinite" }}>
             <div className="text-center mb-8">
-                <h1 className="text-[16px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500  to-pink-400 bg-300% animate-shimmer"
+                <h1 className="text-[18px] font-bold  text-gray-700 bg-300% animate-shimmer"
                     style={{ animation: "shimmer 8s linear infinite" }}>
                   Tạo khóa học của bạn
                 </h1>
