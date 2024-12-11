@@ -176,7 +176,7 @@ const Khoahocdathanhtoan = () => {
         console.error("Error fetching dashboard data:", error);
         setIsLoading(false);
       });
-  }, []);
+  }, [parsedLecturer.giangvien]);
   // console.log(coursesInProgress, "coursesInProgress");
   const averageRatings = coursesInProgress.map((item) => {
     if (item.danhgia?.length > 0) {
@@ -272,10 +272,10 @@ const Khoahocdahoanthanh = () => {
         setIsLoading(false);
       });
   }, [parsedLecturer.giangvien]);
-console.log(khoahocdahoanthanh,"khoahocdahoanthanh");
-  const TongLuotMua = khoahocdahoanthanh.reduce((acc, curr) => {
-    return acc + 1;
-  }, 0);
+
+  const TongLuotMua = thanhtoanData.filter(payment => 
+    khoahocdahoanthanh.some(course => course.khoahoc.id === payment.id_khoahoc)
+  ).length;
 
   return (
     <div className="courses-masonry my-20">
