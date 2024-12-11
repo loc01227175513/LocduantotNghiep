@@ -1,55 +1,165 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { GiangvienKhoaHocDaMua } from "../../../../service/Dashboard-lecture/Dashboard-lecture.jsx";
+import React, { useMemo, useState } from "react";
 import { RiFileList3Line } from "react-icons/ri";
+import { KhoaHocDuocMua } from "../../../../service/Dashboard-lecture/Dashboard-lecture.jsx";
+
+// Separate constants
+const TAB_OPTIONS = [
+  { key: "day", label: "Hôm nay" },
+  { key: "month", label: "Tháng này" },
+  { key: "year", label: "Năm nay" },
+  { key: "all", label: "Tất cả" }
+];
+
+// Utility function to filter courses
+const filterCourses = (courses, selectedTab, selectedDate) => {
+  if (!courses) return [];
+
+  const today = new Date();
+
+  return courses.filter((item) => {
+    const itemDate = new Date(item.updated_at);
+
+    // Date filter
+    const dateMatch = !selectedDate ||
+      itemDate.toDateString() === new Date(selectedDate).toDateString();
+
+    // Tab filter
+    const tabMatch = selectedTab === "all" || (() => {
+      switch (selectedTab) {
+        case "day":
+          return itemDate.toDateString() === today.toDateString();
+        case "month":
+          return (
+            itemDate.getMonth() === today.getMonth() &&
+            itemDate.getFullYear() === today.getFullYear()
+          );
+        case "year":
+          return itemDate.getFullYear() === today.getFullYear();
+        default:
+          return true;
+      }
+    })();
+
+    return dateMatch && tabMatch;
+  });
+};
 
 export default function Khoahocdanghoc() {
   const [lecturer, setLecturer] = useState(null);
   const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTab, setSelectedTab] = useState("all"); // Default to "all" for no tab filter
+  const [selectedTab, setSelectedTab] = useState("all");
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    GiangvienKhoaHocDaMua().then((res) => {
-      setLecturer(res.data);
-    });
+  // Memoized localStorage parsing with safer approach
+  const parsedLecturer = useMemo(() => {
+    try {
+      const userData = typeof window !== 'undefined' ? localStorage.getItem('lecturerId') : null;
+      return userData ? JSON.parse(userData) : null;
+    } catch (error) {
+      console.error("Error parsing lecturer data:", error);
+      return null;
+    }
   }, []);
 
-  const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
-  };
+  // Consolidated data fetching effect
+  React.useEffect(() => {
+    const fetchCourses = async () => {
+      if (!parsedLecturer?.giangvien) {
+        setIsLoading(false);
+        return;
+      }
 
-  const handleTabChange = (tab) => {
-    setSelectedTab(tab);
-  };
+      try {
+        setIsLoading(true);
+        const res = await KhoaHocDuocMua();
+        const data = res.data.filter(item => item.khoahocs.id_giangvien === parsedLecturer.giangvien);
+        setLecturer(data);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  // Lọc dựa trên selectedDate
-  const dateFilteredLecturer = lecturer?.filter((item) => {
-    if (!selectedDate) return true;
-    const itemDate = new Date(item.updated_at);
-    return (
-      itemDate.toLocaleDateString("en-US") ===
-      new Date(selectedDate).toLocaleDateString("en-US")
-    );
-  });
+    fetchCourses();
+  }, [parsedLecturer?.giangvien]);
 
-  // Lọc dựa trên selectedTab
-  const tabFilteredLecturer = dateFilteredLecturer?.filter((item) => {
-    const itemDate = new Date(item.updated_at);
+  // Memoized filtered courses
+  const filteredLecturer = useMemo(() =>
+    filterCourses(lecturer, selectedTab, selectedDate),
+    [lecturer, selectedTab, selectedDate]
+  );
 
-    switch (selectedTab) {
-      case "day":
-        return itemDate.toLocaleDateString("en-US") === new Date().toLocaleDateString("en-US");
-      case "month":
-        return (
-          itemDate.getMonth() === new Date().getMonth() &&
-          itemDate.getFullYear() === new Date().getFullYear()
-        );
-      case "year":
-        return itemDate.getFullYear() === new Date().getFullYear();
-      default:
-        return true; // 'all' case or no tab selected
-    }
-  });
+  // Deduplicated unique courses
+  const uniqueCourses = useMemo(() =>
+    filteredLecturer.filter((item, index, self) =>
+      index === self.findIndex(t => t.khoahocs.id === item.khoahocs.id)
+    ),
+    [filteredLecturer]
+  );
+
+  // Render methods
+  const renderEmptyState = () => (
+    <div className="flex flex-col items-center justify-center py-12">
+      <RiFileList3Line className="text-gray-400 text-7xl mb-4" />
+      <p className="text-xl text-gray-500">Không có đơn hàng nào</p>
+    </div>
+  );
+
+  const renderTableHeader = () => (
+    <thead>
+      <tr className="table-light">
+        {[
+          "ID đơn hàng",
+          "Tên khóa học",
+          "Ngày",
+          "Giá",
+          "Số lượng",
+          "Trạng thái"
+        ].map(header => (
+          <th key={header} className="p-3 text-left text-[14px] font-normal">
+            {header}
+          </th>
+        ))}
+      </tr>
+    </thead>
+  );
+
+  const renderTableRows = () => (
+    <tbody>
+      {uniqueCourses.map((item) => (
+        <tr key={item.id}>
+          <td className="p-3 align-middle text-left text-[14px]"># {item.id}</td>
+          <td className="p-3 align-middle text-break text-left text-[14px]">
+            {item.khoahocs.ten}
+          </td>
+          <td className="p-3 align-middle text-left text-[14px]">
+            {new Date(item.updated_at).toLocaleDateString("vi-VN")}
+          </td>
+          <td className="p-3 align-middle text-left text-[14px]">
+            {item.gia === 0 && item.giamgia === 0
+              ? 'Miễn phí'
+              : new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+              }).format(item.gia - item.giamgia)
+            }
+          </td>
+          <td className="p-3 align-middle text-left text-[14px]">
+            {item.thanhtoan.length}
+          </td>
+          <td className="p-3 align-middle text-left text-[14px]">
+            <span className={`badge rounded-pill ${item.trangthai === 'Đã Thanh Toán' ? 'bg-danger' :
+                item.trangthai === 'Đang xử lý' ? 'bg-warning' : 'bg-secondary'
+              }`}>
+              {item.trangthai === 'Hoàn thành' ? 'Đã hoàn thành' : item.trangthai}
+            </span>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  );
 
   return (
     <div className="col-lg-9 p-4">
@@ -58,102 +168,47 @@ export default function Khoahocdanghoc() {
           <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <div className="flex flex-col gap-4 w-full">
               <div className="flex items-center gap-4">
-                <div className="flex justify-center gap-2 overflow-x-auto no-scrollbar ">
-                  <button
-                    className={`  rounded-md text-[14px]  transition-all duration-200  h-[25px] w-[100px] ${
-                      selectedTab === "day"
-                        ? "bg-pink-700 text-white"
-                        : "hover:bg-pink-700 hover:text-white text-[#161823]"
-                    }`}
-                    onClick={() => handleTabChange("day")}
-                  >
-                    Hôm nay
-                  </button>
-                  <button
-                    className={` rounded-md text-[14px]  transition-all duration-200 h-[25px] w-[100px] ${
-                      selectedTab === "month"
-                        ? "bg-pink-700 text-white"
-                        : "hover:bg-pink-700 hover:text-white text-[#161823]"
-                    }`}
-                    onClick={() => handleTabChange("month")}
-                  >
-                    Tháng này
-                  </button>
-                  <button
-                    className={`  rounded-md text-[14px]  transition-all duration-200 h-[25px] w-[100px] ${
-                      selectedTab === "year"
-                        ? "bg-pink-700 text-white"
-                        : "hover:bg-pink-700 hover:text-white text-[#161823]"
-                    }`}
-                    onClick={() => handleTabChange("year")}
-                  >
-                    Năm nay
-                  </button>
-                  <button
-                    className={`  rounded-md   text-[14px]  transition-all duration-200 h-[25px] w-[100px] ${
-                      selectedTab === "all"
-                        ? "bg-pink-700 text-white"
-                        : "hover:bg-pink-700 hover:text-white text-[#161823]"
-                    }`}
-                    onClick={() => handleTabChange("all")}
-                  >
-                    Tất cả
-                  </button>
+                <div className="flex justify-center gap-2 overflow-x-auto no-scrollbar">
+                  {TAB_OPTIONS.map(({ key, label }) => (
+                    <button
+                      key={key}
+                      className={`rounded-md text-[14px] transition-all duration-200 h-[25px] w-[100px] ${selectedTab === key
+                          ? "bg-pink-700 text-white"
+                          : "hover:bg-pink-700 hover:text-white text-[#161823]"
+                        }`}
+                      onClick={() => setSelectedTab(key)}
+                    >
+                      {label}
+                    </button>
+                  ))}
                 </div>
 
                 <input
                   type="date"
                   value={selectedDate}
-                  onChange={handleDateChange}
-                  className="px-3  w-32 h-10 rounded-lg border border-[#1618231f] text-[14px] focus:outline-none focus:border-[#16182333] transition-colors min-w-[140px]"
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className="px-3 w-32 h-10 rounded-lg border border-[#1618231f] text-[14px] focus:outline-none focus:border-[#16182333] transition-colors min-w-[140px]"
                 />
               </div>
             </div>
           </div>
 
           <h4 className="mb-4 text-[20px] font-bold">Lịch sử đơn hàng</h4>
-           
-         <div className="table-responsive">
-            {tabFilteredLecturer && tabFilteredLecturer.length > 0 ? (
+
+          <div className="table-responsive">
+            {uniqueCourses.length > 0 ? (
               <table className="table table-hover">
-                <thead>
-                  <tr className="table-light">
-                    <th className="p-3 text-left text-[14px] font-normal">ID đơn hàng</th>
-                    <th className="p-3 text-left text-[14px] font-normal">Tên khóa học</th>
-                    <th className="p-3 text-left text-[14px] font-normal">Ngày</th>
-                    <th className="p-3 text-left text-[14px] font-normal">Giá</th>
-                    <th className="p-3 text-left text-[14px] font-normal">Trạng thái</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tabFilteredLecturer.map((item) => (
-                    <tr key={item.id}>
-                      <td className="p-3 align-middle text-left text-[14px]"># {item.id}</td>
-                      <td className="p-3 align-middle text-break text-left text-[14px]">{item.khoahocs.ten}</td>
-                      <td className="p-3 align-middle text-left text-[14px]">{new Date(item.updated_at).toLocaleDateString("vi-VN")}</td>
-                      <td className="p-3 align-middle text-left text-[14px]">{item.gia === 0 ? 'Miễn phí' : new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.gia)}</td>
-                      <td className="p-3 align-middle text-left text-[14px]">
-                        <span className={`badge rounded-pill ${
-                          item.trangthai === 'Đã Thanh Toán' ? 'bg-danger' : 
-                          item.trangthai === 'Đang xử lý' ? 'bg-warning' : 'bg-secondary'
-                        }`}>
-                          {item.trangthai === 'Hoàn thành' ? 'Đã hoàn thành' : item.trangthai}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                {renderTableHeader()}
+                {renderTableRows()}
               </table>
             ) : (
-              <div className="flex flex-col items-center justify-center py-12">
-                <RiFileList3Line className="text-gray-400 text-7xl mb-4" />
-                <p className="text-xl text-gray-500">Không có đơn hàng nào</p>
-              </div>
+              renderEmptyState()
             )}
           </div>
         </div>
       </div>
 
+      {/* Styles remain the same as in the original component */}
       <style jsx>{`
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 

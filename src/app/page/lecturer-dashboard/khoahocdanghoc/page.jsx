@@ -273,8 +273,8 @@ const Khoahocdahoanthanh = () => {
       });
   }, [parsedLecturer.giangvien]);
 
-  const TongLuotMua = thanhtoanData.filter(payment => 
-    khoahocdahoanthanh.some(course => course.khoahoc.id === payment.id_khoahoc)
+  const TongLuotMua = khoahocdahoanthanh.filter( item => 
+    khoahocdahoanthanh.some(course => course.khoahoc.id === item.khoahoc.id)
   ).length;
 
   return (
