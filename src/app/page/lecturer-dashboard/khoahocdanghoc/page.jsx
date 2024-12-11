@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { GiangvienKhoaHoc, GiangvienKhoaHocDaMua } from "../../../../service/Dashboard-lecture/Dashboard-lecture";
+import { GiangvienKhoaHoc, GiangvienKhoaHocDaMua, KhoaHocDuocMua, TatCaKhoaHocDaHoc } from "../../../../service/Dashboard-lecture/Dashboard-lecture";
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Product from "../../../component/Card/Product";
@@ -36,7 +36,7 @@ export default function Khoahoccuatoi() {
         <ul className="nav nav-tabs custom-tabs" id="myTab" role="tablist">
           {[
             { id: 1, label: 'Khóa học đang học', target: 'home' },
-            { id: 2, label: 'Khóa học đã thanh toán', target: 'profile' },
+            { id: 2, label: 'Khóa học thanh toán mua', target: 'profile' },
             { id: 3, label: 'Khóa học đã hoàn thành', target: 'contact' }
           ].map(tab => (
             <li key={tab.id} className="nav-item" role="presentation">
@@ -88,6 +88,7 @@ export default function Khoahoccuatoi() {
 
 const Khoahocdanghoc = () => {
   const [khoahocdanghoc1, setKhoahocdanghoc] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -104,9 +105,11 @@ const Khoahocdanghoc = () => {
       });
   }, []);
 
+
+
   const DanhGiaTrungBinh = khoahocdanghoc1.map((item) => {
     if (!item || !item.danhgia) return 0;
-    
+
     if (item.danhgia.length > 0) {
       const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia || 0), 0);
       return (total / item.danhgia.length);
@@ -143,7 +146,7 @@ const Khoahocdanghoc = () => {
               baihocs={item?.baihoc?.length || 0}
               dangky={item?.ThanhToan?.length || 0}
               danhgia={DanhGiaTrungBinh[index]}
-            
+
             />
           ))}
         </div>
@@ -159,11 +162,14 @@ const Khoahocdathanhtoan = () => {
   const [coursesInProgress, setCoursesInProgress] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const userData = localStorage.getItem('lecturerId');
+  const parsedLecturer = JSON.parse(userData);
   useEffect(() => {
     setIsLoading(true);
-    GiangvienKhoaHocDaMua()
+    KhoaHocDuocMua()
       .then((res) => {
-        setCoursesInProgress(res.data);
+        const data = res.data.filter(item => item.khoahocs.id_giangvien === parsedLecturer.giangvien);
+        setCoursesInProgress(data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -171,7 +177,7 @@ const Khoahocdathanhtoan = () => {
         setIsLoading(false);
       });
   }, []);
-
+  // console.log(coursesInProgress, "coursesInProgress");
   const averageRatings = coursesInProgress.map((item) => {
     if (item.danhgia?.length > 0) {
       const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia), 0);
@@ -179,7 +185,16 @@ const Khoahocdathanhtoan = () => {
     }
     return 0;
   });
-  // console.log(coursesInProgress, "coursesInProgress"); 
+
+  const TongLuotMua = coursesInProgress.reduce((acc, curr) => {
+    // Get unique id_khoahoc values from thanhtoan array
+    const uniqueKhoaHocIds = new Set(curr.thanhtoan.map(t => t.id_khoahoc));
+    // Only add 1 per unique course ID
+    return acc + uniqueKhoaHocIds.size;
+  }, 0);
+
+  // console.log(TongLuotMua,"TongLuotMua");
+
 
 
   return (
@@ -197,22 +212,27 @@ const Khoahocdathanhtoan = () => {
         </div>
       ) : (
         <div className="flex gap-10 w-full overflow-x-scroll">
-          {coursesInProgress.map((item, index) => (
-            <Product
-              key={index}
-              id={item.khoahocs.id}
-              gia={item.khoahocs.gia}
-              giamgia={item.khoahocs.giamgia}
-              ten={item.khoahocs.ten}
-              hinh={item.khoahocs.hinh}
-              chude={item.chude?.ten}
-              giangvien={item.khoahocs.giangVien?.ten}
-              baihocs={item.baihoc?.length}
-              dangky={item.thanhtoan?.length}
-              danhgia={averageRatings[index]}
-              PhanTram={`${(item.khoahocdahoc.length / item.baihoc.length) * 100}%`}
-            />
-          ))}
+          {coursesInProgress
+            .filter((item, index, self) =>
+              index === self.findIndex(t => t.khoahocs.id === item.khoahocs.id)
+            )
+            .map((item, index) => (
+              <Product
+                key={index}
+                id={item.khoahocs.id}
+                TongLuotMua={TongLuotMua}
+                gia={item.khoahocs.gia}
+                giamgia={item.khoahocs.giamgia}
+                ten={item.khoahocs.ten}
+                hinh={item.khoahocs.hinh}
+                chude={item.chude?.ten}
+                giangvien={item.khoahocs.giangVien?.ten}
+                baihocs={item.baihoc?.length}
+                dangky={item.thanhtoan?.length}
+                danhgia={averageRatings[index]}
+                PhanTram={`${(item.khoahocdahoc.length / item.baihoc.length) * 100}%`}
+              />
+            ))}
         </div>
       )}
     </div>
@@ -223,31 +243,39 @@ const Khoahocdathanhtoan = () => {
 
 
 const Khoahocdahoanthanh = () => {
-  const [coursesInProgress, setCoursesInProgress] = useState([]);
+  const [khoahocdahoanthanh, setKhoahocdahoanthanh] = useState([]);
+  const [thanhtoanData, setThanhtoanData] = useState([]);
+  const [baihocData, setBaihocData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  
+  const userData = localStorage.getItem('lecturerId');
+  const parsedLecturer = JSON.parse(userData);
 
   useEffect(() => {
     setIsLoading(true);
-    GiangvienKhoaHocDaMua()
+    TatCaKhoaHocDaHoc()
       .then((res) => {
-        setCoursesInProgress(res.data);
+        // Filter courses for current lecturer
+        const filteredData = res.data.khoahocdahoc.filter(item => 
+          item.khoahoc.id_giangvien === parsedLecturer.giangvien
+        );
+        setKhoahocdahoanthanh(filteredData);
+        setThanhtoanData(res.data.thanhtoan);
+        setBaihocData(res.data.baihoc);
         setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching dashboard data:", error);
+        setKhoahocdahoanthanh([]);
+        setThanhtoanData([]);
+        setBaihocData([]);
         setIsLoading(false);
       });
-  }, []);
-
-  const averageRatings = coursesInProgress.map((item) => {
-    if (item.danhgia?.length > 0) {
-      const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia), 0);
-      return (total / item.danhgia.length);
-    }
-    return 0;
-  });
-
-  const filteredCourses = coursesInProgress?.filter((item) => item.khoahocdahoc.length > 0);
+  }, [parsedLecturer.giangvien]);
+console.log(khoahocdahoanthanh,"khoahocdahoanthanh");
+  const TongLuotMua = khoahocdahoanthanh.reduce((acc, curr) => {
+    return acc + 1;
+  }, 0);
 
   return (
     <div className="courses-masonry my-20">
@@ -257,29 +285,44 @@ const Khoahocdahoanthanh = () => {
             <div key={n} className="skeleton-card animate-pulse h-96 bg-gray-200 rounded-lg" />
           ))}
         </div>
-      ) : filteredCourses.length === 0 ? (
+      ) : khoahocdahoanthanh.length === 0 ? (
         <div className="flex flex-col items-center justify-center w-full py-10">
           <RiEmotionSadLine className="text-6xl text-gray-400 mb-4" />
           <p className="text-xl text-gray-500">Bạn chưa có khóa học nào đã hoàn thành</p>
         </div>
       ) : (
         <div className="flex gap-10 w-full overflow-x-scroll">
-          {filteredCourses.map((item, index) => (
-            <Product
-              key={index}
-              id={item.khoahocs.id}
-              gia={item.khoahocs.gia}
-              giamgia={item.khoahocs.giamgia}
-              ten={item.khoahocs.ten}
-              hinh={item.khoahocs.hinh}
-              chude={item.chude?.ten}
-              giangvien={item.giangVien?.ten}
-              baihocs={item.baihoc?.length}
-              dangky={item.thanhtoan?.length}
-              danhgia={averageRatings[index]}
-              PhanTram={`${(item.khoahocdahoc.length / item.baihoc.length) * 100}%`}
-            />
-          ))}
+          {khoahocdahoanthanh
+            .filter((item, index, self) =>
+              index === self.findIndex(t => t.id_khoahoc === item.id_khoahoc)
+            )
+            .map((item, index) => {
+              // Get payment count for this course
+              const paymentCount = thanhtoanData.filter(
+                payment => payment.id_khoahoc === item.khoahoc.id
+              ).length;
+
+              // Get lesson count for this course
+              const lessonCount = baihocData.filter(
+                lesson => lesson.id_khoahoc === item.khoahoc.id
+              ).length;
+
+              return (
+                <Product
+                  key={index}
+                  id={item.khoahoc.id}
+                  TongLuotMua={TongLuotMua}
+                  gia={item.khoahoc.gia}
+                  giamgia={item.khoahoc.giamgia}
+                  ten={item.khoahoc.ten}
+                  hinh={item.khoahoc.hinh}
+                  chude={item.khoahoc.chude?.ten}
+                  giangvien={item.khoahoc.giangVien?.ten}
+                  baihocs={lessonCount}
+                  dangky={paymentCount}
+                />
+              );
+            })}
         </div>
       )}
     </div>

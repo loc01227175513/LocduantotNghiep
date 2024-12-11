@@ -160,7 +160,7 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
                 ) : (
                   <div className="sale-price  my-2  animate">
                     <p className="text-[14px] mb-2 md:text-3xl font-bold flex items-baseline">
-                      {gia === 0 ? "0" : gia.toLocaleString()}
+                      {gia === 0 && giamgia === 0 ? "0" : '0'}
                       <span className="text-lg md:text-xl ml-1">VNĐ</span>
                     </p>
                   </div>
@@ -171,14 +171,14 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
 
 
 
-      {PhanTram >= 0 && (
-          <div className="progress-wrapper h-2 bg-gray-200 rounded-full mb-6 overflow-hidden">
+          {PhanTram >= 0 && (
+            <div className="progress-wrapper h-2 bg-gray-200 rounded-full mb-6 overflow-hidden">
               <div
                 className="progress-bar h-full bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${PhanTram}%` }}
               />
-          </div>  
-      )}
+            </div>
+          )}
           {renderActionButton(id)}
 
           <style jsx>{`

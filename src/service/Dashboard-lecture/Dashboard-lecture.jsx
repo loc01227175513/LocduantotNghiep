@@ -97,3 +97,47 @@ export const GiangvienDoanhThu = async () => {
         throw error; // Rethrow the error after logging
     }
 };
+export const KhoaHocDuocMua = async () => {
+  
+    const url = 'https://huuphuoc.id.vn/api/TongSoKhoahocDangKy';
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            referrerPolicy: 'unsafe-url',
+        }); // Gọi API nội bộ
+  
+        if (!response.ok) {
+            throw new Error('Failed to fetch courses');
+        }
+        return response.json();
+    } catch (error) {
+        console.error('Error in GiangvienDoanhThu:', error);
+        throw error; // Rethrow the error after logging
+    }
+
+}
+export const TatCaKhoaHocDaHoc = async () => {
+  
+    const url = 'https://huuphuoc.id.vn/api/TatCaKhoaHocDaHoc';
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            referrerPolicy: 'unsafe-url',
+        }); // Gọi API nội bộ
+  
+        if (!response.ok) {
+            throw new Error('Failed to fetch courses');
+        }
+        return response.json();
+    } catch (error) {
+        console.error('Error in GiangvienDoanhThu:', error);
+        throw error; // Rethrow the error after logging
+    }
+
+}

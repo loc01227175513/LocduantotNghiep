@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id }) {
+export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, baihocs, dangky, danhgia, id, TongLuotMua }) {
   const formattedPrice = (gia !== undefined && gia !== null) ? gia.toLocaleString() : "N/A";
   const formattedDiscount = (giamgia !== undefined && giamgia !== null) ? giamgia.toLocaleString() : "N/A";
 
@@ -11,7 +11,13 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
       <div className="rts-single-course">
         <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative">
           <div className="thumbnail relative" style={{ aspectRatio: '16 / 9' }}>
+            {TongLuotMua > 0 && (
+              <div className="absolute top-0 left-0 font-black text-white px-3 py-1   text-[16px] shadow-lg transform -rotate-12 z-10">
+                {TongLuotMua}
+              </div>
+            )}
             <Image src={hinh} alt="course" layout="fill" objectFit="cover" />
+
             {/* Free course badge */}
             {(gia === 0 || giamgia === 0) && (
               <div className="absolute top-3 right-3 bg-red-600 text-white px-3 py-1 rounded-full font-bold text-xl shadow-lg transform -rotate-12 z-10">
@@ -58,7 +64,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
             </div>
             <div className="rating-area text-gray-600 text-xl">
               <svg
-                stroke="currentColor" 
+                stroke="currentColor"
                 fill="#FFD700"
                 strokeWidth="0"
                 viewBox="0 0 576 512"
@@ -74,7 +80,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
             </div>
           </div>
 
-          
+
 
 
           <button className="download-cert-btn mt-4 w-full py-2 bg-pink-700 text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-pink-800">
@@ -95,7 +101,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
                 ) : giamgia === 0 ? (
                   <div className="sale-price">
                     <p className="text-2xl font-bold text-red-600">
-                     0
+                      0
                       <span className="text-xl">VNĐ</span>
                     </p>
                   </div>
