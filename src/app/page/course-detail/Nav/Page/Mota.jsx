@@ -103,7 +103,7 @@ const styles = `
 `;
 
 export default function Mota({ course }) {
-  console.log(course);
+  // console.log(course);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -196,7 +196,7 @@ export default function Mota({ course }) {
     return stars;
   };
 
-  console.log(course, "course");
+  // console.log(course, "course");
 
   return (
     <>

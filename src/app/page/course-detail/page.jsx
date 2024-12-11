@@ -151,6 +151,10 @@ const NavPhai = ({
     }
   };
 
+  const GiangVienCheck2 = localStorage.getItem("lecturerId") || null;
+  const GiangVienCheck22 = GiangVienCheck2 ? JSON.parse(GiangVienCheck2) : null;
+  const courseCheck = GiangVienCheck22?.giangvien ? course.id_giangvien === GiangVienCheck22.giangvien : false;
+  // console.log(courseCheck);
   const router = useRouter();
   return (
     <>
@@ -207,25 +211,28 @@ const NavPhai = ({
                     </div>
                     {!NguoiDung ? (
                       <Link href="/page/login">
-                        <button className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1">
+                        <button className="rts-btn btn-border mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1">
                           Đi Đến Đăng nhập
                         </button>
                       </Link>
-                    ) : isCourseRegistered ? (
+                    ) : isCourseRegistered || courseCheck ? (
                       <Link href={`/page/Study?id=${course.id}`}>
-                        <button className="rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1">
+                        <button className="rts-btn btn-border mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1">
                           Đi đến khóa học
                         </button>
                       </Link>
-                    ) : course.gia === 0 || course.giamgia === 0 ? (
+                    )  : course.trangthai === "Notyet" || course.trangthai === "Pending" ? (
+                      <button className="rts-btn text-[14px]">Bản Demo</button>
+                    ): 
+                    course.gia === 0 || course.giamgia === 0 ? (
                       <button
                         onClick={handleThanhToanKhoaHocFree}
                         disabled={buttonStates.freeCourse.disabled}
-                        className={`rts-btn btn-border mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1 
+                        className={`rts-btn btn-border mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1 
                           ${buttonStates.freeCourse.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                       >
                         {buttonStates.freeCourse.loading ? (
-                          <span className="flex items-center">
+                          <span className="flex items-center text-[14px]">
                             <LoadingSpinner />
                             Đang xử lý...
                           </span>
@@ -233,12 +240,10 @@ const NavPhai = ({
                       </button>
                     ) : isCourseInCart ? (
                       <Link href="/page/cart">
-                        <button className="mt-10 flex justify-center text-xl text-pink-700 !border-pink-700 !border-1">
-                          <span className="rts-btn btn-border text-pink-700">Đi Đến Giỏ Hàng</span>
+                        <button className="mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1">
+                          <span className="rts-btn btn-border  text-pink-700">Đi Đến Giỏ Hàng</span>
                         </button>
                       </Link>
-                    ) : course.trangthai === "Notyet" || course.trangthai === "Pending" ? (
-                      <button className="rts-btn">Bản Demo</button>
                     ) : (
                       <>
                         <button

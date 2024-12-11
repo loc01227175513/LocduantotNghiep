@@ -89,7 +89,7 @@ export default function Instructor({ course }) {
   const starCount = StartFilter(highestRating);
 
   const HocSinh = course.thanhToan.filter((item) => item.id_nguoidung).length;
-  console.log(course.thongtingiangvien);
+  // console.log(course.thongtingiangvien);
   useEffect(() => {
     setIsLoaded(true);
   }, []);

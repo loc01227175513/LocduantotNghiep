@@ -149,7 +149,7 @@ export default function Review({ course }) {
     threshold: 0.1,
   });
 
-  console.log(course.danhgia);
+  // console.log(course.danhgia);
 
   // Filter and sort reviews
   const filteredReviews = course.danhgia
