@@ -256,7 +256,7 @@ const Khoahocdahoanthanh = () => {
     setIsLoading(true);
     TatCaKhoaHocDaHoc()
       .then((res) => {
-        // Filter courses for current lecturer
+        // Lọc khóa học theo giảng viên hiện tại
         const filteredData = res.data.khoahocdahoc.filter(item => 
           item.khoahoc.id_giangvien === parsedLecturer.giangvien
         );
@@ -276,9 +276,18 @@ const Khoahocdahoanthanh = () => {
       });
   }, [parsedLecturer.giangvien]);
 
-  const TongLuotMua = khoahocdahoanthanh.filter( item => 
-    khoahocdahoanthanh.some(course => course.khoahoc.id === item.khoahoc.id)
-  ).length;
+  const getUniqueCompletedCourses = () => {
+    // Lọc các khóa học unique và đã hoàn thành
+    const uniqueCourses = khoahocdahoanthanh.reduce((acc, current) => {
+      const x = acc.find(item => item.id_khoahoc === current.id_khoahoc);
+      if (!x) {
+        return acc.concat([current]);
+      }
+      return acc;
+    }, []);
+
+    return uniqueCourses;
+  };
 
   return (
     <div className="courses-masonry my-20">
@@ -295,46 +304,46 @@ const Khoahocdahoanthanh = () => {
         </div>
       ) : (
         <div className="flex gap-10 w-full overflow-x-scroll">
-          {khoahocdahoanthanh
-            .filter((item, index, self) =>
-              index === self.findIndex(t => t.id_khoahoc === item.id_khoahoc)
-            )
-            .map((item, index) => {
-              // Get payment count for this course
-              const paymentCount = thanhtoanData.filter(
-                payment => payment.id_khoahoc === item.khoahoc.id
-              ).length;
+          {getUniqueCompletedCourses().map((item, index) => {
+            // Đếm số người hoàn thành cho khóa học này
+            const completedCount = khoahocdahoanthanh.filter(
+              course => course.id_khoahoc === item.id_khoahoc && 
+              course.trangthai === "Đã Hoàn Thành"
+            ).length;
 
-              // Get lesson count for this course
-              const lessonCount = baihocData.filter(
-                lesson => lesson.id_khoahoc === item.khoahoc.id
-              ).length;
+            // Tính các thông số khác
+            const paymentCount = thanhtoanData.filter(
+              payment => payment.id_khoahoc === item.khoahoc.id
+            ).length;
 
-              // Get average rating for this course
-              const courseRatings = danhgiaData.filter(
-                rating => rating.id_khoahoc === item.khoahoc.id
-              );
-              const averageRating = courseRatings.length > 0 
-                ? courseRatings.reduce((acc, curr) => acc + Number(curr.danhgia), 0) / courseRatings.length
-                : 0;
+            const lessonCount = baihocData.filter(
+              lesson => lesson.id_khoahoc === item.khoahoc.id
+            ).length;
 
-              return (
-                <Product
-                  key={index}
-                  id={item.khoahoc.id}
-                  TongLuotMua={TongLuotMua}
-                  gia={item.khoahoc.gia}
-                  giamgia={item.khoahoc.giamgia}
-                  ten={item.khoahoc.ten}
-                  hinh={item.khoahoc.hinh}
-                  chude={item.chude?.ten}
-                  giangvien={item.khoahoc.giangVien?.ten}
-                  baihocs={lessonCount}
-                  dangky={paymentCount}
-                  danhgia={averageRating}
-                />
-              );
-            })}
+            const courseRatings = danhgiaData.filter(
+              rating => rating.id_khoahoc === item.khoahoc.id
+            );
+            const averageRating = courseRatings.length > 0 
+              ? courseRatings.reduce((acc, curr) => acc + Number(curr.danhgia), 0) / courseRatings.length
+              : 0;
+
+            return (
+              <Product
+                key={index}
+                id={item.khoahoc.id}
+                TongLuotMua={completedCount}
+                gia={item.khoahoc.gia}
+                giamgia={item.khoahoc.giamgia}
+                ten={item.khoahoc.ten}
+                hinh={item.khoahoc.hinh}
+                chude={item.chude?.ten}
+                giangvien={item.khoahoc.giangVien?.ten}
+                baihocs={lessonCount}
+                dangky={paymentCount}
+                danhgia={averageRating}
+              />
+            );
+          })}
         </div>
       )}
     </div>
