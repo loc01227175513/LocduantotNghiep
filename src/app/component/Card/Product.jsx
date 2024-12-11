@@ -12,7 +12,7 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
         <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative">
           <div className="thumbnail relative" style={{ aspectRatio: '16 / 9' }}>
             {TongLuotMua > 0 && (
-              <div className="absolute top-0 left-0 font-black text-white px-3 py-1   text-[16px] shadow-lg transform -rotate-12 z-10">
+              <div className="absolute top-2 left-2 font-black text-white px-3 py-1   text-[16px] shadow-lg transform -rotate-12 z-10 bg-opacity-50 bg-gray-500 rounded-full">
                 {TongLuotMua}
               </div>
             )}
@@ -39,9 +39,9 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
             </p>
           </Link>
 
-          <div className="teacher">
+          <div className="teacher flex items-center">
             <i className="bi bi-grid mr-2 text-gray-800 text-xl"></i>
-            <span className="text-xl text-gray-800">{chude}</span>
+            <span className="text-xl text-gray-800 truncate hover:text-clip" title={chude}>{chude}</span>
           </div>
           <div className="flex space-x-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
             <div className="flex items-center space-x-2 pr-2 pt-2 pb-2 rounded-full">

@@ -246,6 +246,7 @@ const Khoahocdahoanthanh = () => {
   const [khoahocdahoanthanh, setKhoahocdahoanthanh] = useState([]);
   const [thanhtoanData, setThanhtoanData] = useState([]);
   const [baihocData, setBaihocData] = useState([]);
+  const [danhgiaData, setDanhgiaData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   
   const userData = localStorage.getItem('lecturerId');
@@ -262,6 +263,7 @@ const Khoahocdahoanthanh = () => {
         setKhoahocdahoanthanh(filteredData);
         setThanhtoanData(res.data.thanhtoan);
         setBaihocData(res.data.baihoc);
+        setDanhgiaData(res.data.danhgia);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -269,6 +271,7 @@ const Khoahocdahoanthanh = () => {
         setKhoahocdahoanthanh([]);
         setThanhtoanData([]);
         setBaihocData([]);
+        setDanhgiaData([]);
         setIsLoading(false);
       });
   }, [parsedLecturer.giangvien]);
@@ -307,6 +310,14 @@ const Khoahocdahoanthanh = () => {
                 lesson => lesson.id_khoahoc === item.khoahoc.id
               ).length;
 
+              // Get average rating for this course
+              const courseRatings = danhgiaData.filter(
+                rating => rating.id_khoahoc === item.khoahoc.id
+              );
+              const averageRating = courseRatings.length > 0 
+                ? courseRatings.reduce((acc, curr) => acc + Number(curr.danhgia), 0) / courseRatings.length
+                : 0;
+
               return (
                 <Product
                   key={index}
@@ -316,10 +327,11 @@ const Khoahocdahoanthanh = () => {
                   giamgia={item.khoahoc.giamgia}
                   ten={item.khoahoc.ten}
                   hinh={item.khoahoc.hinh}
-                  chude={item.khoahoc.chude?.ten}
+                  chude={item.chude?.ten}
                   giangvien={item.khoahoc.giangVien?.ten}
                   baihocs={lessonCount}
                   dangky={paymentCount}
+                  danhgia={averageRating}
                 />
               );
             })}

@@ -115,7 +115,7 @@ export default function Khoahocdanghoc() {
           "Tên khóa học",
           "Ngày",
           "Giá",
-          "Số lượng",
+          "Lượt mua" ,
           "Trạng thái"
         ].map(header => (
           <th key={header} className="p-3 text-left text-[14px] font-normal">
