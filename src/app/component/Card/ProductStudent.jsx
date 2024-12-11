@@ -20,7 +20,7 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
       const chungChiKhoaHoc = await LayChungChi({
         id_khoahoc: id
       });
-      console.log("ChungChiKhoaHoc", chungChiKhoaHoc);
+      // console.log("ChungChiKhoaHoc", chungChiKhoaHoc);
       if (!chungChiKhoaHoc?.id_chungchi) {
         setError('Không tìm thấy chứng chỉ cho khóa học này');
         return;
@@ -28,12 +28,12 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
 
       // Lấy danh sách tất cả chứng chỉ
       const danhSachChungChi = await ChungChi();
-      console.log("DanhSachChungChi", danhSachChungChi);
+      // console.log("DanhSachChungChi", danhSachChungChi);
       // Tìm chứng chỉ khớp với id_chungchi
       const chungChiTimThay = danhSachChungChi.data.find(
         item => item.id === chungChiKhoaHoc.id_chungchi
       );
-      console.log("chungChiTimThay", chungChiTimThay);
+      // console.log("chungChiTimThay", chungChiTimThay);
 
       if (chungChiTimThay?.giaychungnhan) {
         try {

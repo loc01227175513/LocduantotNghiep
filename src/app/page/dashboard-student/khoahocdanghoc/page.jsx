@@ -229,7 +229,7 @@ const Khoahocdanghoc = () => {
 
       });
   }, []);
-  console.log(khoahocdanghoc1);
+  // console.log(khoahocdanghoc1);
 
 
   const tieptuchoc = (id) => {
@@ -303,7 +303,7 @@ const Khoahocdathanhtoan = () => {
       });
 
   }, []);
-  console.log(data , "data");
+  // console.log(data , "data"); 
 
 
   const tieptuchoc = (id) => {

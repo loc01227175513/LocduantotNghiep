@@ -14,10 +14,10 @@ function Mota() {
       const url = new URL(currentUrl);
       const idFromUrl = url.searchParams.get("id");
       setId(idFromUrl);
-      console.log("id:", idFromUrl); // Log id once
+      // console.log("id:", idFromUrl); // Log id once 
     }
   }, []);
-  console.log("id:", id); // Log id
+  // console.log("id:", id); // Log id
 
   const fetchMoTa = useCallback(async () => {
     try {
@@ -25,7 +25,7 @@ function Mota() {
         referrerPolicy: 'unsafe-url'
       });
       const data = response.data;
-      console.log("API response data:", data); // Log API response
+      // console.log("API response data:", data); // Log API response
 
       const ids = data.data.flatMap((item, index) => {
         try {
@@ -43,7 +43,7 @@ function Mota() {
       });
 
       setMotaIds(ids);
-      console.log("Fetched motaIds:", ids); // Log fetched ids
+      // console.log("Fetched motaIds:", ids); // Log fetched ids
 
       const tenValues = data.data.flatMap((item) => {
         try {
@@ -61,7 +61,7 @@ function Mota() {
       });
 
       setHocSinhInputs(tenValues.length > 0 ? tenValues : [""]);
-      console.log("Fetched hocSinhInputs:", tenValues); // Log fetched inputs
+      // console.log("Fetched hocSinhInputs:", tenValues); // Log fetched inputs
     } catch (error) {
       console.error("Error fetching course description:", error);
     }
@@ -109,14 +109,14 @@ function Mota() {
     if (newInputs.length > 1) {
       const idmota = motaIds[index]; // Use correct idmota from motaIds
       if (idmota === undefined) {
-        console.error("idmota is undefined for index:", index);
-        console.log("Current motaIds:", motaIds); // Log current motaIds
-        console.log("Current hocSinhInputs:", hocSinhInputs); // Log current hocSinhInputs
+        // console.error("idmota is undefined for index:", index);
+        // console.log("Current motaIds:", motaIds); // Log current motaIds
+        // console.log("Current hocSinhInputs:", hocSinhInputs); // Log current hocSinhInputs
         return;
       }
 
       try {
-        console.log("Request data:", { idmota: idmota, id_khoahoc: id }); // Log request data
+        // console.log("Request data:", { idmota: idmota, id_khoahoc: id }); // Log request data
                const response = await Axios.post("https://huuphuoc.id.vn/api/xoamota", {
           idmota: idmota,
           id_khoahoc: id,
@@ -124,7 +124,7 @@ function Mota() {
           referrerPolicy: 'unsafe-url'
         });
 
-        console.log("Delete response:", response);
+        // console.log("Delete response:", response);
 
         newInputs.splice(index, 1);
         setState(newInputs);
@@ -136,7 +136,7 @@ function Mota() {
         alert("Mô tả đã được xóa thành công");
         window.location.reload(); // Reload the page
       } catch (error) {
-        console.error("Error deleting description:", error);
+        console.error("Error deleting description:", error); 
         console.error("Request data:", {
           idmota: idmota,
           id_khoahoc: id,

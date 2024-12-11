@@ -1038,7 +1038,7 @@ const BaiHoc = () => {
       const url = new URL(currentUrl);
       const idFromUrl = url.searchParams.get("id");
       setId(idFromUrl);
-      console.log("id:", idFromUrl);
+      // console.log("id:", idFromUrl);
     }
   }, []);
 
@@ -1129,7 +1129,7 @@ const BaiHoc = () => {
           order: index + 1,
         }));
 
-      console.log("Dữ liệu gửi lên:", { baihocs: lessons, id_khoahoc: id });
+      // console.log("Dữ liệu gửi lên:", { baihocs: lessons, id_khoahoc: id });  
 
       await Axios.post(
         "https://huuphuoc.id.vn/api/keoThaBaiHoc",
@@ -1137,7 +1137,7 @@ const BaiHoc = () => {
         { referrerPolicy: 'unsafe-url' }
       );
       handleExpandLesson(id);
-      console.log("Cập nhật thứ tự thành công!");
+      // console.log("Cập nhật thứ tự thành công!");
     } catch (error) {
       if (error.response) {
         console.error("Error response from server:", error.response.data);
@@ -1157,7 +1157,7 @@ const BaiHoc = () => {
         id_baihoc: parentId,
       }));
 
-      console.log("Prepared Payload:", { videos: orderedSubItems });
+      // console.log("Prepared Payload:", { videos: orderedSubItems });
 
       await Axios.post(
         "https://huuphuoc.id.vn/api/sapXepThuTuVideo",
@@ -1165,7 +1165,7 @@ const BaiHoc = () => {
         { referrerPolicy: 'unsafe-url' }
       );
       handleExpandLesson(parentId);
-      console.log("Update successful!");
+      // console.log("Update successful!");
     } catch (error) {
       if (error.response) {
         handleExpandLesson(parentId);
@@ -1183,9 +1183,9 @@ const BaiHoc = () => {
   //cap nhat sub item sau khi di chuyen
   const updateSubItemParent = useCallback(async (subItemId, newParentId) => {
     try {
-      console.log("Starting updateSubItemParent");
-      console.log("subItemId:", subItemId);
-      console.log("newParentId:", newParentId);
+      // console.log("Starting updateSubItemParent");
+      // console.log("subItemId:", subItemId);
+      // console.log("newParentId:", newParentId);
 
       await Axios.post(
         "https://huuphuoc.id.vn/api/diChuyenVideo",
@@ -1211,7 +1211,7 @@ const BaiHoc = () => {
           return item;
         });
         handleExpandLesson(newParentId);
-        console.log("Updated items:", updatedItems);
+        // console.log("Updated items:", updatedItems);
         return updatedItems;
       });
 
@@ -1223,7 +1223,7 @@ const BaiHoc = () => {
         console.error("Container not found for parentId:", newParentId);
       }
       handleExpandLesson(newParentId);
-      console.log("Sub item đã được di chuyển thành công");
+      // console.log("Sub item đã được di chuyển thành công");
     } catch (error) {
       handleExpandLesson(newParentId);
       console.error("Error moving sub item:", error);
@@ -1303,7 +1303,7 @@ const BaiHoc = () => {
       handleExpandLesson(targetParentId);
       await updateSubItemOrder(targetParentId, container);
 
-      console.log("Sub item moved successfully");
+      // console.log("Sub item moved successfully");
     } catch (error) {
       console.error("Error moving sub item:", error);
     }
@@ -1394,7 +1394,7 @@ const BaiHoc = () => {
         );
         handleExpandLesson(oldParentId);
 
-        console.log("Sub-item đã được xóa thành công");
+        // console.log("Sub-item đã được xóa thành công"); 
       } else {
         handleExpandLesson(oldParentId);
         console.error("Failed to delete sub-item:", response.statusText);
@@ -1431,7 +1431,7 @@ const BaiHoc = () => {
           )
         );
         handleExpandLesson(id);
-        console.log("Bài học đã được xóa thành công");
+        // console.log("Bài học đã được xóa thành công");
       } else {
         handleExpandLesson(id);
         console.error("Failed to delete lesson:", response.statusText);
@@ -1543,9 +1543,9 @@ const BaiHoc = () => {
       const videoId = extractVideoId(newContentUrl);
       if (videoId) {
         try {
-          console.log("Extracted videoId:", videoId);
+          // console.log("Extracted videoId:", videoId); 
           const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=AIzaSyBoFccofvQSQ5Y0l29SdeRD7hka5lL9-fk`;
-          console.log("API URL:", apiUrl);
+          // console.log("API URL:", apiUrl);
           const response = await Axios.get(apiUrl);
           const isoDuration = response.data.items[0].contentDetails.duration;
           const durationInSeconds = parseISO8601Duration(isoDuration);
@@ -1558,12 +1558,12 @@ const BaiHoc = () => {
             url: videoId,
           };
 
-          console.log("Payload:", payload);
+          // console.log("Payload:", payload);
 
           await Axios.post("https://huuphuoc.id.vn/api/taonoidungsub", payload, {
             referrerPolicy: 'unsafe-url'
           });
-          console.log(`Adding content to sub-item ID ${subItemId}`);
+          // console.log(`Adding content to sub-item ID ${subItemId}`);
           setNewContentUrl("");
           setIsContentModalOpen(false);
         } catch (error) {

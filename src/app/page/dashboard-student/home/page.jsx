@@ -48,14 +48,14 @@ export default function Homedashboardstudent() {
         setLoading(false);
       });
   }, []);
-  console.log(data);
+  // console.log(data);  
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  console.log(data.length);
-  console.log(khoahocdahoc.length);
-  console.log(data);
+  // console.log(data.length);
+  // console.log(khoahocdahoc.length);
+  // console.log(data);
 
   return (
     <div className="p-8 col-lg-9">

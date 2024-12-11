@@ -17,7 +17,7 @@ const Page = () => {
     
   const renderContent = () => {
   
-    console.log(ThongBao, "ssss");
+    // console.log(ThongBao, "ssss");
 
     switch (activeTab) {
       case 'student':

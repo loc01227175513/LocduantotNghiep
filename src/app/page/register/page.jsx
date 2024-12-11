@@ -34,7 +34,7 @@ export default function Page() {
     setIsLoading(true);
     try {
       const response = await Register(values);
-      console.log(response);
+      // console.log(response); 
       if (response) {
         window.location = '/page/login';
       }

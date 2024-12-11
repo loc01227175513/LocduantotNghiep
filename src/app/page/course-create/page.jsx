@@ -56,7 +56,7 @@ const CourseCreatePage = () => {
 
       const data = await response.json();
       setSuccessMessage(data.message);
-      console.log("Response:", data);
+      // console.log("Response:", data);
     } catch (error) {
       setError("Lỗi khi gửi yêu cầu xem xét: " + error.message);
       console.error("Error submitting for review:", error);

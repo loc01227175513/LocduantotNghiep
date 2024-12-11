@@ -10,7 +10,7 @@ export const Categorydata = async () => {
         }
 
         const data = await response.json();
-        console.log('Fetched data:', data.data);
+        // console.log('Fetched data:', data.data);
 
         return data.data.map((item) => {
             if (typeof item.hinh !== 'string') {

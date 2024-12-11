@@ -198,7 +198,7 @@ const AddTinNhan = ({ onClose, csrfToken, giangVien, nguoiDung, refreshData }) =
 
     const handleLecturerChange = (e) => {
         const { name, value } = e.target;
-        console.log(name, value); // Debugging line
+        // console.log(name, value); // Debugging line 
         setLecturerFormData((prev) => ({
             ...prev,
             [name]: value,

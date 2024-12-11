@@ -43,7 +43,7 @@ const Profile = () => {
   const fetchUserData = async () => {
     try {
       const userData = await ShowUser();
-      console.log(userData);
+      // console.log(userData); 
       setFormData({
         ten: userData.data.ten || '',
         email: userData.data.email || '',

@@ -45,7 +45,7 @@ const Grid = ({ courses }) => {
   const handleYeuThich = async (id) => {
     try {
       const response = await KhoaHocYeuThich(id);
-      console.log(response);
+      // console.log(response); 
       toast.success("Added to favorites!");
     } catch (error) {
       console.error("Error:", error);
@@ -97,7 +97,7 @@ const List = ({ courses }) => {
   const handleYeuThich = async (id) => {
     try {
       const response = await KhoaHocYeuThich(id);
-      console.log(response);
+      // console.log(response);
       toast.success("Added to favorites!");
     } catch (error) {
       console.error("Error:", error);

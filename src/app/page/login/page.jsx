@@ -59,7 +59,7 @@ export default function Login() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Login successful:", result);
+        // console.log("Login successful:", result); 
 
         // Handle remember me
         if (values.rememberMe) {
@@ -78,7 +78,7 @@ export default function Login() {
         window.location = redirectPath;
       } else {
         const error = await response.json();
-        console.error("Login failed:", error);
+        // console.error("Login failed:", error);
         setErrorMessage("Thông tin đăng nhập không chính xác");
       }
     } catch (error) {

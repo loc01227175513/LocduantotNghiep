@@ -299,7 +299,7 @@ const CourseArea = () => {
 
         return () => swiper.destroy();
     }, []);
-    console.log(KhoaHoc, "khoahoc");
+    // console.log(KhoaHoc, "khoahoc");  
     const getAverageRating = (danhgia) => {
         if (!danhgia || danhgia.length === 0) return 0;
         const total = danhgia.reduce((acc, item) => acc + Number(item.danhgia), 0);
@@ -672,7 +672,7 @@ const UpcomingEvents = () => {
         };
         fetchData();
     }, []);
-    console.log(KhuyenMai, "khuyenmai");
+    // console.log(KhuyenMai, "khuyenmai");
 
     return (
         <div className="up-coming-events rts-section-gap">
@@ -950,7 +950,7 @@ const FeedbackArea = () => {
         setCurrentSlide((prev) => (prev - 1 + danhGia.length) % danhGia.length);
     };
 
-    console.log(danhGia, "danhgia");
+    // console.log(danhGia, "danhgia");    
 
     return (
         <div className='container'>

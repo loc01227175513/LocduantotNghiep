@@ -12,26 +12,26 @@ export default function Page() {
   useEffect(() => {
     ChungChi().then((data) => {
       setChungChi(data.data);
-      console.log("chungchi", data);
+      // console.log("chungchi", data);
     });
   }, []);
 
   const handleSelect = (id) => {
     setSelectedId(id);
-    console.log("selectedId", id);
+    // console.log("selectedId", id);
   };
 
   const handlePublish = () => {
     if (selectedId) {
       ChonChungChi(selectedId)
         .then((data) => {
-          console.log("data", data);
+          // console.log("data", data);
         })
         .catch((error) => {
           console.error("Error publishing certificate", error);
         });
     } else {
-      console.log("No ID selected");
+      // console.log("No ID selected");
     }
   };
 

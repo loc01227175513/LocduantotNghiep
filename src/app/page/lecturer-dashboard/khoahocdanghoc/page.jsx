@@ -130,7 +130,7 @@ const Khoahocdanghoc = () => {
       ) : (
         <div className="flex gap-10 w-full overflow-x-scroll ">
           {khoahocdanghoc1.map((item, index) => (
-            console.log(item,"item"),
+            // console.log(item,"item"), 
             <Product
               key={index}
               id={item?.id}
@@ -179,7 +179,7 @@ const Khoahocdathanhtoan = () => {
     }
     return 0;
   });
-  console.log(coursesInProgress, "coursesInProgress");
+  // console.log(coursesInProgress, "coursesInProgress"); 
 
 
   return (

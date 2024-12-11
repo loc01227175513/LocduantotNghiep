@@ -48,7 +48,7 @@ export default function Quanlykhoahoc() {
 
     fetchData();
   }, []);
-  console.log(khoahoc);
+  // console.log(khoahoc);   
 
   useEffect(() => {
     fetch("https://huuphuoc.id.vn/api/theloai", {

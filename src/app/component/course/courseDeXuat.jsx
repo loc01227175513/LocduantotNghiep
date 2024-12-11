@@ -32,7 +32,7 @@ const CourseDeXuat = () => {
                 setIsLoading(false);
             });
     }, []);
-    console.log(khoaHocDaThanhToan,"khoaHocDaThanhToan");
+    // console.log(khoaHocDaThanhToan,"khoaHocDaThanhToan");
     useEffect(() => {
         fetch("https://huuphuoc.id.vn/api/allkhoahoc")
             .then((response) => response.json())
@@ -56,8 +56,8 @@ const CourseDeXuat = () => {
                 setKhoaHocDeXuat([]);
             });
     }, [khoaHocDaThanhToan]);
-    console.log(khoaHocDeXuat,"khoaHocDeXuat");
-    console.log(allCourse22,"allCourse22");
+    // console.log(khoaHocDeXuat,"khoaHocDeXuat");
+    // console.log(allCourse22,"allCourse22");
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
         setCurrentPage(1);
@@ -71,7 +71,7 @@ const CourseDeXuat = () => {
     const handleYeuThich = async (id) => {
         try {
             const response = await KhoaHocYeuThich(id);
-            console.log(response);
+            // console.log(response);
             toast.success("Added to favorites!");
         } catch (error) {
             console.error("Error:", error);

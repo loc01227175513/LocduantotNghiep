@@ -60,7 +60,7 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
             const flatDapAnNguoiDung = dapAnNguoiDung.flat();
 
             if (flatCheckToanBocauhoi.length === 0) {
-                console.log("Không có dữ liệu trong checkToanBocauhoi");
+                // console.log("Không có dữ liệu trong checkToanBocauhoi"); 
                 return;
             }
 
@@ -101,12 +101,12 @@ export default function KetQuaTracNghiem({ idBaihoc, idTracNghiem }) {
                 const check = arraysEqual(TongSoDapAnDung, SocaudapandungUser);
                 if (check) {
                     HoanThanhTracNghiem({ id_baihoc: idBaihoc });
-                    console.log("Bài trắc nghiệm đã hoàn thành đúng.");
+                    // console.log("Bài trắc nghiệm đã hoàn thành đúng."); 
                 } else {
-                    console.log("Chưa hoàn thành trắc nghiệm.");
+                    // console.log("Chưa hoàn thành trắc nghiệm.");
                 }
             } else {
-                console.log("ID bài trắc nghiệm không khớp.");
+                // console.log("ID bài trắc nghiệm không khớp.");
             }
         }
     }, [checkToanBocauhoi, dapAnNguoiDung, idBaihoc]);

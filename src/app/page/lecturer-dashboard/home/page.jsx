@@ -246,7 +246,7 @@ export default function Homedashboardlecturer() {
 
         const khoahocRes = await GiangvienKhoaHoc();
         setKhoahoc(khoahocRes.data);
-        console.log(khoahocRes.data);
+        // console.log(khoahocRes.data); 
 
         const khoahocdamuaRes = await GiangvienKhoaHocDaMua();
         setKhoahocdamua(khoahocdamuaRes.data);
@@ -276,7 +276,7 @@ export default function Homedashboardlecturer() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);  
           setDoanhthu(data.data);
         })
         .catch((error) => {
@@ -299,7 +299,7 @@ export default function Homedashboardlecturer() {
     return (current.ThanhToan.length > max.ThanhToan.length) ? current : max;
   }, { khoahoc: '', ThanhToan: [] });
 
-  console.log(khoahocbanchay);
+  // console.log(khoahocbanchay);
   const khoahocMaxSotien = khoahoc.reduce((max, current) => {
     // Tính tổng số tiền cho khóa học hiện tại
     const totalSotienCurrent = current.ThanhToan.reduce((sum, item) => sum + item.tong, 0);
@@ -313,7 +313,7 @@ export default function Homedashboardlecturer() {
 
   const khoahocdadangky = khoahoc.length;
   const khoahocdahoanthanh = khoahoc.filter((item) => item.trangthai === "Progress").length;
-  console.log(khoahoc);
+  // console.log(khoahoc);
   const khoahoctamdung = khoahoc.filter((item) => item.trangthai === "Notyet").length;
   const khoahocdanghoc = khoahocdamua.length;
   const tongdoanhthu = doanhthu.tongdoanhthu || 0;
@@ -333,7 +333,7 @@ export default function Homedashboardlecturer() {
     { icon: FaClock, value: khoahoctamdung, label: "Tổng khóa học tạm dừng" },
     { icon: FaMoneyBill, value: tongdoanhthu, label: "Tổng thu nhập" },
   ];
-  console.log(khoahoc, "khoahoc");
+  // console.log(khoahoc, "khoahoc");
 
   const validImageSrc = (src) => {
     if (typeof src === 'string' && (src.startsWith('/') || src.startsWith('http://') || src.startsWith('https://'))) {

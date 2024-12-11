@@ -229,11 +229,11 @@ export default function SaleComponent() {
 
         return courses;
     };
-    console.log(KhuyenMai, 'KhuyenMai');
+    // console.log(KhuyenMai, 'KhuyenMai'); 
     const handleYeuThich = async (id) => {
         try {
             const response = await KhoaHocYeuThich(id);
-            console.log(response);
+            // console.log(response);
             toast.success("Added to favorites!", toastConfig);
         } catch (error) {
             console.error("Error:", error);

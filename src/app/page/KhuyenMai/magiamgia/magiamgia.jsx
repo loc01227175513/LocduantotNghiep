@@ -146,7 +146,7 @@ export default function VoucherShop() {
     const indexOfLastVoucher = currentPage * vouchersPerPage;
     const indexOfFirstVoucher = indexOfLastVoucher - vouchersPerPage;
     const currentVouchers = filteredVouchers.slice(indexOfFirstVoucher, indexOfLastVoucher);
-    console.log(currentVouchers);
+    // console.log(currentVouchers); 
 
 
     const totalPages = Math.ceil(filteredVouchers.length / vouchersPerPage);

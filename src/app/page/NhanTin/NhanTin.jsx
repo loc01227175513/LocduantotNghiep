@@ -82,7 +82,7 @@ const NhanTin = () => {
         hidden: { opacity: 0, y: 20 },
         show: { opacity: 1, y: 0 },
     };
-    console.log(nhantin);
+    // console.log(nhantin); 
    const handleUserSubmit = async (e) => {
         e.preventDefault();
 

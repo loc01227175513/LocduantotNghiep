@@ -72,9 +72,9 @@ export const Profileinsructor = () => {
 
         fetchFollowStatus();
     }, [followStatusChanged]);
-    console.log(follow, "follow");
+    // console.log(follow, "follow");      
 
-    console.log(data, "data");
+    // console.log(data, "data");
     const TongBaiHoc = data
         .map((item) => item.baihoc.length)
         .reduce((a, b) => a + b, 0);

@@ -14,7 +14,7 @@ const Page = () => {
       ? localStorage.getItem("appliedCoupons")
       : null;
   const MaArray = MaGiamGia ? JSON.parse(MaGiamGia) : [];
-  console.log(MaArray[0]?.id_magiamgia, "id_magiamgia");
+  // console.log(MaArray[0]?.id_magiamgia, "id_magiamgia");
 
   const [newItem, setNewItem] = useState({
     ten: "",

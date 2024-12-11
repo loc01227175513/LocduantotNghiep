@@ -13,7 +13,7 @@ export const ChungChi = async () => {
 export const ChonChungChi = async (id) => {
   const urlParams = new URLSearchParams(window.location.search);
   const id_khoahoc = urlParams.get('id');
-  console.log("id_khoahoc", id_khoahoc);
+  // console.log("id_khoahoc", id_khoahoc);
 
   if (!id_khoahoc) {
     throw new Error('Course ID not found in URL');

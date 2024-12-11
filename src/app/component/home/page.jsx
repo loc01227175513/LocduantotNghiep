@@ -86,7 +86,7 @@ export default function Homecomponent() {
         const data = await KhoaHocDangHoc();
         setKhoaHocDangHoc(data || []);
       } catch (error) {
-        console.log("Failed to fetch courses", error);
+        // console.log("Failed to fetch courses", error); 
         setKhoaHocDangHoc([]);
       }
     };

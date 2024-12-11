@@ -266,7 +266,7 @@ export default function Header() {
     typeof window !== "undefined"
       ? JSON.parse(localStorage.getItem("data"))
       : null;
-  console.log(data);
+  // console.log(data); 
 
   useEffect(() => {
     LayThongBao()

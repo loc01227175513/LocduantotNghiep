@@ -96,7 +96,7 @@ export default function Khoahocdanghoc() {
     setSelectedOrder(null);
     setOrderDetails(null);
   };
-console.log(orderDetails);
+// console.log(orderDetails); 
   return (
     <div className="overflow-y-scroll col-lg-9 h-lvh p-4">
       <div className="bg-white rounded-lg shadow-sm p-6">

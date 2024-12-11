@@ -64,7 +64,7 @@ const OutstandingCourse = () => {
   const handleYeuThich = async (id) => {
     try {
       const response = await KhoaHocYeuThich(id);
-      console.log(response);
+      // console.log(response); 
       toast.success("Added to favorites!");
     } catch (error) {
       console.error("Error:", error);
@@ -235,7 +235,7 @@ const CourseNew = () => {
   const handleYeuThich = async (id) => {
     try {
       const response = await KhoaHocYeuThich(id);
-      console.log(response);
+      // console.log(response); 
       toast.success("Added to favorites!");
     } catch (error) {
       console.error("Error:", error);
@@ -411,7 +411,7 @@ const Courseseal = () => {
   const handleYeuThich = async (id) => {
     try {
       const response = await KhoaHocYeuThich(id);
-      console.log(response);
+      // console.log(response);
       toast.success("Added to favorites!");
     } catch (error) {
       console.error("Error:", error);
@@ -586,7 +586,7 @@ const Coursefree = () => {
   const handleYeuThich = async (id) => {
     try {
       const response = await KhoaHocYeuThich(id);
-      console.log(response);
+      // console.log(response);  
       toast.success("Added to favorites!");
     } catch (error) {
       console.error("Error:", error);
@@ -739,7 +739,7 @@ const KhoaHocDangHocDay = () => {
         setIsLoading(false);
       });
   }, []);
-  console.log(khoahocdanghoc1);
+  // console.log(khoahocdanghoc1); 
 
   const tieptuchoc = (id) => {
     router.push(`/page/Study?id=${id}`);
