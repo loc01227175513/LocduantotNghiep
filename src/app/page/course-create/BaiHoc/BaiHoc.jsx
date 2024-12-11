@@ -676,7 +676,7 @@ const NoiDungBaiHoc = ({
         updatedItems[sourceLessonIndex].subItems = sourceSubItems;
         updatedItems[destinationLessonIndex].subItems = destinationSubItems;
         setItems(updatedItems);
-
+        handleExpandLesson(destination.droppableId);
         updateSubItemOrder(source.droppableId, null);
         updateSubItemOrder(destination.droppableId, null);
         updateSubItemParent(movedSubItem.id, destination.droppableId);
@@ -1117,7 +1117,7 @@ const BaiHoc = () => {
     }));
     setExpandedLessonId(itemId);
     fetchSubItems(itemId);
-  }, [fetchSubItems ]);
+  }, [fetchSubItems, setExpandedLessonId]);
   //cap nhat thu tu bai hoc
   const updateLessonOrder = useCallback(async (reorderedItems) => {
     try {
@@ -1186,13 +1186,13 @@ const BaiHoc = () => {
       // console.log("Starting updateSubItemParent");
       // console.log("subItemId:", subItemId);
       // console.log("newParentId:", newParentId);
-
+      handleExpandLesson(newParentId);
       await Axios.post(
         "https://huuphuoc.id.vn/api/diChuyenVideo",
         { video_id: subItemId, new_baihoc_id: newParentId },
         { referrerPolicy: 'unsafe-url' }
       );
-
+      handleExpandLesson(newParentId);
       setItems((prevItems) => {
         const updatedItems = prevItems.map((item) => {
           if (item.id === newParentId) {
@@ -1202,10 +1202,10 @@ const BaiHoc = () => {
             const movedSubItem = parentItem.subItems.find(
               (sub) => sub.id === subItemId
             );
-
+            handleExpandLesson(newParentId);
             return { ...item, subItems: [...item.subItems, movedSubItem] };
           } else if (item.subItems.some((sub) => sub.id === subItemId)) {
-            
+            handleExpandLesson(newParentId);
             return { ...item, subItems: item.subItems.filter((sub) => sub.id !== subItemId) };
           }
           return item;

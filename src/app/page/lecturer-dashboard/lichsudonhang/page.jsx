@@ -115,7 +115,7 @@ export default function Khoahocdanghoc() {
           "Tên khóa học",
           "Ngày",
           "Giá",
-          "Lượt mua" ,
+          "Lượt mua",
           "Trạng thái"
         ].map(header => (
           <th key={header} className="p-3 text-left text-[14px] font-normal">
@@ -149,9 +149,9 @@ export default function Khoahocdanghoc() {
           <td className="p-3 align-middle text-left text-[14px]">
             {item.thanhtoan.length}
           </td>
-          <td className="p-3 align-middle text-left text-[14px]">
-            <span className={`badge rounded-pill ${item.trangthai === 'Đã Thanh Toán' ? 'bg-danger' :
-                item.trangthai === 'Đang xử lý' ? 'bg-warning' : 'bg-secondary'
+          <td className="p-3 align-middle text-left text-[14px] ">
+            <span className={`badge rounded-pill p-2 ${item.trangthai === 'Đã Thanh Toán' ? 'bg-danger'  :
+              item.trangthai === 'Đang xử lý' ? 'bg-warning' : 'bg-secondary'
               }`}>
               {item.trangthai === 'Hoàn thành' ? 'Đã hoàn thành' : item.trangthai}
             </span>
@@ -173,8 +173,8 @@ export default function Khoahocdanghoc() {
                     <button
                       key={key}
                       className={`rounded-md text-[14px] transition-all duration-200 h-[25px] w-[100px] ${selectedTab === key
-                          ? "bg-pink-700 text-white"
-                          : "hover:bg-pink-700 hover:text-white text-[#161823]"
+                        ? "bg-pink-700 text-white"
+                        : "hover:bg-pink-700 hover:text-white text-[#161823]"
                         }`}
                       onClick={() => setSelectedTab(key)}
                     >
@@ -192,8 +192,10 @@ export default function Khoahocdanghoc() {
               </div>
             </div>
           </div>
+          <div className="ml-4">
+            <h4 className="mb-4 text-[20px] font-bold">Lịch sử đơn hàng</h4>
+          </div>
 
-          <h4 className="mb-4 text-[20px] font-bold">Lịch sử đơn hàng</h4>
 
           <div className="table-responsive">
             {uniqueCourses.length > 0 ? (

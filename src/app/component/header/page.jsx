@@ -12,7 +12,7 @@ import { Categoryheader } from "../category/category.component";
 import { LayThongBao } from "@/service/ThongBao/ThongBao";
 import Link from "next/link";
 import { use } from "@/assets/js/plugins/swiper";
-
+import { useRouter } from "next/navigation";
 const menuItems = [
   {
     href: "/",
@@ -53,6 +53,25 @@ const menuItems = [
     href: "/page/NhanTin",
     icon: "fas fa-comments",
     label: "Nhắn tin"
+  },
+  {
+    href: "/page/lecturer-dashboard",
+    icon: "fas fa-user",
+    label: "Trang quản lý"
+  }, {
+    href: "/page/lecturer-dashboard/lichsudonhang",
+    icon: "fas fa-user",
+    label: "Lịch sử đơn hàng"
+  },
+  {
+    href: "/page/login",
+    icon: "fas fa-user",
+    label: "Đăng nhập"
+  },
+  {
+    href: "/page/register",
+    icon: "fas fa-user",
+    label: "Đăng ký"
   }
 ];
 
@@ -248,7 +267,7 @@ export default function Header() {
   const [isCoursesMenuOpen, setIsCoursesMenuOpen] = useState(false);
   const [isDashboardMenuOpen, setIsDashboardMenuOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const router = useRouter();
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
@@ -284,7 +303,7 @@ export default function Header() {
       localStorage.removeItem("data");
       localStorage.removeItem("rememberedUser");
     }
-    window.location.reload();
+    router.push("/page/login");
   };
 
   useEffect(() => {
@@ -856,15 +875,13 @@ export default function Header() {
           </div>
 
           <div
-            className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-all h-screen ${
-              sidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-            } z-[1000]`}
+            className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-all h-screen ${sidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+              } z-[1000]`}
             onClick={closeSidebar}
           >
             <div
-              className={`fixed top-0 right-0 h-full w-[400px] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
-                sidebarOpen ? 'translate-x-0' : 'translate-x-full'
-              }`}
+              className={`fixed top-0 right-0 h-full w-[400px] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'
+                }`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
@@ -978,11 +995,11 @@ export default function Header() {
       {isMobileMenuOpen && (
         <>
           {/* Add a backdrop */}
-          <div 
+          <div
             className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[1000]"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          
+
           {/* Update the sidebar container */}
           <div
             className="lg:hidden fixed top-28 left-0 h-full w-80 bg-gradient-to-br from-[#1e3c72] to-[#ff6b6b] z-[1001] flex flex-col shadow-3xl"
@@ -992,14 +1009,14 @@ export default function Header() {
               <Link
                 href="/page/Cours-Filter"
                 className="w-full text-center text-white text-lg font-medium 
-                  bg-[#ff6b6b]
-                  hover:bg-[#ff6b6b]
-                  active:bg-orange-700
+                  bg-pink-700
+                  hover:bg-pink-700
+                  active:bg-pink-700
                   transition-all duration-300 ease-out
-                  rounded-full px-6 py-3.5 sm:py-3
+                  rounded-md px-6 py-3.5 sm:py-3
                   shadow-lg hover:shadow-xl
                   transform hover:scale-[1.02] active:scale-[0.98]
-                  focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
+                  focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                   openSearch();
@@ -1010,20 +1027,54 @@ export default function Header() {
               </Link>
 
               {/* Add onClick handlers to all links to close the menu */}
+
               <ul className="flex flex-col space-y-4">
-                {menuItems.map((item, index) => (
-                  <li key={index} className="w-full">
+                {menuItems.map((item, index) => {
+                  const isLoggedIn = typeof window !== 'undefined' && localStorage.getItem('data');
+
+                  // Hide login/register links if user is logged in
+                  if (isLoggedIn && (item.href === '/page/login' || item.href === '/page/register')) {
+                    return null;
+                  }
+
+                  // Regular menu items
+                  if (!isLoggedIn || (item.href !== '/page/login' && item.href !== '/page/register')) {
+                    return (
+                      <li key={index} className="w-full">
+                        <Link
+                          href={item.href}
+                          className="flex items-center space-x-3 text-white hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <i className={`${item.icon} text-xl text-white font-medium`}></i>
+                          <span className="text-[12px] font-medium">{item.label}</span>
+                        </Link>
+                      </li>
+                    );
+                  }
+                })}
+
+                {/* Add logout option if user is logged in */}
+                {typeof window !== 'undefined' && localStorage.getItem('data') && (
+                  <li className="w-full">
                     <Link
-                      href={item.href}
+                      href="/"
                       className="flex items-center space-x-3 text-yellow-200 hover:text-white transition-all py-2 px-3 rounded-lg hover:bg-white/10"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={() => {
+                        localStorage.removeItem('lecturerId');
+                        localStorage.removeItem('data');
+                        localStorage.removeItem('rememberedUser');
+                        setIsMobileMenuOpen(false);
+                      }}
                     >
-                      <i className={`${item.icon} text-xl text-white`}></i>
-                      <span className="text-base">{item.label}</span>
+                      <i className="fas fa-sign-out-alt text-xl text-white"></i>
+                      <span className="text-base">Đăng xuất</span>
                     </Link>
                   </li>
-                ))}
+                )}
               </ul>
+
+
             </nav>
           </div>
         </>
@@ -1324,22 +1375,9 @@ const Search = React.memo(function SearchComponent({ isOpenSearch, closeSearch, 
                   />
                   <button
                     type="submit"
-                    className="bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 m-1 w-[120px] px-2 py-3 text-white rounded-lg shadow-md hover:shadow-lg hover:from-pink-700 hover:to-pink-700 active:from-pink-700 active:to-pink-700 transition duration-200 hover:scale-[1.02] transform flex items-center justify-center gap-1"
+                    className="bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 m-1 w-[120px] px-2 py-3 text-white rounded-md shadow-md hover:shadow-lg hover:from-pink-700 hover:to-pink-700 active:from-pink-700 active:to-pink-700 transition duration-200 hover:scale-[1.02] transform flex items-center justify-center gap-1"
                   >
-                    <span className="text-2xl">Search</span>
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
+                    <span className="text-[15px]">Tìm kiếm</span>
                   </button>
                 </div>
 
