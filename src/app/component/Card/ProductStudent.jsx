@@ -100,7 +100,7 @@ export default function ProductStudent({ gia, giamgia, ten, hinh, chude, giangvi
 
   return (
     <div
-      className="transition flash element-item creative p-2 sm:p-3"
+      className="transition flash element-item creative "
       data-category="transition"
     >
       <div className="rts-single-course rounded-xl overflow-hidden bg-white">

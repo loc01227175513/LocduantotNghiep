@@ -18669,7 +18669,7 @@ nav ul li a {
 }
 
 .rts-single-course {
-  width: 237px;
+  width: 261px;
   height: max-content;
   border-radius: 6px;
   border: 1px solid #be185d2b;
@@ -18683,7 +18683,7 @@ nav ul li a {
      display: flex;
      justify-content: flex-start;
      align-items: flex-start;
-     flex-direction: row;
+     flex-direction: row; 
      flex-wrap: wrap;
      gap: 20px;                     
 }

@@ -302,7 +302,7 @@ const CourseNew = () => {
 
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal chialaiflex">
+            <div className="filter mt--30 portfolio-feed personal chialaiflex">
                 {paginatedCourses.map((item) => {
                   // Calculate averageRating per course
                   const averageRating =
@@ -479,7 +479,7 @@ const Courseseal = () => {
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
               {/* Updated Grid Layout */}
-              <div className="filter mt--30 portfolio-feed grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              <div className="filter mt--30 portfolio-feed personal chialaiflex">
                 {displayedCourses.map((item) => {
                   // Calculate averageRating per course
                   const averageRating =
@@ -653,7 +653,7 @@ const Coursefree = () => {
 
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div className="filter mt--30 portfolio-feed personal chialaiflex">
                 {displayedCourses.map((item) => {
                   // Calculate averageRating per course
                   const averageRating =
@@ -788,7 +788,7 @@ const KhoaHocDangHocDay = () => {
           </div>
           <div className="border-t border-orange-100 ms-portfolio-filter-area main-isotop">
             <div className="portfolio_wrap">
-              <div className="filter mt--30 portfolio-feed personal chialaiflex grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"> {/* Updated to display 5 items per row */}
+            <div className="filter mt--30 portfolio-feed personal chialaiflex">
                 {paginatedCourses.map((item) => {
                   const averageRating =
                     item.danhgia && item.danhgia.length > 0

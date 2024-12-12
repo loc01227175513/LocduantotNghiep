@@ -21,7 +21,7 @@ export default function CardProduct({
 
 
     return (
-        <div className="transition flash element-item creative" data-category="transition" key={id}>
+        <div className="transition flash element-item creative "  data-category="transition" key={id}>
             <div className="rts-single-course">
                 <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative">
                     <Image width={500} height={300} src={hinh} alt="course" style={{ height: "170px" , objectFit: "cover" }} />
