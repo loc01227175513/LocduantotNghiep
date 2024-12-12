@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../component/header/page';
+import FooterComponent from '@/app/component/footer/page';
 import { TatCaKhuyenMaiKhoaHoc, showAllNguoiDungMaGiamGia } from '../../../service/khuyenmai/khuyenmai';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -141,18 +142,18 @@ const Cart = () => {
       <Header />
       <main className="">
         <h1 className="display-4 text-center my-20 font-bold text-black">
-          🛒 Giỏ Hàng Của Tôi
+          Giỏ Hàng Của Tôi
         </h1>
 
         {cartItems.length === 0 ? (
           // Empty cart message
           <div className="text-center py-20">
             <FaShoppingCart className="mx-auto text-gray-400 text-9xl mb-4" />
-            <h2 className="text-2xl font-semibold text-gray-600 mb-4">Giỏ hàng của bạn đang trống</h2>
-            <p className="text-gray-500 mb-8">Hãy thêm khóa học vào giỏ hàng để tiến hành thanh toán</p>
+            <h2 className="text-[14px] font-semibold text-gray-600 mb-4 ">Giỏ hàng của bạn đang trống</h2>
+            <p className="text-gray-500 mb-8 text-[14px]">Hãy thêm khóa học vào giỏ hàng để tiến hành thanh toán</p>
             <Link
               href="/"
-              className="bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white font-bold py-3 px-6 rounded-lg hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
+              className="bg-gradient-to-r from-pink-700 via-pink-700 to-pink-700 text-[14px] text-white font-bold py-3 px-6 rounded-lg hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
             >
               Khám phá khóa học
             </Link>
@@ -169,12 +170,12 @@ const Cart = () => {
                 <table className="table table-hover align-middle">
                   <thead>
                     <tr className="text-black">
-                      <th className="py-4 text-xl"></th>
-                      <th className="py-4 text-xl">Hình ảnh</th>
-                      <th className="py-4 text-xl">Sản phẩm</th>
-                      <th className="py-4 text-xl">Giá</th>
-                      <th className="py-4 text-xl">Giảm Giá</th>
-                      <th className="py-4 text-xl">Tổng</th>
+                      <th className="py-4 text-[14px]"></th>
+                      <th className="py-4 text-[14px]">Hình ảnh</th>
+                      <th className="py-4 text-[14px]">Khóa học</th>
+                      <th className="py-4 text-[14px]">Giá</th>
+                      <th className="py-4 text-[14px]">Giảm Giá</th>
+                      <th className="py-4 text-[14px]">Tổng</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -212,11 +213,11 @@ const Cart = () => {
                               />
                             </td>
                             <td className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
-                              <h3 className="text-2xl">{khoahoc.ten}</h3>
+                              <h3 className="text-[14px]">{khoahoc.ten}</h3>
                             </td>
-                            <td className="text-gray-600 text-2xl">đ{khoahoc.gia.toLocaleString()}</td>
-                            <td className="text-gray-600 text-2xl">{khoahoc.giamgia.toLocaleString()}</td>
-                            <td className="font-bold text-black animate-numberChange text-2xl">
+                            <td className="text-gray-600 text-[14px]">đ{khoahoc.gia.toLocaleString()}</td>
+                            <td className="text-gray-600 text-[14px]">{khoahoc.giamgia.toLocaleString()}</td>
+                            <td className="font-bold text-black animate-numberChange text-[14px]">
                               đ{finalPrice.toLocaleString()}
                             </td>
                           </tr>
@@ -232,28 +233,29 @@ const Cart = () => {
             <div className="w-full md:w-1/3 pl-10 md:ml-4">
               <div className="card shadow-lg rounded-xl border-0 hover:shadow-2xl transition-all duration-500">
                 <div className="card-header font-medium text-black rounded-t-xl">
-                  <h3 className="mb-0 py-3 px-4 text-black text-2xl">
-                    💰 Tổng Giỏ Hàng
+                  <h3 className="mb-0 py-3 px-4 text-black text-[16px]">
+                    Tổng Giỏ Hàng
                   </h3>
                 </div>
                 <div className="card-body p-4">
                   <table className="table mb-3">
                     <tbody>
                       <tr>
-                        <th className="text-gray-600 text-2xl">Thành tiền</th>
-                        <td className="text-right text-2xl">{totalBeforeDiscount.toLocaleString()} VNĐ</td>
+                        <th className="text-gray-600 text-[14px]">Thành tiền</th>
+                        <td className="text-right text-[14px]">{totalBeforeDiscount.toLocaleString()} VNĐ</td>
                       </tr>
                       <tr>
-                        <th className="text-gray-600 text-2xl">Giảm giá</th>
-                        <td className="text-right text-2xl">-{totalDiscount}%</td>
+                        <th className="text-gray-600 text-[14px]">Giảm giá</th>
+                        <td className="text-right text-[14px]">-{totalDiscount}%</td>
                       </tr>
                       <tr>
-                        <td colSpan="2" className="text-center py-4">
+                        <td colSpan="2" className="text-right py-4">
                           <button
-                            className="bg-[#1e3c72] text-white font-bold py-3 px-6 rounded-md"
+                            className="text-pink-700 text-[14px] py-2 px-1 rounded-md w-40 border-1 border-pink-700"
                             onClick={() => setIsModalOpen(true)}
+                            style={{ border: '0.5rem solid #be185d' }}
                           >
-                            🎫 Chọn Ưu Đãi
+                            Ưu Đãi
                           </button>
                         </td>
                       </tr>
@@ -268,9 +270,9 @@ const Cart = () => {
                         })
                       )}
                       <tr>
-                        <th className="text-2xl font-bold">Tổng Tiền</th>
+                        <th className="text-[14px] font-bold">Tổng Tiền</th>
                         <td className="text-right">
-                          <strong className="text-2xl">
+                          <strong className="text-[14px]">
                             {sum.toLocaleString()} VNĐ
                           </strong>
                         </td>
@@ -281,7 +283,7 @@ const Cart = () => {
                     <div className="flex">
                       <Link
                         href="/page/checkout"
-                        className="bg-gradient-to-r text-2xl from-blue-900 via-pink-700 to-pink-700 text-white font-bold py-4 px-6 rounded-xl text-center w-full hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
+                        className="bg-gradient-to-r text-[14px] from-blue-900 via-pink-700 to-pink-700 text-white font-medium py-4 px-6 rounded-xl text-center w-full hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
                       >
                         Tiến hành thanh toán →
                       </Link>
@@ -301,28 +303,33 @@ const Cart = () => {
       {/* Enhanced Modal Animation */}
       {isModalOpen && (
         <div
-          className="modal fade show d-block animate-modalFadeIn"
+          className="modal fade show d-block animate-modalFadeIn "
+          
           tabIndex="-1"
           style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}
         >
-          <div className="modal-dialog modal-dialog-centered animate-modalSlideIn">
-            <div className="modal-content border-0 shadow-2xl rounded-xl">
-              <div className="modal-header bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] text-white rounded-t-xl">
-                <h5 className="modal-title font-bold ">Mã Giảm Giá</h5>
+          <div className="modal-dialog modal-dialog-centered animate-modalSlideIn ">
+            <div className="modal-content border-0 shadow-2xl rounded-xl " style={{width:'800px! important'}}>
+              <div className="modal-header bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white rounded-t-xl">
+                <h5 className="modal-title font-medium text-[20px] ">Mã Giảm Giá</h5>
                 <button
                   type="button"
                   className="btn-close hover:rotate-90 transition-all duration-300"
                   onClick={() => setIsModalOpen(false)}
                 />
               </div>
-              <div className="modal-body p-4">
+              <div className="modal-body p-4  ">
                 <Voucher handleApplyCoupon={handleApplyCoupon} />
               </div>
             </div>
           </div>
         </div>
       )}
+      <div className='mt-10'>
+        <FooterComponent />
+      </div>
     </div>
+
   );
 }
 
@@ -381,15 +388,15 @@ const Voucher = ({ handleApplyCoupon }) => {
 
   return (
     <>
-      <div className="my-4">
+      <div className="my-4 " >
         {/* Coupon input form */}
-        <form className="mb-4 p-3 bg-light rounded shadow-sm" onSubmit={handleSubmit}>
+        <form className="mb-4 p-3 bg-light shadow-sm  " onSubmit={handleSubmit}>
           <div className="row g-2 align-items-center">
-            <div className="col-md-8">
+            <div className="col-md-8 ">
               <input
                 type="text"
                 name="coupon_code"
-                className="form-control form-control-lg placeholder:text-xl pt-1"
+                className="form-control form-control-lg placeholder:text-[14px] text-[14px]  rounded-lg p-2"
                 style={{ border: '1px solid gray', borderRadius: '0.5rem' }}
                 placeholder="Nhập mã giảm giá"
                 required
@@ -401,13 +408,14 @@ const Voucher = ({ handleApplyCoupon }) => {
               />
             </div>
             <div className="col-md-4">
-              <button type="submit" className="btn rounded-lg font-bold bg-pink-700 text-white btn-lg w-100 fw-bold hover-scale">
-                <i className="fas fa-tag me-2"></i>Áp dụng
+              <button type="submit" className="btn rounded-lg text-[14px]  bg-pink-700 text-white btn-lg w-100 fw-bold hover-scale h-[42px] " >
+                <i className="fas fa-tag me-2 mr-2"></i>
+              <span className='text-[14px]' style={{fontWeight:'normal'}}>   Áp dụng</span>
               </button>
             </div>
           </div>
-          <small className="form-text text-muted mt- text-lg">
-            <i className="fas fa-info-circle me-1"></i>
+          <small className="form-text text-muted mt- text-lg ">
+            <i className="fas fa-info-circle me-1 text-[14px] mt-4"></i>
             Mỗi khóa học chỉ áp dụng được một mã giảm giá.
           </small>
         </form>
@@ -430,15 +438,15 @@ const Voucher = ({ handleApplyCoupon }) => {
               >
                 <div className="card-body position-relative p-4 mx-auto" style={{ width: '423.182px' }}>
                   {/* Status */}
-                  <div className="bg-white text-xl text-sky-950 font-bold">
+                  <div className="bg-white text-[14px] text-sky-950 font-medium">
                     {voucher.trangthai === 'Đã sử dụng' ? 'Đã dùng' : 'Có sẵn'}
                   </div>
 
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h4 className="card-title fw-bold text-black mb-0 text-2xl py-1">
-                      Mã: {voucher.magiamgia.maso}
+                  <div className="d-flex justify-content-between align-items-center mb-3 ">
+                    <h4 className="card-title fw-bold text-black mb-0 text-[14px] py-1 ">
+                      Mã: <span className='text-[20px] font-medium'>{voucher.magiamgia.maso}</span>
                     </h4>
-                    <span className={`badge ${voucher.magiamgia.trangthai === 'Đã Duyệt' ? 'bg-success' : 'bg-secondary'} px-3 py-2 text-lg`}>
+                    <span className={`badge ${voucher.magiamgia.trangthai === 'Đã Duyệt' ? 'bg-pink-700' : 'bg-secondary'} px-3 py-3 text-[14px]`}>
                       {voucher.magiamgia.trangthai}
                     </span>
                   </div>
@@ -446,25 +454,25 @@ const Voucher = ({ handleApplyCoupon }) => {
                   <div className="row g-3">
                     <div className="col-6">
                       <p className="card-text">
-                        <i className="fas fa-percent font-bold me-2"></i>
+                        <i className="fas fa-percent  me-2"></i>
                         <strong>Giảm giá:</strong> {voucher.magiamgia.giamgia}%
                       </p>
                     </div>
                     <div className="col-6">
                       <p className="card-text">
-                        <i className="fas fa-users font-bold me-2"></i>
+                        <i className="fas fa-users me-2"></i>
                         <strong>Đã dùng:</strong> {voucher.magiamgia.sudunghientai}/{voucher.magiamgia.luotsudung}
                       </p>
                     </div>
                     <div className="col-6">
                       <p className="card-text">
-                        <i className="fas fa-calendar-alt font-bold me-2"></i>
+                        <i className="fas fa-calendar-alt me-2"></i>
                         <strong>Bắt đầu:</strong> {new Date(voucher.magiamgia.ngaybatdau).toLocaleDateString()}
                       </p>
                     </div>
                     <div className="col-6">
                       <p className="card-text">
-                        <i className="fas fa-clock font-bold me-2"></i>
+                        <i className="fas fa-clock  me-2"></i>
                         <strong>Hết hạn:</strong> {new Date(voucher.magiamgia.ngayketthuc).toLocaleDateString()}
                       </p>
                     </div>
@@ -475,7 +483,7 @@ const Voucher = ({ handleApplyCoupon }) => {
                     onClick={() => handleSelectVoucher(voucher)}
                     disabled={!isValid || isSelected}
                   >
-                    <i className={`fas ${isSelected ? 'fa-check' : 'fa-ticket-alt'} me-2`}></i>
+                    <i className={`fas ${isSelected ? 'fa-check' : 'fa-ticket-alt'} me-2 text-[14px]`}></i>
                     {isSelected ? 'Đã chọn' : 'Chọn voucher'}
                   </button>
                 </div>
@@ -485,6 +493,8 @@ const Voucher = ({ handleApplyCoupon }) => {
         </div>
       </div>
       <ToastContainer />
+
+
     </>
   );
 };
