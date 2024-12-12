@@ -2,6 +2,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Grid, List } from './course';
 import { Allcoursesss } from '../../../../service/course/course.service';
+import { combineReducers } from 'redux';
+
+// Ensure that combineReducers is passed a valid object
+const rootReducer = combineReducers({
+  // your reducers here, e.g.:
+  // exampleReducer: exampleReducer,
+});
 
 export default function Page() {
   const searchKeyword = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('search') : '';

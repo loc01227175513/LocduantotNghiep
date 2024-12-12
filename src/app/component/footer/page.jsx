@@ -173,7 +173,7 @@ export default function FooterComponent() {
                       type="checkbox"
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="ml-2 text-xl text-gray-600 text-xl">
+                    <span className="ml-2 text-gray-600">
                       Tôi đồng ý với các điều khoản của chính sách dịch vụ và
                       quyền riêng tư
                     </span>
