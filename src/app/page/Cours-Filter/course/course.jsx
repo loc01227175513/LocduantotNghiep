@@ -54,7 +54,7 @@ const Grid = ({ courses }) => {
   };
 
   return (
-    <div className="flex flex-wrap flex-row justify-start items-start gap-20">
+    <div className="flex flex-wrap flex-row justify-start items-start gap-[63px]">
       {courses.map((course) => {
         const averageRating =
           course.danhgia && course.danhgia.length > 0
@@ -62,7 +62,7 @@ const Grid = ({ courses }) => {
             : 0;
         return (
 
-          <div key={course.id} style={{width: "210px", marginBottom:"-105px"}}>
+          <div key={course.id} style={{width: "210px", marginBottom:"-130px"}}>
             <CardProduct
               id={course.id}
               hinh={course.hinh}
