@@ -196,14 +196,14 @@ const Page = () => {
         } else {
           setValidationMessage("");
           setErrorMessage(
-            "Card details are invalid. Please check your card details and try again."
+            "Thẻ ngân hàng không hợp lệ. Vui lòng kiểm tra lại thông tin thẻ."
           );
         }
       })
       .catch(() => {
         setValidationMessage("");
         setErrorMessage(
-          "There was an error validating the card details. Please try again later."
+          "Thẻ ngân hàng không hợp lệ. Vui lòng kiểm tra lại thông tin thẻ."
         );
       });
   };
@@ -310,9 +310,9 @@ const Page = () => {
       <div className="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen py-8">
         <div className="mx-auto">
           {/* Animated Header */}
-          <h1 className="text-5xl font-semibold mb-8 text-center animate-fade-in relative">
-            <span className="absolute -inset-1 blur-2xl bg-gradient-to-r from-blue-900 via-pink-700 to-gray-600 opacity-30"></span>
-            <span className="relative text-pink-700">Thanh Toán</span>
+          <h1 className="text-5xl mb-20 font-semibold  text-center animate-fade-in relative">
+            <span className="absolute -inset-1 blur-2xl  opacity-30"></span>
+            <span className="relative text-black">Thanh Toán</span>
           </h1>
 
           {cartItems.length === 0 ? (
@@ -327,7 +327,7 @@ const Page = () => {
               </p>
               <Link
                 href="/"
-                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-pink-700 to-pink-700 text-white rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
               >
                 <span className="material-icons mr-2 text-2xl">
                   Khám phá khóa học
@@ -339,7 +339,7 @@ const Page = () => {
               {/* Cart Items Section */}
               <div className="w-full lg:w-1/2 space-y-6">
                 <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
-                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700">
+                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-black to-black">
                     Các khóa học trong giỏ hàng
                   </h2>
                   <div className="space-y-6">
@@ -360,18 +360,18 @@ const Page = () => {
                                 height={150}
                                 src={khoahoc.hinh}
                                 alt={khoahoc.ten}
-                                className="w-32 h-24 object-cover rounded-xl shadow-md group-hover:shadow-xl transition-all duration-300"
+                                className="w-52 h-32 object-cover rounded-xl shadow-md group-hover:shadow-xl transition-all duration-300"
                               />
                               <div className="absolute -top-2 -right-2 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-bold shadow-lg">
                                 -{discountPercentage}%
                               </div>
                             </div>
                             <div className="flex-grow ml-6">
-                              <h3 className="text-2xl font-bold text-gray-800 mb-2 hover:text-purple-600 transition-colors">
+                              <h3 className="text-[16px] font-bold text-gray-800 mb-2 hover:text-purple-600 transition-colors">
                                 {khoahoc.ten}
                               </h3>
-                              <p className="text-gray-600 flex items-center mb-2 text-base">
-                                <span className="material-icons mr-1 text-base">
+                              <p className="text-gray-600 flex items-center mb-2 text-[14px]">
+                                <span className="material-icons mr-1 text-[14px]">
                                   Giảng viên:
                                 </span>
                                 {khoahoc.tenGiangVien}
@@ -379,11 +379,11 @@ const Page = () => {
                               <div className="flex items-center">
                                 <p className="text-2xl font-bold text-pink-700">
                                   {discountedPrice.toLocaleString()}
-                                  <span className="text-lg">VNĐ</span>
+                                  VNĐ
                                 </p>
                                 <p className="text-gray-500 line-through ml-2 text-2xl">
                                   {khoahoc.gia.toLocaleString()}
-                                  <span className="text-lg">VNĐ</span>{" "}
+                                 VNĐ
                                 </p>
                               </div>
                             </div>
@@ -394,19 +394,19 @@ const Page = () => {
                   </div>
                 </div>
                 {/* Order Summary */}
-                <div className="bg-gradient-to-br from-purple-100 to-blue-50 rounded-xl shadow-lg p-6 border border-purple-200">
-                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700">
+                <div className="bg-gradient-to-br from-white to-white rounded-xl shadow-lg p-6 border border-purple-200">
+                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-black to-black">
                     Tóm Tắt Đơn Hàng
                   </h2>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center pb-4">
-                      <span className="text-gray-600 text-2xl">Tổng cộng:</span>
+                      <span className="text-gray-600 text-2xl font-medium">Tổng cộng:</span>
                       <span className="text-2xl font-bold text-gray-800">
-                        {totalPrice.toLocaleString()}<span className="text-lg">VNĐ</span>
+                        {totalPrice.toLocaleString()}VNĐ
                       </span>
                     </div>
                     <div className="flex justify-between items-center pb-4">
-                      <span className="text-gray-600 text-2xl">Giảm giá:</span>
+                      <span className="text-gray-600 text-2xl font-medium">Giảm giá:</span>
                       <span className="text-2xl font-bold text-red-500">
                         -{discount}%
                       </span>
@@ -424,9 +424,9 @@ const Page = () => {
                           return null; // Return null since we are not rendering anything here
                         })
                       )}
-                      <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700">
+                      <span className="text-3xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-pink-700 to-pink-700">
                         {sum.toLocaleString()}
-                        <span className="text-lg">VNĐ</span>
+                        VNĐ
                       </span>
                     </div>
                   </div>
@@ -437,11 +437,11 @@ const Page = () => {
               <div className="w-full lg:w-1/4 space-y-6">
                 {/* Payment Form */}
                 <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300 border border-purple-100">
-                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700  ">
+                  <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-black to-black  ">
                     Phương thức - thông tin
                   </h2>
                   {errorMessage && (
-                    <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded">
+                    <div className="mb-6 p-4 text-[14px] bg-red-50 border-l-4 border-red-500 text-red-700 rounded">
                       {errorMessage}
                     </div>
                   )}
@@ -497,6 +497,8 @@ const Page = () => {
                         onBlur={validateCardDetails}
                         className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
                         required
+                        placeholder="Tên trên thẻ"
+                        style={{ fontSize: '14px' }}
                       />
                     </div>
                     <div className="mb-6">
@@ -511,6 +513,8 @@ const Page = () => {
                         onBlur={validateCardDetails}
                         className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
                         required
+                        placeholder="Mã số thẻ"
+                        style={{ fontSize: '14px' }}  
                       />
                     </div>
                     <div className="flex mb-6">
@@ -524,9 +528,10 @@ const Page = () => {
                           value={paymentDetails.expiryDate}
                           onChange={handlePaymentInputChange}
                           onBlur={validateCardDetails}
-                          className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
+                          className="w-full p-4 mt-2 border placeholder:text-[14px] border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
                           placeholder="MM/YY"
                           required
+                          style={{ fontSize: '14px' }}
                         />
                       </div>
                       <div className="w-1/2 pl-3">
@@ -539,8 +544,10 @@ const Page = () => {
                           value={paymentDetails.cvc}
                           onChange={handlePaymentInputChange}
                           onBlur={validateCardDetails}
-                          className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
+                          className="w-full p-4 mt-2 border placeholder:text-[14px] text-[14px] border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
+                          placeholder="CVC/CVV"
                           required
+                          style={{ fontSize: '14px' }}
                         />
                       </div>
                     </div>
@@ -549,7 +556,7 @@ const Page = () => {
                       className="w-full text-2xl font-bold  mb-6 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white py-4 rounded-lg  hover:from-pink-700 hover:to-pink-800 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
                     >
                       Thanh Toán  
-                        <span className="pl-1"> { (totalPrice - (totalPrice * discount) / 100).toLocaleString()}</span><span className="text-lg">VNĐ</span>
+                        <span className="pl-1"> { (totalPrice - (totalPrice * discount) / 100).toLocaleString()}</span>VNĐ
                     </button>
                     <Link href={`/`}>
                       <p className="text-center mt-3 text-gray-500 text-2xl">Quay lại</p>
