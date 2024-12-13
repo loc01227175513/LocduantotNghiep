@@ -219,7 +219,7 @@ export const Profileinsructor = () => {
                 <>
                     {data.slice(0, 1).map((item) => (
                         <div className="profile-header" key={item.giangVien.id}>
-                            <div className="profile-cover-image bg-gradient-to-r from-blue-900 to-pink-700 via-pink-700 mt-52 p-8 relative">
+                            <div className="profile-cover-image bg-gradient-to-r from-blue-900 to-pink-700 via-pink-700 mt-52  relative">
                                 <div className="profile-info-overlay max-w-4xl mx-auto relative z-10">
                                     <div className="flex justify-center items-center">
                                         <Image
@@ -230,12 +230,12 @@ export const Profileinsructor = () => {
                                             className="avatar-image rounded-full h-40 w-40 object-cover"
                                         />
                                     </div>
-                                    <div className="text-center mt-4">
+                                    <div className="text-center ">
                                         <h1 className="profile-name text-white text-[20px]">{item.giangVien.ten}</h1>
-                                        <p className="profile-username text-white text-[14px] mt-1">@{item.giangVien.ten.toLowerCase().replace(/\s+/g, '')}</p>
+                                        <p className="profile-username text-white text-[16px] ">@{item.giangVien.ten.toLowerCase().replace(/\s+/g, '')}</p>
                                     </div>
 
-                                    <div className="profile-stats flex justify-center gap-12 mt-6">
+                                    <div className="profile-stats flex justify-center gap-[100px] ">
                                         <div className="stat-item text-center">
                                             <span className="stat-value text-white text-[14px] block">{TongBaiHoc}</span>
                                             <span className="stat-label text-white text-[14px] block mt-1">Bài học</span>
@@ -272,17 +272,17 @@ export const Profileinsructor = () => {
                                         ))}
                                     </div>
 
-                                    <div className="bio-text text-white text-[14px] text-center mt-6 max-w-2xl mx-auto px-4">
+                                    <div className="bio-text text-white text-[14px] text-center  max-w-2xl mx-auto px-4">
                                         {item.giangVien.tieusu}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     ))}
-                    <div className="courses-grid bg-white">
+                    <div className="chialaiflex bg-white ">
                         {data.length > 0 ? (
                             data.map((item) => (
-                                <div key={item.id} className="transition flash element-item creative">
+                                <div key={item.id} className=" ">
                                     <div className="rts-single-course">
                                         <Link
                                             href={`/page/course-detail?id=${item.id}`}
@@ -440,19 +440,21 @@ export const Profileinsructor = () => {
             .profile-name {
                 font-size: 32px;
                 font-weight: bold;
-                margin-bottom: 8px;
+               
             }
 
             .profile-username {
                 color: #a7a7a7;
-                margin-bottom: 20px;
+                
             }
 
             .profile-stats {
                 display: flex;
                 justify-content: center;
-                gap: 40px;
-                margin-bottom: 24px;
+                margin-top: 15px;
+
+                gap: 80px;
+                margin-bottom: 15px;
             }
 
             .stat-item {
@@ -476,7 +478,7 @@ export const Profileinsructor = () => {
                 border: none;
                 padding: 12px 48px;
                 border-radius: 4px;
-                font-weight: bold;
+                font-weight: 400;
                 cursor: pointer;
                 transition: all 0.3s ease;
             }
@@ -503,12 +505,7 @@ export const Profileinsructor = () => {
                 color: #fe2c55;
             }
 
-            .courses-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 24px;
-                padding: 20px 0;
-            }
+          
 
             .course-card {
                 background: #1f1f1f;

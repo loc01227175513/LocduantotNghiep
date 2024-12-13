@@ -485,14 +485,14 @@ export default function Header() {
                       </li>
                       {/* Thể loại */}
                       <li className="group relative">
-                        <div className="flex items-center text-gray-700 hover:text-pink-700 transition-colors cursor-pointer">
-                          <i class="fa-solid fa-list text-2xl mr-2"></i>
+                        <div className="flex items-center text-gray-700 hover:text-pink-700 transition-colors cursor-pointer w-full"> {/* Added w-full for wider touch area */}
+                          <i className="fa-solid fa-list text-2xl mr-2"></i>
                           <span className="text-3xl font-medium mr-2">
                             Thể loại
                           </span>
                           <i className="fas fa-chevron-down text-xl transition-transform group-hover:rotate-180"></i>
                         </div>
-                        <div className="dropdown-menu hidden group-hover:block absolute left-0 mt-2 w-350 shadow-lg rounded-lg z-10">
+                        <div className="dropdown-menu hidden group-hover:block absolute left-0 top-[25px] shadow-lg rounded-lg z-10" style={{ maxHeight: '430px', overflowY: 'auto' }}>
                           <Categoryheader />
                         </div>
                       </li>

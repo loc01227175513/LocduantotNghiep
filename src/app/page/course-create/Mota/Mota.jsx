@@ -81,9 +81,9 @@ function Mota() {
     setState(newInputs);
   };
 
-  const handleAddInput = (state, setState) => {
+  const handleAddInput = (state, setState, count = 1) => {
     if (state.every((input) => input.trim() !== "")) {
-      setState([...state, ""]);
+        setState([...state, ...Array(count).fill("")]); // Add multiple empty inputs
     }
   };
 
@@ -241,7 +241,7 @@ function Mota() {
       ))}
       <div className="mt-6">
       <button
-  onClick={() => handleAddInput(hocSinhInputs, setHocSinhInputs)}
+  onClick={() => handleAddInput(hocSinhInputs, setHocSinhInputs, 3)}
   className="group px-6 py-3 font-semibold text-pink-500
     border border-pink-500
     rounded-xl shadow-md  text-[14px]
@@ -250,7 +250,7 @@ function Mota() {
   <svg className="w-5 h-5  transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
   </svg>
-  Thêm mục tiêu
+  Thêm 3 mục tiêu
 </button>
       </div>
     </div>

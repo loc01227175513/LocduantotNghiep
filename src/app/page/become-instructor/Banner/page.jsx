@@ -15,10 +15,9 @@ export default function page() {
                     }}>
                         <h1 style={{
                             fontSize: '2.5rem',
-                            background: 'linear-gradient(90deg, #2563eb, #4f46e5)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            marginBottom: '1rem'
+                          
+                            marginBottom: '1rem',
+                            color: 'black'
                         }}>
                             Become an Instructor
                         </h1>
@@ -27,11 +26,13 @@ export default function page() {
                             alignItems: 'center',
                             gap: '0.75rem',
                             fontSize: '1rem',
-                            color: '#64748b'
+                            color: 'black'
                         }}>
                             <Link  href="/" style={{
                                 textDecoration: 'none',
-                                color: '#64748b',
+                                color: 'black',
+                                fontWeight: '600',
+                                fontSize: '18px',
                                 transition: 'color 0.3s ease',
                                 ':hover': { color: '#2563eb' }
                             }}>
@@ -56,8 +57,9 @@ export default function page() {
                                 href="/page/become-instructor"
                                 style={{
                                     textDecoration: 'none',
-                                    color: '#2563eb',
-                                    fontWeight: '600'
+                                    color: 'black',
+                                    fontWeight: '600',
+                                    fontSize: '18px'
                                 }}
                             >
                                 Become an Instructor

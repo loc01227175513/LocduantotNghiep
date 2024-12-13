@@ -391,7 +391,7 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
 
     return (
         <motion.div
-            className="flex-grow lg:pr-8"
+            className="flex-grow lg:pr-8 max-w-[900px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
@@ -487,8 +487,8 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                                             onMouseEnter={() => handleVideoHover(videotieptheo)}
                                             onMouseLeave={() => setPreviewVideo(null)}
                                         >
-                                            
-                                            
+
+
                                             Video tiếp theo <i className="bi bi-skip-forward-fill mx-2" ></i>
                                         </button>
                                     </div>
@@ -879,7 +879,7 @@ const CommentList = ({ comments }) => {
                     >
                         {comment.comment}
                     </motion.p>
-                   
+
                 </motion.div>
             ))}
         </motion.div>
@@ -1488,7 +1488,7 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
                                     <label className="flex items-center space-x-3 cursor-pointer">
                                         <input
                                             type="radio"
-                                            name={`answer-${currentQuestionIndex}`} 
+                                            name={`answer-${currentQuestionIndex}`}
                                             checked={selectedAnswers[currentQuestionIndex] === answerIndex}
                                             onChange={() => handleAnswerSelect(currentQuestionIndex, answerIndex)}
                                             className="hidden"

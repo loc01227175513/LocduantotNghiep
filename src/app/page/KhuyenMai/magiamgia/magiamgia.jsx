@@ -8,8 +8,8 @@ import { calc } from "@chakra-ui/react";
 
 function VoucherCard({ maso, giamgia, gia, hinh, hansudung, onSave, isSaved, isSaving }) {
     return (
-        <div className='mt-2 rounded-lg  '>
-            <div className='w-[400px] h-[150px] bg-gray-100 flex relative rounded-lg border-2'>
+        <div className='mt-2 rounded-lg   '>
+            <div className='w-[400px] h-[150px] flex relative rounded-lg border-2'>
                 <div className='w-[150px] h-[150px] bg-red-400 flex-shrink-0 rounded-lg '>
                     <Image
                         width={150}
@@ -25,17 +25,18 @@ function VoucherCard({ maso, giamgia, gia, hinh, hansudung, onSave, isSaved, isS
                             <p className="text-black font-normal">
                                 Giảm ngay
                             </p>
-                            <p className="text-red-600 font-bold text-6xl">
+                            <p className="text-pink-700 pb-3 font-bold text-6xl">
                                 {giamgia}%
                             </p>
                         </div>
-                        <p className="font-normal">Cho đơn tối thiểu {gia.toLocaleString()} đ</p>
                         <div className="flex gap-2">
                             <p className="font-normal"> Mã:</p>
                             <p className="font-bold" s>
                                 {maso}
                             </p>
                         </div>
+                        <p className="font-normal">Cho đơn tối thiểu: {gia.toLocaleString()}VNĐ</p>
+                       
                         <p className="font-normal">HSD: {new Date(hansudung).toLocaleDateString()}</p>
                         <button
                             className={` float-end
@@ -43,9 +44,9 @@ function VoucherCard({ maso, giamgia, gia, hinh, hansudung, onSave, isSaved, isS
                         transform transition-all duration-300 ease-in-out
                         hover:scale-[1.02] active:scale-[0.98]
                         hover:bg-pink-700
-                        border-1 
+                        border-1  absolute bottom-5 right-5
                         border-black
-                        ${isSaved ? 'white hover:bg-pink-700 text-pink-700 hover:text-white rounded-full' :
+                        ${isSaved ? 'white hover:bg-pink-700 text-pink-700 hover:text-white rounded-full ' :
                                     isSaving ? 'text-pink-700 bg-transparent' :
                                         'text-pink-700 border-2 border-pink-700 hover:bg-pink-700 hover:text-white'}
                         ${isSaved || isSaving ? 'cursor-not-allowed' : 'cursor-pointer'}
@@ -155,10 +156,10 @@ export default function VoucherShop() {
         <>
             <div className="h-auto flex justify-center min-h-[700px]">
                 <ToastContainer position="top-right" autoClose={3000} />
-                <div className="container  flex flex-row justify-start items-start">
+                <div className="container  flex flex-row justify-start items-start gap-[100px]">
                     <div className=" flex-shrink-0 bg-white rounded-xl border border-gray-300 w-[calc(100%-1000px)] p-10 shadow-lg">
                         <h1 className="text-3xl font-bold text-center mb-6 text-black">
-                            Ưu Đãi Đặc Biệt 🎉
+                            Ưu Đãi Đặc Biệt 
                         </h1>
                         <div className="space-y-5">
                             <div className="filter-group">
@@ -221,9 +222,11 @@ export default function VoucherShop() {
                                     setMinPrice('');
                                     setMaxPrice('');
                                 }}
-                                className="w-full mt-6 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg"
+                                className="w-full mt-6 px-4 py-2 bg-gradient-to-r
+                                text-[16px]
+                                from-blue-900  via-pink-700 to-pink-700 font-medium text-white rounded-lg hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg"
                             >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                 </svg>
                                 Đặt Lại
@@ -243,7 +246,7 @@ export default function VoucherShop() {
                             >
                                 <div className="">
                                     <div
-                                        className="flex flex-wrap justify-center gap-5 h-[400px]"
+                                        className="flex flex-wrap justify-start  gap-5 "
 
                                     >
                                         {currentVouchers.length > 0 ? (
@@ -279,7 +282,7 @@ export default function VoucherShop() {
                                         <button
                                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                             disabled={currentPage === 1}
-                                            className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center disabled:opacity-50 hover:bg-purple-300 shadow-md"
+                                            className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center disabled:opacity-50 hover:bg-gray-400 shadow-md"
                                         >
                                             ←
                                         </button>
@@ -289,7 +292,7 @@ export default function VoucherShop() {
                                                 key={index + 1}
                                                 onClick={() => setCurrentPage(index + 1)}
                                                 className={`w-10 h-10 rounded-full flex items-center justify-center
-                                    ${currentPage === index + 1 ? 'bg-purple-600 text-white' : 'bg-purple-200 hover:bg-purple-300'}`}
+                                    ${currentPage === index + 1 ? 'bg-pink-700 text-white' : 'bg-gray-300 hover:bg-gray-400'}`}
                                             >
                                                 {index + 1}
                                             </button>
@@ -298,7 +301,7 @@ export default function VoucherShop() {
                                         <button
                                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                             disabled={currentPage === totalPages}
-                                            className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center disabled:opacity-50 hover:bg-purple-300 shadow-md"
+                                            className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center disabled:opacity-50 hover:bg-gray-400 shadow-md"
                                         >
                                             →
                                         </button>

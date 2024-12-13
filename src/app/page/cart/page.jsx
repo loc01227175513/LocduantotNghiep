@@ -304,12 +304,12 @@ const Cart = () => {
       {isModalOpen && (
         <div
           className="modal fade show d-block animate-modalFadeIn "
-          
+
           tabIndex="-1"
           style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}
         >
           <div className="modal-dialog modal-dialog-centered animate-modalSlideIn ">
-            <div className="modal-content border-0 shadow-2xl rounded-xl " style={{width:'800px! important'}}>
+            <div className="modal-content border-0 shadow-2xl rounded-xl " style={{ width: '800px! important' }}>
               <div className="modal-header bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white rounded-t-xl">
                 <h5 className="modal-title font-medium text-[20px] ">Mã Giảm Giá</h5>
                 <button
@@ -410,7 +410,7 @@ const Voucher = ({ handleApplyCoupon }) => {
             <div className="col-md-4">
               <button type="submit" className="btn rounded-lg text-[14px]  bg-pink-700 text-white btn-lg w-100 fw-bold hover-scale h-[42px] " >
                 <i className="fas fa-tag me-2 mr-2"></i>
-              <span className='text-[14px]' style={{fontWeight:'normal'}}>   Áp dụng</span>
+                <span className='text-[14px]' style={{ fontWeight: 'normal' }}>   Áp dụng</span>
               </button>
             </div>
           </div>
@@ -446,7 +446,7 @@ const Voucher = ({ handleApplyCoupon }) => {
                     <h4 className="card-title fw-bold text-black mb-0 text-[14px] py-1 ">
                       Mã: <span className='text-[20px] font-medium'>{voucher.magiamgia.maso}</span>
                     </h4>
-                    <span className={`badge ${voucher.magiamgia.trangthai === 'Đã Duyệt' ? 'bg-pink-700' : 'bg-secondary'} px-3 py-3 text-[14px]`}>
+                    <span className={`badge ${voucher.magiamgia.trangthai === 'Đã Duyệt' ? 'border-1 border-pink-700 text-pink-700 font-medium' : 'bg-secondary'} px-3 py-3 text-[14px]`}>
                       {voucher.magiamgia.trangthai}
                     </span>
                   </div>
@@ -479,12 +479,12 @@ const Voucher = ({ handleApplyCoupon }) => {
                   </div>
 
                   <button
-                    className={`btn ${buttonClass} btn-lg bg-gradient-to-r from-[#1e3c72] to-[#ff6b6b] w-100 mt-3 position-relative overflow-hidden text-white rounded-lg border-1 border-gray-200`}
+                    className={`btn ${buttonClass} btn-lg bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 w-100 mt-3 position-relative overflow-hidden text-white rounded-lg border-1 border-gray-200`}
                     onClick={() => handleSelectVoucher(voucher)}
                     disabled={!isValid || isSelected}
                   >
                     <i className={`fas ${isSelected ? 'fa-check' : 'fa-ticket-alt'} me-2 text-[14px]`}></i>
-                    {isSelected ? 'Đã chọn' : 'Chọn voucher'}
+                    {isSelected ? 'Đã chọn' : !isValid ? 'Hết hạn' : 'Chọn voucher'}
                   </button>
                 </div>
               </div>

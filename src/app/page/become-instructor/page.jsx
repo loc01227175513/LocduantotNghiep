@@ -23,7 +23,7 @@ export default function Becomeinstructor() {
     return (
         <>
             <Header />
-            <div className="rts-bread-crumbarea-1 rts-section-gap bg_image mt-44">
+            <div className="rts-bread-crumbarea-1 rts-section-gap bg-gradient-to-r from-blue-900 to-pink-700 via-pink-700 mt-44">
                 <div className="container">
                     <Banner />
                 </div>

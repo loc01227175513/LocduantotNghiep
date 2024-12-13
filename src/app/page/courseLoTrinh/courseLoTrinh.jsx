@@ -81,12 +81,12 @@ export default function Roadmap() {
                         Lên kế hoạch cho hành trình học tập của bạn với lộ trình được chế tác chuyên nghiệp của chúng tôi
                     </p>
                 </div>
-    
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                     {loTrinhKhoaHoc.map((course) => (
                         <div
                             key={course.id}
-                            className="course-section group relative border border-amber-500 bg-white/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer mx-auto w-full max-w-[300px]"
+                            className="course-section group relative border border-pink-700 bg-white/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer mx-auto w-full max-w-[300px]"
                             onClick={() => setSelectedCourse(course)}
                         >
                             <div className="overflow-hidden rounded-t-2xl w-full">
@@ -103,12 +103,12 @@ export default function Roadmap() {
                             </div>
                             <div className="p-4 sm:p-6 relative z-10">
                                 <div className="flex items-center mb-4">
-                                    <FaGraduationCap className="text-blue-500 text-2xl sm:text-3xl mr-2 sm:mr-3" />
-                                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800 line-clamp-2">
+                                    <FaGraduationCap className="text-black text-2xl sm:text-3xl mr-2 sm:mr-3" />
+                                    <h2 className="text-[16px] font-bold text-gray-800 line-clamp-2">
                                         {course.ten}
                                     </h2>
                                 </div>
-                                <p className="text-gray-600 text-sm sm:text-base line-clamp-3">
+                                <p className="text-gray-600 text-[16px]  line-clamp-3">
                                     {course.mota}
                                 </p>
                             </div>
@@ -116,14 +116,14 @@ export default function Roadmap() {
                     ))}
                 </div>
             </div>
-    
+
             <Modal
                 isOpen={!!selectedCourse}
                 onClose={() => setSelectedCourse(null)}
             >
                 {selectedCourse && (
                     <div className=" ">
-                        <h3 className="flex items-center gap-2 text-blue-800 text-4xl">
+                        <h3 className="flex items-center gap-2 text-pink-700 text-4xl">
                             <FaBook className="" />
                             Lộ trình: {selectedCourse.ten}
                         </h3>
@@ -135,14 +135,14 @@ export default function Roadmap() {
                                 >
                                     <div
                                         className={`containerhshss group ${index > 0 ? "shift-left" : ""}`}
-                                    >                     
-                                        <div className="arrow-box relative inline-block bg-[#ff6b6b] text-white py-[10px] px-[30px] text-xl group-hover:bg-pink-700 transition-colors duration-500">
+                                    >
+                                        <div className="arrow-box relative inline-block bg-pink-700 text-white py-[10px] px-[30px] text-xl group-hover:bg-pink-800 transition-colors duration-500">
                                             <div className="content p-3">
                                                 <p className='font-bold'>{subCourse.khoahoc.ten}</p>
                                             </div>
                                         </div>
                                         <div className="h-[270px] m-[10px] bg-white absolute left-0 rounded-md shadow p-2" style={{ width: 'calc(100% - 30px)' }} >
-                                            <p className='text-xl text-blue-500 group-hover:text-pink-700 transition-colors duration-300'>{subCourse.khoahoc.mota}</p>
+                                            <p className=' text-black text-[16px] group-hover:text-pink-700 transition-colors duration-300'>{subCourse.khoahoc.mota}</p>
                                         </div>
                                     </div>
                                 </Link>

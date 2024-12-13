@@ -317,8 +317,8 @@ const Categoryheader = () => {
             <li key={index} className="category-item">
               <Link href={`/page/Cours-Filter?id=${item.id}`} className="menu-item cv">
                 <div className="text ">
-                  <div className="imgtl">
-                    <Image width={500} height={300} src={item.hinh} alt="" />
+                  <div className="imgtl flex justify-center items-center">
+                    <Image width={500} height={300} src={item.hinh} alt=""  className="w-[130px] h-[100px] object-cover"/>
                   </div>
                   <p className="font-medium text-2xl text-black text-center pt-1 pb-1">{item.ten}</p>
                   <p className="text-center text-2xl" style={{ fontWeight: '400' }}>130+ Khóa học</p>
@@ -332,8 +332,8 @@ const Categoryheader = () => {
             <li key={index} className="category-item">
               <Link href={`/page/Cours-Filter?id=${item.id}`} className="menu-item cv">
                 <div className="text ">
-                  <div className="imgtl">
-                    <Image width={500} height={300} src={item.hinh} alt="" className="" />
+                  <div className="imgtl flex justify-center items-center">
+                    <Image width={500} height={300} src={item.hinh} alt="" className="w-[130px] h-[100px] object-cover"/>
                   </div>
                   <p className="font-medium text-2xl text-black text-center pt-1 pb-1">{item.ten}</p>
                   <p className=" text-center text-2xl" style={{ fontWeight: '400' }}>130+ Khóa học</p>

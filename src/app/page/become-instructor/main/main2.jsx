@@ -69,7 +69,7 @@ export default function Main2() {
 
     return (
         <>
-            <div className="min-h-screen py-12 bg-gradient-to-br from-blue-50 via-white to-blue-50">
+            <div className="min-h-screen py-12 bg-gradient-to-br from-pink-50 via-white to-pink-50">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -77,7 +77,7 @@ export default function Main2() {
                 >
                     <div className="relative px-10 py-10 bg-white rounded-2xl shadow-xl">
                         {/* Decorative elements */}
-                        <div className="absolute top-0 right-0 w-40 h-40 bg-blue-100 rounded-full -mr-20 -mt-20 opacity-20" />
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-pink-100 rounded-full -mr-20 -mt-20 opacity-20" />
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-yellow-100 rounded-full -ml-16 -mb-16 opacity-20" />
 
                         <div className="relative z-10">
@@ -85,11 +85,11 @@ export default function Main2() {
                                 <motion.h2
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className="mb-4 text-4xl font-bold text-gray-800"
+                                    className="mb-4 text-[20px] font-bold text-gray-800"
                                 >
                                     Trở thành một người hướng dẫn ngày hôm nay
                                 </motion.h2>
-                                <p className="text-lg text-gray-600">
+                                <p className="text-[16px] text-gray-600">
                                     Tham gia thị trường học tập trực tuyến lớn nhất thế giới
                                 </p>
                             </div>
@@ -103,15 +103,19 @@ export default function Main2() {
                                         { name: 'passwordConfirm', type: 'password', icon: '🔐', placeholder: 'Xác nhận mật khẩu' }
                                     ].map((field) => (
                                         <div key={field.name} className="relative group">
-                                            <span className="absolute left-3 top-10 text-gray-400 ">{field.icon}</span>
+                                            <span className="absolute right-3 top-4 text-[20px] text-gray-400 ">{field.icon}</span>
                                             <input
                                                 type={field.type}
                                                 name={field.name}
                                                 placeholder={field.placeholder}
                                                 value={formData[field.name]}
                                                 onChange={handleChange}
-                                                className="w-full pl-5 pt-2 pb-2   bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
-                                            />
+                                                className="w-full pl-5 pt-2 pb-2  text-[16px] placeholder:text-[16px]  bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+                                                style={{
+                                                    fontSize: '16px',
+                                                   
+                                                }}
+                                           />
                                         </div>
                                     ))}
                                 </div>
@@ -123,9 +127,12 @@ export default function Main2() {
                                         name="acceptTerms"
                                         checked={formData.acceptTerms}
                                         onChange={handleChange}
-                                        className="w-4 h-4 border-2 border-blue-500 rounded focus:ring-blue-500"
+                                        className="w-4 h-4 border-2 text-[16px] placeholder:text-[16px] border-blue-500 rounded focus:ring-blue-500"
+                                        style={{
+                                            fontSize: '12px',
+                                        }}
                                     />
-                                    <label htmlFor="acceptTerms" className="ml-3 text-gray-700">
+                                    <label htmlFor="acceptTerms" className="ml-3 text-gray-700 text-[22px]">
                                         Tôi đồng ý với các điều khoản và điều kiện
                                     </label>
                                 </div>
@@ -133,7 +140,7 @@ export default function Main2() {
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="relative w-full p-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg disabled:opacity-70"
+                                    className="relative w-full p-4 text-[20px] font-semibold text-white bg-gradient-to-r from-pink-700  to-pink-700 rounded-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg disabled:opacity-70"
                                 >
                                     {loading ? (
                                         <span className="flex items-center justify-center">
