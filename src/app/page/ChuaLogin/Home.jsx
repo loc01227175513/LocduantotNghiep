@@ -5,6 +5,7 @@ import Img from 'next/image';
 import Swiper from 'swiper';
 import Link from 'next/link';
 import { TatCaKhuyenMaiKhoaHoc } from '../../../service/khuyenmai/khuyenmai';
+import { Coursefree } from "@/app/component/course/course.component"
 import HorizontalScrollImages from "@/app/component/course/Slider";
 import Image from 'next/image';
 import Counter from "@/app/component/home/Counter";
@@ -13,6 +14,7 @@ const Home = () => {
         <>
             <BannerAreaTen />
             <ServiceArea />
+            <Coursefree />
             <CourseArea />
             <WhyChooseUs />
             <UpcomingEvents />
@@ -137,7 +139,7 @@ const BannerAreaTen = () => {
 };
 
 
-//chủ đề
+
 const ServiceArea = () => {
     const [DanhMuc, setDanhMuc] = useState([]);
 
@@ -240,7 +242,7 @@ const ServiceArea = () => {
 };
 
 
-//khóa học
+
 
 
 

@@ -99,7 +99,7 @@ const Headerdashboardstudent2 = ({ page }) => {
               className={`single-item ${pagess === 'quanlykhoahoc' ? 'active' : ''}`}
               onClick={() => click("quanlykhoahoc")}
             >
-              <i className="fa-light fa-book text-2xl" />
+              <i className="fa-light fa-cogs text-2xl" />
               <p>Quản lý khóa học</p>
             </Link>
             <Link 
@@ -107,8 +107,16 @@ const Headerdashboardstudent2 = ({ page }) => {
               className={`single-item ${pagess === 'NhanTinGiangVien' ? 'active' : ''}`}
               onClick={() => click("NhanTinGiangVien")}
             >
-              <i className="fa-light fa-book text-2xl" />
+              <i className="fa-light fa-comments text-2xl" />
               <p>Nhắn tin giảng viên</p>
+            </Link>
+            <Link 
+              href={"/page/lecturer-dashboard/DanhGiaKhoaHoc"} 
+              className={`single-item ${pagess === 'DanhGiaKhoaHoc' ? 'active' : ''}`}
+              onClick={() => click("DanhGiaKhoaHoc")}
+            >
+              <i className="fa-light fa-star text-2xl" />
+              <p>Đánh giá khóa học</p>
             </Link>
 
             {/* <Link href="announcement.html"
