@@ -141,7 +141,8 @@ export default function VoucherShop() {
         const meetsDiscount = discount ? item.magiamgia.giamgia >= parseInt(discount) : true;
         const meetsMinPrice = minPrice ? item.khoahoc.gia >= parseInt(minPrice) : true;
         const meetsMaxPrice = maxPrice ? item.khoahoc.gia <= parseInt(maxPrice) : true;
-        return meetsDiscount && meetsMinPrice && meetsMaxPrice;
+        const isValidVoucher = item.khoahoc.giamgia !== 0;
+        return meetsDiscount && meetsMinPrice && meetsMaxPrice && isValidVoucher;
     });
 
     const indexOfLastVoucher = currentPage * vouchersPerPage;
@@ -260,7 +261,7 @@ export default function VoucherShop() {
                                                     <VoucherCard
                                                         maso={item.magiamgia.maso}
                                                         giamgia={item.magiamgia.giamgia}
-                                                        gia={item.khoahoc.gia}
+                                                        gia={item.khoahoc.giamgia}
                                                         hinh={item.khoahoc.hinh}
                                                         hansudung={item.magiamgia.ngayketthuc}
                                                         onSave={handleSave}

@@ -399,7 +399,6 @@ export default function Homedashboardlecturer() {
                     </div>
                     <p className=' text-[20px] my-2'>{khoahocMaxSotien.ten}</p>
                     <p className='text-5xl my-2 text-pink-700'>{khoahocMaxSotien.ThanhToan.reduce((sum, item) => sum + item.tong, 0).toLocaleString('vi-VN')}VNĐ</p>
-
                   </div>
                 </div>
               </div>

@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ThemKhoaHocDaHoc } from "../../../../service/course/course.service";
 import { ShowTracNghiem, ShowCauHoi, GuiCauTraLoi, checkQuizCompletion } from "@/service/TaoBaiTracNghiem/TaoBaiTracNghiem";
 import KetQuaTracNghiem from './ketquatracnghiem';
+import { Dashboard } from "@/service/dashbordStuden/Dashboard-service";
 import { useRouter } from 'next/navigation';
 
 export default function Page() {
@@ -34,9 +35,25 @@ export default function Page() {
     const [idBaihoc, setIdBaihoc] = useState(null);
     const [idTracNghiem, setIdTracNghiem] = useState(null);
     const playerRef = useRef(null);
+    const [id, setId] = useState(null);
 
-    const id = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('id') : null;
     const parsedData = typeof window !== 'undefined' && window.localStorage ? JSON.parse(localStorage.getItem('data')) : null;
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await Dashboard();
+                if (!res || !res.data || res.data.length === 0) {
+                    router.push('/');
+                }
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+                // Redirect to home on error
+                router.push('/'); // Adjust the path as necessary
+            }
+        };
+        fetchData();
+    }, [router]); // Added 'router' as a dependency
+
 
     useEffect(() => {
         const data = localStorage.getItem('data');
@@ -310,6 +327,17 @@ export default function Page() {
             handleAddCourse();
         }
     }, [tongbaiHoc, tongBaihOcDaHoc]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const newId = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('id') : null;
+            if (newId !== id) {
+                setId(newId);
+            }
+        }, 1000); // Check every second
+
+        return () => clearInterval(interval); // Cleanup on unmount
+    }, [id]);
 
     return (
         <div className="container mx-auto px-4 py-8 bg-gray-100 min-h-screen mt-60 mb-60">

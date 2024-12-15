@@ -134,7 +134,7 @@ export default function SaleComponent() {
         const now = new Date().getTime();
 
         const validDiscounts = KhuyenMai
-            .filter(item => item.magiamgia && item.magiamgia.giamgia > 0)
+            .filter(item => item.magiamgia && item.magiamgia.giamgia > 0) // Ensure only valid discounts are considered
             .filter(item => {
                 const end = new Date(item.magiamgia.ngayketthuc).getTime();
                 return now < end;
@@ -174,7 +174,7 @@ export default function SaleComponent() {
                             <span className="overflow-hidden text-ellipsis">{date}</span>
                         </p>
                         <p className="text-lg text-gray-600 mt-1 overflow-hidden text-ellipsis whitespace-nowrap">
-                            {items.length} khuyến mãi
+                            {items.filter(item => item.khoahoc.giamgia > 0).length} khuyến mãi
                         </p>
                         <p className={`slot-status mt-1 overflow-hidden text-ellipsis whitespace-nowrap 
                             ${status === 'Chưa tới' ? 'text-green-500' : 'text-pink-700'}`}>
@@ -188,6 +188,9 @@ export default function SaleComponent() {
     const getFilteredCourses = () => {
         const now = new Date().getTime();
         let courses = KhuyenMai;
+
+        // Filter out courses with a price of 0
+        courses = courses.filter(item => item.khoahoc.giamgia > 0);
 
         // Group by date first
         const groupByDate = (items) => {

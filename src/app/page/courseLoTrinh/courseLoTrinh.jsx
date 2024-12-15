@@ -108,7 +108,7 @@ export default function Roadmap() {
                                         {course.ten}
                                     </h2>
                                 </div>
-                                <p className="text-gray-600 text-[16px]  line-clamp-3">
+                                <p className="text-gray-600 text-[16px] line-clamp-1 overflow-hidden whitespace-nowrap text-ellipsis">
                                     {course.mota}
                                 </p>
                             </div>
@@ -141,8 +141,8 @@ export default function Roadmap() {
                                                 <p className='font-bold'>{subCourse.khoahoc.ten}</p>
                                             </div>
                                         </div>
-                                        <div className="h-[270px] m-[10px] bg-white absolute left-0 rounded-md shadow p-2" style={{ width: 'calc(100% - 30px)' }} >
-                                            <p className=' text-black text-[16px] group-hover:text-pink-700 transition-colors duration-300'>{subCourse.khoahoc.mota}</p>
+                                        <div className="h-[270px] m-[10px] bg-white absolute left-0 rounded-md shadow p-2 overflow-hidden" style={{ width: 'calc(100% - 30px)' }} >
+                                            <p className=' text-black text-[16px] group-hover:text-pink-700 transition-colors duration-300 line-clamp-3'>{subCourse.khoahoc.mota}</p>
                                         </div>
                                     </div>
                                 </Link>

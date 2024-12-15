@@ -41,7 +41,7 @@ const CourseDeXuat = () => {
                 const CouseChuDe = khoaHocDaThanhToan?.flatMap(course =>
                     course.khoahocs.map(khoaHoc => khoaHoc.id_chude)
                 ) || []; // Use flatMap to flatten the array
-                console.log(CouseChuDe, "CouseChuDe");
+                // console.log(CouseChuDe, "CouseChuDe");      
 
                 // Filter courses based on the extracted subject IDs
                 const recommendedCourses = data.data.filter(course =>
@@ -51,7 +51,7 @@ const CourseDeXuat = () => {
                 setKhoaHocDeXuat(recommendedCourses);
             })
             .catch((error) => {
-                console.error("Error fetching courses:", error);
+                // console.error("Error fetching courses:", error);
                 toast.error("Failed to load courses.");
                 setKhoaHocDeXuat([]);
             });
