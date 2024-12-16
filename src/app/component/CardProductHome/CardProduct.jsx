@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaStar, FaRegStar } from "react-icons/fa"; // Import star icons
+import { TatCaKhuyenMaiKhoaHoc } from '../../../service/khuyenmai/khuyenmai';
 export default function CardProduct({
     id,
     hinh,
@@ -18,13 +19,26 @@ export default function CardProduct({
     renderStars
 }) {
     // Inside component:
-
-
+    const [khuyenMai1, setKhuyenMai] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await TatCaKhuyenMaiKhoaHoc();
+            setKhuyenMai(data);
+        };
+        fetchData();
+    }, []);
+    console.log(khuyenMai1);
+    const khuyenMai = khuyenMai1.find(item => item.id_khoahoc === id && item.magiamgia.trangthai === "Đã Duyệt" && item.khoahoc.giamgia > 0);
     return (
         <div className="transition flash element-item creative "  data-category="transition" key={id}>
             <div className="rts-single-course">
                 <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative">
                     <Image width={500} height={300} src={hinh} alt="course" style={{ height: "170px" , objectFit: "cover" }} />
+                    {khuyenMai && (
+                        <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 bg-opacity-50 h-20 justify-center items-center flex  w-20 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                           <span className='text-[20px]'>-{Math.round(( khuyenMai.magiamgia.giamgia))}%</span>
+                        </div>
+                    )}
                     {/* Free course badge */}
                     {(gia === 0 || giamgia === 0) && (
                         <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">

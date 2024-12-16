@@ -85,6 +85,7 @@ export default function Khoahocdanghoc() {
     fetchCourses();
   }, [parsedLecturer?.giangvien]);
 
+  
   // Memoized filtered courses
   const filteredLecturer = useMemo(() =>
     filterCourses(lecturer, selectedTab, selectedDate),
@@ -116,7 +117,8 @@ export default function Khoahocdanghoc() {
           "Ngày",
           "Giá",
           "Lượt mua",
-          "Trạng thái"
+          "Trạng thái",
+          "Tổng chiết khấu"
         ].map(header => (
           <th key={header} className="p-3 text-left text-[14px] font-normal">
             {header}
@@ -126,40 +128,61 @@ export default function Khoahocdanghoc() {
     </thead>
   );
 
-  const renderTableRows = () => (
-    <tbody>
-      {uniqueCourses.map((item) => (
-        <tr key={item.id}>
-          <td className="p-3 align-middle text-left text-[14px]"># {item.id}</td>
-          <td className="p-3 align-middle text-break text-left text-[14px]">
-            {item.khoahocs.ten}
-          </td>
-          <td className="p-3 align-middle text-left text-[14px]">
-            {new Date(item.updated_at).toLocaleDateString("vi-VN")}
-          </td>
-          <td className="p-3 align-middle text-left text-[14px]">
-            {item.gia === 0 && item.giamgia === 0
-              ? 'Miễn phí'
-              : new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-              }).format(item.gia - item.giamgia)
-            }
-          </td>
-          <td className="p-3 align-middle text-left text-[14px]">
-            {item.thanhtoan.length}
-          </td>
-          <td className="p-3 align-middle text-left text-[14px] ">
-            <span className={`badge rounded-pill p-2 ${item.trangthai === 'Đã Thanh Toán' ? 'bg-danger'  :
-              item.trangthai === 'Đang xử lý' ? 'bg-warning' : 'bg-secondary'
-              }`}>
-              {item.trangthai === 'Hoàn thành' ? 'Đã hoàn thành' : item.trangthai}
-            </span>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  );
+  const renderTableRows = () => {
+    // Group orders by course ID and total amount
+    const groupedOrders = filteredLecturer.reduce((acc, item) => {
+      const key = `${item.khoahocs.id}_${item.tong}`; // Unique key combining course ID and total
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(item);
+      return acc;
+    }, {});
+
+    return (
+      <tbody>
+        {Object.values(groupedOrders).map((orders) => (
+          <tr key={`${orders[0].khoahocs.id}_${orders[0].tong}`}>
+            <td className="p-3 align-middle text-left text-[14px]"># {orders[0].id}</td>
+            <td className="p-3 align-middle text-break text-left text-[14px]">
+              {orders[0].khoahocs.ten}
+            </td>
+            <td className="p-3 align-middle text-left text-[14px]">
+              {new Date(orders[0].updated_at).toLocaleDateString("vi-VN")}
+            </td>
+            <td className="p-3 align-middle text-left text-[14px]">
+              {orders[0].tong === 0
+                ? 'Miễn phí'
+                : new Intl.NumberFormat('vi-VN', {
+                  style: 'currency',
+                  currency: 'VND'
+                }).format(orders[0].tong)
+              }
+            </td>
+            <td className="p-3 align-middle text-left text-[14px]">
+              {orders.reduce((total, order) => total + order.thanhtoan.length, 0)}
+            </td>
+            <td className="p-3 align-middle text-left text-[14px]">
+              <span className={`badge rounded-pill p-2 ${orders[0].trangthai === 'Đã Thanh Toán' ? 'bg-danger' :
+                orders[0].trangthai === 'Đang xử lý' ? 'bg-warning' : 'bg-secondary'
+                }`}>
+                {orders[0].trangthai === 'Hoàn thành' ? 'Đã hoàn thành' : orders[0].trangthai}
+              </span>
+            </td>
+            <td className="p-3 align-middle text-left text-[14px]">
+              {orders[0].tong === 0
+                ? 'Miễn phí'
+                : new Intl.NumberFormat('vi-VN', {
+                  style: 'currency',
+                  currency: 'VND'
+                }).format(orders[0].tong * 0.9)
+              }
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    );
+  };
 
   return (
     <div className="col-lg-9 p-4">

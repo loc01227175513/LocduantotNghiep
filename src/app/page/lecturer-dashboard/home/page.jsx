@@ -298,7 +298,7 @@ export default function Homedashboardlecturer() {
   const khoahocbanchay = khoahoc.reduce((max, current) => {
     return (current.ThanhToan.length > max.ThanhToan.length) ? current : max;
   }, { khoahoc: '', ThanhToan: [] });
-
+  // console.log(khoahocdamua);
   // console.log(khoahocbanchay);
   const khoahocMaxSotien = khoahoc.reduce((max, current) => {
     // Tính tổng số tiền cho khóa học hiện tại
@@ -322,16 +322,42 @@ export default function Homedashboardlecturer() {
   const TongSoHS = khoahoc.reduce((total, course) => {
     return total + (course.ThanhToan ? course.ThanhToan.length : 0);
   }, 0);
+
+  const calculateRevenue = (data, timeFrame) => {
+    const now = new Date();
+    return data.reduce((total, item) => {
+      const createdAt = new Date(item.created_at);
+      const isInTimeFrame = timeFrame === 'daily' ?
+        createdAt.toDateString() === now.toDateString() :
+        timeFrame === 'weekly' ?
+          createdAt >= new Date(now.setDate(now.getDate() - 7)) :
+          timeFrame === 'monthly' ?
+            createdAt.getMonth() === now.getMonth() && createdAt.getFullYear() === now.getFullYear() :
+            createdAt.getFullYear() === now.getFullYear(); // yearly
+
+      return isInTimeFrame ? total + item.tong : total;
+    }, 0);
+  };
+
+  const doanhthuTheoNgay = calculateRevenue(khoahocdamua, 'daily');
+  const doanhthuTheoTuan = calculateRevenue(khoahocdamua, 'weekly');
+  const doanhthuTheoThang = calculateRevenue(khoahocdamua, 'monthly');
+  const doanhthuTheoNam = calculateRevenue(khoahocdamua, 'yearly');
+
   const cardData = [
     { icon: FaBook, value: khoahocdadangky, label: "Khóa học đã đăng ký" },
     { icon: FaGraduationCap, value: khoahocdanghoc, label: "Khóa học đang học" },
     { icon: FaTrophy, value: khoahocdahoanthanh, label: "Khóa học đã hoàn thành" },
     { icon: FaBookmark, value: khoahocdadangky, label: "Tổng khóa học của tôi" },
     { icon: FaUser, value: TongSoHS, label: "Tổng số học sinh" },
-    { icon: FaDollarSign, value: sodukhadung, label: "Số dư khả dụng" },
     { icon: FaUsers, value: activeCoursesCount, label: "Tổng khóa học đang phát hành" },
     { icon: FaClock, value: khoahoctamdung, label: "Tổng khóa học tạm dừng" },
-    { icon: FaMoneyBill, value: tongdoanhthu, label: "Tổng thu nhập" },
+    { icon: FaDollarSign, value: doanhthuTheoNgay - (doanhthuTheoNgay * 0.1), label: "Doanh thu theo ngày" },
+    { icon: FaDollarSign, value: doanhthuTheoTuan - (doanhthuTheoTuan * 0.1), label: "Doanh thu theo tuần" },
+    { icon: FaDollarSign, value: doanhthuTheoThang - (doanhthuTheoThang * 0.1), label: "Doanh thu theo tháng" },
+    { icon: FaDollarSign, value: doanhthuTheoNam - (doanhthuTheoNam * 0.1), label: "Doanh thu theo năm" },
+    { icon: FaDollarSign, value: sodukhadung - (sodukhadung * 0.1), label: "Số dư khả dụng" },
+    { icon: FaMoneyBill, value: tongdoanhthu - (tongdoanhthu * 0.1), label: "Tổng thu nhập" },
   ];
   // console.log(khoahoc, "khoahoc");
 
@@ -447,10 +473,10 @@ export default function Homedashboardlecturer() {
                                     </h6>
                                     <span
                                       className={`badge text-[14px] px-4 py-1.5 rounded-full whitespace-nowrap ${item.trangthai === 'Progress'
-                                          ? 'bg-green-500 text-white'
-                                          : item.trangthai === 'Notyet' || item.trangthai === 'notyet'
-                                            ? 'text-pink-700 '
-                                            : 'text-pink-700'
+                                        ? 'bg-green-500 text-white'
+                                        : item.trangthai === 'Notyet' || item.trangthai === 'notyet'
+                                          ? 'text-pink-700 '
+                                          : 'text-pink-700'
                                         }`}
                                     >
                                       {(() => {
