@@ -5,7 +5,8 @@ import Img from 'next/image';
 import Swiper from 'swiper';
 import Link from 'next/link';
 import { TatCaKhuyenMaiKhoaHoc } from '../../../service/khuyenmai/khuyenmai';
-import { Coursefree } from "@/app/component/course/course.component"
+import { Coursefree, CourseNew, OutstandingCourse } from "@/app/component/course/course.component"
+import SaleComponent from "@/app/component/course/SaleComponent"
 import HorizontalScrollImages from "@/app/component/course/Slider";
 import Image from 'next/image';
 import Counter from "@/app/component/home/Counter";
@@ -14,11 +15,17 @@ const Home = () => {
         <>
             <BannerAreaTen />
             <ServiceArea />
+            <SaleComponent />
             <Coursefree />
             <CourseArea />
+            <OutstandingCourse />
             <WhyChooseUs />
-            <UpcomingEvents />
+            <div data-aos="fade-up" id="khoahocmoi">
+                <CourseNew />
+            </div>
             <FunFacts />
+            <UpcomingEvents />
+
             <FeedbackArea />
             <div className='container my-20'>
                 <HorizontalScrollImages />
@@ -170,7 +177,7 @@ const ServiceArea = () => {
                                 <i className="bi bi-lightbulb text-white text-2xl"></i>
                             </div>
                         </div>
-                        <span className="text-black font-semibold text-4xl px-6 py-3 bg-gradient-to-r from-blue-900 to-pink-700 bg-clip-text text-transparent hover:text-pink-700">
+                        <span className="text-black font-semibold text-4xl px-6 py-3 bg-gradient-to-r from-blue-900 to-pink-700 bg-clip-text text-transparent ">
                             Danh Mục Khóa Học Nổi Bật
                         </span>
                     </div>
@@ -522,6 +529,7 @@ const CourseArea = () => {
 
 
 const WhyChooseUs = () => {
+
     return (
         <div className="why-choose-us bg-gradient-to-r  from-blue-900 via-pink-700 to-pink-700 bg-choose-us-one bg_image rts-section-gap shape-move">
             <div className="container mx-auto  px-4">

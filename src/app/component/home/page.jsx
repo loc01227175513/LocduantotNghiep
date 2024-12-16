@@ -14,7 +14,7 @@ import {
 import { KhoaHocDangHoc } from "../../../service/dashbordStuden/Dashboard-service";
 import { Dashboard } from "@/service/dashbordStuden/Dashboard-service";
 import
- SaleComponent
+SaleComponent
   from "../course/SaleComponent";
 import HorizontalScrollImages from "../course/Slider";
 import { NextCategory } from "../category/category.component";
@@ -42,7 +42,7 @@ export default function Homecomponent() {
   // Check if we're on client side
   useEffect(() => {
     setIsClient(true);
-    
+
     // Initialize AOS safely
     const initAOS = async () => {
       try {
@@ -81,7 +81,7 @@ export default function Homecomponent() {
   useEffect(() => {
     const fetchData = async () => {
       if (!isClient) return;
-      
+
       try {
         const data = await KhoaHocDangHoc();
         setKhoaHocDangHoc(data || []);
@@ -119,9 +119,9 @@ export default function Homecomponent() {
   return (
     <div>
       <div className="mt-60">
-          <div data-aos="fade-up">
-            <Banner />
-          </div>
+        <div data-aos="fade-up">
+          <Banner />
+        </div>
         <div data-aos="fade-up">
           <NextCategory />
         </div>
@@ -138,11 +138,13 @@ export default function Homecomponent() {
             <CourseDeXuat />
           </div>
         ) : null}
-
-
         <div data-aos="fade-up">
-          <OutstandingCourse />
+          <Coursefree />
         </div>
+        <div data-aos="fade-up">
+          <Courseseal />
+        </div>
+        
 
         <div data-aos="fade-up">
           <div
@@ -309,8 +311,10 @@ export default function Homecomponent() {
             </div>
           </div>
         </div>
-        <div data-aos="fade-up" id="khoahocmoi">
-          <CourseNew />
+      
+        
+        <div data-aos="fade-up">
+          <OutstandingCourse />
         </div>
         <div data-aos="fade-up">
           <div className="fun-facts-area bg-gradient" data-aos="fade-up">
@@ -366,13 +370,10 @@ export default function Homecomponent() {
             </div>
           </div>
         </div>
-        <div data-aos="fade-up">
-          <Courseseal />
-        </div>
+        <div data-aos="fade-up" id="khoahocmoi">
+          <CourseNew />
+        </div>        
 
-        <div data-aos="fade-up">
-          <Coursefree />
-        </div>
         <br />
         <br />
         <br />

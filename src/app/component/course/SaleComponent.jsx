@@ -5,6 +5,7 @@ import { TatCaKhuyenMaiKhoaHoc } from '../../../service/khuyenmai/khuyenmai';
 import { toast } from 'react-toastify';
 import { KhoaHocYeuThich } from "../../../service/YeuThich/YeuThich";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const toastConfig = {
     position: "bottom-right",
@@ -21,6 +22,15 @@ export default function SaleComponent() {
     const [loading, setLoading] = useState(false);
     const [activeDate, setActiveDate] = useState(null);
     const [showFullText, setShowFullText] = useState(false);
+    const [data, setData] = useState([]);
+    const router = useRouter();
+    const user = localStorage.getItem('data');
+    useEffect(() => {
+        if (user) {
+            setData(JSON.parse(user));
+        }
+    }, [user]);
+
     const [countdown, setCountdown] = useState({
         hours: '00',
         minutes: '00',
@@ -232,22 +242,23 @@ export default function SaleComponent() {
 
         return courses;
     };
-    // console.log(KhuyenMai, 'KhuyenMai'); 
-    const handleYeuThich = async (id) => {
-        try {
-            const response = await KhoaHocYeuThich(id);
+
+
+        const handleYeuThich = async (id) => {
+            try {
+                const response = await KhoaHocYeuThich(id);
             // console.log(response);
             toast.success("Added to favorites!", toastConfig);
         } catch (error) {
-            console.error("Error:", error);
-            toast.error("Error adding to favorites!", toastConfig);
-        }
-    };
+               console.log(error);
+            }
+        };
+    
 
 
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto  py-8">
             <section className="flash-sale-section relative">
                 <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-6 h-full">
                     <div className="flash-sale-banner flex flex-col md:flex-row justify-between items-start md:items-center gap-6  bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 p-6 rounded-xl shadow-lg">
@@ -316,13 +327,23 @@ export default function SaleComponent() {
                                                     loading="lazy"
                                                 />
                                             </Link>
-                                            <div className="bestseller-product-actions mt-2 flex justify-end absolute top-28 right-4">
-                                                <button className="bestseller-icon-favorite text-white hover:text-pink-700 hover:bg-pink-700  hover:rounded-full " onClick={() => handleYeuThich(item.khoahoc.id)}>
-                                                    <span role="img" aria-label="bookmark" className="flex items-center justify-center w-14 h-14 rounded-full  bg-white/15">
-                                                        <i className="fa-sharp fa-light fa-bookmark text-lg"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
+                                            {data.id ? (
+                                                <div className="bestseller-product-actions mt-2 flex justify-end absolute top-28 right-4">
+                                                    <button className="bestseller-icon-favorite text-white hover:text-pink-700 hover:bg-pink-700  hover:rounded-full " onClick={() => handleYeuThich(item.khoahoc.id)}>
+                                                        <span role="img" aria-label="bookmark" className="flex items-center justify-center w-14 h-14 rounded-full  bg-white/15">
+                                                            <i className="fa-sharp fa-light fa-bookmark text-lg"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <div className="bestseller-product-actions mt-2 flex justify-end absolute top-28 right-4">
+                                                    <button className="bestseller-icon-favorite text-white hover:text-pink-700 hover:bg-pink-700  hover:rounded-full " onClick={() => router.push('/page/login')}>
+                                                        <span role="img" aria-label="bookmark" className="flex items-center justify-center w-14 h-14 rounded-full  bg-white/15">
+                                                            <i className="fa-sharp fa-light fa-bookmark text-lg"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            )}
                                         </div>
 
                                         <div className="category-product-info mt-2 space-y-2 p-3">
