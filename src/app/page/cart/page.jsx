@@ -16,7 +16,7 @@ const Cart = () => {
   const [KhuyenMai, setKhuyenMai] = useState([]);
   const [appliedCoupons, setAppliedCoupons] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  console.log(KhuyenMai, "KhuyenMai");
   useEffect(() => {
     TatCaKhuyenMaiKhoaHoc()
       .then((response) => {
@@ -95,43 +95,82 @@ const Cart = () => {
   const handleApplyCoupon = (e) => {
     e.preventDefault();
     const couponCode = e.target.coupon_code.value.trim();
-    const promo = KhuyenMai.find(
+  
+    // Find all promos matching the coupon code and approved status
+    const applicablePromos = KhuyenMai.filter(
       (promo) =>
-        promo.magiamgia.maso === couponCode && promo.magiamgia.trangthai === "Đã Duyệt"
+        promo.magiamgia.maso === couponCode &&
+        promo.magiamgia.trangthai === "Đã Duyệt" &&
+        promo.magiamgia.sudunghientai < promo.magiamgia.luotsudung // Ensure the promo hasn't exceeded usage
     );
-
-    if (promo) {
-      const courseId = promo.id_khoahoc;
-      const courseInCart = cartItems.some((item) =>
-        item.khoahocs.some((khoahoc) => khoahoc.id === courseId)
-      );
-
-      if (courseInCart) {
-        const existingCoupon = appliedCoupons.find((c) => c.id_khoahoc === courseId);
-        if (existingCoupon) {
-          toast.error("Một mã giảm giá đã được áp dụng cho khóa học này.");
-          return;
+  
+    if (applicablePromos.length === 0) {
+      toast.error("Mã giảm giá không hợp lệ hoặc đã hết lượt sử dụng.");
+      return;
+    }
+  
+    // Extract unique course IDs from the applicable promos
+    const eligibleCourseIds = applicablePromos.map((promo) => promo.id_khoahoc);
+  
+    // Find courses in the cart that are eligible for the coupon
+    const eligibleCoursesInCart = cartItems.filter((item) =>
+      item.khoahocs.some((khoahoc) => eligibleCourseIds.includes(khoahoc.id))
+    );
+  
+    if (eligibleCoursesInCart.length === 0) {
+      toast.error("Mã giảm giá không áp dụng cho bất kỳ khóa học nào trong giỏ hàng.");
+      return;
+    }
+  
+    let anyCouponApplied = false;
+  
+    // Iterate through each eligible course in the cart
+    eligibleCoursesInCart.forEach((cartItem) => {
+      cartItem.khoahocs.forEach((khoahoc) => {
+        if (eligibleCourseIds.includes(khoahoc.id)) {
+          const existingCoupon = appliedCoupons.find(
+            (c) => c.id_khoahoc === khoahoc.id && c.id_magiamgia === promo.magiamgia.id
+          );
+  
+          if (existingCoupon) {
+            // Optionally, notify the user about already applied coupons
+            toast.warn(`Mã giảm giá đã được áp dụng cho khóa học "${khoahoc.ten}".`);
+            return;
+          }
+  
+          // Find the promo related to this course
+          const promoForCourse = applicablePromos.find((promo) => promo.id_khoahoc === khoahoc.id);
+  
+          if (promoForCourse) {
+            const newCoupon = {
+              id_magiamgia: promoForCourse.magiamgia.id,
+              id_khoahoc: khoahoc.id,
+              giamgia: promoForCourse.magiamgia.giamgia,
+            };
+  
+            setAppliedCoupons((prevCoupons) => {
+              const updatedCoupons = [...prevCoupons, newCoupon];
+              if (typeof window !== 'undefined') {
+                localStorage.setItem("appliedCoupons", JSON.stringify(updatedCoupons));
+              }
+              return updatedCoupons;
+            });
+  
+            // Update the usage count of the promo
+            promoForCourse.magiamgia.sudunghientai += 1;
+  
+            anyCouponApplied = true;
+            toast.success(`Mã giảm giá áp dụng thành công cho khóa học "${khoahoc.ten}"!`);
+          }
         }
-
-        const newCoupon = {
-          id_magiamgia: promo.magiamgia.id,
-          id_khoahoc: courseId,
-          giamgia: promo.magiamgia.giamgia,
-        };
-
-        const updatedCoupons = [...appliedCoupons, newCoupon];
-        setAppliedCoupons(updatedCoupons);
-        if (typeof window !== 'undefined') {
-          localStorage.setItem("appliedCoupons", JSON.stringify(updatedCoupons));
-        }
-        toast.success("Mã giảm giá áp dụng thành công!");
-      } else {
-        toast.error("Mã giảm giá không áp dụng cho bất kỳ khóa học nào trong giỏ hàng.");
-      }
-    } else {
-      toast.error("Mã giảm giá không hợp lệ.");
+      });
+    });
+  
+    if (!anyCouponApplied) {
+      toast.error("Không áp dụng được mã giảm giá cho bất kỳ khóa học nào.");
     }
   };
+  
 
   const NguoiDung = typeof window !== 'undefined' ? localStorage.getItem('data') : null;
   const parsedData = NguoiDung ? JSON.parse(NguoiDung) : null;
