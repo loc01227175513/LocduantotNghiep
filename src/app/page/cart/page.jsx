@@ -95,7 +95,7 @@ const Cart = () => {
   const handleApplyCoupon = (e) => {
     e.preventDefault();
     const couponCode = e.target.coupon_code.value.trim();
-  
+
     // Find all promos matching the coupon code and approved status
     const applicablePromos = KhuyenMai.filter(
       (promo) =>
@@ -103,27 +103,27 @@ const Cart = () => {
         promo.magiamgia.trangthai === "Đã Duyệt" &&
         promo.magiamgia.sudunghientai < promo.magiamgia.luotsudung // Ensure the promo hasn't exceeded usage
     );
-  
+
     if (applicablePromos.length === 0) {
       toast.error("Mã giảm giá không hợp lệ hoặc đã hết lượt sử dụng.");
       return;
     }
-  
+
     // Extract unique course IDs from the applicable promos
     const eligibleCourseIds = applicablePromos.map((promo) => promo.id_khoahoc);
-  
+
     // Find courses in the cart that are eligible for the coupon
     const eligibleCoursesInCart = cartItems.filter((item) =>
       item.khoahocs.some((khoahoc) => eligibleCourseIds.includes(khoahoc.id))
     );
-  
+
     if (eligibleCoursesInCart.length === 0) {
       toast.error("Mã giảm giá không áp dụng cho bất kỳ khóa học nào trong giỏ hàng.");
       return;
     }
-  
+
     let anyCouponApplied = false;
-  
+
     // Iterate through each eligible course in the cart
     eligibleCoursesInCart.forEach((cartItem) => {
       cartItem.khoahocs.forEach((khoahoc) => {
@@ -131,23 +131,23 @@ const Cart = () => {
           const existingCoupon = appliedCoupons.find(
             (c) => c.id_khoahoc === khoahoc.id && c.id_magiamgia === promo.magiamgia.id
           );
-  
+
           if (existingCoupon) {
             // Optionally, notify the user about already applied coupons
             toast.warn(`Mã giảm giá đã được áp dụng cho khóa học "${khoahoc.ten}".`);
             return;
           }
-  
+
           // Find the promo related to this course
           const promoForCourse = applicablePromos.find((promo) => promo.id_khoahoc === khoahoc.id);
-  
+
           if (promoForCourse) {
             const newCoupon = {
               id_magiamgia: promoForCourse.magiamgia.id,
               id_khoahoc: khoahoc.id,
               giamgia: promoForCourse.magiamgia.giamgia,
             };
-  
+
             setAppliedCoupons((prevCoupons) => {
               const updatedCoupons = [...prevCoupons, newCoupon];
               if (typeof window !== 'undefined') {
@@ -155,22 +155,22 @@ const Cart = () => {
               }
               return updatedCoupons;
             });
-  
+
             // Update the usage count of the promo
             promoForCourse.magiamgia.sudunghientai += 1;
-  
+
             anyCouponApplied = true;
             toast.success(`Mã giảm giá áp dụng thành công cho khóa học "${khoahoc.ten}"!`);
           }
         }
       });
     });
-  
+
     if (!anyCouponApplied) {
       toast.error("Không áp dụng được mã giảm giá cho bất kỳ khóa học nào.");
     }
   };
-  
+
 
   const NguoiDung = typeof window !== 'undefined' ? localStorage.getItem('data') : null;
   const parsedData = NguoiDung ? JSON.parse(NguoiDung) : null;
