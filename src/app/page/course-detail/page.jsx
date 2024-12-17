@@ -16,7 +16,7 @@ import { Allcoursesss } from "../../../service/course/course.service";
 import Nav from "./Nav/Nav";
 import { FaStar, FaRegStar } from "react-icons/fa"; // Import star icons
 import Image from "next/image";
-
+import { TatCaKhuyenMaiKhoaHoc } from '../../../service/khuyenmai/khuyenmai';
 const Khac = ({ course }) => {
   return (
     <>
@@ -122,6 +122,7 @@ const NavPhai = ({
   setIsCourseRegistered,
   setButtonStates
 }) => {
+  const [khuyenMai, setKhuyenMai] = useState([]);
   const LoadingSpinner = () => (
     <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -155,7 +156,18 @@ const NavPhai = ({
   const GiangVienCheck22 = GiangVienCheck2 ? JSON.parse(GiangVienCheck2) : null;
   const courseCheck = GiangVienCheck22?.giangvien ? course.id_giangvien === GiangVienCheck22.giangvien : false;
   // console.log(courseCheck);
+
   const router = useRouter();
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await TatCaKhuyenMaiKhoaHoc();
+      setKhuyenMai(data);
+    };
+    fetchData();
+  }, []);
+  // console.log(khuyenMai , "khuyenMai");
+  const khuyenMai1 = khuyenMai.find(item => item.id_khoahoc === course.id && item.magiamgia.trangthai === "Đã Duyệt" && item.khoahoc.giamgia > 0);
+  // console.log(khuyenMai1, "khuyenMai")
   return (
     <>
       <div className="rts-course-area rts-section-gap">
@@ -172,21 +184,82 @@ const NavPhai = ({
                     <div className="thumbnail">
                       <div className="vedio-icone">
                         {firstVideo && (
-                          <iframe
-                            height="250px"
-                            src={`https://www.youtube.com/embed/${firstVideo.url_link}?enablejsapi=1`}
-                            title="YouTube video player"
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerPolicy="strict-origin-when-cross-origin"
-                            allowFullScreen
-                          />
+                          <div className="relative w-full">
+                            <iframe
+                              id="player"
+                              height="250px"
+                              src={`https://www.youtube.com/embed/${firstVideo.url_link}?enablejsapi=1&rel=0&modestbranding=1&controls=1&showinfo=0&fs=0&iv_load_policy=3&autohide=1`}
+                              title="YouTube video player"
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              referrerPolicy="strict-origin-when-cross-origin"
+                              allowFullScreen
+                              sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                            />
+
+
+
+                            <div className="video-title-overlay" />
+                            <div className="video-title-overlay1" />
+                            <div className="video-title-overlay-text">
+                              <h1 className="text-white text-2xl font-bold">
+                                {course.tenkhoahoc}
+                              </h1>
+                            </div>
+                          </div>
                         )}
                         <div className="video-overlay">
                           <Link href="#" className="video-overlay-close">×</Link>
                         </div>
                       </div>
                     </div>
+
+                    <style jsx>{`
+  .video-title-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: black;
+    z-index: 10;
+  }
+  
+  .video-title-overlay1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: black;
+    z-index: 10;
+  }
+
+  /* Hide YouTube elements */
+  :global(.ytp-ce-element) {
+    display: none !important;
+  }
+    .ytp-videowall-still-info-bg,
+.ytp-videowall-still-info-content {
+    display: none !important;
+}
+  
+  :global(.ytp-endscreen-content) {
+    display: none !important;
+  }
+  
+  :global(.ytp-pause-overlay) {
+    display: none !important;
+  }
+  
+  :global(.ytp-title-text) {
+    display: none !important;
+  }
+  
+  :global(.ytp-chrome-top) {
+    display: none !important;
+  }
+`}</style>
                     <div className="price-area">
                       {course.gia === 0 && course.giamgia === 0 ? (
                         <p className="p-4 text-white font-bold text-2xl text-center w-full">
@@ -204,6 +277,15 @@ const NavPhai = ({
                         </>
                       )}
                     </div>
+                    {khuyenMai1 && (
+                      <div className="text-center text-white bg-green-700 text-[14px] py-2 px-4 rounded-lg flex items-center justify-center">
+
+                        <span className="text-white text-[14px]">
+                          -{khuyenMai1.magiamgia.giamgia}%  với voucher
+                        </span>
+                      </div>
+                    )}
+
 
 
                     {!NguoiDung ? (

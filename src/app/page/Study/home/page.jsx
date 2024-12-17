@@ -432,10 +432,13 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                 <iframe
                     id="player"
                     className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
-                    src={videoUrl ? `https://www.youtube.com/embed/${videoUrl}?enablejsapi=1` : ''}
+                    src={videoUrl ? `https://www.youtube.com/embed/${videoUrl}?enablejsapi=1&showinfo=0&rel=0&modestbranding=1&autohide=1&iv_load_policy=3` : ''}
                     allowFullScreen
                     title="YouTube Video"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
                 />
+
+
                 <AnimatePresence>
                     {isVideoEnded && (
                         <motion.div
