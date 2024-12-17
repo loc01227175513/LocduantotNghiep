@@ -35,9 +35,10 @@ export default function CardProduct({
                 <Link href={`/page/course-detail?id=${id}`} className="thumbnail relative">
                     <Image width={500} height={300} src={hinh} alt="course" style={{ height: "170px" , objectFit: "cover" }} />
                     {khuyenMai && (
-                        <div className="absolute top-3 left-3 bg-green-700 text-white px-3 py-1  h-20 justify-center items-center flex  w-20 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
-                           <span className='text-[13px]'>Vocher</span>
-                        </div>
+                        <div className="absolute top-3 left-3 bg-green-700 text-white px-3 py-1 h-20 justify-center items-center flex w-20 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                        <i className="fas fa-gift text-[20px]"></i>
+                     </div>
+                     
                     )}
                     {/* Free course badge */}
                     {(gia === 0 || giamgia === 0) && (
