@@ -234,13 +234,16 @@ const NavPhai = ({
                       )}
                     </div>
                     {khuyenMai1 && (
-                      <div className="text-center text-white bg-green-700 text-[14px] py-2 px-4 rounded-lg flex items-center justify-center">
-
-                        <span className="text-white text-[14px]">
-                          -{khuyenMai1.magiamgia.giamgia}%  với voucher
+                      <div className="flex items-center justify-center  text-green-700 py-3 px-6 rounded-lg  transform transition duration-500 ease-in-out hover:scale-105">
+                        <span className="font-medium text-lg text-center flex items-center space-x-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-5 w-5 text-yellow-400">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9V5m0 14v-4m-5-5l3 3m9-3l-3 3" />
+                          </svg>
+                          <span>-{khuyenMai1.magiamgia.giamgia}% với voucher</span>
                         </span>
                       </div>
                     )}
+
 
 
 
