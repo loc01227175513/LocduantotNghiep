@@ -414,7 +414,8 @@ export default function Coursedetailcomponent() {
     const queryParams = new URLSearchParams(window.location.search);
     const courseId = queryParams.get("id");
     setId(courseId);
-  }, []);
+  }, []); // Removed window.location.search from the dependency array
+  
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -425,7 +426,7 @@ export default function Coursedetailcomponent() {
           setNguoiDung(parsedData);
         }
       } catch (error) {
-        window.location.reload();
+        console.error("Error loading user data:", error);
         setNguoiDung(null);
       }
     };
@@ -441,12 +442,13 @@ export default function Coursedetailcomponent() {
         const res = await CourseDetails(id);
         setCourse(res.khoahoc || null);
       } catch (error) {
-        window.location.reload();
+        console.error("Error loading course details:", error);
         setCourse(null);
       } finally {
         setLoading(false);
       }
     };
+
     loadCourseDetails();
   }, [id]);
 
@@ -464,7 +466,7 @@ export default function Coursedetailcomponent() {
           setIsCourseInCart(isInCart);
         }
       } catch (error) {
-        window.location.reload();
+        console.error("Error checking cart status:", error);
       }
     };
     checkCartStatus();
@@ -484,7 +486,7 @@ export default function Coursedetailcomponent() {
           setIsCourseRegistered(isRegistered);
         }
       } catch (error) {
-        window.location.reload();
+        console.error("Error checking registration status:", error);
       }
     };
     checkRegistrationStatus();
