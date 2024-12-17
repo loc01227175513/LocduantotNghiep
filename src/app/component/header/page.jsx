@@ -13,6 +13,7 @@ import { LayThongBao } from "@/service/ThongBao/ThongBao";
 import Link from "next/link";
 import { use } from "@/assets/js/plugins/swiper";
 import { useRouter } from "next/navigation";
+import { Dashboard } from "@/service/Dashboard-lecture/Dashboard-lecture";
 const menuItems = [
   {
     href: "/",
@@ -268,6 +269,22 @@ export default function Header() {
   const [isDashboardMenuOpen, setIsDashboardMenuOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
+
+
+  useEffect(() => {
+    const KiemtraVaiTro = async () => {
+      const res = await Dashboard();
+      if (res) {
+        localStorage.setItem('lecturerId', JSON.stringify(res.data));
+      }
+
+    }
+    KiemtraVaiTro();
+  }, []);
+
+
+
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };

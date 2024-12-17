@@ -83,7 +83,7 @@ const Headerdashboardstudent2 = ({ page }) => {
               onClick={() => click("khoahoc")}
             >
               <i className="fa-light fa-graduation-cap text-2xl" />
-              <p>Khóa học đang học</p>
+              <p>Khóa học đang dạy</p>
             </Link>
 
             <Link

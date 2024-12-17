@@ -144,8 +144,7 @@ const NavPhai = ({
       setIsCourseRegistered(true);
       router.push(`/page/Study?id=${course.id}`);
     } catch (error) {
-      console.error("Error registering free course:", error);
-      toast.error("Có lỗi xảy ra khi đăng ký khóa học");
+      window.location.reload();
     } finally {
       setButtonStates(prev => ({
         ...prev,
@@ -423,7 +422,7 @@ export default function Coursedetailcomponent() {
           setNguoiDung(parsedData);
         }
       } catch (error) {
-        console.error("Error loading user data:", error);
+        window.location.reload();
         setNguoiDung(null);
       }
     };
@@ -439,7 +438,7 @@ export default function Coursedetailcomponent() {
         const res = await CourseDetails(id);
         setCourse(res.khoahoc || null);
       } catch (error) {
-        console.error("Error loading course details:", error);
+        window.location.reload();
         setCourse(null);
       } finally {
         setLoading(false);
@@ -462,7 +461,7 @@ export default function Coursedetailcomponent() {
           setIsCourseInCart(isInCart);
         }
       } catch (error) {
-        console.error("Error checking cart status:", error);
+        window.location.reload();
       }
     };
     checkCartStatus();
@@ -482,7 +481,7 @@ export default function Coursedetailcomponent() {
           setIsCourseRegistered(isRegistered);
         }
       } catch (error) {
-        console.error("Error checking registration status:", error);
+        window.location.reload();
       }
     };
     checkRegistrationStatus();
@@ -494,7 +493,7 @@ export default function Coursedetailcomponent() {
         const res = await Allcoursesss();
         setAllcourse(res.data || []);
       } catch (error) {
-        console.error("Error loading all courses:", error);
+        window.location.reload();
         setAllcourse([]);
       }
     };
@@ -562,7 +561,7 @@ export default function Coursedetailcomponent() {
       toast.success("Sản phẩm đã được thêm vào giỏ hàng!");
       setIsCourseInCart(true);
     } catch (error) {
-      console.error("Error adding to cart:", error);
+      window.location.reload();
       toast.error("Không thể thêm vào giỏ hàng");
     } finally {
       setButtonStates(prev => ({
@@ -584,7 +583,7 @@ export default function Coursedetailcomponent() {
       await handleAddCart();
       router.push('/page/checkout');
     } catch (error) {
-      console.error("Error processing buy now:", error);
+      window.location.reload();
       toast.error("Có lỗi xảy ra khi xử lý mua ngay");
     } finally {
       setButtonStates(prev => ({
@@ -637,7 +636,7 @@ export default function Coursedetailcomponent() {
 
       return `/${trimmedUrl}`;
     } catch (error) {
-      console.error('Error processing image URL:', error);
+      window.location.reload();
       return '/placeholder.jpg';
     }
   };

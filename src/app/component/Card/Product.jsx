@@ -83,10 +83,10 @@ export default function Product({ gia, giamgia, ten, hinh, chude, giangvien, bai
 
 
 
-          <button className="download-cert-btn mt-4 w-full py-2 bg-pink-700 text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-pink-800">
+          {/* <button className="download-cert-btn mt-4 w-full py-2 bg-pink-700 text-white rounded-lg transition-colors duration-300 ease-in-out hover:bg-pink-800">
             <i className="fas fa-certificate px-2" />
             Nhận chứng chỉ ngay
-          </button>
+          </button> */}
 
           <div className="rating-and-price">
             <div className="price-area">

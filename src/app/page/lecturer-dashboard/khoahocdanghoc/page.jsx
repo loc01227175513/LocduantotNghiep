@@ -35,9 +35,9 @@ export default function Khoahoccuatoi() {
 
         <ul className="nav nav-tabs custom-tabs" id="myTab" role="tablist">
           {[
-            { id: 1, label: 'Khóa học đang học', target: 'home' },
-            { id: 2, label: 'Khóa học thanh toán mua', target: 'profile' },
-            { id: 3, label: 'Khóa học đã hoàn thành', target: 'contact' }
+            { id: 1, label: 'Khóa học đang dạy', target: 'home' },
+            { id: 2, label: 'Khóa học đã được mua', target: 'profile' },
+            { id: 3, label: 'Khóa học sinh đã hoàn thành', target: 'contact' }
           ].map(tab => (
             <li key={tab.id} className="nav-item" role="presentation">
               <motion.button
@@ -177,7 +177,7 @@ const Khoahocdathanhtoan = () => {
         setIsLoading(false);
       });
   }, [parsedLecturer.giangvien]);
-  // console.log(coursesInProgress, "coursesInProgress");
+  console.log(coursesInProgress, "coursesInProgress");
   const averageRatings = coursesInProgress.map((item) => {
     if (item.danhgia?.length > 0) {
       const total = item.danhgia.reduce((acc, curr) => acc + Number(curr.danhgia), 0);
@@ -187,11 +187,19 @@ const Khoahocdathanhtoan = () => {
   });
 
   const TongLuotMua = coursesInProgress.reduce((acc, curr) => {
-    // Get unique id_khoahoc values from thanhtoan array
-    const uniqueKhoaHocIds = new Set(curr.thanhtoan.map(t => t.id_khoahoc));
-    // Only add 1 per unique course ID
-    return acc + uniqueKhoaHocIds.size;
-  }, 0);
+    curr.thanhtoan.forEach(t => {
+      if (!acc[t.id_khoahoc]) {
+        acc[t.id_khoahoc] = new Set(); // Khởi tạo Set cho mỗi khóa học nếu chưa có
+      }
+      acc[t.id_khoahoc].add(t.id_nguoidung); // Thêm id người dùng vào Set (loại bỏ trùng lặp)
+    });
+    return acc;
+  }, {});
+
+  // Chuyển đổi Set thành số lượng thanh toán cho mỗi khóa học
+  const TongLuotMuaCount = Object.fromEntries(
+    Object.entries(TongLuotMua).map(([key, value]) => [key, value.size])
+  );
 
   // console.log(TongLuotMua,"TongLuotMua");
 
@@ -220,7 +228,7 @@ const Khoahocdathanhtoan = () => {
               <Product
                 key={index}
                 id={item.khoahocs.id}
-                TongLuotMua={TongLuotMua}
+                TongLuotMua={TongLuotMuaCount[item.khoahocs.id] || 0}  // Dùng TongLuotMuaCount để lấy số lượt mua
                 gia={item.khoahocs.gia}
                 giamgia={item.khoahocs.giamgia}
                 ten={item.khoahocs.ten}
@@ -248,7 +256,7 @@ const Khoahocdahoanthanh = () => {
   const [baihocData, setBaihocData] = useState([]);
   const [danhgiaData, setDanhgiaData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const userData = localStorage.getItem('lecturerId');
   const parsedLecturer = JSON.parse(userData);
 
@@ -257,7 +265,7 @@ const Khoahocdahoanthanh = () => {
     TatCaKhoaHocDaHoc()
       .then((res) => {
         // Lọc khóa học theo giảng viên hiện tại
-        const filteredData = res.data.khoahocdahoc.filter(item => 
+        const filteredData = res.data.khoahocdahoc.filter(item =>
           item.khoahoc.id_giangvien === parsedLecturer.giangvien
         );
         setKhoahocdahoanthanh(filteredData);
@@ -307,8 +315,8 @@ const Khoahocdahoanthanh = () => {
           {getUniqueCompletedCourses().map((item, index) => {
             // Đếm số người hoàn thành cho khóa học này
             const completedCount = khoahocdahoanthanh.filter(
-              course => course.id_khoahoc === item.id_khoahoc && 
-              course.trangthai === "Đã Hoàn Thành"
+              course => course.id_khoahoc === item.id_khoahoc &&
+                course.trangthai === "Đã Hoàn Thành"
             ).length;
 
             // Tính các thông số khác
@@ -323,7 +331,7 @@ const Khoahocdahoanthanh = () => {
             const courseRatings = danhgiaData.filter(
               rating => rating.id_khoahoc === item.khoahoc.id
             );
-            const averageRating = courseRatings.length > 0 
+            const averageRating = courseRatings.length > 0
               ? courseRatings.reduce((acc, curr) => acc + Number(curr.danhgia), 0) / courseRatings.length
               : 0;
 
