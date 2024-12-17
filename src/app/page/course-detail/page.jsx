@@ -214,52 +214,7 @@ const NavPhai = ({
                       </div>
                     </div>
 
-                    <style jsx>{`
-  .video-title-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: black;
-    z-index: 10;
-  }
-  
-  .video-title-overlay1 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: black;
-    z-index: 10;
-  }
 
-  /* Hide YouTube elements */
-  :global(.ytp-ce-element) {
-    display: none !important;
-  }
-    .ytp-videowall-still-info-bg,
-.ytp-videowall-still-info-content {
-    display: none !important;
-}
-  
-  :global(.ytp-endscreen-content) {
-    display: none !important;
-  }
-  
-  :global(.ytp-pause-overlay) {
-    display: none !important;
-  }
-  
-  :global(.ytp-title-text) {
-    display: none !important;
-  }
-  
-  :global(.ytp-chrome-top) {
-    display: none !important;
-  }
-`}</style>
                     <div className="price-area">
                       {course.gia === 0 && course.giamgia === 0 ? (
                         <p className="p-4 text-white font-bold text-2xl text-center w-full">
