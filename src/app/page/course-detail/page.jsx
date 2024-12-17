@@ -17,6 +17,7 @@ import Nav from "./Nav/Nav";
 import { FaStar, FaRegStar } from "react-icons/fa"; // Import star icons
 import Image from "next/image";
 import { TatCaKhuyenMaiKhoaHoc } from '../../../service/khuyenmai/khuyenmai';
+
 const Khac = ({ course }) => {
   return (
     <>
@@ -122,6 +123,7 @@ const NavPhai = ({
   setIsCourseRegistered,
   setButtonStates
 }) => {
+
   const [khuyenMai, setKhuyenMai] = useState([]);
   const LoadingSpinner = () => (
     <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
@@ -250,11 +252,11 @@ const NavPhai = ({
                         </button>
                       </Link>
                     ) : isCourseRegistered || courseCheck ? (
-                      <Link href={`/page/Study?id=${course.id}`}>
-                        <button className="rts-btn btn-border mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1">
-                          Đi đến khóa học
-                        </button>
-                      </Link>
+
+                      <button onClick={() => router.push(`/page/Study?id=${course.id}`)} className="rts-btn btn-border mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1">
+                        Đi đến khóa học
+                      </button>
+
                     ) : course.trangthai === "Notyet" || course.trangthai === "Pending" ? (
                       <button className="rts-btn text-[14px]">Bản Demo</button>
                     ) :

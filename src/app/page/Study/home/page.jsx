@@ -36,7 +36,23 @@ export default function Page() {
     const [idTracNghiem, setIdTracNghiem] = useState(null);
     const playerRef = useRef(null);
     const [id, setId] = useState(null);
-
+    useEffect(() => {
+        // Check if the YouTube API script is already present
+        const existingScript = document.getElementById('youtube-iframe-api');
+        if (!existingScript) {
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            tag.id = 'youtube-iframe-api'; // Set an ID for the script
+            tag.onload = () => {
+                window.onYouTubeIframeAPIReady = () => {
+                    setIsYTReady(true);
+                };
+            };
+            document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, null);
+        } else {
+            setIsYTReady(true); // If the script exists, set the state directly
+        }
+    }, []);
     const parsedData = typeof window !== 'undefined' && window.localStorage ? JSON.parse(localStorage.getItem('data')) : null;
     useEffect(() => {
         const fetchData = async () => {
@@ -68,16 +84,7 @@ export default function Page() {
         }
     }, [router]);
 
-    useEffect(() => {
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        tag.onload = () => {
-            window.onYouTubeIframeAPIReady = () => {
-                setIsYTReady(true);
-            };
-        };
-        document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, null);
-    }, []);
+
 
     const getYouTubeVideoID = (url) => {
         try {
@@ -92,10 +99,15 @@ export default function Page() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await Axios.get(`https://huuphuoc.id.vn/api/Khoahocchitiet/${id}`, {
-                    referrerPolicy: 'unsafe-url'
+                const response = await fetch(`https://huuphuoc.id.vn/api/Khoahocchitiet/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'referrerPolicy': 'unsafe-url'
+                    }
                 });
-                const khoahocData = response.data.khoahoc;
+                const data = await response.json(); // Parse the JSON response
+                const khoahocData = data.khoahoc; // Access khoahoc from the parsed data
                 setKhoahoc(khoahocData);
 
                 if (khoahocData.baihocs.length > 0) {
@@ -181,10 +193,10 @@ export default function Page() {
 
                     setWatchedVideos(prev => ({ ...prev, [currentVideoId]: true }));
                 } catch (error) {
-                    console.error('Error tracking video watch status:', error);
+                    window.location.reload();
                 }
             } else {
-                console.error('Missing parsedData or currentVideoId');
+                window.location.reload();
             }
         }
     }, [parsedData, currentVideoId]);
