@@ -108,7 +108,7 @@ const Headerdashboardstudent2 = ({ page }) => {
               onClick={() => click("NhanTinGiangVien")}
             >
               <i className="fa-light fa-comments text-2xl" />
-              <p>Nhắn tin giảng viên</p>
+              <p>Nhắn tin</p>
             </Link>
             <Link 
               href={"/page/lecturer-dashboard/DanhGiaKhoaHoc"} 
