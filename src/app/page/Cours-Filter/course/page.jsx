@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
 export default function Page() {
   const searchKeyword = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('search') : '';
   const IdTheLoai = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('id') : '';
-
+  const Chude = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('chude') : '';
   const [view, setView] = useState('grid');
   const [courses, setCourses] = useState([]);
 
@@ -22,7 +22,9 @@ export default function Page() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
   const [selectedPrices, setSelectedPrices] = useState([]);
-
+  // Add state for selected subjects
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
+  // console.log(courses, "courses");
   // Sort state
   const [sortBy, setSortBy] = useState('');
 
@@ -87,6 +89,11 @@ export default function Page() {
       });
     }
 
+    // Filter by Chude from URL if it exists
+    if (Chude) {
+      filtered = filtered.filter((course) => course.id_chude.toString() === Chude);
+    }
+
     // Sort courses
     if (sortBy) {
       filtered = [...filtered].sort((a, b) => {
@@ -110,7 +117,7 @@ export default function Page() {
     }
 
     return filtered;
-  }, [courses, searchTerm, selectedCategories, selectedAuthors, selectedPrices, sortBy, IdTheLoai]);
+  }, [courses, searchTerm, selectedCategories, selectedAuthors, selectedPrices, sortBy, IdTheLoai, Chude]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -166,7 +173,7 @@ export default function Page() {
               {/* Category Filter */}
               <div className="single-filter-left-wrapper">
                 <h6 className="title">
-                  <i className="fas fa-layer-group " /> Loại
+                  <i className="fas fa-layer-group " /> Chủ đề
                 </h6>
                 <div className="checkbox-filter filter-body">
                   <div className="checkbox-wrapper">
@@ -248,6 +255,35 @@ export default function Page() {
                   </div>
                 </div>
               </div>
+              {/* Subject Filter */}
+              {/* <div className="single-filter-left-wrapper">
+                <h6 className="title">
+                  <i className="fas fa-book" /> Chủ đề
+                </h6>
+                <div className="checkbox-filter filter-body">
+                  <div className="checkbox-wrapper">
+                    {Array.from(new Set(courses.map((course) => course.chude))).map(
+                      (subject, index) => (
+                        <div className="single-checkbox-filter" key={index}>
+                          <div className="check-box">
+                            <input
+                              type="checkbox"
+                              id={`subject-${index}`}
+                              value={subject}
+                              checked={selectedSubjects.includes(subject)}
+                              onChange={handleCheckboxChange(setSelectedSubjects)}
+                            />
+                            <label htmlFor={`subject-${index}`} className="text-xl">
+                              {subject}
+                            </label>
+                            <br />
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div> */}
               {/* Clear All Filters */}
               <button
                 className="rts-btn btn-border"
@@ -256,6 +292,7 @@ export default function Page() {
                   setSelectedCategories([]);
                   setSelectedAuthors([]);
                   setSelectedPrices([]);
+                  setSelectedSubjects([]);
                   setSortBy('');
                 }}
               >

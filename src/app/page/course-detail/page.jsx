@@ -205,10 +205,7 @@ const NavPhai = ({
                       )}
                     </div>
 
-                    <div className="clock-area" style={{ marginTop: "-15px" }}>
-                      <i className="fa-light fa-clock text-xl mr-3" />
-                      <span className="text-xl">2 ngày còn lại ở mức giá này!</span>
-                    </div>
+
                     {!NguoiDung ? (
                       <Link href="/page/login">
                         <button className="rts-btn btn-border mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1">
@@ -221,62 +218,62 @@ const NavPhai = ({
                           Đi đến khóa học
                         </button>
                       </Link>
-                    )  : course.trangthai === "Notyet" || course.trangthai === "Pending" ? (
+                    ) : course.trangthai === "Notyet" || course.trangthai === "Pending" ? (
                       <button className="rts-btn text-[14px]">Bản Demo</button>
-                    ): 
-                    course.gia === 0 || course.giamgia === 0 ? (
-                      <button
-                        onClick={handleThanhToanKhoaHocFree}
-                        disabled={buttonStates.freeCourse.disabled}
-                        className={`rts-btn btn-border mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1 
-                          ${buttonStates.freeCourse.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-                      >
-                        {buttonStates.freeCourse.loading ? (
-                          <span className="flex items-center text-[14px]">
-                            <LoadingSpinner />
-                            Đang xử lý...
-                          </span>
-                        ) : "Nhận khóa học miễn phí"}
-                      </button>
-                    ) : isCourseInCart ? (
-                      <Link href="/page/cart">
-                        <button className="mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1">
-                          <span className="rts-btn btn-border  text-pink-700">Đi Đến Giỏ Hàng</span>
-                        </button>
-                      </Link>
-                    ) : (
-                      <>
+                    ) :
+                      course.gia === 0 || course.giamgia === 0 ? (
                         <button
-                          onClick={handleBuyNow}
-                          disabled={buttonStates.buyNow.disabled}
-                          className={`rts-btn btn-border text-xl bg-gradient-to-r from-pink-700 via-pink-700 to-pink-700 text-white !border-pink-700 !border-1
-                            ${buttonStates.buyNow.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                          onClick={handleThanhToanKhoaHocFree}
+                          disabled={buttonStates.freeCourse.disabled}
+                          className={`rts-btn btn-border mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1 
+                          ${buttonStates.freeCourse.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
-                          {buttonStates.buyNow.loading ? (
-                            <span className="flex items-center">
+                          {buttonStates.freeCourse.loading ? (
+                            <span className="flex items-center text-[14px]">
                               <LoadingSpinner />
                               Đang xử lý...
                             </span>
-                          ) : "Mua ngay"}
+                          ) : "Nhận khóa học miễn phí"}
                         </button>
-                        <button
-                          onClick={handleAddCart}
-                          disabled={buttonStates.addCart.disabled}
-                          className={`  flex justify-center text-xl !border-pink-700 !border-1
-                            ${buttonStates.addCart.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            style={{ marginTop: "-20px" }}
-                        >
-                          <span className="rts-btn btn-border text-pink-700">
-                            {buttonStates.addCart.loading ? (
+                      ) : isCourseInCart ? (
+                        <Link href="/page/cart">
+                          <button className="mt-10 flex justify-center text-[14px] text-pink-700 !border-pink-700 !border-1">
+                            <span className="rts-btn btn-border  text-pink-700">Đi Đến Giỏ Hàng</span>
+                          </button>
+                        </Link>
+                      ) : (
+                        <>
+                          <button
+                            onClick={handleBuyNow}
+                            disabled={buttonStates.buyNow.disabled}
+                            className={`rts-btn btn-border text-xl bg-gradient-to-r from-pink-700 via-pink-700 to-pink-700 text-white !border-pink-700 !border-1
+                            ${buttonStates.buyNow.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                          >
+                            {buttonStates.buyNow.loading ? (
                               <span className="flex items-center">
                                 <LoadingSpinner />
-                                Đang thêm...
+                                Đang xử lý...
                               </span>
-                            ) : "Thêm vào giỏ hàng"}
-                          </span>
-                        </button>
-                      </>
-                    )}
+                            ) : "Mua ngay"}
+                          </button>
+                          <button
+                            onClick={handleAddCart}
+                            disabled={buttonStates.addCart.disabled}
+                            className={`  flex justify-center text-xl !border-pink-700 !border-1
+                            ${buttonStates.addCart.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            style={{ marginTop: "-20px" }}
+                          >
+                            <span className="rts-btn btn-border text-pink-700">
+                              {buttonStates.addCart.loading ? (
+                                <span className="flex items-center">
+                                  <LoadingSpinner />
+                                  Đang thêm...
+                                </span>
+                              ) : "Thêm vào giỏ hàng"}
+                            </span>
+                          </button>
+                        </>
+                      )}
                     <div className="p-1 font-bold text-black what-includes text-left">
                       <span className="m text-left block text-xl text-gray-500">Đảm bảo hoàn lại tiền 30 ngày</span>
                       <h5 className="text-3xl text-left font-bold">Khóa học này bao gồm:</h5>
@@ -787,25 +784,29 @@ export default function Coursedetailcomponent() {
                           animation: "popIn 0.5s ease-out 0.2s backwards",
                         }}
                       >
-                        <span
-                          className="text-white text-xl"
-                          style={{ fontWeight: "normal" }}
-                        >
-                          Thể loại:{" "}
-                        </span>
-                        <span
-                          className="text-2xl text-white hover:bg-pink-700"
-                          style={{
-                            backgroundColor: "rgba(255,255,255,0.2)",
-                            padding: "5px 12px",
-                            borderRadius: "18px",
-                            transition: "all 0.3s ease",
-                            cursor: "pointer",
-                            fontWeight: "normal",
-                          }}
-                        >
-                          {course.chude}
-                        </span>
+                        <Link href={`/page/Cours-Filter?chude=${course.chude_id}`}>
+                          <span
+                            className="text-white text-xl"
+                            style={{ fontWeight: "normal" }}
+                          >
+                            Chủ đề:{" "}
+                          </span>
+                          <span
+                            className="text-2xl text-white hover:bg-pink-700"
+                            style={{
+                              backgroundColor: "rgba(255,255,255,0.2)",
+                              padding: "5px 12px",
+                              borderRadius: "18px",
+                              transition: "all 0.3s ease",
+                              cursor: "pointer",
+                              fontWeight: "normal",
+                            }}
+                          >
+                            {/* {console.log(course , "course")} */}
+
+                            {course.chude}
+                          </span>
+                        </Link>
                       </p>
                     </div>
                   </div>
@@ -1002,12 +1003,12 @@ export default function Coursedetailcomponent() {
                                     {course.gia === 0 ||
                                       course.giamgia === 0 ? (
                                       <span className="text-red-500 font-bold text-2xl">
-                                       0VNĐ
+                                        0VNĐ
                                       </span>
                                     ) : (
                                       <div className="flex items-center">
                                         <span className="text-red-500 font-bold text-2xl mr-3">
-                                          {course.giamgia.toLocaleString('vi-VN')}  
+                                          {course.giamgia.toLocaleString('vi-VN')}
                                           <span className="text-xl">VNĐ</span>
                                         </span>
                                         <span className="line-through text-gray-500 text-2xl">
