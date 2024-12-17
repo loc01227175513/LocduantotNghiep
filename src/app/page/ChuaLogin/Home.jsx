@@ -10,11 +10,12 @@ import SaleComponent from "@/app/component/course/SaleComponent"
 import HorizontalScrollImages from "@/app/component/course/Slider";
 import Image from 'next/image';
 import Counter from "@/app/component/home/Counter";
+import { NextCategory } from "@/app/component/category/category.component";
 const Home = () => {
     return (
         <>
             <BannerAreaTen />
-            <ServiceArea />
+            <NextCategory />
             <SaleComponent />
             <Coursefree />
             <CourseArea />
@@ -147,106 +148,106 @@ const BannerAreaTen = () => {
 
 
 
-const ServiceArea = () => {
-    const [DanhMuc, setDanhMuc] = useState([]);
+// const ServiceArea = () => {
+//     const [DanhMuc, setDanhMuc] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("https://huuphuoc.id.vn/api/theloai", {
-                    referrerPolicy: 'unsafe-url',
-                });
-                const data = await response.json();
-                setDanhMuc(data.data.slice(0, 5));
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        fetchData();
-    }, []);
+//     useEffect(() => {
+//         const fetchData = async () => {
+//             try {
+//                 const response = await fetch("https://huuphuoc.id.vn/api/theloai", {
+//                     referrerPolicy: 'unsafe-url',
+//                 });
+//                 const data = await response.json();
+//                 setDanhMuc(data.data.slice(0, 5));
+//             } catch (error) {
+//                 console.error("Error fetching data:", error);
+//             }
+//         };
+//         fetchData();
+//     }, []);
 
-    return (
-        <div className="container">
-            <section className="py-10 relative overflow-hidden">
-                {/* Header Section */}
-                <div className="text-center mb-12">
-                    <div className="inline-flex items-center justify-center  mb-6">
-                        <div className="relative group flex items-center justify-center">
+//     return (
+//         <div className="container">
+//             <section className="py-10 relative overflow-hidden">
+//                 {/* Header Section */}
+//                 <div className="text-center mb-12">
+//                     <div className="inline-flex items-center justify-center  mb-6">
+//                         <div className="relative group flex items-center justify-center">
 
-                            <div className="relative bg-pink-200 rounded-[100%] p-2 h-16 w-16 flex items-center justify-center">
-                                <i className="bi bi-lightbulb text-white text-2xl"></i>
-                            </div>
-                        </div>
-                        <span className="text-black font-semibold text-4xl px-6 py-3 bg-gradient-to-r from-blue-900 to-pink-700 bg-clip-text text-transparent ">
-                            Danh Mục Khóa Học Nổi Bật
-                        </span>
-                    </div>
-                </div>
+//                             <div className="relative bg-pink-200 rounded-[100%] p-2 h-16 w-16 flex items-center justify-center">
+//                                 <i className="bi bi-lightbulb text-white text-2xl"></i>
+//                             </div>
+//                         </div>
+//                         <span className="text-black font-semibold text-4xl px-6 py-3 bg-gradient-to-r from-blue-900 to-pink-700 bg-clip-text text-transparent ">
+//                             Danh Mục Khóa Học Nổi Bật
+//                         </span>
+//                     </div>
+//                 </div>
 
-                {/* TikTok-style Vertical Scroll Container */}
-                <div className="mx-auto  ">
-                    <div className="flex gap-5  ">
-                        {DanhMuc.map((item, index) => (
-                            <div
-                                key={index}
-                                className="group bg-white "
-                            >
-                                <div className="relative bg-white rounded-xl shadow-[0_0_10px_rgba(0,0,0,0.1)] overflow-hidden hover:shadow-[0_0_20px_rgba(0,0,0,0.05)] transform hover:scale-105 transition-all duration-300">
-                                    {/* Category Image */}
-                                    <div className="relative overflow-hidden rounded-t-md aspect-video ">
-                                        <Img
-                                            width={300}
-                                            height={200}
-                                            src={item.hinh}
-                                            alt={item.ten}
-                                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                                        />
-                                        {/* Overlay Gradient */}
+//                 {/* TikTok-style Vertical Scroll Container */}
+//                 <div className="mx-auto  ">
+//                     <div className="flex gap-5  ">
+//                         {DanhMuc.map((item, index) => (
+//                             <div
+//                                 key={index}
+//                                 className="group bg-white "
+//                             >
+//                                 <div className="relative bg-white rounded-xl shadow-[0_0_10px_rgba(0,0,0,0.1)] overflow-hidden hover:shadow-[0_0_20px_rgba(0,0,0,0.05)] transform hover:scale-105 transition-all duration-300">
+//                                     {/* Category Image */}
+//                                     <div className="relative overflow-hidden rounded-t-md aspect-video ">
+//                                         <Img
+//                                             width={300}
+//                                             height={200}
+//                                             src={item.hinh}
+//                                             alt={item.ten}
+//                                             className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+//                                         />
+//                                         {/* Overlay Gradient */}
 
-                                    </div>
+//                                     </div>
 
-                                    {/* Category Info */}
+//                                     {/* Category Info */}
 
 
 
-                                    {/* Stats Row */}
-                                    <div className="p-3 sm:p-6 text-center">
-                                        <h6 className="text-lg sm:text-2xl text-gray-800 mb-2 group-hover:text-pink-700 transition-colors">
-                                            {item.ten}
-                                        </h6>
-                                        <p className="text-xs sm:text-xl flex items-center justify-center gap-1 sm:gap-2">
-                                            <i className="bi bi-collection text-xl sm:text-2xl"></i>
-                                            <span className="text-lg sm:text-2xl" style={{ fontWeight: '400' }}>130+ khóa học</span>
-                                        </p>
-                                    </div>
+//                                     {/* Stats Row */}
+//                                     <div className="p-3 sm:p-6 text-center">
+//                                         <h6 className="text-lg sm:text-2xl text-gray-800 mb-2 group-hover:text-pink-700 transition-colors">
+//                                             {item.ten}
+//                                         </h6>
+//                                         <p className="text-xs sm:text-xl flex items-center justify-center gap-1 sm:gap-2">
+//                                             <i className="bi bi-collection text-xl sm:text-2xl"></i>
+//                                             <span className="text-lg sm:text-2xl" style={{ fontWeight: '400' }}>130+ khóa học</span>
+//                                         </p>
+//                                     </div>
 
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+//                                 </div>
+//                             </div>
+//                         ))}
+//                     </div>
+//                 </div>
+//             </section>
 
-            {/* Add custom scrollbar styles */}
-            <style jsx global>{`
-                .custom-scrollbar::-webkit-scrollbar {
-                    width: 6px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                    background: #f1f1f1;
-                    border-radius: 10px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: linear-gradient(to bottom, #111827, #be185d, #111827);
-                    border-radius: 10px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: linear-gradient(to bottom, #1f2937, #db2777, #1f2937);
-                }
-            `}</style>
-        </div>
-    );
-};
+//             {/* Add custom scrollbar styles */}
+//             <style jsx global>{`
+//                 .custom-scrollbar::-webkit-scrollbar {
+//                     width: 6px;
+//                 }
+//                 .custom-scrollbar::-webkit-scrollbar-track {
+//                     background: #f1f1f1;
+//                     border-radius: 10px;
+//                 }
+//                 .custom-scrollbar::-webkit-scrollbar-thumb {
+//                     background: linear-gradient(to bottom, #111827, #be185d, #111827);
+//                     border-radius: 10px;
+//                 }
+//                 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+//                     background: linear-gradient(to bottom, #1f2937, #db2777, #1f2937);
+//                 }
+//             `}</style>
+//         </div>
+//     );
+// };
 
 
 
