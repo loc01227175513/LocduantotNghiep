@@ -107,6 +107,8 @@ export default function Mota({ course }) {
   // console.log(course);
   const [isLoaded, setIsLoaded] = useState(false);
   const [khuyenMai1, setKhuyenMai] = useState([]);
+  const [visibleCourses, setVisibleCourses] = useState(6);
+  const [showLoadMore, setShowLoadMore] = useState(true);
   useEffect(() => {
       const fetchData = async () => {
           const data = await TatCaKhuyenMaiKhoaHoc();
@@ -207,6 +209,20 @@ export default function Mota({ course }) {
   // console.log(course, "course");
 
  const khuyenMai = khuyenMai1.find(item => item.id_khoahoc === course.id && item.magiamgia.trangthai === "Đã Duyệt" && item.khoahoc.giamgia > 0);
+
+ const loadMore = () => {
+  const nextVisible = visibleCourses + 6;
+  setVisibleCourses(nextVisible);
+  if (nextVisible >= course.Tongkhoahoc.length) {
+    setShowLoadMore(false);
+  }
+};
+
+const hideItems = () => {
+  setVisibleCourses(6);
+  setShowLoadMore(true);
+};
+
   return (
     <>
       <style>{styles}</style>
@@ -262,7 +278,7 @@ export default function Mota({ course }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-0">
-            {course.Tongkhoahoc.map((item, index) => {
+            {course.Tongkhoahoc.slice(0, visibleCourses).map((item, index) => {
               const averageRating =
                 item.danhgia?.length > 0
                   ? item.danhgia.reduce(
@@ -523,6 +539,25 @@ export default function Mota({ course }) {
             })}
           </div>
         </div>
+        {course.Tongkhoahoc.length > 6 && (
+          <div className="flex justify-center gap-4 mt-8">
+            {showLoadMore && course.Tongkhoahoc.length > visibleCourses ? (
+              <button
+                onClick={loadMore}
+                className="bg-gradient-to-r text-[14px] from-blue-900 to-pink-700 hover:bg-pink-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                Xem thêm khóa học
+              </button>
+            ) : visibleCourses > 6 && (
+              <button
+                onClick={hideItems}
+                className="bg-gradient-to-r text-[14px] from-pink-700 to-blue-900 hover:bg-blue-900 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+              >
+                Ẩn bớt khóa học
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </>
   );
