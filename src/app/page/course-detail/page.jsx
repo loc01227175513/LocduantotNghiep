@@ -335,33 +335,48 @@ const NavPhai = ({
                           <span className="text-left text-2xl font-normal">{formattedTotalTime}</span>
                         </div>
                       </div>
-                      <div className="single-include flex">
-                        <div className="left">
-                          <i className="fa-regular fa-floppy-disk text-2xl mr-3" />
-                          <span className="text-left text-2xl font-normal">Chủ thể</span>
+
+                      <Link href={`/page/Cours-Filter?chude=${course.chude_id}`}>
+                        <div className="single-include flex">
+                          <div className="left">
+                            <i className="fa-regular fa-floppy-disk text-2xl mr-3" />
+
+                            <span className="text-left text-2xl font-normal">Chủ đề</span>
+
+                          </div>
+                          <div className="right">
+                            <span className="text-left text-2xl font-normal">{course.chude}</span>
+                          </div>
                         </div>
-                        <div className="right">
-                          <span className="text-left text-2xl font-normal">{course.chude}</span>
-                        </div>
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 </div>
 
-                <div className="right-course-details mt--30">
-                  <div className="course-side-bar">
-                    <div className="course-single-information">
-                      <h5 className="font-semibold mb-4 text-3xl">Giảng viên:</h5>
-                      <div className="body">
-                        <div className="single-check">
-                          <i className="fa-light fa-circle-check pulse" />
-                          {course.giangvien}
-                        </div>
+                <Link href={`/page/Profile-insructor?id=${course.id_giangvien}`}>
+                  <div className="right-course-details mt--30">
+                    <div className="course-side-bar">
+
+                      <div className="course-single-information">
+
+                        <Link href={`/page/Profile-insructor?id=${course.id_giangvien}`}>
+                          <h5 className="font-semibold mb-4 text-3xl">Giảng viên:</h5>
+                          <div className="body">
+                            <div className="single-check">
+
+                              <i className="fa-light fa-circle-check pulse" />
+
+                              {course.giangvien}
+
+                            </div>
+                          </div>
+                        </Link>
                       </div>
+
+                      <Khac course={course} />
                     </div>
-                    <Khac course={course} />
                   </div>
-                </div>
+                </Link>
               </div>
             </div>
           </div>
@@ -381,6 +396,14 @@ export default function Coursedetailcomponent() {
   const [imageLoadingStates, setImageLoadingStates] = useState({});
   const [NguoiDung, setNguoiDung] = useState(null);
   const router = useRouter();
+  const [khuyenMai1, setKhuyenMai] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await TatCaKhuyenMaiKhoaHoc();
+      setKhuyenMai(data);
+    };
+    fetchData();
+  }, []);
   const [buttonStates, setButtonStates] = useState({
     addCart: {
       loading: false,
@@ -656,6 +679,9 @@ export default function Coursedetailcomponent() {
     }));
   };
 
+
+  // console.log(khuyenMai1);
+  const khuyenMai = khuyenMai1.find(item => item.id_khoahoc === course.id && item.magiamgia.trangthai === "Đã Duyệt" && item.khoahoc.giamgia > 0);
   return (
     <div className="mt-32">
       <Header />
@@ -805,25 +831,27 @@ export default function Coursedetailcomponent() {
                           fontWeight: "normal",
                         }}
                       >
-                        <span
-                          className="text-white text-xl"
-                          style={{ fontWeight: "normal" }}
-                        >
-                          Giảng Viên:
-                        </span>
-                        <span
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <strong
-                            className="text-2xl text-white"
+                        <Link href={`/page/Cours-Filter?chude=${course.chude_id}`}>
+                          <span
+                            className="text-white text-xl"
                             style={{ fontWeight: "normal" }}
                           >
-                            {course.giangvien}
-                          </strong>
-                          .
-                        </span>
+                            Giảng Viên:
+                          </span>
+                          <span
+                            style={{
+                              marginLeft: "5px",
+                            }}
+                          >
+                            <strong
+                              className="text-2xl text-white"
+                              style={{ fontWeight: "normal" }}
+                            >
+                              {course.giangvien}
+                            </strong>
+                            .
+                          </span>
+                        </Link>
                       </p>
                       <p
                         style={{
@@ -853,6 +881,7 @@ export default function Coursedetailcomponent() {
                             {course.chude}
                           </span>
                         </Link>
+
                       </p>
                     </div>
                   </div>
@@ -939,6 +968,12 @@ export default function Coursedetailcomponent() {
                                     quality={75}
                                     unoptimized={true}
                                   />
+                                  {khuyenMai && (
+                                    <div className="absolute top-3 left-3 bg-green-700 text-white px-3 py-1 h-20 justify-center items-center flex w-20 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                                      <i className="fas fa-gift text-[20px]"></i>
+                                    </div>
+
+                                  )}
                                 </div>
                                 <div className="course-tags">
                                   {course.gia === 0 ? (

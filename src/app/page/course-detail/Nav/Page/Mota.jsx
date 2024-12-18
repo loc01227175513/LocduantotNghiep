@@ -14,6 +14,7 @@ import Image from "next/image";
 import { KhoaHocYeuThich } from "../../../../../service/YeuThich/YeuThich";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { TatCaKhuyenMaiKhoaHoc } from '@/service/khuyenmai/khuyenmai';
 const styles = `
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -105,7 +106,14 @@ const styles = `
 export default function Mota({ course }) {
   // console.log(course);
   const [isLoaded, setIsLoaded] = useState(false);
-
+  const [khuyenMai1, setKhuyenMai] = useState([]);
+  useEffect(() => {
+      const fetchData = async () => {
+          const data = await TatCaKhuyenMaiKhoaHoc();
+          setKhuyenMai(data);
+      };
+      fetchData();
+  }, []);
   useEffect(() => {
     setIsLoaded(true);
   }, []);
@@ -198,6 +206,7 @@ export default function Mota({ course }) {
 
   // console.log(course, "course");
 
+ const khuyenMai = khuyenMai1.find(item => item.id_khoahoc === course.id && item.magiamgia.trangthai === "Đã Duyệt" && item.khoahoc.giamgia > 0);
   return (
     <>
       <style>{styles}</style>
@@ -270,6 +279,12 @@ export default function Mota({ course }) {
                 >
                   <div className="rts-single-course">
                     <Link href={`/page/course-detail?id=${item.id}`} className="thumbnail relative">
+                    {khuyenMai && (
+                        <div className="absolute top-3 left-3 bg-green-700 text-white px-3 py-1 h-20 justify-center items-center flex w-20 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">
+                            <i className="fas fa-gift text-[20px]"></i>
+                        </div>
+
+                    )}
                       <Image
                         width={500}
                         height={300}
@@ -278,6 +293,7 @@ export default function Mota({ course }) {
                         style={{ height: "170px", objectFit: "cover" }}
                         priority={index < 3}
                       />
+                      
                       {/* Free course badge */}
                       {(item.gia === 0 || item.giamgia === 0) && (
                         <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-lg shadow-lg transform -rotate-12 z-10">

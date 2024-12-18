@@ -28,7 +28,8 @@ export default function CardProduct({
         fetchData();
     }, []);
     // console.log(khuyenMai1);
-    const khuyenMai = khuyenMai1.find(item => item.id_khoahoc === id && item.magiamgia.trangthai === "Đã Duyệt" && item.khoahoc.giamgia > 0);
+    const khuyenMai = khuyenMai1.find(item => item.id_khoahoc === id && item.magiamgia.trangthai === "Đã Duyệt" && item.khoahoc.giamgia > 0); 
+    // console.log(khuyenMai);
     return (
         <div className="transition flash element-item creative " data-category="transition" key={id}>
             <div className="rts-single-course">
