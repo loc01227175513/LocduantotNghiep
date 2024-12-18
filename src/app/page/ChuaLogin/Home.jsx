@@ -87,7 +87,7 @@ const BannerAreaTen = () => {
                         </p>
 
                         <div className="flex flex-wrap items-center gap-6 animate-slideUp">
-                            <Link href="/page/login" className="group relative px-8 py-4 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700
+                            <Link href="/page/Cours-Filter" className="group relative px-8 py-4 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700
         rounded-xl font-medium transition-all duration-300
         hover:shadow-xl hover:from-pink-700 hover:to-pink-700
         before:absolute before:inset-0 before:-z-10 
@@ -101,7 +101,7 @@ const BannerAreaTen = () => {
         border-1 border-white
         ">
                                 <span className="text-white text-xl group-hover:text-pink-100 relative z-10">
-                                    Tìm khóa học
+                                    KHÁM PHÁ KHÓA HỌC
                                 </span>
                             </Link>
 
