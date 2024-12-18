@@ -182,7 +182,7 @@ const NextCategory = () => {
                     </h6>
                     <p className="text-xs sm:text-sm flex items-center justify-center gap-1 sm:gap-2">
                       <i className="bi bi-collection text-xl sm:text-2xl"></i>
-                      <span className="text-lg sm:text-2xl" style={{ fontWeight: '400' }}>130+ khóa học</span>
+                      <span className="text-lg sm:text-2xl" style={{ fontWeight: '400' }}>6+ khóa học</span>
                     </p>
                   </div>
                 </div>
