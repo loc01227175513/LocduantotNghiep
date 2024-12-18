@@ -66,7 +66,7 @@ export const Profileinsructor = () => {
                 }
             } catch (error) {
                 console.error('Error fetching follow status:', error);
-                toast.error('Lỗi khi kiểm tra trạng thái theo dõi');
+                toast.error('Đăng nhập để theo dõi');
             }
         };
 
