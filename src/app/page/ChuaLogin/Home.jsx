@@ -602,7 +602,7 @@ const WhyChooseUs = () => {
                                     },
                                     {
                                         img: "04_zdj1tq.png",
-                                        title: "Chứng chỉ giá trị",
+                                        title: "Ưu đãi hấp dẫn",
                                         desc: "Được công nhận toàn cầu",
                                     },
                                     {
