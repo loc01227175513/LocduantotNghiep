@@ -506,7 +506,7 @@ const VideoPlayer = ({ videoUrl, isVideoEnded, khoahoc, formatDuration, totalDur
                             whileHover={{ scale: 1.02 }}
                         >
                             {/* {khoahoc.ten} <span>-</span> {chitietkhoahoc && chitietkhoahoc.tenbaihoc ? chitietkhoahoc.tenbaihoc : 'Loading...'}  <span>:</span>  */}
-                           {chitietkhoahoc && chitietkhoahoc.motavideo ? chitietkhoahoc.motavideo : 'Loading...'}
+                            {chitietkhoahoc && chitietkhoahoc.motavideo ? chitietkhoahoc.motavideo : 'Loading...'}
                         </motion.h1>
 
                         {!convideo && conbaihoc && (
