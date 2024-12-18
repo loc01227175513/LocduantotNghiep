@@ -233,32 +233,34 @@ const Cart = () => {
                               height: '80px',
                               animation: `fadeIn 0.5s ease-out ${(index + subIndex) * 0.1}s`,
                             }}
-                          >
-                            <td className="text-center">
-                              <button className="btn w-14 btn-outline-danger btn-sm rounded-circle p-2 hover:scale-125 hover:rotate-12 transition-all duration-300">
-                                <i
-                                  onClick={() => xoagiohang(khoahoc.id)}
-                                  className="bi bi-trash text-2xl"
-                                ></i>
-                              </button>
-                            </td>
-                            <td className="flex items-center justify-center w-[120px] h-[120px]">
-                              <Image
-                                width={120}
-                                height={120}
-                                src={khoahoc.hinh}
-                                className="rounded-lg shadow-sm hover:scale-110 hover:rotate-2 transition-all duration-300 w-full h-full object-cover"
-                                alt={khoahoc.ten}
-                              />
-                            </td>
-                            <td className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
-                              <h3 className="text-[14px]">{khoahoc.ten}</h3>
-                            </td>
-                            <td className="text-gray-600 text-[14px]">đ{khoahoc.gia.toLocaleString()}</td>
-                            <td className="text-gray-600 text-[14px]">{khoahoc.giamgia.toLocaleString()}</td>
-                            <td className="font-bold text-black animate-numberChange text-[14px]">
-                              đ{finalPrice.toLocaleString()}
-                            </td>
+                          > <Link href={`/page/course-detail?id=${khoahoc.id}`}>
+                              <td className="text-center">
+                                <button className="btn w-14 btn-outline-danger btn-sm rounded-circle p-2 hover:scale-125 hover:rotate-12 transition-all duration-300">
+                                  <i
+                                    onClick={() => xoagiohang(khoahoc.id)}
+                                    className="bi bi-trash text-2xl"
+                                  ></i>
+                                </button>
+                              </td>
+
+                              <td className="flex items-center justify-center w-[120px] h-[120px]">
+                                <Image
+                                  width={120}
+                                  height={120}
+                                  src={khoahoc.hinh}
+                                  className="rounded-lg shadow-sm hover:scale-110 hover:rotate-2 transition-all duration-300 w-full h-full object-cover"
+                                  alt={khoahoc.ten}
+                                />
+                              </td>
+                              <td className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
+                                <h3 className="text-[14px]">{khoahoc.ten}</h3>
+                              </td>
+                              <td className="text-gray-600 text-[14px]">đ{khoahoc.gia.toLocaleString()}</td>
+                              <td className="text-gray-600 text-[14px]">{khoahoc.giamgia.toLocaleString()}</td>
+                              <td className="font-bold text-black animate-numberChange text-[14px]">
+                                đ{finalPrice.toLocaleString()}
+                              </td>
+                            </Link>
                           </tr>
                         );
                       })

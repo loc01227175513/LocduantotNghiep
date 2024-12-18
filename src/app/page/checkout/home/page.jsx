@@ -354,39 +354,45 @@ const Page = () => {
                             key={khoahoc.id}
                             className="flex items-center p-6 rounded-xl hover:bg-gray-50 transition-all duration-300 border border-gray-100 hover:border-purple-200 hover:shadow-lg transform hover:scale-[1.02]"
                           >
+
                             <div className="relative group">
-                              <Image
-                                width={250}
-                                height={150}
-                                src={khoahoc.hinh}
-                                alt={khoahoc.ten}
-                                className="w-52 h-32 object-cover rounded-xl shadow-md group-hover:shadow-xl transition-all duration-300"
-                              />
-                              <div className="absolute -top-2 -right-2 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-bold shadow-lg">
-                                -{discountPercentage}%
-                              </div>
+                              <Link href={`/page/course-detail?id=${khoahoc.id}`}>
+                                <Image
+                                  width={250}
+                                  height={150}
+                                  src={khoahoc.hinh}
+                                  alt={khoahoc.ten}
+                                  className="w-52 h-32 object-cover rounded-xl shadow-md group-hover:shadow-xl transition-all duration-300"
+                                />
+                                <div className="absolute -top-2 -right-2 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-bold shadow-lg">
+                                  -{discountPercentage}%
+                                </div>
+                              </Link>
                             </div>
                             <div className="flex-grow ml-6">
-                              <h3 className="text-[16px] font-bold text-gray-800 mb-2 hover:text-purple-600 transition-colors">
-                                {khoahoc.ten}
-                              </h3>
-                              <p className="text-gray-600 flex items-center mb-2 text-[14px]">
-                                <span className="material-icons mr-1 text-[14px]">
-                                  Giảng viên:
-                                </span>
-                                {khoahoc.tenGiangVien}
-                              </p>
-                              <div className="flex items-center">
-                                <p className="text-2xl font-bold text-pink-700">
-                                  {discountedPrice.toLocaleString()}
-                                  VNĐ
+                              <Link href={`/page/course-detail?id=${khoahoc.id}`}>
+                                <h3 className="text-[16px] font-bold text-gray-800 mb-2 hover:text-purple-600 transition-colors">
+                                  {khoahoc.ten}
+                                </h3>
+                                <p className="text-gray-600 flex items-center mb-2 text-[14px]">
+                                  <span className="material-icons mr-1 text-[14px]">
+                                    Giảng viên:
+                                  </span>
+                                  {khoahoc.tenGiangVien}
                                 </p>
-                                <p className="text-gray-500 line-through ml-2 text-2xl">
-                                  {khoahoc.gia.toLocaleString()}
-                                 VNĐ
-                                </p>
-                              </div>
+                                <div className="flex items-center">
+                                  <p className="text-2xl font-bold text-pink-700">
+                                    {discountedPrice.toLocaleString()}
+                                    VNĐ
+                                  </p>
+                                  <p className="text-gray-500 line-through ml-2 text-2xl">
+                                    {khoahoc.gia.toLocaleString()}
+                                    VNĐ
+                                  </p>
+                                </div>
+                              </Link>
                             </div>
+
                           </div>
                         );
                       })
@@ -455,7 +461,7 @@ const Page = () => {
                       <label className="font-medium text-gray-700 text-2xl pb-2">
                         Chọn phương thức
                       </label>
-                                         <div className="flex items-center mb-4 p-3">
+                      <div className="flex items-center mb-4 p-3">
                         <button
                           className="text-blue-600 hover:text-blue-700 font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center border border-blue-600"
                           onClick={handleCheckOutStriper}
@@ -514,7 +520,7 @@ const Page = () => {
                         className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-2xl"
                         required
                         placeholder="Mã số thẻ"
-                        style={{ fontSize: '14px' }}  
+                        style={{ fontSize: '14px' }}
                       />
                     </div>
                     <div className="flex mb-6">
@@ -551,12 +557,12 @@ const Page = () => {
                         />
                       </div>
                     </div>
-                       <button
+                    <button
                       type="submit"
                       className="w-full text-2xl font-bold  mb-6 bg-gradient-to-r from-blue-900 via-pink-700 to-pink-700 text-white py-4 rounded-lg  hover:from-pink-700 hover:to-pink-800 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
                     >
-                      Thanh Toán  
-                        <span className="pl-1"> { (totalPrice - (totalPrice * discount) / 100).toLocaleString()}</span>VNĐ
+                      Thanh Toán
+                      <span className="pl-1"> {(totalPrice - (totalPrice * discount) / 100).toLocaleString()}</span>VNĐ
                     </button>
                     <Link href={`/`}>
                       <p className="text-center mt-3 text-gray-500 text-2xl">Quay lại</p>

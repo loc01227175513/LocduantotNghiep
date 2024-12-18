@@ -234,12 +234,11 @@ const NavPhai = ({
                       )}
                     </div>
                     {khuyenMai1 && (
-                      <div className="flex items-center justify-center  text-green-700 py-3 px-6 rounded-lg  transform transition duration-500 ease-in-out hover:scale-105">
+                      <div className="flex items-center justify-center bg-gray-50  text-green-700 py-3 px-6 rounded-lg  transform transition duration-500 ease-in-out hover:scale-105">
                         <span className="font-medium text-lg text-center flex items-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-5 w-5 text-yellow-400">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9V5m0 14v-4m-5-5l3 3m9-3l-3 3" />
-                          </svg>
-                          <span>-{khuyenMai1.magiamgia.giamgia}% với voucher</span>
+                          <Link href={`/page/KhuyenMai`}>
+                            <span className="text-xl font-bold">{khuyenMai1.magiamgia.giamgia}% với voucher</span>
+                          </Link>
                         </span>
                       </div>
                     )}
@@ -411,11 +410,15 @@ export default function Coursedetailcomponent() {
   }, [course?.danhgia]);
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const courseId = queryParams.get("id");
-    setId(courseId);
+    const intervalId = setInterval(() => {
+      const queryParams = new URLSearchParams(window.location.search);
+      const courseId = queryParams.get("id");
+      setId(courseId);
+    }, 1000); // Update every second
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
   }, []); // Removed window.location.search from the dependency array
-  
+
 
   useEffect(() => {
     const loadUserData = async () => {

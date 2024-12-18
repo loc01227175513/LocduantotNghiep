@@ -2,6 +2,7 @@
 import React, { useMemo, useState } from "react";
 import { RiFileList3Line } from "react-icons/ri";
 import { KhoaHocDuocMua } from "../../../../service/Dashboard-lecture/Dashboard-lecture.jsx";
+import Link from 'next/link';
 
 // Separate constants
 const TAB_OPTIONS = [
@@ -85,7 +86,7 @@ export default function Khoahocdanghoc() {
     fetchCourses();
   }, [parsedLecturer?.giangvien]);
 
-  
+
   // Memoized filtered courses
   const filteredLecturer = useMemo(() =>
     filterCourses(lecturer, selectedTab, selectedDate),
@@ -138,15 +139,19 @@ export default function Khoahocdanghoc() {
       acc[key].push(item);
       return acc;
     }, {});
-
+    console.log(groupedOrders);
     return (
       <tbody>
         {Object.values(groupedOrders).map((orders) => (
+
           <tr key={`${orders[0].khoahocs.id}_${orders[0].tong}`}>
+
             <td className="p-3 align-middle text-left text-[14px]"># {orders[0].id}</td>
-            <td className="p-3 align-middle text-break text-left text-[14px]">
-              {orders[0].khoahocs.ten}
-            </td>
+            <Link href={`/page/course-detail?id=${orders[0].id_khoahoc}`}>
+              <td className="p-3 align-middle text-break text-left text-[14px]">
+                {orders[0].khoahocs.ten}
+              </td>
+            </Link>
             <td className="p-3 align-middle text-left text-[14px]">
               {new Date(orders[0].updated_at).toLocaleDateString("vi-VN")}
             </td>
@@ -178,7 +183,9 @@ export default function Khoahocdanghoc() {
                 }).format(orders[0].tong * 0.9)
               }
             </td>
+
           </tr>
+
         ))}
       </tbody>
     );
