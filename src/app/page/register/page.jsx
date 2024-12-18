@@ -19,7 +19,7 @@ export default function Page() {
     dienthoai: '',
     matkhau: '',
     repassword: '',
-    hinh: 'https://png.pngtree.com/png-clipart/20221230/original/pngtree-blank-face-man-cartoon-character-png-image_8831926.png',
+    hinh: 'https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg',
   };
 
   const validationSchema = Yup.object({
