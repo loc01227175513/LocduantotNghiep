@@ -544,14 +544,14 @@ const hideItems = () => {
             {showLoadMore && course.Tongkhoahoc.length > visibleCourses ? (
               <button
                 onClick={loadMore}
-                className="bg-gradient-to-r text-[14px] from-blue-900 to-pink-700 hover:bg-pink-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="bg-gradient-to-r text-[14px] py-3 from-blue-900 to-pink-700 hover:bg-pink-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               >
                 Xem thêm khóa học
               </button>
             ) : visibleCourses > 6 && (
               <button
                 onClick={hideItems}
-                className="bg-gradient-to-r text-[14px] from-pink-700 to-blue-900 hover:bg-blue-900 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+                className="bg-gradient-to-r text-[14px] py-3 from-pink-700 to-blue-900 hover:bg-blue-900 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
               >
                 Ẩn bớt khóa học
               </button>

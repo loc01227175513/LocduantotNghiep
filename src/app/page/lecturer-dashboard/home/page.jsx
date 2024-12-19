@@ -356,7 +356,7 @@ export default function Homedashboardlecturer() {
     { icon: FaDollarSign, value: doanhthuTheoTuan - (doanhthuTheoTuan * 0.1), label: "Doanh thu theo tuần" },
     { icon: FaDollarSign, value: doanhthuTheoThang - (doanhthuTheoThang * 0.1), label: "Doanh thu theo tháng" },
     { icon: FaDollarSign, value: doanhthuTheoNam - (doanhthuTheoNam * 0.1), label: "Doanh thu theo năm" },
-    { icon: FaDollarSign, value: sodukhadung - (sodukhadung * 0.1), label: "Số dư khả dụng" },
+    // { icon: FaDollarSign, value: sodukhadung - (sodukhadung * 0.1), label: "Số dư khả dụng" },
     { icon: FaMoneyBill, value: tongdoanhthu - (tongdoanhthu * 0.1), label: "Tổng thu nhập" },
   ];
   // console.log(khoahoc, "khoahoc");
@@ -737,7 +737,7 @@ const DoanhThuChart = () => {
             }}
           >
             <MenuItem value="tongdoanhthu" className="text-[1.3rem]"  >Tổng Doanh Thu</MenuItem>
-            <MenuItem value="sodukhadung" className="text-[1.3rem]" >Số Dư Khả Dụng</MenuItem>
+            {/* <MenuItem value="sodukhadung" className="text-[1.3rem]" >Số Dư Khả Dụng</MenuItem> */}
           </Select>
         </Box>
 
@@ -823,7 +823,7 @@ const DoanhThuChart = () => {
                 fill: '#000000',
                 filter: 'url(#glow)'
               }}
-              name={metric === 'tongdoanhthu' ? 'Tổng Doanh Thu' : 'Số Dư Khả Dụng'}
+              name={metric === 'tongdoanhthu' ? 'Tổng Doanh Thu' : ''}
               animationDuration={2000}
               animationEasing="ease-out"
               filter="url(#glow)"

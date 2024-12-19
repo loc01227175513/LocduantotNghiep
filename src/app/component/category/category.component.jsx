@@ -180,10 +180,7 @@ const NextCategory = () => {
                     <h6 className="text-lg sm:text-2xl text-gray-800 mb-2 group-hover:text-pink-700 transition-colors">
                       {item.name}
                     </h6>
-                    <p className="text-xs sm:text-sm flex items-center justify-center gap-1 sm:gap-2">
-                      <i className="bi bi-collection text-xl sm:text-2xl"></i>
-                      <span className="text-lg sm:text-2xl" style={{ fontWeight: '400' }}>6+ khóa học</span>
-                    </p>
+                   
                   </div>
                 </div>
               </Link>
