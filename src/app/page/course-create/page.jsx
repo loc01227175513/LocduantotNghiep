@@ -205,12 +205,12 @@ const CourseCreatePage = () => {
                       onClick={() => setView("GiaCa")}
                       isActive={view === "GiaCa"}
                     />
-                    <MenuItem 
+                    {/* <MenuItem 
                       icon={Award}
                       text="Chứng Chỉ"
                       onClick={() => setView("ChungChi")}
                       isActive={view === "ChungChi"}
-                    />
+                    /> */}
                     <MenuItem 
                       icon={Gift}
                       text="Khuyến mãi"
