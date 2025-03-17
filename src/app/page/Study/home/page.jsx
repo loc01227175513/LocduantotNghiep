@@ -99,7 +99,7 @@ export default function Page() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://huuphuoc.id.vn/api/Khoahocchitiet/${id}`, {
+                const response = await fetch(`http://127.0.0.1:8000/api/Khoahocchitiet/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ export default function Page() {
                         id_video: currentVideoId,
                     };
 
-                    await Axios.post('https://huuphuoc.id.vn/api/videodahoc', requestData, {
+                    await Axios.post('http://127.0.0.1:8000/api/videodahoc', requestData, {
                         referrerPolicy: 'unsafe-url'
                     });
 
@@ -237,7 +237,7 @@ export default function Page() {
 
             try {
                 const parsedUserData = JSON.parse(data);
-                const response = await Axios.post(`https://huuphuoc.id.vn/api/kiemtravidedahoc`, {
+                const response = await Axios.post(`http://127.0.0.1:8000/api/kiemtravidedahoc`, {
                     id_nguoidung: parsedUserData.id
                 }, {
                     referrerPolicy: 'unsafe-url'
@@ -308,7 +308,7 @@ export default function Page() {
                 noidung: comment,
             };
 
-            const response = await Axios.post('https://huuphuoc.id.vn/api/danhgia', payload, {
+            const response = await Axios.post('http://127.0.0.1:8000/api/danhgia', payload, {
                 referrerPolicy: 'unsafe-url'
             });
             if (response.status === 200) {
@@ -1425,7 +1425,7 @@ const ShowTracNghiemComponent = ({ idBaihoc, idTracNghiem }) => {
                 return;
             }
             try {
-                const url = "https://huuphuoc.id.vn/api/ShowCauHoi";
+                const url = "http://127.0.0.1:8000/api/ShowCauHoi";
                 const response = await fetch(url, {
                     method: "POST",
                     headers: {

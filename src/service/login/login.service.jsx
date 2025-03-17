@@ -1,5 +1,5 @@
 export const Login = async (data) => {
-    const url = 'https://huuphuoc.id.vn/api/login';
+    const url = 'http://127.0.0.1:8000/api/login';
   
     try {
       const response = await fetch(url, {

@@ -1,5 +1,5 @@
 export const Lecture = async () => {
-  const url = 'https://huuphuoc.id.vn/api/khoahocbanduocgiangvien';
+  const url = 'http://127.0.0.1:8000/api/khoahocbanduocgiangvien';
 
   try {
     // Retrieve and validate data from local storage
@@ -31,7 +31,7 @@ export const Lecture = async () => {
 };
 
 export const GiangVienHienTai = async () => {
-  const url = 'https://huuphuoc.id.vn/api/giangvienhientai';
+  const url = 'http://127.0.0.1:8000/api/giangvienhientai';
 
   try {
     // Retrieve and validate data from local storage
@@ -63,7 +63,7 @@ export const GiangVienHienTai = async () => {
 };
 
 export const TatCaGiangVien = async () => {
-  const url = 'https://huuphuoc.id.vn/api/giangvien';
+  const url = 'http://127.0.0.1:8000/api/giangvien';
   
   try {
     const response = await fetch(url, {

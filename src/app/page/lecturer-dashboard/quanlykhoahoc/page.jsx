@@ -51,7 +51,7 @@ export default function Quanlykhoahoc() {
   // console.log(khoahoc);   
 
   useEffect(() => {
-    fetch("https://huuphuoc.id.vn/api/theloai", {
+    fetch("http://127.0.0.1:8000/api/theloai", {
       referrerPolicy: 'unsafe-url',
     })
       .then((response) => response.json())

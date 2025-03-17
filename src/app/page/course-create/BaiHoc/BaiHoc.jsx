@@ -1048,7 +1048,7 @@ const BaiHoc = () => {
       if (id) {
         try {
           const response = await Axios.post(
-            "https://huuphuoc.id.vn/api/showBaiHoc",
+            "http://127.0.0.1:8000/api/showBaiHoc",
             { id_khoahoc: id },
             { referrerPolicy: 'unsafe-url' }
           );
@@ -1076,7 +1076,7 @@ const BaiHoc = () => {
   const fetchSubItems = useCallback(async (id_baihoc) => {
     try {
       const response = await Axios.post(
-        "https://huuphuoc.id.vn/api/ShowSubBaiHoc",
+        "http://127.0.0.1:8000/api/ShowSubBaiHoc",
         {
           id_baihoc: id_baihoc,
         },
@@ -1132,7 +1132,7 @@ const BaiHoc = () => {
       // console.log("Dữ liệu gửi lên:", { baihocs: lessons, id_khoahoc: id });  
 
       await Axios.post(
-        "https://huuphuoc.id.vn/api/keoThaBaiHoc",
+        "http://127.0.0.1:8000/api/keoThaBaiHoc",
         { baihocs: lessons },
         { referrerPolicy: 'unsafe-url' }
       );
@@ -1160,7 +1160,7 @@ const BaiHoc = () => {
       // console.log("Prepared Payload:", { videos: orderedSubItems });
 
       await Axios.post(
-        "https://huuphuoc.id.vn/api/sapXepThuTuVideo",
+        "http://127.0.0.1:8000/api/sapXepThuTuVideo",
         { videos: orderedSubItems },
         { referrerPolicy: 'unsafe-url' }
       );
@@ -1188,7 +1188,7 @@ const BaiHoc = () => {
       // console.log("newParentId:", newParentId);
       handleExpandLesson(newParentId);
       await Axios.post(
-        "https://huuphuoc.id.vn/api/diChuyenVideo",
+        "http://127.0.0.1:8000/api/diChuyenVideo",
         { video_id: subItemId, new_baihoc_id: newParentId },
         { referrerPolicy: 'unsafe-url' }
       );
@@ -1266,7 +1266,7 @@ const BaiHoc = () => {
   const moveSubItem = useCallback(async (subItemId, sourceParentId, targetParentId, container) => {
     try {
       await Axios.post(
-        "https://huuphuoc.id.vn/api/diChuyenVideo",
+        "http://127.0.0.1:8000/api/diChuyenVideo",
         { video_id: subItemId, new_baihoc_id: targetParentId },
         { referrerPolicy: 'unsafe-url' }
       );
@@ -1375,7 +1375,7 @@ const BaiHoc = () => {
   const handleRemoveSubItem = useCallback(async (itemId, subItemId) => {
     try {
       const response = await Axios.post(
-        "https://huuphuoc.id.vn/api/Xoasub",
+        "http://127.0.0.1:8000/api/Xoasub",
         { id_video: subItemId },
         { referrerPolicy: 'unsafe-url' }
       );
@@ -1417,7 +1417,7 @@ const BaiHoc = () => {
 
     try {
       const response = await Axios.post(
-        "https://huuphuoc.id.vn/api/xoabaihoc",
+        "http://127.0.0.1:8000/api/xoabaihoc",
         { id_baihoc: itemId },
         { referrerPolicy: 'unsafe-url' }
       );
@@ -1446,7 +1446,7 @@ const BaiHoc = () => {
     if (id) {
       try {
         await Axios.post(
-          "https://huuphuoc.id.vn/api/themBaiHoc",
+          "http://127.0.0.1:8000/api/themBaiHoc",
           {
             id_khoahoc: id,
             ten: lessonName,
@@ -1490,7 +1490,7 @@ const BaiHoc = () => {
     if (newSubItemName.trim()) {
       try {
         const response = await Axios.post(
-          "https://huuphuoc.id.vn/api/themSubBaiHoc",
+          "http://127.0.0.1:8000/api/themSubBaiHoc",
           {
             ten: newSubItemName,
             id_baihoc: itemId,
@@ -1560,7 +1560,7 @@ const BaiHoc = () => {
 
           // console.log("Payload:", payload);
 
-          await Axios.post("https://huuphuoc.id.vn/api/taonoidungsub", payload, {
+          await Axios.post("http://127.0.0.1:8000/api/taonoidungsub", payload, {
             referrerPolicy: 'unsafe-url'
           });
           // console.log(`Adding content to sub-item ID ${subItemId}`);

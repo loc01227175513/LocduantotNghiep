@@ -1,5 +1,5 @@
 export const Oder = async () => {
-    const url = 'https://huuphuoc.id.vn/api/lichsumuahang';
+    const url = 'http://127.0.0.1:8000/api/lichsumuahang';
     
     try {
         // Kiểm tra và lấy dữ liệu từ localStorage một cách an toàn
@@ -44,7 +44,7 @@ export const Oder = async () => {
 };
 
 export const OderDetail = async (id) => {
-    const url = 'https://huuphuoc.id.vn/api/donhangchitiet';
+    const url = 'http://127.0.0.1:8000/api/donhangchitiet';
     
     try {
         // Validate id parameter

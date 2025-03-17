@@ -1,5 +1,5 @@
 export const ChungChi = async () => {
-  const url = 'https://huuphuoc.id.vn/api/ChungChi';
+  const url = 'http://127.0.0.1:8000/api/ChungChi';
 
   const response = await fetch(`${url}`, {
     referrerPolicy: 'unsafe-url',
@@ -19,7 +19,7 @@ export const ChonChungChi = async (id) => {
     throw new Error('Course ID not found in URL');
   }
 
-  const url = `https://huuphuoc.id.vn/api/GiangVienCourseChungChi`;
+  const url = `http://127.0.0.1:8000/api/GiangVienCourseChungChi`;
 
   try {
     const response = await fetch(`${url}`, {
@@ -47,7 +47,7 @@ export const ChonChungChi = async (id) => {
 };
 export const LayChungChi = async ({ id_khoahoc }) => {
   try {
-    const response = await fetch('https://huuphuoc.id.vn/api/LayChungChi', {
+    const response = await fetch('http://127.0.0.1:8000/api/LayChungChi', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

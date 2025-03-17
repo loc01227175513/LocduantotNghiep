@@ -1,5 +1,5 @@
 export const fetchBanner = async () => {
-  const url = 'https://huuphuoc.id.vn/api/showBanner';
+  const url = 'http://127.0.0.1:8000/api/showBanner';
 
   try {
     const response = await fetch(url, {

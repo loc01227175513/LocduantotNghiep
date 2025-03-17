@@ -9,7 +9,7 @@ export const DanhSachTinNhan = async () => {
     }
     const parsedLecturer = JSON.parse(userData);
     
-    const response = await fetch('https://huuphuoc.id.vn/api/showAllNhanTin', {
+    const response = await fetch('http://127.0.0.1:8000/api/showAllNhanTin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export const DanhSachTinNhan = async () => {
     } catch (error) {
       throw new Error('Invalid user data');
     }
-    const url = 'https://huuphuoc.id.vn/api/laynguoidung';
+    const url = 'http://127.0.0.1:8000/api/laynguoidung';
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -63,7 +63,7 @@ export const DanhSachTinNhan = async () => {
   
   export const showGiangVien = async () => {
     try {
-      const response = await fetch('https://huuphuoc.id.vn/api/giangvien', {
+      const response = await fetch('http://127.0.0.1:8000/api/giangvien', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export const DanhSachTinNhan = async () => {
       throw new Error('No lecturer ID found in localStorage');
     }
     const parsedLecturer = JSON.parse(userData);
-    const url = process.env.REACT_APP_API_URL || 'https://huuphuoc.id.vn/api/showAllNhanTinGiangVien';
+    const url = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000/api/showAllNhanTinGiangVien';
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -112,7 +112,7 @@ export const DanhSachTinNhan = async () => {
   };
   
   export const ShowAllNguoiDung = async () => {
-    const url = 'https://huuphuoc.id.vn/api/showAllNguoiDung';
+    const url = 'http://127.0.0.1:8000/api/showAllNguoiDung';
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -142,7 +142,7 @@ export const DanhSachTinNhan = async () => {
       }
 
       const parsedLecturer = JSON.parse(userData);
-      const response = await fetch('https://huuphuoc.id.vn/api/giangVienHientai', {
+      const response = await fetch('http://127.0.0.1:8000/api/giangVienHientai', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

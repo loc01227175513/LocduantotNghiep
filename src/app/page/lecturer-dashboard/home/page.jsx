@@ -266,7 +266,7 @@ export default function Homedashboardlecturer() {
     const storedData = localStorage.getItem('lecturerId');
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
+      fetch('http://127.0.0.1:8000/api/DoanhThuGiangVien', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -545,7 +545,7 @@ const DoanhThuChart = () => {
     setError(null);
 
     try {
-      const response = await fetch('https://huuphuoc.id.vn/api/DoanhThuGiangVien', {
+      const response = await fetch('http://127.0.0.1:8000/api/DoanhThuGiangVien', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

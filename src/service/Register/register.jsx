@@ -1,5 +1,5 @@
 export const Register = async (formData) => {
-    const url = 'https://huuphuoc.id.vn/api/dangky';
+    const url = 'http://127.0.0.1:8000/api/dangky';
     const timeout = 15000; // Timeout sau 15 giây
   
     try {

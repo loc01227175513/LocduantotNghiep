@@ -21,7 +21,7 @@ function Mota() {
 
   const fetchMoTa = useCallback(async () => {
     try {
-         const response = await Axios.get(`https://huuphuoc.id.vn/api/motaKhoaHoc/${id}`, {
+         const response = await Axios.get(`http://127.0.0.1:8000/api/motaKhoaHoc/${id}`, {
         referrerPolicy: 'unsafe-url'
       });
       const data = response.data;
@@ -91,7 +91,7 @@ function Mota() {
     const hocSinhValues = hocSinhInputs.filter((input) => input.trim() !== "");
 
     try {
-          await Axios.post("https://huuphuoc.id.vn/api/updateMota", {
+          await Axios.post("http://127.0.0.1:8000/api/updateMota", {
         id_khoahoc: id,
         mota: hocSinhValues,
       }, {
@@ -117,7 +117,7 @@ function Mota() {
 
       try {
         // console.log("Request data:", { idmota: idmota, id_khoahoc: id }); // Log request data
-               const response = await Axios.post("https://huuphuoc.id.vn/api/xoamota", {
+               const response = await Axios.post("http://127.0.0.1:8000/api/xoamota", {
           idmota: idmota,
           id_khoahoc: id,
         }, {

@@ -1,5 +1,5 @@
 export const Allcoursesss = async () => {
-  const url = 'https://huuphuoc.id.vn/api/allkhoahoc';
+  const url = 'http://127.0.0.1:8000/api/allkhoahoc';
 
   try {
     const response = await fetch(url, {
@@ -17,7 +17,7 @@ export const Allcoursesss = async () => {
 };
 
 export const CourseDetails = async (id) => {
-  const url = `https://huuphuoc.id.vn/api/Khoahocchitiet/${id}`;
+  const url = `http://127.0.0.1:8000/api/Khoahocchitiet/${id}`;
   try {
     const response = await fetch(`${url}`, {
       referrerPolicy: 'unsafe-url',
@@ -43,7 +43,7 @@ export const ThemKhoaHocDaHoc = async () => {
     throw new Error('Course ID not found in URL');
   }
 
-  const url = `https://huuphuoc.id.vn/api/ThemKhoaHocDaHoc`;
+  const url = `http://127.0.0.1:8000/api/ThemKhoaHocDaHoc`;
 
   try {
     const response = await fetch(`${url}`, {
@@ -79,7 +79,7 @@ export const GiangVienKhoaHocHienThi = async () => {
     throw new Error('Invalid course ID');
   }
 
-  const url = `https://huuphuoc.id.vn/api/GiangVienKhoaHocHienThi/${id_khoahoc}`;
+  const url = `http://127.0.0.1:8000/api/GiangVienKhoaHocHienThi/${id_khoahoc}`;
   // console.log('Fetching URL:', url); 
 
   try {

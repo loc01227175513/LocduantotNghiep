@@ -44,7 +44,7 @@ const Page = () => {
         const fetchData = () => {
           axios
             .post(
-              "https://huuphuoc.id.vn/api/showgiohang",
+              "http://127.0.0.1:8000/api/showgiohang",
               { id_nguoidung: parsedData.id },
               { referrerPolicy: "unsafe-url" }
             )
@@ -117,7 +117,7 @@ const Page = () => {
     // Round to ensure whole numbers
     const totalPrice = calculatedTotalPrice;
 
-    const response = await axios.post("https://huuphuoc.id.vn/api/ThanhToanStripe", {
+    const response = await axios.post("http://127.0.0.1:8000/api/ThanhToanStripe", {
       total: totalPrice,
       id_nguoidung: JSON.parse(localStorage.getItem("data")).id,
       id_khoahoc: cartItems.flatMap(item => item.khoahocs.map(khoahoc => khoahoc.id)),
@@ -177,7 +177,7 @@ const Page = () => {
     const [month, year] = paymentDetails.expiryDate.split("/");
     axios
       .post(
-        "https://huuphuoc.id.vn/api/thenganhang",
+        "http://127.0.0.1:8000/api/thenganhang",
         {
           tenthe: paymentDetails.nameOnCard,
           sothe: paymentDetails.cardNumber,
@@ -222,7 +222,7 @@ const Page = () => {
     const [month, year] = paymentDetails.expiryDate.split("/");
     try {
       const cardResponse = await axios.post(
-        "https://huuphuoc.id.vn/api/thenganhang",
+        "http://127.0.0.1:8000/api/thenganhang",
         {
           tenthe: paymentDetails.nameOnCard,
           sothe: paymentDetails.cardNumber,
@@ -238,7 +238,7 @@ const Page = () => {
 
       if (cardResponse.data.success) {
         const paymentResponse = await axios.post(
-          "https://huuphuoc.id.vn/api/thanhtoan",
+          "http://127.0.0.1:8000/api/thanhtoan",
           {
             total: totalPrice - (totalPrice * discount) / 100,
             id_nguoidung:
@@ -266,7 +266,7 @@ const Page = () => {
 
         if (paymentResponse.data.success) {
           await axios.post(
-            "https://huuphuoc.id.vn/api/xoagiohang",
+            "http://127.0.0.1:8000/api/xoagiohang",
             {
               total: totalPrice.toFixed(2),
               id_nguoidung:

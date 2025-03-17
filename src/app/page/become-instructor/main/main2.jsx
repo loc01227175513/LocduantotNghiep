@@ -35,7 +35,7 @@ export default function Main2() {
             return;
         }
         try {
-            const response = await fetch('https://huuphuoc.id.vn/api/dangkygiangvien', {
+            const response = await fetch('http://127.0.0.1:8000/api/dangkygiangvien', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

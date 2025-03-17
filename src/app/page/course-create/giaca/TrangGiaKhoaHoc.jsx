@@ -19,7 +19,7 @@ function TrangGiaKhoaHoc() {
     useEffect(() => {
         const fetchCoursePrice = async () => {
             try {
-                const response = await fetch('https://huuphuoc.id.vn/api/showgiaKhoaHoc', {
+                const response = await fetch('http://127.0.0.1:8000/api/showgiaKhoaHoc', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ function TrangGiaKhoaHoc() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://huuphuoc.id.vn/api/capnhatgiaKhoaHoc', {
+            const response = await fetch('http://127.0.0.1:8000/api/capnhatgiaKhoaHoc', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

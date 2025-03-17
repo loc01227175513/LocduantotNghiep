@@ -154,7 +154,7 @@ const BannerAreaTen = () => {
 //     useEffect(() => {
 //         const fetchData = async () => {
 //             try {
-//                 const response = await fetch("https://huuphuoc.id.vn/api/theloai", {
+//                 const response = await fetch("http://127.0.0.1:8000/api/theloai", {
 //                     referrerPolicy: 'unsafe-url',
 //                 });
 //                 const data = await response.json();
@@ -260,7 +260,7 @@ const CourseArea = () => {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
+                const response = await fetch("http://127.0.0.1:8000/api/allkhoahoc", {
                     referrerPolicy: "unsafe-url",
                 });
                 const data = await response.json();
@@ -941,7 +941,7 @@ const FeedbackArea = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://huuphuoc.id.vn/api/danhgia', {
+                const response = await fetch('http://127.0.0.1:8000/api/danhgia', {
                     referrerPolicy: 'unsafe-url',
                 });
                 const data = await response.json();

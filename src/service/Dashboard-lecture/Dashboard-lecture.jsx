@@ -1,7 +1,7 @@
 export const Dashboard = async () => {
     const userData = localStorage.getItem('data');
     const parsedData = JSON.parse(userData);
-    const url = 'https://huuphuoc.id.vn/api/kiemtragiangvien';
+    const url = 'http://127.0.0.1:8000/api/kiemtragiangvien';
   
     try {
         const response = await fetch(url, {
@@ -26,7 +26,7 @@ export const Dashboard = async () => {
 export const GiangvienKhoaHoc = async () => {
     const userData = localStorage.getItem('lecturerId');
     const parsedLecturer = JSON.parse(userData);
-    const url = 'https://huuphuoc.id.vn/api/laykhoahocdanglam';
+    const url = 'http://127.0.0.1:8000/api/laykhoahocdanglam';
   
     try {
         const response = await fetch(url, {
@@ -51,7 +51,7 @@ export const GiangvienKhoaHoc = async () => {
 export const GiangvienKhoaHocDaMua = async () => {
     const userData = localStorage.getItem('lecturerId');
     const parsedLecturer = JSON.parse(userData);
-    const url = 'https://huuphuoc.id.vn/api/TongSoDangKy';
+    const url = 'http://127.0.0.1:8000/api/TongSoDangKy';
   
     try {
         const response = await fetch(url, {
@@ -76,7 +76,7 @@ export const GiangvienKhoaHocDaMua = async () => {
 export const GiangvienDoanhThu = async () => {
     const userData = localStorage.getItem('lecturerId');
     const parsedLecturer = JSON.parse(userData);
-    const url = 'https://huuphuoc.id.vn/api/DoanhThuGiangVien';
+    const url = 'http://127.0.0.1:8000/api/DoanhThuGiangVien';
   
     try {
         const response = await fetch(url, {
@@ -99,7 +99,7 @@ export const GiangvienDoanhThu = async () => {
 };
 export const KhoaHocDuocMua = async () => {
   
-    const url = 'https://huuphuoc.id.vn/api/TongSoKhoahocDangKy';
+    const url = 'http://127.0.0.1:8000/api/TongSoKhoahocDangKy';
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -121,7 +121,7 @@ export const KhoaHocDuocMua = async () => {
 }
 export const TatCaKhoaHocDaHoc = async () => {
   
-    const url = 'https://huuphuoc.id.vn/api/TatCaKhoaHocDaHoc';
+    const url = 'http://127.0.0.1:8000/api/TatCaKhoaHocDaHoc';
     try {
         const response = await fetch(url, {
             method: 'GET',

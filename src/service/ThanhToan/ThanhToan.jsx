@@ -1,5 +1,5 @@
 export const ThanhToanKhoaHocFree = async (id_giangvien) => {
-    const url = 'https://huuphuoc.id.vn/api/thanhtoanKhoahocFree';
+    const url = 'http://127.0.0.1:8000/api/thanhtoanKhoahocFree';
     const data = JSON.parse(localStorage.getItem('data'));
     const urlParams = new URLSearchParams(window.location.search);
     const id_khoahoc = urlParams.get('id');

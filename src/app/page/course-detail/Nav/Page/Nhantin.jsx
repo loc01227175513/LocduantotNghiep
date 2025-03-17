@@ -137,7 +137,7 @@ const handleMessageSubmit = async (e, senderType) => {
     };
 
     const url = senderType === 'nguoidung' 
-        ? 'https://huuphuoc.id.vn/api/addNhanTin' 
+        ? 'http://127.0.0.1:8000/api/addNhanTin' 
         : '/admin-api/addNhanTin';
 
     try {

@@ -1,5 +1,5 @@
 export const TaoBaiTracNghiem = async ({ id_baihoc, tieu_de, mo_ta }) => {
-  const url = 'https://huuphuoc.id.vn/api/TaoTracNghiem';
+  const url = 'http://127.0.0.1:8000/api/TaoTracNghiem';
 
   try {
     const response = await fetch(url, {
@@ -31,7 +31,7 @@ export const TaoBaiTracNghiem = async ({ id_baihoc, tieu_de, mo_ta }) => {
   }
 };
 export const ShowTracNghiem = async ({ id_baihoc }) => {
-  const url = 'https://huuphuoc.id.vn/api/showTracNghiemGiangVien';
+  const url = 'http://127.0.0.1:8000/api/showTracNghiemGiangVien';
 
   try {
     const response = await fetch(url, {
@@ -59,7 +59,7 @@ export const ShowTracNghiem = async ({ id_baihoc }) => {
 };
 
 export const TaoCauHoi = async ({ id_baihoc, id_baitracnghiem, cau_hoi, cau_traloi }) => {
-  const url = 'https://huuphuoc.id.vn/api/TaoCauHoiTracNghiem';
+  const url = 'http://127.0.0.1:8000/api/TaoCauHoiTracNghiem';
 
   try {
     const response = await fetch(url, {
@@ -96,7 +96,7 @@ export const TaoCauHoi = async ({ id_baihoc, id_baitracnghiem, cau_hoi, cau_tral
 };
 
 export const XoaCauHoi = async ({ BaihocidNe, quizId, hoiIndex }) => {
-  const url = 'https://huuphuoc.id.vn/api/XoaCauHoiTracNghiem';
+  const url = 'http://127.0.0.1:8000/api/XoaCauHoiTracNghiem';
 
   try {
     const response = await fetch(url, {
@@ -127,7 +127,7 @@ export const XoaCauHoi = async ({ BaihocidNe, quizId, hoiIndex }) => {
 
 
 export const XoaPhanTracNghiem = async ({ id_baihoc, id_baitracnghiem}) => {
-  const url = 'https://huuphuoc.id.vn/api/XoaPhanTracNghiem';
+  const url = 'http://127.0.0.1:8000/api/XoaPhanTracNghiem';
 
   try {
     const response = await fetch(url, {
@@ -155,7 +155,7 @@ export const XoaPhanTracNghiem = async ({ id_baihoc, id_baitracnghiem}) => {
 };
 
 export const ShowCauHoi = async (BaihocidNe, quizId) => {
-  const url = 'https://huuphuoc.id.vn/api/ShowCauHoi';
+  const url = 'http://127.0.0.1:8000/api/ShowCauHoi';
 
   try {
     const response = await fetch(url, {
@@ -186,7 +186,7 @@ export const ShowCauHoi = async (BaihocidNe, quizId) => {
 
 export const GuiCauTraLoi = async ({ id_baihoc, noidung }) => {
   const user = localStorage.getItem("data");
-  const url = "https://huuphuoc.id.vn/api/NguoiDungGuiDapAn";
+  const url = "http://127.0.0.1:8000/api/NguoiDungGuiDapAn";
 
   try {
     const response = await fetch(url, {
@@ -216,7 +216,7 @@ export const GuiCauTraLoi = async ({ id_baihoc, noidung }) => {
 
 export const showAllTracNghiemNguoiDung = async ({ id_baihoc }) => {
   const user = localStorage.getItem("data");
-  const url = 'https://huuphuoc.id.vn/api/showAllTracNghiemNguoiDung';
+  const url = 'http://127.0.0.1:8000/api/showAllTracNghiemNguoiDung';
 
   try {
     const response = await fetch(url, {
@@ -244,7 +244,7 @@ export const showAllTracNghiemNguoiDung = async ({ id_baihoc }) => {
 }
 export const HoanThanhTracNghiem = async ({ id_baihoc }) => {
   const user = localStorage.getItem("data");
-  const url = 'https://huuphuoc.id.vn/api/GuiTrangThaiBaiTracNghiem';
+  const url = 'http://127.0.0.1:8000/api/GuiTrangThaiBaiTracNghiem';
 
   try {
     const response = await fetch(url, {
@@ -273,7 +273,7 @@ export const HoanThanhTracNghiem = async ({ id_baihoc }) => {
 };
 
 export const checkQuizCompletion = async ({ id_baihoc }) => {
-  const url = 'https://huuphuoc.id.vn/api/showTrangThaiHoangThanh';
+  const url = 'http://127.0.0.1:8000/api/showTrangThaiHoangThanh';
   const userData = localStorage.getItem("data");
 
   if (!userData) {

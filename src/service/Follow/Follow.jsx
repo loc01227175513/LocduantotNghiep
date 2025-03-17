@@ -1,5 +1,5 @@
 export const TheoDoiGiangVien = async () => {
-    const url = 'https://huuphuoc.id.vn/api/TheoDoiGiangVien';
+    const url = 'http://127.0.0.1:8000/api/TheoDoiGiangVien';
     const userData = localStorage.getItem('data');
   
     if (!userData) {
@@ -42,7 +42,7 @@ export const TheoDoiGiangVien = async () => {
   export const DanhSachTheoDoi = async () => {
     const userData = localStorage.getItem('data');
     const parsedLecturer = JSON.parse(userData);
-    const url = 'https://huuphuoc.id.vn/api/showAllTheoDoi';
+    const url = 'http://127.0.0.1:8000/api/showAllTheoDoi';
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -61,7 +61,7 @@ export const TheoDoiGiangVien = async () => {
   };
   
   export const BoTheoDoiGiangVien = async (id) => {
-    const url = `https://huuphuoc.id.vn/api/deleteTheoDoi/${id}`;
+    const url = `http://127.0.0.1:8000/api/deleteTheoDoi/${id}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE',

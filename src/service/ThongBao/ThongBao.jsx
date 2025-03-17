@@ -1,7 +1,7 @@
 export const LayThongBao = async () => {
     const userData = localStorage.getItem('data');
     const user = JSON.parse(userData);
-    const url = `https://huuphuoc.id.vn/api/Nhanthongbao/${user.id}`;
+    const url = `http://127.0.0.1:8000/api/Nhanthongbao/${user.id}`;
   
     const response = await fetch(url, {
       method: 'get',

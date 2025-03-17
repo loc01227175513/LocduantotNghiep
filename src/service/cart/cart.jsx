@@ -13,7 +13,7 @@ const getUserId = () => {
 };
 
 export const Addcart = async () => {
-  const url = 'https://huuphuoc.id.vn/api/addcart';
+  const url = 'http://127.0.0.1:8000/api/addcart';
   const id_nguoidung = getUserId();
 
   if (!id_nguoidung) {
@@ -51,7 +51,7 @@ export const Addcart = async () => {
 };
 
 export const Showcart = async () => {
-  const url = 'https://huuphuoc.id.vn/api/showgiohang';
+  const url = 'http://127.0.0.1:8000/api/showgiohang';
   const user = localStorage.getItem('data');
 
   if (!user) {
@@ -94,7 +94,7 @@ export const Showcart = async () => {
 };
 
 export const KhoaHocDaDanKy = async () => {
-  const url = 'https://huuphuoc.id.vn/api/khoahocdadangky';
+  const url = 'http://127.0.0.1:8000/api/khoahocdadangky';
   const user = localStorage.getItem('data');
 
   if (!user) {

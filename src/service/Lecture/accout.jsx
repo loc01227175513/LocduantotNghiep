@@ -1,5 +1,5 @@
 export const updateUser = async (data) => {
-  const url = 'https://huuphuoc.id.vn/api/CapNhatGiangVien';
+  const url = 'http://127.0.0.1:8000/api/CapNhatGiangVien';
   
   try {
     const localData = JSON.parse(localStorage.getItem('data'));
@@ -30,7 +30,7 @@ export const updateUser = async (data) => {
 };
 
 export const ShowUser = async () => {
-  const url = 'https://huuphuoc.id.vn/api/ShowGiangVien';
+  const url = 'http://127.0.0.1:8000/api/ShowGiangVien';
   
   try {
     const localData = JSON.parse(localStorage.getItem('data'));
@@ -61,7 +61,7 @@ export const ShowUser = async () => {
 };
 
 export const UpdatePassWord = async (data) => {
-  const url = 'https://huuphuoc.id.vn/api/CapNhatMatKhauGiangVien';
+  const url = 'http://127.0.0.1:8000/api/CapNhatMatKhauGiangVien';
   
   try {
     const localData = JSON.parse(localStorage.getItem('data'));

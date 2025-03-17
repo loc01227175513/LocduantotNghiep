@@ -1,5 +1,5 @@
 export const LoTrinhKhoaHoc = async () => {
-  const url = 'https://huuphuoc.id.vn/api/lotrinhkhoahoc';
+  const url = 'http://127.0.0.1:8000/api/lotrinhkhoahoc';
 
   const response = await fetch(`${url}`, {
     referrerPolicy: 'unsafe-url',
@@ -11,7 +11,7 @@ export const LoTrinhKhoaHoc = async () => {
 };
 
 export const LoTrinhKhoaHocCon = async () => {
-  const url = 'https://huuphuoc.id.vn/api/lotrinhkhoahoccon';
+  const url = 'http://127.0.0.1:8000/api/lotrinhkhoahoccon';
 
   const response = await fetch(`${url}`, {
     referrerPolicy: 'unsafe-url',

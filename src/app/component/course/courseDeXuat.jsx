@@ -34,7 +34,7 @@ const CourseDeXuat = () => {
     }, []);
     // console.log(khoaHocDaThanhToan,"khoaHocDaThanhToan");
     useEffect(() => {
-        fetch("https://huuphuoc.id.vn/api/allkhoahoc")
+        fetch("http://127.0.0.1:8000/api/allkhoahoc")
             .then((response) => response.json())
             .then((data) => {
                 // Extract subject IDs from purchased courses

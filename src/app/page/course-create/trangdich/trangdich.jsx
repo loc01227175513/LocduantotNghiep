@@ -46,7 +46,7 @@ function TrangDich() {
     useEffect(() => {
         const fetchCourseData = async () => {
             try {
-                const response = await axios.post('https://huuphuoc.id.vn/api/ShowTrangDichKhoaHoc', { id_khoahoc: id }, {
+                const response = await axios.post('http://127.0.0.1:8000/api/ShowTrangDichKhoaHoc', { id_khoahoc: id }, {
                     referrerPolicy: 'unsafe-url'
                 });
                 const data = response.data;
@@ -73,7 +73,7 @@ function TrangDich() {
     }, [id, parsedData.giangvien]);
 
     useEffect(() => {
-        axios.get('https://huuphuoc.id.vn/api/theloai', {
+        axios.get('http://127.0.0.1:8000/api/theloai', {
             referrerPolicy: 'unsafe-url'
         })
             .then(response => {
@@ -213,7 +213,7 @@ function TrangDich() {
                 submitData.append(key, formData[key]);
             });
 
-            const response = await axios.post('https://huuphuoc.id.vn/api/TrangDichKhoaHoc', submitData, {
+            const response = await axios.post('http://127.0.0.1:8000/api/TrangDichKhoaHoc', submitData, {
                 referrerPolicy: 'unsafe-url',
                 headers: {
                     'Content-Type': 'multipart/form-data'

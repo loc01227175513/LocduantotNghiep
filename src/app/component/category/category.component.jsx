@@ -205,7 +205,7 @@ const Category = ({ onCategoryChange }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    fetch("https://huuphuoc.id.vn/api/allkhoahoc", {
+    fetch("http://127.0.0.1:8000/api/allkhoahoc", {
       referrerPolicy: 'unsafe-url',
     })
       .then((response) => response.json())
@@ -289,7 +289,7 @@ const Categoryheader = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://huuphuoc.id.vn/api/theloai", {
+        const response = await fetch("http://127.0.0.1:8000/api/theloai", {
           referrerPolicy: 'unsafe-url',
         });
         const data = await response.json();

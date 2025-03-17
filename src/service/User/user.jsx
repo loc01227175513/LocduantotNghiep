@@ -1,5 +1,5 @@
 export const user = async () => {
-    const url = 'https://huuphuoc.id.vn/api/laynguoidung';
+    const url = 'http://127.0.0.1:8000/api/laynguoidung';
   
     // Retrieve data from local storage
     const data = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('data')) : null;
@@ -32,7 +32,7 @@ export const user = async () => {
   };
   
   export const updateUser = async (data) => {
-    const url = 'https://huuphuoc.id.vn/api/CapNhatNguoiDung';
+    const url = 'http://127.0.0.1:8000/api/CapNhatNguoiDung';
     const localData = JSON.parse(localStorage.getItem('data')); // Renamed to localData
   
     if (!localData || !localData.id) {
@@ -62,7 +62,7 @@ export const user = async () => {
   };
   
   export const ShowUser = async () => {
-    const url = 'https://huuphuoc.id.vn/api/ShowNguoiDung';
+    const url = 'http://127.0.0.1:8000/api/ShowNguoiDung';
     const localData = JSON.parse(localStorage.getItem('data')); // Renamed to localData
   
     if (!localData || !localData.id) {
@@ -92,7 +92,7 @@ export const user = async () => {
   };
   
   export const UpdatePassWord = async (data) => {
-    const url = 'https://huuphuoc.id.vn/api/CapNhatMatKhau';
+    const url = 'http://127.0.0.1:8000/api/CapNhatMatKhau';
     const localData = JSON.parse(localStorage.getItem('data'));
   
     if (!localData || !localData.id) {

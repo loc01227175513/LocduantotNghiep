@@ -18,7 +18,7 @@ const fetchData = async (url, id) => {
 export const Dashboard = async () => {
     const userData = localStorage.getItem('data');
     const parsedData = JSON.parse(userData);
-    const url = 'https://huuphuoc.id.vn/api/khoahocdadangky';
+    const url = 'http://127.0.0.1:8000/api/khoahocdadangky';
   
     return fetchData(url, parsedData.id);
 };
@@ -26,7 +26,7 @@ export const Dashboard = async () => {
 export const KhoaHocDaHoc = async () => {
     const userData = localStorage.getItem('data');
     const parsedData = JSON.parse(userData);
-    const url = 'https://huuphuoc.id.vn/api/KhoaHocDaHoc';
+    const url = 'http://127.0.0.1:8000/api/KhoaHocDaHoc';
   
     return fetchData(url, parsedData.id);
 };
@@ -34,7 +34,7 @@ export const KhoaHocDaHoc = async () => {
 export const KhoaHocDangHoc = async () => {
     const userData = localStorage.getItem('data');
     const parsedData = JSON.parse(userData);
-    const url = 'https://huuphuoc.id.vn/api/khoahocdanghoc';
+    const url = 'http://127.0.0.1:8000/api/khoahocdanghoc';
   
     return fetchData(url, parsedData.id);
 };
@@ -42,7 +42,7 @@ export const KhoaHocDangHoc = async () => {
 export const KhoaHocDaHoanThanh = async () => {
     const userData = localStorage.getItem('data');
     const parsedData = JSON.parse(userData);
-    const url = 'https://huuphuoc.id.vn/api/KhoaHocDaHoc';
+    const url = 'http://127.0.0.1:8000/api/KhoaHocDaHoc';
     
     return fetchData(url, parsedData.id);
 };

@@ -1,5 +1,5 @@
 export const MangXaHoiss = async (data) => {
-    const url = 'https://huuphuoc.id.vn/api/mangxahoi';
+    const url = 'http://127.0.0.1:8000/api/mangxahoi';
     const localData = JSON.parse(localStorage.getItem('data'));
   
     if (!localData || !localData.id) {
@@ -39,7 +39,7 @@ export const MangXaHoiss = async (data) => {
   };
   
   export const ShowMangXaHoi = async () => {
-    const url = 'https://huuphuoc.id.vn/api/showmangxahoi';
+    const url = 'http://127.0.0.1:8000/api/showmangxahoi';
     const localData = JSON.parse(localStorage.getItem('data'));
   
     if (!localData || !localData.id) {

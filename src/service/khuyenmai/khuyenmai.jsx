@@ -1,5 +1,5 @@
 export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
-    const url = 'https://huuphuoc.id.vn/api/addMaGiamGiaKhoaHoc';
+    const url = 'http://127.0.0.1:8000/api/addMaGiamGiaKhoaHoc';
     const urlParams = new URLSearchParams(window.location.search);
     const id_khoahoc = urlParams.get('id');
   
@@ -34,7 +34,7 @@ export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
   };
   
   export const TatCaKhuyenMaiKhoaHoc = async () => {
-    const url = 'https://huuphuoc.id.vn/api/showAllMaGiamGiaKhoaHoc';
+    const url = 'http://127.0.0.1:8000/api/showAllMaGiamGiaKhoaHoc';
     try {
       const response = await fetch(url, {
         referrerPolicy: 'unsafe-url',
@@ -50,7 +50,7 @@ export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
   };
   
   export const TatCaKhuyenMai = async () => {
-    const url = 'https://huuphuoc.id.vn/api/showAllMaGiamGia';
+    const url = 'http://127.0.0.1:8000/api/showAllMaGiamGia';
     try {
       const response = await fetch(url, {
         referrerPolicy: 'unsafe-url',
@@ -66,7 +66,7 @@ export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
   };
   
   export const NguoiDungMaGiamGia = async (DataCoupon) => {
-    const url = 'https://huuphuoc.id.vn/api/addNguoiDungMaGiamGia';
+    const url = 'http://127.0.0.1:8000/api/addNguoiDungMaGiamGia';
   
     try {
       const userData = localStorage.getItem('data');
@@ -112,7 +112,7 @@ export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
       throw new Error('User data is missing or invalid');
     }
   
-    const url = 'https://huuphuoc.id.vn/api/showAllNguoiDungMaGiamGia';
+    const url = 'http://127.0.0.1:8000/api/showAllNguoiDungMaGiamGia';
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -135,7 +135,7 @@ export const AddKhuyenMaiKhoaHoc = async (selectedCoupon) => {
   };
   
   export const TinhMaGiamGia = async () => {
-    const url = "https://huuphuoc.id.vn/api/TinhMaGiamGia";
+    const url = "http://127.0.0.1:8000/api/TinhMaGiamGia";
   
     try {
       const userData = localStorage.getItem('data');

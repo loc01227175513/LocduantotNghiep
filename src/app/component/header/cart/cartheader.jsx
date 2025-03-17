@@ -22,7 +22,7 @@ const Cart = ({ onAction }) => {
       if (userData) {
         try {
           const parsedData = JSON.parse(userData);
-          const response = await axios.post('https://huuphuoc.id.vn/api/showgiohang', { id_nguoidung: parsedData.id });
+          const response = await axios.post('http://127.0.0.1:8000/api/showgiohang', { id_nguoidung: parsedData.id });
           setCartItems(response.data.data);
 
           const totalDiscountedPrice = response.data.data.reduce((sum, item) => {
@@ -52,7 +52,7 @@ const Cart = ({ onAction }) => {
         id_nguoidung: parsedData.id,
       };
       
-      await axios.post('https://huuphuoc.id.vn/api/xoasanphamadd', payload);
+      await axios.post('http://127.0.0.1:8000/api/xoasanphamadd', payload);
       
       setCartItems(prevItems => prevItems.filter(item => 
         !item.khoahocs.some(khoahoc => khoahoc.id === id)

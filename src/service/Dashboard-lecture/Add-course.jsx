@@ -1,7 +1,7 @@
 export const GiangvienTaoKhoaHoc = async (tieude, chude) => {
     const userData = localStorage.getItem('lecturerId');
     const parsedLecturer = JSON.parse(userData);
-    const url = 'https://huuphuoc.id.vn/api/taokhoahoc';
+    const url = 'http://127.0.0.1:8000/api/taokhoahoc';
   
     try {
         const response = await fetch(url, {
